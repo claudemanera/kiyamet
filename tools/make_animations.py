@@ -15,7 +15,7 @@ for path in glob.glob(GEO + '/*.geo.json'):
     geo = json.load(open(path))['minecraft:geometry'][0]
     bones = [b['name'] for b in geo['bones']]
     has = lambda b: b in bones
-    zombie = 'zombie' in name or name in ('patient_zero', 'the_butcher', 'experiment_47')
+    zombie = 'zombie' in name or name in ('patient_zero', 'the_butcher', 'experiment_47', 'masked_one')
     vehicle = name.startswith('car_') or name in ('atv', 'motorcycle', 'armored_truck')
     anims = {}
     idle = {}

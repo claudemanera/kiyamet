@@ -24,6 +24,13 @@ public final class Ui {
         return s;
     }
 
+    /** A custom logo (assets/kiyamet/items/icon/<name>.json) drawn on a plain item. */
+    public static ItemStack logo(String name, Component title, Component... lore) {
+        ItemStack s = icon(Items.PAPER, title, lore);
+        s.set(net.minecraft.core.component.DataComponents.ITEM_MODEL, Identifier.fromNamespaceAndPath("kiyamet", "icon/" + name));
+        return s;
+    }
+
     public static ItemStack lore(ItemStack s, List<Component> lines) {
         List<Component> out = new ArrayList<>();
         for (Component c : lines) out.add(c.copy().withStyle(st -> st.withItalic(false)));

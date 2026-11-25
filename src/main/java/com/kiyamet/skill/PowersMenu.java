@@ -20,6 +20,7 @@ import net.minecraft.world.item.Items;
 public class PowersMenu extends ChestMenu {
     private final SimpleContainer shown;
     private final ServerPlayer player;
+    private int page;
 
     public static void open(ServerPlayer p) {
         p.openMenu(new SimpleMenuProvider((id, inv, pl) -> new PowersMenu(id, inv, p), Component.literal("Super Powers")));
@@ -39,14 +40,15 @@ public class PowersMenu extends ChestMenu {
         SkillData d = SkillManager.get(player);
         Powers.Power[] all = Powers.Power.values();
         int unlocked = 0;
-        for (int i = 0; i < all.length && i < 45; i++) {
-            Powers.Power pw = all[i];
+        for (Powers.Power pw : all) if (pw.unlocked(d)) unlocked++;
+        for (int i = 0; i < 45 && page * 45 + i < all.length; i++) {
+            Powers.Power pw = all[page * 45 + i];
             boolean un = pw.unlocked(d), on = un && Powers.enabled(player, pw);
-            if (un) unlocked++;
-            ItemStack s = Ui.icon(un ? pw.icon : Items.GRAY_DYE, Ui.text(pw.title, !un ? ChatFormatting.DARK_GRAY : on ? ChatFormatting.GREEN : ChatFormatting.RED, ChatFormatting.BOLD),
+            ItemStack s = (un ? Ui.logo("power_" + pw.name().toLowerCase(), Ui.text(pw.title, on ? ChatFormatting.GREEN : ChatFormatting.RED, ChatFormatting.BOLD)) : Ui.icon(Items.GRAY_DYE, Ui.text(pw.title, ChatFormatting.DARK_GRAY, ChatFormatting.BOLD)));
+            Ui.lore(s, java.util.List.of(pw.title, !un ? ChatFormatting.DARK_GRAY : on ? ChatFormatting.GREEN : ChatFormatting.RED, ChatFormatting.BOLD),
                     Ui.text(un ? (on ? "● Active" : "● Switched off") : "✘ Locked", !un ? ChatFormatting.DARK_GRAY : on ? ChatFormatting.GREEN : ChatFormatting.RED),
                     Component.literal("Unlock: ").withStyle(ChatFormatting.GRAY).append(Component.translatable(pw.skill.key())).append(Component.literal(" " + pw.level + "  (you: " + d.level(pw.skill) + ")")),
-                    un ? Ui.text("Click to switch " + (on ? "off" : "on"), ChatFormatting.YELLOW) : Ui.bar(d.level(pw.skill) / (double) pw.level, 16));
+                    un ? Ui.text("Click to switch " + (on ? "off" : "on"), ChatFormatting.YELLOW) : Ui.bar(d.level(pw.skill) / (double) pw.level, 16)));
             shown.setItem(i, Ui.glint(s, on));
         }
         for (int i = 45; i < 54; i++) shown.setItem(i, Ui.dark());
@@ -54,6 +56,9 @@ public class PowersMenu extends ChestMenu {
         shown.setItem(49, Ui.glint(Ui.icon(Items.NETHER_STAR, Ui.text("Powers unlocked: " + unlocked + " / " + all.length, ChatFormatting.GOLD, ChatFormatting.BOLD),
                 Ui.bar(unlocked / (double) all.length, 20), Ui.text("Level up skills to earn more powers.", ChatFormatting.GRAY)), true));
         shown.setItem(53, Ui.icon(Items.BARRIER, Ui.text("Close", ChatFormatting.RED)));
+        int pages = (all.length + 44) / 45;
+        if (page > 0) shown.setItem(47, Ui.icon(Items.SPECTRAL_ARROW, Ui.text("< Previous page", ChatFormatting.AQUA)));
+        if (page < pages - 1) shown.setItem(51, Ui.icon(Items.SPECTRAL_ARROW, Ui.text("Next page > (" + (page + 2) + "/" + pages + ")", ChatFormatting.AQUA)));
     }
 
     @Override
@@ -62,8 +67,11 @@ public class PowersMenu extends ChestMenu {
         if (slot == 45) { SkillsMenu.open(player); return; }
         if (slot == 53) { player.closeContainer(); return; }
         Powers.Power[] all = Powers.Power.values();
-        if (slot < all.length && all[slot].unlocked(SkillManager.get(player))) {
-            Powers.toggle(player, all[slot]);
+        if (slot == 47 && page > 0) { page--; refresh(); return; }
+        if (slot == 51 && (page + 1) * 45 < all.length) { page++; refresh(); return; }
+        int idx = page * 45 + slot;
+        if (slot < 45 && idx < all.length && all[idx].unlocked(SkillManager.get(player))) {
+            Powers.toggle(player, all[idx]);
             player.level().playSound(null, player.blockPosition(), SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.5f, 1.3f);
             refresh();
         }

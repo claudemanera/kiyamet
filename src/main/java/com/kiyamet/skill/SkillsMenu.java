@@ -87,7 +87,7 @@ public class SkillsMenu extends ChestMenu {
             int steps = Perks.steps(lv);
             for (Perks.Perk pk : Perks.of(s))
                 lore.add(Ui.text("✦ " + (steps == 0 ? pk.label() + " (from level 50)" : pk.describe(steps)), steps == 0 ? ChatFormatting.DARK_GRAY : ChatFormatting.GREEN));
-            ItemStack st = Ui.icon(icon(s), Component.translatable(s.key()).withStyle(max ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.WHITE, ChatFormatting.BOLD));
+            ItemStack st = Ui.logo("skill_" + s.name().toLowerCase(), Component.translatable(s.key()).withStyle(max ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.WHITE, ChatFormatting.BOLD));
             Ui.lore(st, lore);
             st.setCount(Math.max(1, Math.min(64, lv / 16 + 1)));
             c.setItem(SLOTS[i], Ui.glint(st, lv >= 250));

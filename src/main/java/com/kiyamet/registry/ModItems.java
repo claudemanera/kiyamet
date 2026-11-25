@@ -37,9 +37,9 @@ public final class ModItems {
         for (String s : STONES) { com.kiyamet.stone.StoneKind k = com.kiyamet.stone.StoneKind.byId(s); custom(s, p -> new com.kiyamet.stone.StoneItem(p.stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC), k)); }
         for (String s : GADGETS) {
             if (s.equals("healing_syringe")) custom(s, p -> new com.kiyamet.item.HealItem(p.stacksTo(4), com.kiyamet.item.HealItem.Kind.SYRINGE));
-            else simple(s, 1);
+            else { String id = s; custom(s, p -> new com.kiyamet.item.GadgetItem(p.stacksTo(id.equals("emp_bomb") || id.equals("black_hole_bomb") || id.equals("sonic_lure") ? 8 : 1), id)); }
         }
-        for (String s : WEAPONS) simple(s, 1);
+        for (String s : WEAPONS) { com.kiyamet.item.GunItem.Stats st = com.kiyamet.item.GunItem.statsFor(s); custom(s, p -> new com.kiyamet.item.GunItem(p.stacksTo(1), st)); }
         for (String s : PARTS) {
             if (s.equals("bandage")) custom(s, p -> new com.kiyamet.item.HealItem(p.stacksTo(16), com.kiyamet.item.HealItem.Kind.BANDAGE));
             else if (s.equals("vaccine")) custom(s, p -> new com.kiyamet.item.HealItem(p.stacksTo(8), com.kiyamet.item.HealItem.Kind.VACCINE));

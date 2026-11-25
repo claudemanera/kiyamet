@@ -37,3 +37,12 @@ net.minecraft.world.level.Level
 net.minecraft.world.entity.Entity
 net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 software.bernie.geckolib.renderer.base.GeoRenderState
+net.minecraft.world.item.Item$Properties
+net.minecraft.world.inventory.ChestMenu
+net.minecraft.world.inventory.AbstractContainerMenu
+net.minecraft.world.entity.projectile.arrow.Arrow
+net.minecraft.world.entity.projectile.arrow.AbstractArrow
+net.minecraft.world.level.block.Block
+net.minecraft.world.level.block.state.BlockBehaviour
+net.minecraft.world.item.component.ItemLore
+net.minecraft.server.level.ServerLevel

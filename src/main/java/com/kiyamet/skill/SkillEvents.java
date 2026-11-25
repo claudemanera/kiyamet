@@ -42,7 +42,7 @@ public final class SkillEvents {
             if (!(source.getEntity() instanceof ServerPlayer p) || entity == p) return;
             double base = Math.max(4, entity.getMaxHealth() * 1.5);
             Entity direct = source.getDirectEntity();
-            if (direct != null && direct.getType().is(EntityTypeTags.ARROWS)) SkillManager.addXp(p, Skill.ARCHERY, base);
+            if ((direct != null && direct.getType().is(EntityTypeTags.ARROWS)) || p.getMainHandItem().getItem() instanceof com.kiyamet.item.GunItem) SkillManager.addXp(p, Skill.ARCHERY, base);
             else if (p.getMainHandItem().is(ItemTags.SWORDS)) SkillManager.addXp(p, Skill.SWORDS, base);
             else if (p.getMainHandItem().is(ItemTags.AXES)) SkillManager.addXp(p, Skill.HEAVY_WEAPONS, base);
             SkillManager.addXp(p, Skill.HUNTING, base * 0.6);

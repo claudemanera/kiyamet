@@ -51,6 +51,9 @@ public final class ModBlocks {
     public static final Block DEEPSLATE_RUBY_ORE = reg("deepslate_ruby_ore", p -> new DropExperienceBlock(UniformInt.of(3, 7), p),
             BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE_DIAMOND_ORE));
 
+    public static final Block LAB_TABLE = reg("lab_table", com.kiyamet.lab.LabTableBlock::new,
+            BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 8f).sound(SoundType.METAL).noOcclusion());
+
     private static Block reg(String name, Function<BlockBehaviour.Properties, Block> factory, BlockBehaviour.Properties props) {
         ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Kiyamet.id(name));
         Block block = Registry.register(BuiltInRegistries.BLOCK, key, factory.apply(props.setId(key)));

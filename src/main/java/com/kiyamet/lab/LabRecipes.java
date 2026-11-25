@@ -1,0 +1,76 @@
+package com.kiyamet.lab;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+/** Everything craftable at the Laboratory Table: result, Engineering level, parts (item id -> count). */
+public final class LabRecipes {
+    public record Recipe(String result, int count, int level, Map<String, Integer> parts) {}
+    public static final List<Recipe> ALL = new ArrayList<>();
+
+    private static void r(String result, int count, int level, Object... parts) {
+        Map<String, Integer> m = new LinkedHashMap<>();
+        for (int i = 0; i < parts.length; i += 2) m.put((String) parts[i], (Integer) parts[i + 1]);
+        ALL.add(new Recipe(result, count, level, m));
+    }
+
+    static {
+        // parts
+        r("kiyamet:metal_plate", 2, 1, "minecraft:iron_ingot", 3);
+        r("kiyamet:circuit", 1, 5, "minecraft:copper_ingot", 2, "minecraft:redstone", 2, "minecraft:gold_nugget", 2);
+        r("kiyamet:lens", 1, 10, "minecraft:glass", 2, "minecraft:amethyst_shard", 1);
+        r("kiyamet:fuel_canister", 1, 10, "minecraft:iron_ingot", 2, "minecraft:coal", 4);
+        r("kiyamet:energy_cell", 1, 30, "minecraft:redstone_block", 1, "minecraft:copper_ingot", 3, "kiyamet:circuit", 1);
+        r("kiyamet:bandage", 3, 1, "minecraft:string", 3, "minecraft:paper", 1);
+        r("kiyamet:medkit", 1, 40, "kiyamet:bandage", 3, "minecraft:golden_apple", 1, "minecraft:glass_bottle", 1);
+        r("kiyamet:repair_kit", 1, 60, "kiyamet:metal_plate", 2, "kiyamet:circuit", 1, "minecraft:iron_ingot", 2);
+        r("kiyamet:tech_core", 1, 200, "kiyamet:circuit", 4, "kiyamet:energy_cell", 2, "minecraft:diamond", 1);
+        r("kiyamet:energy_core", 1, 500, "kiyamet:tech_core", 2, "kiyamet:energy_cell", 4, "minecraft:nether_star", 1);
+        // defense
+        r("kiyamet:reinforced_planks", 4, 5, "minecraft:oak_planks", 4, "minecraft:iron_ingot", 1);
+        r("kiyamet:barbed_wire", 4, 20, "minecraft:iron_ingot", 6);
+        r("kiyamet:steel_block", 2, 50, "kiyamet:metal_plate", 4, "minecraft:iron_block", 1);
+        r("kiyamet:steel_grate", 4, 60, "minecraft:iron_bars", 6, "kiyamet:metal_plate", 2);
+        r("kiyamet:spike_trap", 2, 80, "minecraft:iron_ingot", 4, "minecraft:stick", 2);
+        r("kiyamet:razor_wire", 2, 120, "kiyamet:barbed_wire", 3, "minecraft:iron_block", 1);
+        r("kiyamet:steel_gate", 1, 150, "kiyamet:steel_block", 6);
+        r("kiyamet:electric_fence", 4, 220, "kiyamet:barbed_wire", 4, "kiyamet:circuit", 2, "kiyamet:energy_cell", 1);
+        r("kiyamet:ruby_block", 1, 250, "kiyamet:ruby", 9);
+        r("kiyamet:titanium_block", 2, 400, "kiyamet:metal_plate", 4, "minecraft:diamond", 2, "kiyamet:tech_core", 1);
+        r("kiyamet:energy_wall", 4, 650, "kiyamet:energy_core", 1, "kiyamet:circuit", 4, "minecraft:glass", 4);
+        // gadgets
+        r("kiyamet:flashlight", 1, 25, "minecraft:iron_ingot", 2, "minecraft:glowstone_dust", 2, "kiyamet:circuit", 1);
+        r("kiyamet:sonic_lure", 1, 50, "kiyamet:circuit", 1, "minecraft:note_block", 1, "minecraft:redstone", 2);
+        r("kiyamet:grappling_gun", 1, 75, "kiyamet:metal_plate", 2, "minecraft:string", 4, "minecraft:tripwire_hook", 1);
+        r("kiyamet:night_vision", 1, 100, "kiyamet:lens", 2, "kiyamet:circuit", 1, "minecraft:leather", 2);
+        r("kiyamet:vein_miner", 1, 120, "minecraft:diamond_pickaxe", 1, "kiyamet:circuit", 2);
+        r("kiyamet:jetpack", 1, 150, "kiyamet:metal_plate", 4, "kiyamet:fuel_canister", 2, "kiyamet:energy_cell", 1);
+        r("kiyamet:healing_syringe", 2, 175, "kiyamet:vaccine", 1, "minecraft:glass_bottle", 2, "minecraft:glistering_melon_slice", 1);
+        r("kiyamet:auto_turret", 1, 200, "kiyamet:circuit", 4, "kiyamet:metal_plate", 4, "minecraft:dispenser", 1);
+        r("kiyamet:flamethrower", 1, 250, "kiyamet:fuel_canister", 3, "kiyamet:metal_plate", 2, "minecraft:blaze_rod", 1);
+        r("kiyamet:gravity_glove", 1, 300, "kiyamet:energy_cell", 3, "minecraft:leather", 4, "minecraft:ender_pearl", 1);
+        r("kiyamet:structure_scanner", 1, 350, "kiyamet:lens", 2, "kiyamet:circuit", 3, "minecraft:compass", 1);
+        r("kiyamet:drone_controller", 1, 400, "kiyamet:tech_core", 1, "kiyamet:circuit", 2, "kiyamet:lens", 1);
+        r("kiyamet:clone_device", 1, 450, "kiyamet:tech_core", 1, "kiyamet:energy_cell", 2, "minecraft:totem_of_undying", 1);
+        r("kiyamet:teleport_gun", 1, 550, "kiyamet:void_shard", 1, "kiyamet:energy_cell", 2, "minecraft:ender_eye", 2);
+        r("kiyamet:emp_bomb", 2, 600, "kiyamet:circuit", 2, "kiyamet:energy_cell", 2, "minecraft:tnt", 1);
+        r("kiyamet:laser_rifle", 1, 650, "kiyamet:tech_core", 1, "kiyamet:lens", 3, "kiyamet:energy_cell", 2);
+        r("kiyamet:shield_generator", 1, 700, "kiyamet:tech_core", 1, "kiyamet:energy_cell", 3, "minecraft:shield", 1);
+        r("kiyamet:time_stopper", 1, 800, "kiyamet:energy_core", 1, "minecraft:clock", 1, "kiyamet:circuit", 4);
+        r("kiyamet:black_hole_bomb", 1, 900, "kiyamet:void_shard", 2, "kiyamet:energy_core", 1);
+        r("kiyamet:energy_sword", 1, 999, "kiyamet:energy_core", 2, "minecraft:netherite_sword", 1, "kiyamet:tech_core", 2);
+        // arrow weapons
+        String[][] guns = {{"arrow_pistol", "50"}, {"arrow_rifle", "100"}, {"double_arrow_rifle", "150"}, {"arrow_shotgun", "200"}, {"silenced_arrow_pistol", "250"},
+                {"arrow_repeater", "300"}, {"toxic_arrow_rifle", "350"}, {"frost_arrow_gun", "400"}, {"arrow_sniper", "450"}, {"incendiary_repeater", "500"},
+                {"tesla_arrow_gun", "550"}, {"arrow_gatling", "600"}, {"harpoon_gun", "650"}, {"arrow_railgun", "700"}, {"arrow_launcher", "750"},
+                {"void_arrow_launcher", "850"}, {"homing_arrow_gun", "900"}, {"apocalypse_cannon", "999"}};
+        for (String[] g : guns) {
+            int lv = Integer.parseInt(g[1]);
+            r("kiyamet:" + g[0], 1, lv, "kiyamet:metal_plate", 2 + lv / 200, "kiyamet:circuit", 1 + lv / 250, "minecraft:crossbow", 1);
+        }
+    }
+
+    private LabRecipes() {}
+}

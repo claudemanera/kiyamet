@@ -20,7 +20,7 @@ public final class StoneEvents {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             if (++tick % 20 != 0) return;
             for (ServerPlayer p : server.getPlayerList().getPlayers()) if (p.isAlive()) StonePowers.tickPassives(p);
-            for (ServerLevel l : server.getAllLevels()) StonePowers.tickSpirits(l);
+            for (ServerLevel l : server.getAllLevels()) { StonePowers.tickSpirits(l); com.kiyamet.item.GadgetItem.tick(l); }
         });
         ServerLivingEntityEvents.AFTER_DAMAGE.register((entity, source, base, taken, blocked) -> {
             if (source.getEntity() instanceof ServerPlayer p && entity != p && taken > 0) StonePowers.onPlayerHit(p, entity, taken);

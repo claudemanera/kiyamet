@@ -44,7 +44,9 @@ jobs:
           find ~/.gradle/caches -path '*minecraft*' -name '*.jar' | head -40 >> /tmp/ref/paths.txt
           [ -n "$GL" ] && unzip -l "$GL" | grep '\.class' | awk '{print $4}' > /tmp/ref/geckolib_classes.txt
           CP="$MC:$GL:$(find ~/.gradle/caches -name '*.jar' -path '*fabric*' | tr '\n' ':')"
-          while read c; do [ -n "$c" ] && javap -public -cp "$CP" "$c" > "/tmp/ref/$c.txt" 2>&1; done < tools/javap_classes.txt
+          while read c; do [ -n "$c" ] && javap -public -constants -cp "$CP" "$c" > "/tmp/ref/$c.txt" 2>&1; done < tools/javap_classes.txt
+          javap -c -cp "$CP" software.bernie.geckolib.model.DefaultedGeoModel 2>&1 | grep -i ldc > /tmp/ref/geomodel_strings.txt || true
+          [ -n "$MC" ] && unzip -l "$MC" | awk '{print $4}' | grep -E '^net/minecraft/world/entity/(monster|ai/goal|projectile)' > /tmp/ref/mc_entity_classes.txt || true
       - name: Save build log on failure
         if: failure()
         run: |

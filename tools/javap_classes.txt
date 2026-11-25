@@ -27,3 +27,5 @@ software.bernie.geckolib.renderer.GeoEntityRenderer
 software.bernie.geckolib.model.DefaultedEntityGeoModel
 software.bernie.geckolib.model.GeoModel
 software.bernie.geckolib.constant.DefaultAnimations
+net.minecraft.world.entity.monster.zombie.Zombie
+software.bernie.geckolib.model.DefaultedGeoModel

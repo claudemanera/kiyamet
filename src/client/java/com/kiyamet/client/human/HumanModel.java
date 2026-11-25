@@ -11,12 +11,12 @@ import software.bernie.geckolib.renderer.base.GeoRenderState;
 
 /**
  * Survivors, community people and companions use the shared humanoid model with a painted skin (appearance code).
- * Enemies have their own hand-made designs: Raider, Raider Commander and Masked One.
+ * Enemies have their own hand-made designs: Raider, Brute, Raider Woman, Raider Commander and Masked One.
  */
 public class HumanModel extends DefaultedEntityGeoModel<HumanEntity> {
     public static final DataTicket<Integer> APPEARANCE = DataTicket.create("kiyamet_appearance", Integer.class);
     public static final DataTicket<Integer> DESIGN = DataTicket.create("kiyamet_design", Integer.class);
-    private static final String[] DESIGNS = {"human", "raider", "raider_commander", "masked_one"};
+    private static final String[] DESIGNS = {"human", "raider", "raider_commander", "masked_one", "raider_brute", "raider_woman"};
 
     public HumanModel() {
         super(Kiyamet.id("human"));
@@ -24,7 +24,11 @@ public class HumanModel extends DefaultedEntityGeoModel<HumanEntity> {
 
     static int design(HumanEntity h) {
         Faction f = h.faction();
-        if (f == Faction.RAIDER) return h.role() == Role.COMMANDER ? 2 : 1;
+        if (f == Faction.RAIDER) {
+            if (h.role() == Role.COMMANDER) return 2;
+            if (h.appearance().female()) return 5;
+            return (h.appearanceCode() >> 4 & 3) == 0 ? 4 : 1;      // about a quarter of the men are brutes
+        }
         if (f == Faction.WHISPERER) return 3;
         return 0;
     }

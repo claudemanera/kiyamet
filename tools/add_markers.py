@@ -19,6 +19,10 @@ def pool_for(sid):
     return DEFAULT
 
 SANCTUARY = {'small_mosque','grand_mosque','small_church','cathedral','cave_camp','treehouse_village','fishing_village','mushroom_camp'}
+BOSS = {'outbreak_lab':'patient_zero','asylum':'the_butcher','missile_silo':'experiment_47','ancient_underground_city':'forgotten_king',
+        'hive_nest':'hive_mother','lava_forge':'lava_golem','lost_library':'time_keeper','core_chamber':'core_warden',
+        'weather_station':'storm_lord','swamp_witch_hut':'swamp_witch','shadow_ruins':'shadow_stalker'}
+ROBOTS = ['robot_trooper'] * 3 + ['robot_heavy', 'scout_drone']
 n_total = 0
 for mf in sorted(glob.glob(D + '/structure_markers/*.json')):
     sid = os.path.basename(mf)[:-5]
@@ -31,6 +35,10 @@ for mf in sorted(glob.glob(D + '/structure_markers/*.json')):
     for m in marks:
         if m['type'] == 'zombie' and sid not in SANCTUARY:
             x, y, z = m['pos']; ents.append(N.T(N.COMP, N.entity(x, y, z, 'kiyamet:' + r.choice(pool_for(sid)))))
+        elif m['type'] == 'boss' and sid in BOSS:
+            x, y, z = m['pos']; ents.append(N.T(N.COMP, N.entity(x, y, z, 'kiyamet:' + BOSS[sid])))
+        elif m['type'] == 'robot':
+            x, y, z = m['pos']; ents.append(N.T(N.COMP, N.entity(x, y, z, 'kiyamet:' + r.choice(ROBOTS))))
     root['entities'] = N.T(N.LIST, (N.COMP, [e.v for e in ents]) if ents else (N.END, []))
     N.save(nbt, root); n_total += len(ents)
-print('zombies baked:', n_total)
+print('entities baked:', n_total)

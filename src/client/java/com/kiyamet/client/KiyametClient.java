@@ -14,5 +14,7 @@ public class KiyametClient implements ClientModInitializer {
                 ModBlocks.RAZOR_WIRE, ModBlocks.ELECTRIC_FENCE, ModBlocks.SPIKE_TRAP);
         BlockRenderLayerMap.putBlock(ModBlocks.ENERGY_WALL, ChunkSectionLayer.TRANSLUCENT);
         ModEntities.ZOMBIES.forEach((kind, type) -> EntityRendererRegistry.register(type, ctx -> new KZombieRenderer<>(ctx, kind)));
+        com.kiyamet.boss.ModBosses.TYPES.forEach((kind, type) -> EntityRendererRegistry.register(type, ctx -> new BossRenderer<>(ctx, kind)));
+        com.kiyamet.robot.ModRobots.TYPES.forEach((kind, type) -> EntityRendererRegistry.register(type, ctx -> new RobotRenderer<>(ctx, kind)));
     }
 }

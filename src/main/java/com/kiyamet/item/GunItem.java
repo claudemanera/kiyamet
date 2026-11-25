@@ -93,7 +93,9 @@ public class GunItem extends Item {
         ItemStack stack = player.getItemInHand(hand);
         if (!(player instanceof ServerPlayer p) || !(lvl instanceof ServerLevel level)) return InteractionResult.SUCCESS;
         int arrows = stats.mode == Mode.SHOTGUN ? 1 : stats.mode == Mode.BURST3 ? 3 : stats.mode == Mode.DOUBLE ? 2 : 1;
-        if (!useArrow(p, arrows)) { level.playSound(null, p.blockPosition(), SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, 0.8f, 1.4f); return InteractionResult.FAIL; }
+        int archery = SkillManager.get(p).level(Skill.ARCHERY);
+        int cost = p.getRandom().nextFloat() < Math.min(0.4f, archery / 2500f) ? 0 : arrows;            // 1.2: high Archery sometimes saves ammo
+        if (cost > 0 && !useArrow(p, cost)) { level.playSound(null, p.blockPosition(), SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, 0.8f, 1.4f); return InteractionResult.FAIL; }
         float dmg = stats.damage * (1f + SkillManager.get(p).level(Skill.ARCHERY) / 2000f);
         Vec3 eye = p.getEyePosition().add(0, -0.1, 0);
         double range = stats.mode == Mode.PIERCE ? 96 : 48;

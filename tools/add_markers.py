@@ -4,14 +4,14 @@ sys.path.insert(0, os.path.dirname(__file__))
 import nbtlib as N
 D = 'src/main/resources/data/kiyamet'
 THEMES = {
-    'medical': (['abandoned_hospital', 'quarantine_zone', 'outbreak_lab', 'morgue', 'field_hospital', 'asylum', 'pharmacy'], ['doctor_zombie'] * 4 + ['toxic_zombie', 'runner_zombie', 'screamer_zombie']),
+    'medical': (['abandoned_hospital', 'quarantine_zone', 'outbreak_lab', 'morgue', 'field_hospital', 'asylum', 'pharmacy'], ['doctor_zombie'] * 4 + ['nurse_zombie'] * 3 + ['toxic_zombie', 'runner_zombie', 'screamer_zombie']),
     'military': (['military_checkpoint', 'army_base', 'bunker', 'armory_depot', 'crashed_helicopter', 'tank_graveyard', 'radar_station', 'missile_silo', 'barracks', 'border_outpost', 'police_station'],
                  ['armored_zombie'] * 3 + ['police_zombie', 'runner_zombie', 'tank_zombie']),
-    'farm': (['abandoned_farm', 'safe_town', 'treehouse_village', 'fishing_village', 'mushroom_camp'], ['farmer_zombie'] * 3 + ['runner_zombie']),
+    'farm': (['abandoned_farm', 'safe_town', 'treehouse_village', 'fishing_village', 'mushroom_camp'], ['farmer_zombie'] * 3 + ['woman_zombie'] * 3 + ['runner_zombie']),
     'dark': (['ancient_underground_city', 'abandoned_mine', 'sewer_network', 'underground_prison', 'crystal_cavern', 'hive_nest', 'lava_forge', 'lost_library', 'core_chamber', 'shadow_ruins'],
              ['listener_zombie'] * 2 + ['crawler_zombie', 'runner_zombie', 'toxic_zombie']),
 }
-DEFAULT = ['runner_zombie'] * 4 + ['farmer_zombie', 'police_zombie', 'screamer_zombie', 'exploder_zombie', 'toxic_zombie', 'tank_zombie']
+DEFAULT = ['woman_zombie'] * 4 + ['runner_zombie'] * 2 + ['farmer_zombie', 'police_zombie', 'screamer_zombie', 'exploder_zombie', 'toxic_zombie', 'tank_zombie']
 
 def pool_for(sid):
     for ids, pool in THEMES.values():

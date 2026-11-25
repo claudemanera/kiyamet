@@ -1,7 +1,7 @@
 package com.kiyamet.entity;
 
 /**
- * The 14 zombie types. Speed tiers (Walking Dead style): most are slow walkers (0.14-0.18),
+* The 16 zombie types (incl. female walkers). Speed tiers (Walking Dead style): most are slow walkers (0.14-0.18),
  * police/screamer/alpha walk at vanilla zombie speed (0.23-0.24), only runner and hunter are fast (0.33-0.34).
  * The 14 zombie types. minPower = Total Power needed before this kind starts to spawn (zombie evolution).
  * Base stats are for Total Power 0; Difficulty scales them up to x3 at Total Power 8000, then stays flat.
@@ -21,7 +21,9 @@ public enum ZombieKind {
     HUNTER   ("hunter_zombie",    24,   0.33,  5.0,  0,    0.6f, 1.95f, 1.0f, 12, 4000),
     CRAWLER  ("crawler_zombie",   16,   0.14,  4.0,  0,    0.8f, 0.7f,  1.0f, 12, 4000),
     ALPHA    ("alpha_zombie",     60,   0.24,  8.0,  6,    0.8f, 2.3f,  1.2f, 4,  8000),
-    MUTANT   ("mutant_zombie",    90,   0.18,  12.0, 4,    1.2f, 2.8f,  1.5f, 3,  8000);
+    MUTANT   ("mutant_zombie",    90,   0.18,  12.0, 4,    1.2f, 2.8f,  1.5f, 3,  8000),
+    WOMAN    ("woman_zombie",     20,   0.17,  3.0,  0,    0.6f, 1.95f, 1.0f, 34, 0),
+    NURSE    ("nurse_zombie",     20,   0.17,  3.0,  0,    0.6f, 1.95f, 1.0f, 12, 0);
 
     public final String id;
     public final double health, speed, damage, armor;

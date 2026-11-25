@@ -4,13 +4,13 @@ sys.path.insert(0, os.path.dirname(__file__))
 import nbtlib as N
 D = 'src/main/resources/data/kiyamet'
 POOLS = {
-    'dead_metropolis': ['runner_zombie'] * 3 + ['police_zombie', 'screamer_zombie', 'tank_zombie', 'exploder_zombie', 'hunter_zombie', 'alpha_zombie'],
-    'frozen_mountain': ['runner_zombie'] * 2 + ['armored_zombie', 'listener_zombie', 'tank_zombie'],
-    'industrial': ['runner_zombie'] * 2 + ['toxic_zombie', 'toxic_zombie', 'exploder_zombie', 'tank_zombie', 'mutant_zombie'],
-    'oasis': ['runner_zombie'] * 3 + ['farmer_zombie', 'screamer_zombie', 'crawler_zombie'],
-    'port': ['runner_zombie'] * 3 + ['farmer_zombie', 'police_zombie', 'toxic_zombie', 'tank_zombie'],
-    'quarantine': ['doctor_zombie'] * 3 + ['armored_zombie', 'toxic_zombie', 'screamer_zombie', 'mutant_zombie'],
-    'suburbs': ['runner_zombie'] * 3 + ['farmer_zombie', 'police_zombie', 'screamer_zombie', 'exploder_zombie'],
+    'dead_metropolis': ['woman_zombie'] * 3 + ['runner_zombie'] * 3 + ['police_zombie', 'screamer_zombie', 'tank_zombie', 'exploder_zombie', 'hunter_zombie', 'alpha_zombie'],
+    'frozen_mountain': ['woman_zombie'] * 3 + ['runner_zombie'] * 2 + ['armored_zombie', 'listener_zombie', 'tank_zombie'],
+    'industrial': ['woman_zombie'] * 3 + ['runner_zombie'] * 2 + ['toxic_zombie', 'toxic_zombie', 'exploder_zombie', 'tank_zombie', 'mutant_zombie'],
+    'oasis': ['woman_zombie'] * 3 + ['runner_zombie'] * 3 + ['farmer_zombie', 'screamer_zombie', 'crawler_zombie'],
+    'port': ['woman_zombie'] * 3 + ['runner_zombie'] * 3 + ['farmer_zombie', 'police_zombie', 'toxic_zombie', 'tank_zombie'],
+    'quarantine': ['woman_zombie'] * 3 + ['nurse_zombie'] * 3 + ['doctor_zombie'] * 3 + ['armored_zombie', 'toxic_zombie', 'screamer_zombie', 'mutant_zombie'],
+    'suburbs': ['woman_zombie'] * 3 + ['runner_zombie'] * 3 + ['farmer_zombie', 'police_zombie', 'screamer_zombie', 'exploder_zombie'],
 }
 BOSS = {'dead_metropolis':'the_general','port':'deep_horror','industrial':'assembly_mother','frozen_mountain':'frost_giant'}
 total = 0

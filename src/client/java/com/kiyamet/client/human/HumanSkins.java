@@ -118,6 +118,7 @@ public final class HumanSkins {
             outfit(a.outfit());
             detail();
             hairStyle();
+            if (a.female()) feminine();
         }
 
         void face() {
@@ -137,6 +138,19 @@ public final class HumanSkins {
                 case 3 -> { for (int x = 2; x <= 5; x++) front(HEAD, x, 5, shade(hair, 4)); front(HEAD, 2, 6, hair); front(HEAD, 5, 6, hair); }
                 default -> {}
             }
+        }
+
+        void feminine() {
+            int lash = 0xFF151010;
+            front(HEAD, 0, 4, lash); front(HEAD, 7, 4, lash); front(HEAD, 1, 3, lash); front(HEAD, 6, 3, lash);
+            front(HEAD, 2, 3, shade(hair, -10)); front(HEAD, 5, 3, shade(hair, -10));
+            int lip = mix(skin, 0xFFC0485A, 0.65f);
+            front(HEAD, 3, 6, lip); front(HEAD, 4, 6, lip); front(HEAD, 2, 6, mix(skin, lip, 0.4f)); front(HEAD, 5, 6, mix(skin, lip, 0.4f));
+            front(HEAD, 3, 5, shade(skin, -14)); front(HEAD, 4, 5, shade(skin, -14));
+            front(HEAD, 1, 5, mix(skin, 0xFFE08080, 0.25f)); front(HEAD, 6, 5, mix(skin, 0xFFE08080, 0.25f));
+            // a little shape on the shirt
+            for (int x = 1; x <= 6; x++) { int c = img.getPixel(BODY.u + BODY.d + x, BODY.v + BODY.d + 3); if ((c >>> 24) != 0) front(BODY, x, 3, shade(c, -18)); }
+            front(BODY, 3, 2, shade(img.getPixel(BODY.u + BODY.d + 3, BODY.v + BODY.d + 2), -12)); front(BODY, 4, 2, shade(img.getPixel(BODY.u + BODY.d + 4, BODY.v + BODY.d + 2), -12));
         }
 
         void detail() {

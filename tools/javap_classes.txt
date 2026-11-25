@@ -95,3 +95,7 @@ net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrat
 net.fabricmc.fabric.api.client.rendering.v1.LivingEntityRenderLayerRegistrationCallback$RegistrationHelper
 net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry$Builder
 net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate
+net.minecraft.client.renderer.OrderedSubmitNodeCollector
+net.minecraft.client.model.geom.builders.MeshDefinition
+net.minecraft.client.model.geom.builders.PartDefinition
+net.minecraft.client.model.geom.PartPose

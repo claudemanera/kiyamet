@@ -69,7 +69,7 @@ public final class ModItems {
         return item;
     }
 
-    private static Item custom(String name, java.util.function.Function<Item.Properties, Item> factory) {
+    public static Item custom(String name, java.util.function.Function<Item.Properties, Item> factory) {
         ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Kiyamet.id(name));
         Item item = Registry.register(BuiltInRegistries.ITEM, key, factory.apply(new Item.Properties().setId(key)));
         ALL.add(item);

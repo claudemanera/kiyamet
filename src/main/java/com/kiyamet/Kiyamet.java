@@ -24,6 +24,7 @@ public class Kiyamet implements ModInitializer {
         com.kiyamet.stone.GauntletData.init();
         ModBlocks.init();
         ModItems.init();
+        com.kiyamet.backpack.Backpacks.init();
         ModWorldgen.init();
         com.kiyamet.world.ModStructures.init();
         ModAttachments.init();

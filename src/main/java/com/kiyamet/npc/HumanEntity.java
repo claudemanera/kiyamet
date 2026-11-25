@@ -83,7 +83,14 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     @Nullable private BlockPos home;
     private String community = "", communityType = "";
     private int shotCooldown;
+    private Specialty specialty = Specialty.NONE;
+
+    public Specialty specialty() { return specialty; }
     @Nullable private ServerBossEvent bar;
+    /** Companion backpack: 27 slots, opened from the companion panel. Medkits and bandages inside are used automatically. */
+    private final net.minecraft.world.SimpleContainer inventory = new net.minecraft.world.SimpleContainer(27);
+
+    public net.minecraft.world.SimpleContainer inventory() { return inventory; }
 
     public HumanEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -128,10 +135,16 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         entityData.set(ROLE, r.ordinal());
         entityData.set(LEVEL, Math.max(1, Math.min(MAX_LEVEL, level)));
         if (communityType != null) this.communityType = communityType;
-        if (entityData.get(APPEARANCE) == 0) setAppearance(Appearance.random(random, f, r));
-        if (getMainHandItem().isEmpty()) setItemSlot(EquipmentSlot.MAINHAND, Weapon.random(random, f, r, level));
+        if (specialty == Specialty.NONE && (f == Faction.SURVIVOR || f == Faction.COMMUNITY || f == Faction.COMPANION) && r != Role.LEADER && random.nextFloat() < 0.25f)
+            specialty = Specialty.values()[1 + random.nextInt(3)];
+        if (entityData.get(APPEARANCE) == 0) {
+            boolean female = specialty != Specialty.NONE || random.nextFloat() < 0.42f;
+            setAppearance(Appearance.random(random, f, r, female));
+        }
+        if (getMainHandItem().isEmpty()) setItemSlot(EquipmentSlot.MAINHAND, specialty == Specialty.HUNTRESS
+                ? new ItemStack(random.nextBoolean() ? Items.BOW : Items.CROSSBOW) : specialty == Specialty.NURSE ? new ItemStack(Items.IRON_SWORD) : Weapon.random(random, f, r, level));
         setDropChance(EquipmentSlot.MAINHAND, f == Faction.COMPANION ? 1f : 0.15f);
-        String name = Names.random(random, f, r);
+        String name = Names.random(random, f, r, appearance().female());
         if (name != null && !hasCustomName()) setCustomName(Component.literal(name));
         initialized = true;
         applyStats(true);
@@ -183,12 +196,16 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         out.putString("Faction", faction().name());
         out.putString("Role", role().name());
         out.putInt("Xp", xp);
+        out.putString("Specialty", specialty.name());
         out.putString("Order", order.name());
         out.putString("Community", community);
         out.putString("CommunityType", communityType);
         if (owner != null) out.putString("Owner", owner.toString());
         if (home != null) out.putLong("Home", home.asLong());
         out.putBoolean("Ready", initialized);
+        java.util.List<ItemStack> items = new java.util.ArrayList<>();
+        for (int i = 0; i < inventory.getContainerSize(); i++) items.add(inventory.getItem(i));
+        out.store("Inventory", ItemStack.OPTIONAL_CODEC.listOf(), items);
     }
 
     @Override
@@ -199,6 +216,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         try { entityData.set(FACTION, Faction.valueOf(in.getStringOr("Faction", "SURVIVOR")).ordinal()); } catch (IllegalArgumentException ignored) {}
         try { entityData.set(ROLE, Role.valueOf(in.getStringOr("Role", "MEMBER")).ordinal()); } catch (IllegalArgumentException ignored) {}
         xp = in.getIntOr("Xp", 0);
+        specialty = Specialty.byName(in.getStringOr("Specialty", "NONE"));
         try { order = Order.valueOf(in.getStringOr("Order", "FOLLOW")); } catch (IllegalArgumentException ignored) {}
         community = in.getStringOr("Community", "");
         communityType = in.getStringOr("CommunityType", "");
@@ -207,6 +225,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         long h = in.getLongOr("Home", Long.MIN_VALUE);
         home = h == Long.MIN_VALUE ? null : BlockPos.of(h);
         initialized = in.getBooleanOr("Ready", false);
+        in.read("Inventory", ItemStack.OPTIONAL_CODEC.listOf()).ifPresent(l -> { for (int i = 0; i < l.size() && i < inventory.getContainerSize(); i++) inventory.setItem(i, l.get(i)); });
     }
 
     // ---------------------------------------------------------------- AI
@@ -284,15 +303,16 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
             ItemStack w = getMainHandItem();
             shotCooldown = w.getItem() instanceof com.kiyamet.item.GunItem ? 22 : w.is(Items.CROSSBOW) ? 30 : 26;
             if (role() == Role.COMMANDER) shotCooldown = 12;
+            if (specialty == Specialty.HUNTRESS) shotCooldown = (int) (shotCooldown * 0.7);
             Vec3 from = getEyePosition(), to = t.getEyePosition();
             float spread = (float) Math.max(0.05, 0.5 - lvl() / 600.0);
-            boolean hit = random.nextFloat() > spread * 0.6;
+            boolean hit = random.nextFloat() > spread * 0.6 || specialty == Specialty.HUNTRESS && d < 12;
             int n = (int) (from.distanceTo(to) * 2);
             for (int i = 0; i < n; i++) { Vec3 at = from.add(to.subtract(from).scale(i / (double) n)); sl.sendParticles(ParticleTypes.CRIT, at.x, at.y, at.z, 1, 0, 0, 0, 0); }
             sl.playSound(null, blockPosition(), w.getItem() instanceof com.kiyamet.item.GunItem ? SoundEvents.CROSSBOW_SHOOT : SoundEvents.ARROW_SHOOT, SoundSource.HOSTILE, 1f, 0.9f + random.nextFloat() * 0.2f);
             triggerAnim("attack", "attack");
             if (hit) {
-                float dmg = (float) (getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.85 * Weapon.tier(w));
+                float dmg = (float) (getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.85 * Weapon.tier(w) * (specialty == Specialty.HUNTRESS ? 1.3 : 1.0));
                 t.hurtServer(sl, sl.damageSources().arrow(null, HumanEntity.this), dmg);
             }
             if (w.getItem() instanceof com.kiyamet.item.GunItem) com.kiyamet.world.NoiseSystem.make(sl, blockPosition(), 20, 2);
@@ -359,9 +379,54 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (bar != null) bar.setProgress(getHealth() / getMaxHealth());
         if (tickCount % 100 == 0 && getHealth() < getMaxHealth() && getTarget() == null) heal(1 + lvl() / 60f);
         if (faction() == Faction.COMPANION && owner != null && tickCount % 40 == 0 && ownerPlayer() == null && order == Order.FOLLOW) setOrder(Order.STAY);
+        if (tickCount % 40 == 0 && getHealth() < getMaxHealth() * 0.4f) selfHeal();
+        if (specialty == Specialty.NURSE && tickCount % 200 == 0) nurse(sl);
+        if (specialty == Specialty.SCAVENGER && owner != null && tickCount % 3600 == 1800) scavenge();
     }
 
     public void setCommunity(String key) { community = key; }
+
+    private void nurse(ServerLevel sl) {
+        float amount = 2 + lvl() / 40f;
+        boolean healed = false;
+        ServerPlayer p = ownerPlayer();
+        if (p != null && p.distanceTo(this) < 10 && p.getHealth() < p.getMaxHealth()) {
+            p.heal(amount); p.removeEffect(net.minecraft.world.effect.MobEffects.POISON); healed = true;
+            if (lvl() >= 120 && tickCount % 6000 == 0 && com.kiyamet.world.Infection.get(p) > 0) {
+                com.kiyamet.world.Infection.cure(p);
+                p.sendSystemMessage(Component.literal(getName().getString() + " treated your infection.").withStyle(ChatFormatting.GREEN));
+            }
+        }
+        for (HumanEntity h : sl.getEntitiesOfClass(HumanEntity.class, getBoundingBox().inflate(8), h -> h.getHealth() < h.getMaxHealth()
+                && (owner != null ? owner.equals(h.owner) : !community.isEmpty() && community.equals(h.community)))) { h.heal(amount); healed = true; }
+        if (healed) sl.sendParticles(ParticleTypes.HEART, getX(), getY() + 2.1, getZ(), 3, 0.4, 0.2, 0.4, 0);
+    }
+
+    private void scavenge() {
+        String[][] finds = {{"minecraft:bread", "3"}, {"minecraft:arrow", "12"}, {"kiyamet:bandage", "2"}, {"minecraft:iron_ingot", "2"}, {"minecraft:cooked_chicken", "3"},
+                {"kiyamet:metal_plate", "1"}, {"minecraft:string", "4"}, {"kiyamet:fuel_canister", "1"}, {"kiyamet:circuit", "1"}, {"kiyamet:walker_guts", "2"},
+                {"kiyamet:medkit", "1"}, {"kiyamet:ruby", "1"}, {"minecraft:leather", "3"}, {"kiyamet:energy_cell", "1"}};
+        int pick = random.nextInt(lvl() >= 100 ? finds.length : finds.length - 3);
+        ItemStack found = new ItemStack(Ui.item(finds[pick][0]), Integer.parseInt(finds[pick][1]) + lvl() / 100);
+        ItemStack rest = inventory.addItem(found);
+        ServerPlayer p = ownerPlayer();
+        if (p != null) p.sendSystemMessage(Component.literal(getName().getString() + " found " + found.getCount() + "× " + found.getHoverName().getString()
+                + (rest.isEmpty() ? "" : " (her bag is full!)")).withStyle(ChatFormatting.GOLD));
+    }
+
+    private void selfHeal() {
+        for (String id : new String[]{"kiyamet:medkit", "kiyamet:bandage", "kiyamet:healing_syringe"}) {
+            for (int i = 0; i < inventory.getContainerSize(); i++) {
+                ItemStack s = inventory.getItem(i);
+                if (s.is(Ui.item(id))) {
+                    s.shrink(1);
+                    heal(id.endsWith("medkit") ? getMaxHealth() * 0.6f : id.endsWith("bandage") ? getMaxHealth() * 0.2f : getMaxHealth() * 0.4f);
+                    playSound(SoundEvents.ARMOR_EQUIP_LEATHER.value(), 1f, 1.3f);
+                    return;
+                }
+            }
+        }
+    }
 
     private void refreshBar() {
         if (role() == Role.COMMANDER && bar == null) {
@@ -430,6 +495,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
             if (p != null) p.sendSystemMessage(Component.literal(getName().getString() + " has died.").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
         }
         if (bar != null) bar.removeAllPlayers();
+        net.minecraft.world.Containers.dropContents(sl, this, inventory);
         // Everyone is infected: the dead come back.
         if (faction() != Faction.WHISPERER && random.nextFloat() < 0.6f) {
             KZombie z = com.kiyamet.entity.ModEntities.ZOMBIES.get(com.kiyamet.entity.ZombieKind.RUNNER).create(sl, net.minecraft.world.entity.EntitySpawnReason.CONVERSION);
@@ -473,6 +539,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
 
     @Override
     public Component getTypeName() {
+        if (specialty != Specialty.NONE && faction() != Faction.RAIDER && faction() != Faction.WHISPERER) return Component.literal(specialty.title);
         return Component.literal(faction() == Faction.COMMUNITY && role() == Role.MEMBER ? Communities.title(communityType) : role() == Role.MEMBER ? faction().title : faction().title + " " + role().title);
     }
 
@@ -489,7 +556,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     }
 
     @Override
-    public boolean shouldShowName() { return faction() == Faction.COMPANION || role() == Role.LEADER || role() == Role.COMMANDER || role() == Role.TRADER || super.shouldShowName(); }
+    public boolean shouldShowName() { return faction() == Faction.COMPANION || specialty != Specialty.NONE || role() == Role.LEADER || role() == Role.COMMANDER || role() == Role.TRADER || super.shouldShowName(); }
 
     // ---------------------------------------------------------------- GeckoLib
 

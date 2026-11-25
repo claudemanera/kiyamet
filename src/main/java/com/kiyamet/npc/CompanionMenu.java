@@ -16,7 +16,7 @@ import net.minecraft.world.item.Items;
 /** Companion panel: stats, orders, gear, glow, looks editor, dismiss. */
 public class CompanionMenu extends PanelMenu {
     private static final int INFO = 4, FOLLOW = 19, STAY = 20, GUARD = 21, WEAPON = 23, LOOKS = 24, GLOW = 25,
-            HEAL = 30, TP = 32, DISMISS = 49;
+            HEAL = 30, BAG = 31, TP = 32, DISMISS = 49;
     private final HumanEntity h;
     private boolean confirmDismiss;
 
@@ -36,6 +36,7 @@ public class CompanionMenu extends PanelMenu {
         Appearance a = h.appearance();
         ItemStack info = Ui.icon(Items.PLAYER_HEAD, Component.literal(h.getName().getString()).withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD),
                 Ui.text("Level " + lv + " / " + HumanEntity.MAX_LEVEL, ChatFormatting.YELLOW),
+                Ui.text(h.specialty() == Specialty.NONE ? "No specialty" : "★ " + h.specialty().title + ": " + h.specialty().desc, h.specialty() == Specialty.NONE ? ChatFormatting.DARK_GRAY : ChatFormatting.LIGHT_PURPLE),
                 lv >= HumanEntity.MAX_LEVEL ? Ui.text("★ MAX LEVEL", ChatFormatting.LIGHT_PURPLE) : Ui.bar(h.xp() / (double) HumanEntity.xpToNext(lv), 20),
                 Ui.text("XP " + h.xp() + " / " + HumanEntity.xpToNext(lv) + "  (earned from kills)", ChatFormatting.DARK_GRAY),
                 Ui.text("Health " + (int) h.getHealth() + " / " + (int) h.getMaxHealth(), ChatFormatting.RED),
@@ -64,6 +65,10 @@ public class CompanionMenu extends PanelMenu {
                 Ui.text("Makes them visible through walls", ChatFormatting.GRAY)), glow));
         c.setItem(HEAL, Ui.icon(Ui.item("kiyamet:medkit"), Ui.text("Heal with a medkit / bandage", ChatFormatting.RED),
                 Ui.text("Uses one from your inventory", ChatFormatting.GRAY)));
+        int used = 0;
+        for (int i = 0; i < h.inventory().getContainerSize(); i++) if (!h.inventory().getItem(i).isEmpty()) used++;
+        c.setItem(BAG, Ui.icon(Items.CHEST, Ui.text("Inventory (" + used + " / 27)", ChatFormatting.GOLD, ChatFormatting.BOLD),
+                Ui.text("Give them supplies to carry", ChatFormatting.GRAY), Ui.text("Medkits & bandages inside are used automatically", ChatFormatting.GRAY)));
         c.setItem(TP, Ui.icon(Items.ENDER_PEARL, Ui.text("Call to me", ChatFormatting.DARK_AQUA), Ui.text("Teleports them to you and sets Follow", ChatFormatting.GRAY)));
         c.setItem(DISMISS, Ui.icon(confirmDismiss ? Items.TNT : Items.RED_DYE, Ui.text(confirmDismiss ? "Click again to confirm" : "Dismiss companion", ChatFormatting.RED),
                 Ui.text("They become a free survivor again", ChatFormatting.GRAY)));
@@ -95,6 +100,11 @@ public class CompanionMenu extends PanelMenu {
                     }
                 }
                 player.displayClientMessage(Component.literal("You have no medkit or bandage.").withStyle(ChatFormatting.RED), true);
+                return false;
+            }
+            case BAG -> {
+                player.openMenu(new SimpleMenuProvider((id, inv, pl) -> net.minecraft.world.inventory.ChestMenu.threeRows(id, inv, h.inventory()),
+                        Component.literal(h.getName().getString() + "'s inventory")));
                 return false;
             }
             case TP -> { h.teleportTo(player.getX(), player.getY(), player.getZ()); h.setOrder(HumanEntity.Order.FOLLOW); }

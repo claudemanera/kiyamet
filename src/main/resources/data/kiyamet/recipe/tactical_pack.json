@@ -1,0 +1,9 @@
+{
+ "type": "minecraft:crafting_transmute",
+ "category": "equipment",
+ "input": "kiyamet:medic_pack",
+ "material": "kiyamet:circuit",
+ "result": {
+  "id": "kiyamet:tactical_pack"
+ }
+}

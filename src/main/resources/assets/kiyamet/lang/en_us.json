@@ -183,5 +183,18 @@
  "key.kiyamet.gauntlet_cycle": "Gauntlet: next stone",
  "key.kiyamet.camouflage": "Smear walker guts",
  "key.kiyamet.night_vision": "Toggle night vision power",
- "key.kiyamet.shadow_step": "Toggle shadow step power"
+ "key.kiyamet.shadow_step": "Toggle shadow step power",
+ "item.kiyamet.canvas_satchel": "Canvas Satchel",
+ "item.kiyamet.scout_pack": "Scout Pack",
+ "item.kiyamet.hiker_pack": "Hiker's Pack",
+ "item.kiyamet.survivor_pack": "Survivor Pack",
+ "item.kiyamet.ranger_pack": "Ranger Pack",
+ "item.kiyamet.medic_pack": "Medic Pack",
+ "item.kiyamet.tactical_pack": "Tactical Pack",
+ "item.kiyamet.military_rucksack": "Military Rucksack",
+ "item.kiyamet.expedition_pack": "Expedition Pack",
+ "item.kiyamet.apocalypse_pack": "Apocalypse Pack",
+ "key.kiyamet.backpack": "Open worn backpack",
+ "entity.kiyamet.woman_zombie": "Walker",
+ "entity.kiyamet.nurse_zombie": "Nurse Zombie"
 }

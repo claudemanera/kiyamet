@@ -17,6 +17,10 @@ public class KiyametClient implements ClientModInitializer {
         com.kiyamet.boss.ModBosses.TYPES.forEach((kind, type) -> EntityRendererRegistry.register(type, ctx -> new BossRenderer<>(ctx, kind)));
         EntityRendererRegistry.register(com.kiyamet.ally.ModAllies.TURRET, ctx -> new SimpleGeoRenderer<>(ctx, "scout_drone", 1.0f));
         ModKeys.init();
+        net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback.EVENT.register((type, renderer, helper, ctx) -> {
+            if (renderer instanceof net.minecraft.client.renderer.entity.player.AvatarRenderer<?> ar)
+                helper.register(new BackpackLayer((net.minecraft.client.renderer.entity.RenderLayerParent<net.minecraft.client.renderer.entity.state.AvatarRenderState, net.minecraft.client.model.player.PlayerModel>) (Object) ar));
+        });
         EntityRendererRegistry.register(com.kiyamet.npc.ModHumans.HUMAN, ctx -> new com.kiyamet.client.human.HumanRenderer<>(ctx));
         com.kiyamet.robot.ModRobots.TYPES.forEach((kind, type) -> EntityRendererRegistry.register(type, ctx -> new RobotRenderer<>(ctx, kind)));
     }

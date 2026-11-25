@@ -58,6 +58,10 @@ public class AppearanceMenu extends PanelMenu {
     }
 
     private static Appearance with(Appearance a, int row, int v) {
+        return with0(a, row, v).withFemale(a.female());
+    }
+
+    private static Appearance with0(Appearance a, int row, int v) {
         return switch (row) {
             case 0 -> new Appearance(v, a.hair(), a.hairColor(), a.face(), a.detail(), a.outfit(), a.outfitColor(), a.mask());
             case 1 -> new Appearance(a.skin(), v, a.hairColor(), a.face(), a.detail(), a.outfit(), a.outfitColor(), a.mask());
@@ -84,6 +88,7 @@ public class AppearanceMenu extends PanelMenu {
             c.setItem(slot + 2, Ui.icon(Items.SPECTRAL_ARROW, Ui.text("Next ▶", ChatFormatting.YELLOW)));
         }
         c.setItem(45, Ui.icon(Items.ARROW, Ui.text("Back", ChatFormatting.YELLOW)));
+        c.setItem(47, Ui.icon(a.female() ? Items.PINK_DYE : Items.LIGHT_BLUE_DYE, Ui.text("Body: " + (a.female() ? "Woman" : "Man"), ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), Ui.text("Click to switch", ChatFormatting.GRAY)));
         c.setItem(49, Ui.icon(Items.ENCHANTED_BOOK, Ui.text("Randomize everything", ChatFormatting.AQUA)));
         c.setItem(53, Ui.icon(Items.LIME_CONCRETE, Ui.text("Done", ChatFormatting.GREEN)));
     }
@@ -93,7 +98,8 @@ public class AppearanceMenu extends PanelMenu {
         if (!h.isAlive() || !h.isOwnedBy(player)) { player.closeContainer(); return false; }
         if (slot == 45) { CompanionMenu.open(player, h); return false; }
         if (slot == 53) { player.closeContainer(); return false; }
-        if (slot == 49) { h.setAppearance(Appearance.random(h.getRandom(), Faction.SURVIVOR, Role.MEMBER)); return true; }
+        if (slot == 49) { h.setAppearance(Appearance.random(h.getRandom(), Faction.SURVIVOR, Role.MEMBER, h.appearance().female())); return true; }
+        if (slot == 47) { h.setAppearance(h.appearance().withFemale(!h.appearance().female())); return true; }
         for (int[] l : LAYOUT) {
             int row = l[1], n = count(row);
             if (slot == l[0] || slot == l[0] + 2) {

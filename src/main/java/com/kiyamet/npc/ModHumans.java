@@ -76,6 +76,7 @@ public final class ModHumans {
                         case "raiders" -> raiders(p.level(), at, power(p), false);
                         case "commander" -> raiders(p.level(), at, power(p), true);
                         case "masked" -> whisperers(p.level(), at, power(p));
+                        case "car" -> com.kiyamet.vehicle.ModVehicles.abandoned(p.level(), at);
                         case "survivor" -> spawn(p.level(), at, Faction.SURVIVOR, Role.MEMBER, 5 + p.getRandom().nextInt(40), null);
                         default -> { p.sendSystemMessage(Component.literal("raiders | commander | masked | survivor")); return 0; }
                     }
@@ -128,17 +129,24 @@ public final class ModHumans {
             p.sendSystemMessage(Component.literal("Voices and laughter nearby. Raiders.").withStyle(ChatFormatting.RED));
         } else if (roll < 0.42f) {
             spawn(level, at, Faction.SURVIVOR, Role.MEMBER, 1 + level.random.nextInt(10 + power / 40), null);
+        } else if (roll < 0.5f && level.getEntitiesOfClass(com.kiyamet.vehicle.VehicleEntity.class, p.getBoundingBox().inflate(160)).isEmpty()) {
+            com.kiyamet.vehicle.ModVehicles.abandoned(level, at);
         }
     }
 
-    public static void raiders(ServerLevel level, BlockPos at, int power, boolean commander) {
+    public static java.util.List<HumanEntity> raiders(ServerLevel level, BlockPos at, int power, boolean commander) {
         int base = Mth.clamp(5 + power / 25, 5, 240);
         int n = 3 + level.random.nextInt(3) + (commander ? 3 : 0);
+        java.util.List<HumanEntity> out = new java.util.ArrayList<>();
         for (int i = 0; i < n; i++) {
             Role r = i == 0 ? (commander ? Role.COMMANDER : Role.LEADER) : Role.MEMBER;
             int lv = r == Role.COMMANDER ? 260 + level.random.nextInt(41) : Mth.clamp(base + level.random.nextInt(21) - 10 + (r == Role.LEADER ? 15 : 0), 1, 250);
-            spawn(level, at.offset(level.random.nextInt(5) - 2, 0, level.random.nextInt(5) - 2), Faction.RAIDER, r, lv, null);
+            HumanEntity h = spawn(level, at.offset(level.random.nextInt(5) - 2, 0, level.random.nextInt(5) - 2), Faction.RAIDER, r, lv, null);
+            if (h != null) out.add(h);
         }
+        // from 800 power raiders come with cars; the Commander always rolls in with an armored truck
+        if (commander || power >= 800 && level.random.nextFloat() < 0.6f) com.kiyamet.vehicle.ModVehicles.raiderRide(level, at, out, commander, power);
+        return out;
     }
 
     public static void whisperers(ServerLevel level, BlockPos at, int power) {

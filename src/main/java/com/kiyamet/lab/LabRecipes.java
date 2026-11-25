@@ -62,6 +62,14 @@ public final class LabRecipes {
         r("kiyamet:shield_generator", 1, 700, "kiyamet:tech_core", 1, "kiyamet:energy_cell", 3, "minecraft:shield", 1);
         r("kiyamet:time_stopper", 1, 800, "kiyamet:energy_core", 1, "minecraft:clock", 1, "kiyamet:circuit", 4);
         r("kiyamet:black_hole_bomb", 1, 900, "kiyamet:void_shard", 2, "kiyamet:energy_core", 1);
+        r("kiyamet:atv_keys", 1, 30, "minecraft:iron_ingot", 12, "kiyamet:metal_plate", 4, "kiyamet:circuit", 1, "kiyamet:fuel_canister", 1);
+        r("kiyamet:car_sedan_keys", 1, 40, "minecraft:iron_ingot", 16, "kiyamet:metal_plate", 6, "kiyamet:circuit", 2, "minecraft:glass_pane", 6);
+        r("kiyamet:motorcycle_keys", 1, 60, "minecraft:iron_ingot", 10, "kiyamet:metal_plate", 4, "kiyamet:circuit", 2, "minecraft:leather", 4);
+        r("kiyamet:car_pickup_keys", 1, 100, "minecraft:iron_ingot", 24, "kiyamet:metal_plate", 10, "kiyamet:circuit", 3, "minecraft:chest", 2);
+        r("kiyamet:car_police_keys", 1, 150, "minecraft:iron_ingot", 20, "kiyamet:metal_plate", 10, "kiyamet:circuit", 4, "minecraft:redstone_lamp", 2);
+        r("kiyamet:car_ambulance_keys", 1, 200, "minecraft:iron_ingot", 24, "kiyamet:metal_plate", 12, "kiyamet:circuit", 4, "kiyamet:medkit", 3);
+        r("kiyamet:car_armored_suv_keys", 1, 300, "minecraft:iron_block", 6, "kiyamet:metal_plate", 24, "kiyamet:circuit", 6, "kiyamet:energy_cell", 2);
+        r("kiyamet:armored_truck_keys", 1, 450, "minecraft:iron_block", 12, "kiyamet:metal_plate", 40, "kiyamet:tech_core", 2, "kiyamet:energy_cell", 4);
         r("kiyamet:robot_core_trooper", 1, 500, "kiyamet:tech_core", 2, "kiyamet:metal_plate", 12, "kiyamet:circuit", 6, "kiyamet:energy_cell", 3);
         r("kiyamet:robot_core_drone", 1, 650, "kiyamet:tech_core", 2, "kiyamet:lens", 4, "kiyamet:circuit", 8, "kiyamet:energy_core", 1);
         r("kiyamet:robot_core_heavy", 1, 800, "kiyamet:tech_core", 4, "kiyamet:metal_plate", 24, "kiyamet:energy_core", 2, "minecraft:iron_block", 4);

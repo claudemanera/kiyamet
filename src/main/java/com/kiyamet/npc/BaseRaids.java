@@ -271,11 +271,15 @@ public final class BaseRaids {
             int lvBase = Mth.clamp(5 + power / 25 + wave * 6, 5, 240);
 
             int raiders = Mth.clamp(3 + wave * 2 + power / 600, 3, 12);
+            List<HumanEntity> crew = new ArrayList<>();
+            boolean cmd = last && power >= 4000;
             for (int i = 0; i < raiders; i++) {
-                Role role = i == 0 ? (last && power >= 4000 ? Role.COMMANDER : Role.LEADER) : Role.MEMBER;
+                Role role = i == 0 ? (cmd ? Role.COMMANDER : Role.LEADER) : Role.MEMBER;
                 int lv = role == Role.COMMANDER ? 260 + level.random.nextInt(41) : Mth.clamp(lvBase + level.random.nextInt(21) - 10 + (role == Role.LEADER ? 15 : 0), 1, 250);
-                add(ModHumans.spawn(level, at.offset(level.random.nextInt(7) - 3, 0, level.random.nextInt(7) - 3), Faction.RAIDER, role, lv, null));
+                HumanEntity h = ModHumans.spawn(level, at.offset(level.random.nextInt(7) - 3, 0, level.random.nextInt(7) - 3), Faction.RAIDER, role, lv, null);
+                if (h != null) { crew.add(h); add(h); }
             }
+            if (cmd || power >= 800 && level.random.nextFloat() < 0.6f) com.kiyamet.vehicle.ModVehicles.raiderRide(level, at, crew, cmd, power);
             if (power >= 1500 && wave >= 1) {
                 int masked = 2 + level.random.nextInt(2);
                 for (int i = 0; i < masked; i++)

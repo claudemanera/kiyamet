@@ -72,7 +72,7 @@ public class LabMenu extends ChestMenu {
             case ALL -> true;
             case PARTS -> in(com.kiyamet.registry.ModItems.PARTS, id) || id.equals("kiyamet:repair_kit") || id.equals("kiyamet:medkit");
             case DEFENSE -> item(id) instanceof net.minecraft.world.item.BlockItem;
-            case GADGETS -> in(com.kiyamet.registry.ModItems.GADGETS, id);
+            case GADGETS -> in(com.kiyamet.registry.ModItems.GADGETS, id) || id.endsWith("_keys") || id.contains("robot_core") || id.equals("kiyamet:radio");
             case WEAPONS -> in(com.kiyamet.registry.ModItems.WEAPONS, id);
             case READY -> canCraft(r, eng);
         };

@@ -119,7 +119,7 @@
  "item.kiyamet.repair_kit": "Repair Kit",
  "entity.kiyamet.car_sedan": "Sedan",
  "entity.kiyamet.car_pickup": "Pickup Truck",
- "entity.kiyamet.car_police": "Police Car",
+ "entity.kiyamet.car_police": "Police Cruiser",
  "entity.kiyamet.car_ambulance": "Ambulance",
  "entity.kiyamet.car_armored_suv": "Armored SUV",
  "item.kiyamet.ruby": "Ruby",
@@ -201,5 +201,13 @@
  "item.kiyamet.radio": "Walkie-Talkie",
  "item.kiyamet.robot_core_trooper": "Robot Core: Trooper",
  "item.kiyamet.robot_core_drone": "Robot Core: Drone",
- "item.kiyamet.robot_core_heavy": "Robot Core: Heavy"
+ "item.kiyamet.robot_core_heavy": "Robot Core: Heavy",
+ "item.kiyamet.car_sedan_keys": "Sedan Keys",
+ "item.kiyamet.car_pickup_keys": "Pickup Truck Keys",
+ "item.kiyamet.car_police_keys": "Police Cruiser Keys",
+ "item.kiyamet.car_ambulance_keys": "Ambulance Keys",
+ "item.kiyamet.car_armored_suv_keys": "Armored SUV Keys",
+ "item.kiyamet.atv_keys": "ATV Keys",
+ "item.kiyamet.motorcycle_keys": "Motorcycle Keys",
+ "item.kiyamet.armored_truck_keys": "Armored Truck Keys"
 }

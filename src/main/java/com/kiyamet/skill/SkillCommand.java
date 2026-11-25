@@ -11,7 +11,8 @@ import net.minecraft.server.level.ServerPlayer;
 public final class SkillCommand {
     public static void init() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, env) ->
-                dispatcher.register(Commands.literal("skills").executes(ctx -> {
+                dispatcher.register(Commands.literal("skills").executes(ctx -> { SkillsMenu.open(ctx.getSource().getPlayerOrException()); return 1; })
+                        .then(Commands.literal("text").executes(ctx -> {
                     ServerPlayer p = ctx.getSource().getPlayerOrException();
                     SkillData d = SkillManager.get(p);
                     MutableComponent out = Component.translatable("kiyamet.msg.skills_title", d.totalPower()).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD);
@@ -25,7 +26,7 @@ public final class SkillCommand {
                     }
                     ctx.getSource().sendSuccess(() -> out, false);
                     return 1;
-                })));
+                }))));
     }
     private SkillCommand() {}
 }

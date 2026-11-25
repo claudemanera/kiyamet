@@ -1,1 +1,1 @@
-{"variants": {"lit=false": {"model": "kiyamet:block/generator"}, "lit=true": {"model": "kiyamet:block/generator_on"}}}
+{"variants": {"lit=false": {"model": "kiyamet:block/generator"}, "lit=true,on=false": {"model": "kiyamet:block/generator"}, "lit=true,on=true": {"model": "kiyamet:block/generator_on"}}}

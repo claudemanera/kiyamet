@@ -2,7 +2,6 @@ package com.kiyamet.defense;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -25,19 +24,21 @@ import net.minecraft.world.phys.BlockHitResult;
 public class GeneratorBlock extends Block {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final IntegerProperty FUEL = IntegerProperty.create("fuel", 0, 15);
+    /** Master switch from the panel: when off the generator keeps its fuel and powers nothing. */
+    public static final BooleanProperty ON = BooleanProperty.create("on");
     private static final int MINUTE = 1200;
 
     public GeneratorBlock(Properties p) {
         super(p);
-        registerDefaultState(stateDefinition.any().setValue(LIT, false).setValue(FUEL, 0));
+        registerDefaultState(stateDefinition.any().setValue(LIT, false).setValue(FUEL, 0).setValue(ON, true));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) {
-        b.add(LIT, FUEL);
+        b.add(LIT, FUEL, ON);
     }
 
-    private static int fuelValue(ItemStack s) {
+    public static int fuelValue(ItemStack s) {
         if (s.is(Items.COAL) || s.is(Items.CHARCOAL)) return 1;
         if (s.is(Items.COAL_BLOCK)) return 9;
         if (s.is(Items.LAVA_BUCKET)) return 10;
@@ -67,13 +68,28 @@ public class GeneratorBlock extends Block {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide()) player.displayClientMessage(Component.literal("Generator: " + (state.getValue(LIT) ? "running" : "off")
-                + ", fuel " + state.getValue(FUEL) + " min"), true);
+        if (level instanceof ServerLevel sl) GeneratorMenu.open(player, sl, pos);
         return InteractionResult.SUCCESS;
     }
 
+    /** Adds fuel from the panel; returns the number of items used (0 or 1). */
+    public static boolean addFuel(ServerLevel level, BlockPos pos, ItemStack stack) {
+        BlockState state = level.getBlockState(pos);
+        if (!(state.getBlock() instanceof GeneratorBlock g)) return false;
+        int v = fuelValue(stack), fuel = state.getValue(FUEL);
+        if (v == 0 || fuel >= 15) return false;
+        boolean wasLit = state.getValue(LIT);
+        level.setBlock(pos, state.setValue(FUEL, Math.min(15, fuel + v)).setValue(LIT, true), 3);
+        if (!wasLit) level.scheduleTick(pos, g, MINUTE);
+        Power.invalidate();
+        level.playSound(null, pos, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1f, 0.8f);
+        return true;
+    }
+
+
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (!state.getValue(ON)) { if (state.getValue(LIT)) level.scheduleTick(pos, this, MINUTE); return; }
         int fuel = state.getValue(FUEL) - 1;
         if (fuel <= 0) {
             level.setBlock(pos, state.setValue(FUEL, 0).setValue(LIT, false), 3);
@@ -87,7 +103,7 @@ public class GeneratorBlock extends Block {
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        if (state.getValue(LIT) && random.nextInt(3) == 0)
+        if (state.getValue(LIT) && state.getValue(ON) && random.nextInt(3) == 0)
             level.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 1.05, pos.getZ() + 0.5, 0, 0.05, 0);
     }
 }

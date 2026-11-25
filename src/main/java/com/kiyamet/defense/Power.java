@@ -19,10 +19,11 @@ public final class Power {
         Cached c = CACHE.get(pos.asLong());
         if (c != null && c.until > now) return c.on;
         boolean on = false;
+        if (DeviceSwitch.isOff(level, pos)) { CACHE.put(pos.asLong(), new Cached(false, now + 100)); return false; }
         search:
         for (BlockPos p : BlockPos.betweenClosed(pos.offset(-RANGE, -RANGE, -RANGE), pos.offset(RANGE, RANGE, RANGE))) {
             BlockState s = level.getBlockState(p);
-            if (s.getBlock() instanceof GeneratorBlock && s.getValue(BlockStateProperties.LIT)) { on = true; break search; }
+            if (s.getBlock() instanceof GeneratorBlock && s.getValue(BlockStateProperties.LIT) && s.getValue(GeneratorBlock.ON)) { on = true; break search; }
         }
         if (CACHE.size() > 20000) CACHE.clear();
         CACHE.put(pos.asLong(), new Cached(on, now + 100));

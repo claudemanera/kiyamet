@@ -24,6 +24,7 @@ jobs:
           CURL=$(curl -s "$VURL" | jq -r '.downloads.client.url')
           curl -sL -o client.jar "$CURL"
           python3 tools/recolor_stones.py client.jar
+          python3 tools/make_flat_preset.py client.jar
           rm client.jar
       - uses: gradle/actions/setup-gradle@v4
         with:

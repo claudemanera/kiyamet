@@ -1,7 +1,10 @@
 name: Build Kiyamet
 on:
   push:
+    branches: [main]
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,7 +29,26 @@ jobs:
         with:
           gradle-version: '9.2.1'
       - name: Build
-        run: gradle build --stacktrace
+        run: |
+          set -o pipefail
+          gradle build --stacktrace 2>&1 | tee build.log
+      - name: Save build log on failure
+        if: failure()
+        run: |
+          git config user.name ci && git config user.email ci@users.noreply.github.com
+          cp build.log /tmp/build.log
+          git checkout --orphan ci-log
+          git rm -rfq .
+          cp /tmp/build.log build.log
+          git add build.log && git commit -qm "build log ${{ github.run_number }}"
+          git push -f origin ci-log
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: Kiyamet build ${{ github.run_number }}
+          make_latest: true
+          files: build/libs/kiyamet-*[0-9].jar
       - uses: actions/upload-artifact@v4
         with:
           name: kiyamet-jar

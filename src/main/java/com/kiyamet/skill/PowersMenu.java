@@ -45,7 +45,7 @@ public class PowersMenu extends ChestMenu {
             Powers.Power pw = all[page * 45 + i];
             boolean un = pw.unlocked(d), on = un && Powers.enabled(player, pw);
             ItemStack s = (un ? Ui.logo("power_" + pw.name().toLowerCase(), Ui.text(pw.title, on ? ChatFormatting.GREEN : ChatFormatting.RED, ChatFormatting.BOLD)) : Ui.icon(Items.GRAY_DYE, Ui.text(pw.title, ChatFormatting.DARK_GRAY, ChatFormatting.BOLD)));
-            Ui.lore(s, java.util.List.of(pw.title, !un ? ChatFormatting.DARK_GRAY : on ? ChatFormatting.GREEN : ChatFormatting.RED, ChatFormatting.BOLD),
+            Ui.lore(s, java.util.List.of(
                     Ui.text(un ? (on ? "● Active" : "● Switched off") : "✘ Locked", !un ? ChatFormatting.DARK_GRAY : on ? ChatFormatting.GREEN : ChatFormatting.RED),
                     Component.literal("Unlock: ").withStyle(ChatFormatting.GRAY).append(Component.translatable(pw.skill.key())).append(Component.literal(" " + pw.level + "  (you: " + d.level(pw.skill) + ")")),
                     un ? Ui.text("Click to switch " + (on ? "off" : "on"), ChatFormatting.YELLOW) : Ui.bar(d.level(pw.skill) / (double) pw.level, 16)));

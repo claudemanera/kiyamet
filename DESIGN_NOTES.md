@@ -122,3 +122,10 @@ Java: Kiyamet (main), registry/ModBlocks (13 blocks), ModItems (all items + bloc
 City structures moved to pending/ until kiyamet:tiled_city exists (phase 5) — otherwise datapack load fails.
 Stone Codex: 6 pages (stone_codex_page_1..6) in research_tower_director, outbreak_lab_containment, data_center_servers,
  teleport_lab_console, weather_station_console, cryo_vault_control (35%); shapeless recipe -> written book "Stone Codex" (all stone info).
+
+## Zombie speed tiers (user request 2026-11-25)
+Walking Dead style: slow walkers = tank 0.15, crawler 0.14, toxic/exploder/farmer/doctor 0.17, armored 0.16, listener/mutant 0.18.
+Normal (vanilla zombie ~0.23): police, screamer 0.23, alpha 0.24. Fast: runner 0.34, hunter 0.33. Runner spawn weight lowered 40 -> 12 (farmer 30 -> 40).
+
+## Kıyamet 1.2 (planned, NOT in 1.0)
+- Boost skill perk/power effects (stronger perks every 50 levels and at 250/500/750/999).

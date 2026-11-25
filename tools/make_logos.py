@@ -256,6 +256,7 @@ def render(glyph, cut, c1, c2, shape='circle', pips=0, mini=None, special=False)
 
 def save(name, img):
     img.resize((32, 32), Image.LANCZOS).save(f'{TEX}/{name}.png')
+    img.resize((128, 128), Image.LANCZOS).save(f'/home/claude/statsgen/newimg/logo_{name}.png')
     json.dump({'parent': 'minecraft:item/generated', 'textures': {'layer0': f'kiyamet:item/icon/{name}'}}, open(f'{MOD}/{name}.json', 'w'))
     json.dump({'model': {'type': 'minecraft:model', 'model': f'kiyamet:item/icon/{name}'}}, open(f'{ITM}/{name}.json', 'w'))
 

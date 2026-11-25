@@ -198,9 +198,14 @@ public class GadgetItem extends Item {
                 cd = 40;
             }
             case "auto_turret" -> {
-                // Phase 7 places a real turret; for now it pulses arrows of light at nearby enemies for 30 s.
-                for (LivingEntity e : enemies(level, p.position(), 12)) e.hurtServer(level, level.damageSources().playerAttack(p), 6);
-                cd = 100;
+                com.kiyamet.ally.TurretDrone t = com.kiyamet.ally.ModAllies.TURRET.create(level, EntitySpawnReason.TRIGGERED);
+                if (t != null) {
+                    Vec3 at = p.position().add(p.getLookAngle().multiply(1, 0, 1).normalize().scale(1.5)).add(0, 2.2, 0);
+                    t.setPos(at.x, at.y, at.z);
+                    t.bonus = com.kiyamet.skill.SkillManager.get(p).level(com.kiyamet.skill.Skill.ENGINEERING) / 100f;
+                    level.addFreshEntity(t);
+                }
+                cd = 1200;
             }
             default -> { return InteractionResult.PASS; }
         }

@@ -104,6 +104,7 @@ public class KZombie extends Zombie implements GeoEntity {
     public void tick() {
         super.tick();
         if (!(level() instanceof ServerLevel server)) return;
+        com.kiyamet.defense.DefenseRules.tickZombie(server, this);
         LivingEntity target = getTarget();
         if (screamCooldown > 0) screamCooldown--;
         if (leapCooldown > 0) leapCooldown--;

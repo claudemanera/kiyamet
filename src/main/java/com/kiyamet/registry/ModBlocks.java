@@ -54,6 +54,10 @@ public final class ModBlocks {
     public static final Block LAB_TABLE = reg("lab_table", com.kiyamet.lab.LabTableBlock::new,
             BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 8f).sound(SoundType.METAL).noOcclusion());
 
+    public static final Block GENERATOR = reg("generator", com.kiyamet.defense.GeneratorBlock::new,
+            BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(5f, 10f).sound(SoundType.METAL).requiresCorrectToolForDrops()
+                    .lightLevel(s -> s.getValue(com.kiyamet.defense.GeneratorBlock.LIT) ? 9 : 0));
+
     private static Block reg(String name, Function<BlockBehaviour.Properties, Block> factory, BlockBehaviour.Properties props) {
         ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Kiyamet.id(name));
         Block block = Registry.register(BuiltInRegistries.BLOCK, key, factory.apply(props.setId(key)));

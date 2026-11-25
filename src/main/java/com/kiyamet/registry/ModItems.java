@@ -47,6 +47,7 @@ public final class ModItems {
         }
         for (String s : SINGLE) {
             if (s.equals("medkit")) custom(s, p -> new com.kiyamet.item.HealItem(p.stacksTo(8), com.kiyamet.item.HealItem.Kind.MEDKIT));
+            else if (s.equals("repair_kit")) custom(s, p -> new com.kiyamet.item.RepairKitItem(p.stacksTo(16)));
             else if (s.equals("stone_gauntlet")) custom(s, p -> new com.kiyamet.stone.GauntletItem(p.stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC)));
             else simple(s, 1);
         }

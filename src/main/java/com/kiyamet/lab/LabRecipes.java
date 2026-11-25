@@ -36,6 +36,7 @@ public final class LabRecipes {
         r("kiyamet:spike_trap", 2, 80, "minecraft:iron_ingot", 4, "minecraft:stick", 2);
         r("kiyamet:razor_wire", 2, 120, "kiyamet:barbed_wire", 3, "minecraft:iron_block", 1);
         r("kiyamet:steel_gate", 1, 150, "kiyamet:steel_block", 6);
+        r("kiyamet:generator", 1, 80, "minecraft:iron_ingot", 6, "minecraft:furnace", 1, "kiyamet:circuit", 2, "kiyamet:energy_cell", 1);
         r("kiyamet:electric_fence", 4, 220, "kiyamet:barbed_wire", 4, "kiyamet:circuit", 2, "kiyamet:energy_cell", 1);
         r("kiyamet:ruby_block", 1, 250, "kiyamet:ruby", 9);
         r("kiyamet:titanium_block", 2, 400, "kiyamet:metal_plate", 4, "minecraft:diamond", 2, "kiyamet:tech_core", 1);

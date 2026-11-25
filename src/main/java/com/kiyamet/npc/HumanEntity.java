@@ -84,6 +84,10 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     private String community = "", communityType = "";
     private int shotCooldown;
     private Job job = Job.NONE;
+    private int team;
+
+    public int team() { return team; }
+    public void setTeam(int t) { team = Math.floorMod(t, 3); }
     /** Game time when the current supply run ends (0 = not away). */
     private long awayUntil;
     private int awayMinutes, awayGroup;
@@ -222,6 +226,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         out.putInt("Xp", xp);
         out.putString("Profession", profession().name());
         out.putString("Job", job.name());
+        out.putInt("Team", team);
         out.putLong("AwayUntil", awayUntil);
         out.putInt("AwayMinutes", awayMinutes);
         out.putInt("AwayGroup", awayGroup);
@@ -246,6 +251,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         try { entityData.set(ROLE, Role.valueOf(in.getStringOr("Role", "MEMBER")).ordinal()); } catch (IllegalArgumentException ignored) {}
         xp = in.getIntOr("Xp", 0);
         job = Job.byName(in.getStringOr("Job", "NONE"));
+        team = in.getIntOr("Team", 0);
         awayUntil = in.getLongOr("AwayUntil", 0L);
         awayMinutes = in.getIntOr("AwayMinutes", 0);
         awayGroup = in.getIntOr("AwayGroup", 1);
@@ -612,6 +618,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
             if (p != null) p.sendSystemMessage(Component.literal(getName().getString() + " has died.").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
         }
         if (bar != null) bar.removeAllPlayers();
+        Radio.forget(this);
         net.minecraft.world.Containers.dropContents(sl, this, inventory);
         // Everyone is infected: the dead come back.
         if (faction() != Faction.WHISPERER && random.nextFloat() < 0.8f) {

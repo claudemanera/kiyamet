@@ -4,5 +4,7 @@
  "biomes": "#kiyamet:has_structure/city_frozen_mountain",
  "step": "surface_structures",
  "terrain_adaptation": "beard_box",
- "spawn_overrides": {}
+ "spawn_overrides": {},
+ "cols": 3,
+ "rows": 3
 }

@@ -2,3 +2,5 @@ net.minecraft.world.entity.monster.zombie.Zombie
 net.minecraft.world.entity.Mob
 net.minecraft.world.item.Item
 net.minecraft.world.entity.LivingEntity
+net.minecraft.world.level.levelgen.structure.TemplateStructurePiece
+net.minecraft.world.level.levelgen.structure.Structure

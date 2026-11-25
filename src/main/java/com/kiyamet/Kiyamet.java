@@ -25,6 +25,7 @@ public class Kiyamet implements ModInitializer {
         ModBlocks.init();
         ModItems.init();
         ModWorldgen.init();
+        com.kiyamet.world.ModStructures.init();
         ModAttachments.init();
         com.kiyamet.world.Infection.init();
         com.kiyamet.entity.ModEntities.init();

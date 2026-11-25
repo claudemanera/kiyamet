@@ -4,5 +4,7 @@
  "biomes": "#kiyamet:has_structure/city_port",
  "step": "surface_structures",
  "terrain_adaptation": "beard_box",
- "spawn_overrides": {}
+ "spawn_overrides": {},
+ "cols": 4,
+ "rows": 3
 }

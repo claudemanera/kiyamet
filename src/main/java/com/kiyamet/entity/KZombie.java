@@ -143,6 +143,7 @@ public class KZombie extends Zombie implements GeoEntity {
         if (reason != EntitySpawnReason.NATURAL && reason != EntitySpawnReason.CHUNK_GENERATION) return true;
         BlockPos below = blockPosition().below();
         if (!level.getBlockState(below).isSolid() || !level.getFluidState(blockPosition()).isEmpty()) return false;
+        if (level instanceof ServerLevel sl && com.kiyamet.world.ModStructures.inSanctuary(sl, blockPosition())) return false;
         int power = level instanceof ServerLevel s ? Difficulty.nearestPower(s, blockPosition()) : 0;
         if (power < kind.minPower) return false;
         boolean day = level instanceof ServerLevel s && s.isBrightOutside();

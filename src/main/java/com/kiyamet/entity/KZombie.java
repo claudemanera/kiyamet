@@ -136,7 +136,7 @@ public class KZombie extends Zombie implements GeoEntity {
     protected void addBehaviourGoals() {
         super.addBehaviourGoals();
         targetSelector.addGoal(3, new net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal<>(this, com.kiyamet.npc.HumanEntity.class, 10, true, false,
-                (t, l) -> t instanceof com.kiyamet.npc.HumanEntity h && !h.isWhisperer() && !com.kiyamet.twd.Camouflage.hides(t, this)));
+                (t, l) -> t instanceof com.kiyamet.npc.HumanEntity h && !h.isWhisperer() && !h.raiding && !com.kiyamet.twd.Camouflage.hides(t, this)));
         targetSelector.addGoal(4, new net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal<>(this, com.kiyamet.robot.RobotEntity.class, 10, true, false,
                 (t, l) -> t instanceof com.kiyamet.robot.RobotEntity r && r.isAlly()));
     }

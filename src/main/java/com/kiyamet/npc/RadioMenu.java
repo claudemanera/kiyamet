@@ -78,6 +78,13 @@ public class RadioMenu extends PanelMenu {
         c.setItem(41, Ui.icon(Items.OAK_SIGN, Ui.text("Everyone nearby: hold position", ChatFormatting.AQUA)));
         c.setItem(43, Ui.icon(Items.BELL, Ui.text("Open group panel", ChatFormatting.LIGHT_PURPLE), Ui.text("Supply runs, glow, picks", ChatFormatting.GRAY)));
         c.setItem(49, Ui.icon(Items.BARRIER, Ui.text("Close", ChatFormatting.RED)));
+        if (player instanceof net.minecraft.server.level.ServerPlayer sp) {
+            String risk = BaseRaids.riskLabel(sp);
+            net.minecraft.core.BlockPos base = sp.getAttached(BaseRaids.BASE);
+            c.setItem(47, Ui.icon(Items.CROSSBOW, Ui.text("Raid risk: " + risk, risk.equals("Low") ? ChatFormatting.GREEN : ChatFormatting.RED, ChatFormatting.BOLD),
+                    Ui.text(base == null ? "No base yet: sleep in a bed to set it" : "Base: " + base.toShortString(), ChatFormatting.GRAY),
+                    Ui.text(BaseRaids.bloodMoon() ? "BLOOD MOON tonight" : "Raids come every 1-2 weeks", BaseRaids.bloodMoon() ? ChatFormatting.DARK_RED : ChatFormatting.GRAY)));
+        }
     }
 
     private UUID at(int slot) {

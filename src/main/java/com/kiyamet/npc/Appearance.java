@@ -47,8 +47,14 @@ public record Appearance(int skin, int hair, int hairColor, int face, int detail
 
     private static int pick(RandomSource r, int... opts) { return opts[r.nextInt(opts.length)]; }
 
+    /** Mostly light skin tones, some medium, a few dark. */
+    public static int randomSkin(RandomSource r) {
+        float x = r.nextFloat();
+        return x < 0.6f ? r.nextInt(5) : x < 0.85f ? 5 + r.nextInt(3) : 8 + r.nextInt(4);
+    }
+
     public static Appearance random(RandomSource r, Faction f, Role role) {
-        int skin = r.nextInt(SKINS), hair = r.nextInt(HAIRS), hc = r.nextInt(10), face = r.nextInt(FACES);
+        int skin = randomSkin(r), hair = r.nextInt(HAIRS), hc = r.nextInt(10), face = r.nextInt(FACES);
         int detail = r.nextFloat() < 0.65f ? 0 : 1 + r.nextInt(DETAILS - 1);
         int oc = r.nextInt(OUTFIT_COLORS);
         int outfit = switch (f) {

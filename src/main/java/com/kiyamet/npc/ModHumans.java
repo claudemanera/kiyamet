@@ -94,7 +94,7 @@ public final class ModHumans {
         return h;
     }
 
-    private static BlockPos surface(ServerLevel level, BlockPos around, int min, int max) {
+    static BlockPos surface(ServerLevel level, BlockPos around, int min, int max) {
         for (int tries = 0; tries < 12; tries++) {
             double a = level.random.nextDouble() * Math.PI * 2, d = min + level.random.nextInt(max - min);
             int x = around.getX() + (int) (Math.cos(a) * d), z = around.getZ() + (int) (Math.sin(a) * d);

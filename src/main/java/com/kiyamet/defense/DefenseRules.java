@@ -29,7 +29,13 @@ public final class DefenseRules {
         if (z.tickCount % 20 == 10) breakWalls(level, z);
     }
 
-    private static void traps(ServerLevel level, KZombie z) {
+    /** Raiders on a base raid: traps hurt them too, and when a wall blocks the way they smash through. */
+    public static void tickRaider(ServerLevel level, net.minecraft.world.entity.Mob m) {
+        if (m.tickCount % 20 == 0) traps(level, m);
+        if (m.tickCount % 20 == 10) breakWalls(level, m);
+    }
+
+    private static void traps(ServerLevel level, net.minecraft.world.entity.Mob z) {
         BlockPos pos = z.blockPosition();
         for (BlockPos p : new BlockPos[]{pos, pos.above()}) {
             BlockState s = level.getBlockState(p);
@@ -56,10 +62,16 @@ public final class DefenseRules {
         if (n >= uses) { m.remove(p.asLong()); level.destroyBlock(p, false); }
     }
 
-    private static void breakWalls(ServerLevel level, KZombie z) {
+    private static void breakWalls(ServerLevel level, net.minecraft.world.entity.Mob z) {
         LivingEntity target = z.getTarget();
-        if (target == null || !z.horizontalCollision || z.distanceTo(target) > 32) return;
-        Vec3 dir = target.position().subtract(z.position()).multiply(1, 0, 1).normalize();
+        if (!z.horizontalCollision) return;
+        Vec3 goal;
+        if (target != null && z.distanceTo(target) <= 32) goal = target.position();
+        else if (z.getNavigation().getTargetPos() != null) goal = Vec3.atCenterOf(z.getNavigation().getTargetPos());
+        else return;
+        Vec3 dir = goal.subtract(z.position()).multiply(1, 0, 1);
+        if (dir.lengthSqr() < 0.01) return;
+        dir = dir.normalize();
         BlockPos front = BlockPos.containing(z.getX() + dir.x * (z.getBbWidth() / 2 + 0.6), z.getY() + 0.5, z.getZ() + dir.z * (z.getBbWidth() / 2 + 0.6));
         for (BlockPos p : new BlockPos[]{front, front.above()}) {
             BlockState s = level.getBlockState(p);
@@ -70,14 +82,14 @@ public final class DefenseRules {
                 level.sendParticles(ParticleTypes.ELECTRIC_SPARK, p.getX() + 0.5, p.getY() + 0.5, p.getZ() + 0.5, 20, 0.4, 0.4, 0.4, 0.3);
                 return;
             }
-            float mult = switch (z.kind) {
+            float mult = !(z instanceof KZombie kz) ? 1.5f : switch (kz.kind) {
                 case TANK, ALPHA, MUTANT -> 3f;
                 case EXPLODER -> s.is(ModBlocks.TITANIUM_BLOCK) ? 1f : 5f;
                 default -> 1f;
             };
-            float dmg = (float) (z.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE) * mult * 0.5);
+            float dmg = (float) (Math.max(3, z.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE)) * mult * 0.5);
             z.swing(net.minecraft.world.InteractionHand.MAIN_HAND);
-            z.triggerAnim("attack", "attack");
+            if (z instanceof KZombie kz) kz.triggerAnim("attack", "attack");
             level.playSound(null, p, s.getSoundType().getHitSound(), SoundSource.HOSTILE, 1f, 0.7f);
             BlockDurability.hit(level, p, dmg, z);
             return;

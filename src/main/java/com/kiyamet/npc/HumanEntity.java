@@ -138,6 +138,8 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     public Faction faction() { return Faction.byId(entityData.get(FACTION)); }
     public Role role() { return Role.byId(entityData.get(ROLE)); }
     public boolean isWhisperer() { return faction() == Faction.WHISPERER; }
+    /** Part of a base raid: allied with the walkers it came with. */
+    public boolean raiding;
     public String community() { return community; }
     public String communityType() { return communityType; }
     @Nullable public UUID owner() { return owner; }
@@ -221,6 +223,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         super.addAdditionalSaveData(out);
         out.putInt("Appearance", entityData.get(APPEARANCE));
         out.putInt("Level", lvl());
+        out.putBoolean("Raiding", raiding);
         out.putString("Faction", faction().name());
         out.putString("Role", role().name());
         out.putInt("Xp", xp);
@@ -247,6 +250,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         super.readAdditionalSaveData(in);
         entityData.set(APPEARANCE, in.getIntOr("Appearance", 0));
         entityData.set(LEVEL, Math.max(1, in.getIntOr("Level", 1)));
+        raiding = in.getBooleanOr("Raiding", false);
         try { entityData.set(FACTION, Faction.valueOf(in.getStringOr("Faction", "SURVIVOR")).ordinal()); } catch (IllegalArgumentException ignored) {}
         try { entityData.set(ROLE, Role.valueOf(in.getStringOr("Role", "MEMBER")).ordinal()); } catch (IllegalArgumentException ignored) {}
         xp = in.getIntOr("Xp", 0);
@@ -299,7 +303,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, (t, l) -> isHostileTo(t)));
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, HumanEntity.class, 10, true, false, (t, l) -> isHostileTo(t)));
         targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Monster.class, 10, true, false,
-                (t, l) -> !isWhisperer() && (t instanceof KZombie || t instanceof RobotEntity || t instanceof BossEntity && owner != null)));
+                (t, l) -> !isWhisperer() && !(raiding && t instanceof KZombie) && (t instanceof KZombie || t instanceof RobotEntity || t instanceof BossEntity && owner != null)));
     }
 
     private boolean closeToTarget() {
@@ -426,6 +430,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (owner != null && job == Job.SCOUT && tickCount % 100 == 0) scout(sl);
         if (owner != null && job == Job.GUARDIAN && tickCount % 40 == 0) guard(sl);
         if (owner != null && job == Job.LOOTER && tickCount % 6000 == 3000) scavenge();
+        if (raiding) com.kiyamet.defense.DefenseRules.tickRaider(sl, this);
         if (shotCooldown > 0) shotCooldown--;
         if (home == null && owner == null && faction() == Faction.COMMUNITY) home = blockPosition();
         if (faction() == Faction.COMMUNITY && community.isEmpty() && tickCount > 5) community = Communities.assign(sl, this);

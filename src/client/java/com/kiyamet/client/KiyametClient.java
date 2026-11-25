@@ -16,6 +16,7 @@ public class KiyametClient implements ClientModInitializer {
         ModEntities.ZOMBIES.forEach((kind, type) -> EntityRendererRegistry.register(type, ctx -> new KZombieRenderer<>(ctx, kind)));
         com.kiyamet.boss.ModBosses.TYPES.forEach((kind, type) -> EntityRendererRegistry.register(type, ctx -> new BossRenderer<>(ctx, kind)));
         EntityRendererRegistry.register(com.kiyamet.ally.ModAllies.TURRET, ctx -> new SimpleGeoRenderer<>(ctx, "scout_drone", 1.0f));
+        EntityRendererRegistry.register(com.kiyamet.npc.ModHumans.HUMAN, ctx -> new com.kiyamet.client.human.HumanRenderer<>(ctx));
         com.kiyamet.robot.ModRobots.TYPES.forEach((kind, type) -> EntityRendererRegistry.register(type, ctx -> new RobotRenderer<>(ctx, kind)));
     }
 }

@@ -133,6 +133,13 @@ public class KZombie extends Zombie implements GeoEntity {
     }
 
     @Override
+    protected void addBehaviourGoals() {
+        super.addBehaviourGoals();
+        targetSelector.addGoal(3, new net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal<>(this, com.kiyamet.npc.HumanEntity.class, 10, true, false,
+                (t, l) -> t instanceof com.kiyamet.npc.HumanEntity h && !h.isWhisperer() && !com.kiyamet.twd.Camouflage.hides(t, this)));
+    }
+
+    @Override
     public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
         return super.hurtServer(level, source, amount * com.kiyamet.twd.Headshot.multiplier(level, this, source));
     }

@@ -173,5 +173,6 @@
  "entity.kiyamet.auto_turret": "Auto Turret",
  "generator.kiyamet.flatter": "The Walking Dead: Flatter World",
  "item.kiyamet.walker_guts": "Walker Guts",
- "effect.kiyamet.walker_camouflage": "Walker Camouflage"
+ "effect.kiyamet.walker_camouflage": "Walker Camouflage",
+ "entity.kiyamet.human": "Human"
 }

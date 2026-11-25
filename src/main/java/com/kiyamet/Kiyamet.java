@@ -21,6 +21,7 @@ public class Kiyamet implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        com.kiyamet.stone.GauntletData.init();
         ModBlocks.init();
         ModItems.init();
         ModWorldgen.init();
@@ -29,6 +30,7 @@ public class Kiyamet implements ModInitializer {
         com.kiyamet.entity.ModEntities.init();
         SkillEvents.init();
         SkillCommand.init();
+        com.kiyamet.stone.StoneEvents.init();
         LOG.info("Kiyamet loaded: {} items, {} blocks", ModItems.ALL.size(), ModBlocks.ALL.size());
     }
 }

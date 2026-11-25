@@ -156,5 +156,10 @@
  "kiyamet.msg.big_perk": "GREAT POWER unlocked: %s level %s!",
  "kiyamet.msg.skills_title": "Skills — Total Power %s / 19980",
  "kiyamet.msg.infected": "You have been infected! Find a Vaccine before the fever takes you.",
- "kiyamet.msg.cured": "The infection is gone."
+ "kiyamet.msg.cured": "The infection is gone.",
+ "kiyamet.msg.gauntlet_has": "This stone is already in the gauntlet.",
+ "kiyamet.msg.gauntlet_full": "No free slot. The next slot opens at Total Power %s.",
+ "kiyamet.msg.gauntlet_socket": "%s socketed into the gauntlet.",
+ "kiyamet.msg.gauntlet_select": "Selected: %s",
+ "kiyamet.msg.gauntlet_empty": "Hold a power stone in your offhand and right click to socket it."
 }

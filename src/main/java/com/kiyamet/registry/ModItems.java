@@ -34,7 +34,7 @@ public final class ModItems {
             "stone_codex_page_3", "stone_codex_page_4", "stone_codex_page_5", "stone_codex_page_6"};
 
     static {
-        for (String s : STONES) simple(s, 1);
+        for (String s : STONES) { com.kiyamet.stone.StoneKind k = com.kiyamet.stone.StoneKind.byId(s); custom(s, p -> new com.kiyamet.stone.StoneItem(p.stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC), k)); }
         for (String s : GADGETS) {
             if (s.equals("healing_syringe")) custom(s, p -> new com.kiyamet.item.HealItem(p.stacksTo(4), com.kiyamet.item.HealItem.Kind.SYRINGE));
             else simple(s, 1);
@@ -47,6 +47,7 @@ public final class ModItems {
         }
         for (String s : SINGLE) {
             if (s.equals("medkit")) custom(s, p -> new com.kiyamet.item.HealItem(p.stacksTo(8), com.kiyamet.item.HealItem.Kind.MEDKIT));
+            else if (s.equals("stone_gauntlet")) custom(s, p -> new com.kiyamet.stone.GauntletItem(p.stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC)));
             else simple(s, 1);
         }
         for (Block b : ModBlocks.ALL) {

@@ -30,7 +30,7 @@ public final class ModItems {
             "harpoon_gun", "arrow_railgun", "arrow_launcher", "void_arrow_launcher", "homing_arrow_gun", "apocalypse_cannon"};
     public static final String[] PARTS = {"circuit", "energy_cell", "vaccine", "bandage", "tech_core", "metal_plate", "fuel_canister",
             "lens", "void_shard", "energy_core", "ruby"};
-    public static final String[] SINGLE = {"radio", "walker_guts", "medkit", "repair_kit", "stone_gauntlet", "stone_codex_page_1", "stone_codex_page_2",
+    public static final String[] SINGLE = {"robot_core_trooper", "robot_core_drone", "robot_core_heavy", "radio", "walker_guts", "medkit", "repair_kit", "stone_gauntlet", "stone_codex_page_1", "stone_codex_page_2",
             "stone_codex_page_3", "stone_codex_page_4", "stone_codex_page_5", "stone_codex_page_6"};
 
     static {
@@ -47,6 +47,9 @@ public final class ModItems {
         }
         for (String s : SINGLE) {
             if (s.equals("medkit")) custom(s, p -> new com.kiyamet.item.HealItem(p.stacksTo(8), com.kiyamet.item.HealItem.Kind.MEDKIT));
+            else if (s.equals("robot_core_trooper")) custom(s, p -> new com.kiyamet.robot.RobotCoreItem(p.stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC), com.kiyamet.robot.RobotKind.ROBOT_TROOPER));
+            else if (s.equals("robot_core_drone")) custom(s, p -> new com.kiyamet.robot.RobotCoreItem(p.stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC), com.kiyamet.robot.RobotKind.SCOUT_DRONE));
+            else if (s.equals("robot_core_heavy")) custom(s, p -> new com.kiyamet.robot.RobotCoreItem(p.stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC), com.kiyamet.robot.RobotKind.ROBOT_HEAVY));
             else if (s.equals("radio")) custom(s, p -> new com.kiyamet.npc.Radio(p.stacksTo(1)));
             else if (s.equals("walker_guts")) custom(s, p -> new com.kiyamet.item.WalkerGutsItem(p.stacksTo(16)));
             else if (s.equals("repair_kit")) custom(s, p -> new com.kiyamet.item.RepairKitItem(p.stacksTo(16)));

@@ -62,6 +62,9 @@ public final class LabRecipes {
         r("kiyamet:shield_generator", 1, 700, "kiyamet:tech_core", 1, "kiyamet:energy_cell", 3, "minecraft:shield", 1);
         r("kiyamet:time_stopper", 1, 800, "kiyamet:energy_core", 1, "minecraft:clock", 1, "kiyamet:circuit", 4);
         r("kiyamet:black_hole_bomb", 1, 900, "kiyamet:void_shard", 2, "kiyamet:energy_core", 1);
+        r("kiyamet:robot_core_trooper", 1, 500, "kiyamet:tech_core", 2, "kiyamet:metal_plate", 12, "kiyamet:circuit", 6, "kiyamet:energy_cell", 3);
+        r("kiyamet:robot_core_drone", 1, 650, "kiyamet:tech_core", 2, "kiyamet:lens", 4, "kiyamet:circuit", 8, "kiyamet:energy_core", 1);
+        r("kiyamet:robot_core_heavy", 1, 800, "kiyamet:tech_core", 4, "kiyamet:metal_plate", 24, "kiyamet:energy_core", 2, "minecraft:iron_block", 4);
         r("kiyamet:energy_sword", 1, 999, "kiyamet:energy_core", 2, "minecraft:netherite_sword", 1, "kiyamet:tech_core", 2);
         // arrow weapons
         String[][] guns = {{"arrow_pistol", "50"}, {"arrow_rifle", "100"}, {"double_arrow_rifle", "150"}, {"arrow_shotgun", "200"}, {"silenced_arrow_pistol", "250"},

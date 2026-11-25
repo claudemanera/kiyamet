@@ -198,5 +198,8 @@
  "entity.kiyamet.woman_zombie": "Walker",
  "entity.kiyamet.nurse_zombie": "Nurse Zombie",
  "key.kiyamet.squad": "Open group panel",
- "item.kiyamet.radio": "Walkie-Talkie"
+ "item.kiyamet.radio": "Walkie-Talkie",
+ "item.kiyamet.robot_core_trooper": "Robot Core: Trooper",
+ "item.kiyamet.robot_core_drone": "Robot Core: Drone",
+ "item.kiyamet.robot_core_heavy": "Robot Core: Heavy"
 }

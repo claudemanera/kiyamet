@@ -4,3 +4,4 @@ net.minecraft.world.item.Item
 net.minecraft.world.entity.LivingEntity
 net.minecraft.world.level.levelgen.structure.TemplateStructurePiece
 net.minecraft.world.level.levelgen.structure.Structure
+net.minecraft.world.entity.LivingEntity

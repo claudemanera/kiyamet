@@ -61,3 +61,14 @@ net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateMan
 net.minecraft.world.level.levelgen.structure.TerrainAdjustment
 net.minecraft.world.level.chunk.ChunkGenerator
 net.minecraft.world.level.levelgen.Heightmap$Types
+software.bernie.geckolib.constant.dataticket.DataTicket
+software.bernie.geckolib.renderer.layer.builtin.ItemInHandGeoLayer
+software.bernie.geckolib.renderer.layer.builtin.BlockAndItemGeoLayer
+com.mojang.blaze3d.platform.NativeImage
+net.minecraft.client.renderer.texture.DynamicTexture
+net.minecraft.client.renderer.texture.TextureManager
+net.minecraft.world.entity.ai.goal.RangedAttackGoal
+net.minecraft.world.entity.ai.goal.FollowOwnerGoal
+net.minecraft.world.entity.TamableAnimal
+net.minecraft.world.entity.PathfinderMob
+net.minecraft.world.entity.npc.InventoryCarrier

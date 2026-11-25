@@ -6,3 +6,4 @@ net.minecraft.world.level.levelgen.structure.TemplateStructurePiece
 net.minecraft.world.level.levelgen.structure.Structure
 net.minecraft.world.entity.LivingEntity
 net.minecraft.client.renderer.entity.layers.CapeLayer
+net.minecraft.world.entity.Entity

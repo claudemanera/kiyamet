@@ -99,3 +99,6 @@ net.minecraft.client.renderer.OrderedSubmitNodeCollector
 net.minecraft.client.model.geom.builders.MeshDefinition
 net.minecraft.client.model.geom.builders.PartDefinition
 net.minecraft.client.model.geom.PartPose
+software.bernie.geckolib.renderer.base.RenderPassInfo
+net.minecraft.world.entity.animal.equine.AbstractHorse
+net.minecraft.world.entity.animal.horse.AbstractHorse

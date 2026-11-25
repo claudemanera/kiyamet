@@ -72,3 +72,7 @@ net.minecraft.world.entity.ai.goal.FollowOwnerGoal
 net.minecraft.world.entity.TamableAnimal
 net.minecraft.world.entity.PathfinderMob
 net.minecraft.world.entity.npc.InventoryCarrier
+net.minecraft.client.KeyMapping
+net.minecraft.client.KeyMapping$Category
+net.minecraft.network.protocol.common.custom.CustomPacketPayload
+net.minecraft.network.codec.StreamCodec

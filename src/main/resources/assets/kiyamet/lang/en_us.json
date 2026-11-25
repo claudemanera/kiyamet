@@ -174,5 +174,14 @@
  "generator.kiyamet.flatter": "The Walking Dead: Flatter World",
  "item.kiyamet.walker_guts": "Walker Guts",
  "effect.kiyamet.walker_camouflage": "Walker Camouflage",
- "entity.kiyamet.human": "Human"
+ "entity.kiyamet.human": "Human",
+ "key.category.kiyamet.twd": "The Walking Dead",
+ "key.kiyamet.skills": "Open skills",
+ "key.kiyamet.powers": "Open super powers",
+ "key.kiyamet.companions": "Companions: follow / hold",
+ "key.kiyamet.gauntlet_use": "Gauntlet: use stone power",
+ "key.kiyamet.gauntlet_cycle": "Gauntlet: next stone",
+ "key.kiyamet.camouflage": "Smear walker guts",
+ "key.kiyamet.night_vision": "Toggle night vision power",
+ "key.kiyamet.shadow_step": "Toggle shadow step power"
 }

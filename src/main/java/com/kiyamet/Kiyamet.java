@@ -36,6 +36,7 @@ public class Kiyamet implements ModInitializer {
         com.kiyamet.twd.Camouflage.init();
         com.kiyamet.skill.Powers.init();
         com.kiyamet.npc.ModHumans.init();
+        com.kiyamet.net.KeyActions.init();
         SkillEvents.init();
         SkillCommand.init();
         com.kiyamet.stone.StoneEvents.init();

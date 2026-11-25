@@ -62,6 +62,14 @@
   "kiyamet:treehouse_village",
   "kiyamet:underground_prison",
   "kiyamet:volcano_station",
-  "kiyamet:weather_station"
+  "kiyamet:weather_station",
+  "kiyamet:twd_prison",
+  "kiyamet:twd_farm",
+  "kiyamet:twd_walled_town",
+  "kiyamet:twd_hilltop",
+  "kiyamet:twd_kingdom",
+  "kiyamet:twd_raider_factory",
+  "kiyamet:twd_terminal",
+  "kiyamet:twd_masked_camp"
  ]
 }

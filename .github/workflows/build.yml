@@ -47,7 +47,8 @@ jobs:
           unzip -l "$MCC" | awk '{print $4}' | grep '\.class' > /tmp/ref/mc_client_classes.txt
           CP="$MC:$MCC:$GL:$(find ~/.gradle/caches -name '*.jar' -path '*fabric*' | grep -v sources | tr '\n' ':')"
           while read c; do [ -n "$c" ] && javap -public -constants -cp "$CP" "$c" > "/tmp/ref/$c.txt" 2>&1; done < tools/javap_classes.txt
-          javap -c -cp "$CP" software.bernie.geckolib.model.DefaultedGeoModel 2>&1 | grep -i ldc > /tmp/ref/geomodel_strings.txt
+          for k in software.bernie.geckolib.model.DefaultedGeoModel software.bernie.geckolib.model.DefaultedEntityGeoModel software.bernie.geckolib.cache.GeckoLibResources software.bernie.geckolib.constant.DefaultAnimations; do echo "== $k"; javap -c -p -cp "$CP" $k 2>&1 | grep -E "ldc|String"; done > /tmp/ref/geomodel_strings.txt
+          if [ -f tools/javap_private.txt ]; then while read c; do [ -n "$c" ] && javap -p -cp "$CP" "$c" > "/tmp/ref/p_$c.txt" 2>&1; done < tools/javap_private.txt; fi
           true
       - name: Save build log on failure
         if: failure()

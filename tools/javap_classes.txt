@@ -29,3 +29,11 @@ software.bernie.geckolib.model.DefaultedEntityGeoModel
 software.bernie.geckolib.model.DefaultedGeoModel
 software.bernie.geckolib.model.GeoModel
 software.bernie.geckolib.constant.DefaultAnimations
+net.minecraft.client.renderer.entity.state.LivingEntityRenderState
+net.minecraft.world.entity.player.Player
+net.minecraft.server.level.ServerPlayer
+net.minecraft.world.effect.MobEffects
+net.minecraft.world.level.Level
+net.minecraft.world.entity.Entity
+net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+software.bernie.geckolib.renderer.base.GeoRenderState

@@ -196,5 +196,6 @@
  "item.kiyamet.apocalypse_pack": "Apocalypse Pack",
  "key.kiyamet.backpack": "Open worn backpack",
  "entity.kiyamet.woman_zombie": "Walker",
- "entity.kiyamet.nurse_zombie": "Nurse Zombie"
+ "entity.kiyamet.nurse_zombie": "Nurse Zombie",
+ "key.kiyamet.squad": "Open group panel"
 }

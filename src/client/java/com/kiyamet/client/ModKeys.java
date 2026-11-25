@@ -12,8 +12,8 @@ import org.lwjgl.glfw.GLFW;
 /** Key bindings, changeable in Options > Controls > Key Binds > The Walking Dead. */
 public final class ModKeys {
     private static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(Kiyamet.id("twd"));
-    private static final String[] NAMES = {"skills", "powers", "companions", "gauntlet_use", "gauntlet_cycle", "camouflage", "night_vision", "shadow_step", "backpack"};
-    private static final int[] KEYS = {GLFW.GLFW_KEY_K, GLFW.GLFW_KEY_P, GLFW.GLFW_KEY_H, GLFW.GLFW_KEY_R, GLFW.GLFW_KEY_V, GLFW.GLFW_KEY_B, GLFW.GLFW_KEY_N, GLFW.GLFW_KEY_J, GLFW.GLFW_KEY_U};
+    private static final String[] NAMES = {"skills", "powers", "companions", "gauntlet_use", "gauntlet_cycle", "camouflage", "night_vision", "shadow_step", "backpack", "squad"};
+    private static final int[] KEYS = {GLFW.GLFW_KEY_K, GLFW.GLFW_KEY_P, GLFW.GLFW_KEY_H, GLFW.GLFW_KEY_R, GLFW.GLFW_KEY_V, GLFW.GLFW_KEY_B, GLFW.GLFW_KEY_N, GLFW.GLFW_KEY_J, GLFW.GLFW_KEY_U, GLFW.GLFW_KEY_G};
     private static final KeyMapping[] MAPPINGS = new KeyMapping[NAMES.length];
 
     public static void init() {

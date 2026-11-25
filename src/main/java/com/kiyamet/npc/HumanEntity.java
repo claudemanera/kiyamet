@@ -83,6 +83,15 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     @Nullable private BlockPos home;
     private String community = "", communityType = "";
     private int shotCooldown;
+    private Job job = Job.NONE;
+    /** Game time when the current supply run ends (0 = not away). */
+    private long awayUntil;
+    private int awayMinutes, awayGroup;
+
+    public Job job() { return job; }
+    public void setJob(Job j) { job = j; applyStats(false); }
+    public boolean isAway() { return awayUntil > 0; }
+    public long awayUntil() { return awayUntil; }
     private static final EntityDataAccessor<Integer> GEAR = SynchedEntityData.defineId(HumanEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> PROFESSION = SynchedEntityData.defineId(HumanEntity.class, EntityDataSerializers.INT);
 
@@ -168,11 +177,11 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     public void applyStats(boolean heal) {
         int lv = lvl();
         Role r = role();
-        set(Attributes.MAX_HEALTH, (20 + lv * 1.1) * r.hpMult);
+        set(Attributes.MAX_HEALTH, (20 + lv * 1.1) * r.hpMult * (job == Job.GUARDIAN ? 1.4 : 1.0));
         set(Attributes.ATTACK_DAMAGE, (2 + lv * 0.07) * r.dmgMult);
-        set(Attributes.ARMOR, Math.min(24, lv * 0.075 * r.hpMult));
+        set(Attributes.ARMOR, Math.min(30, lv * 0.075 * r.hpMult + (job == Job.GUARDIAN ? 6 : 0)));
         set(Attributes.ARMOR_TOUGHNESS, Math.min(12, lv * 0.03));
-        set(Attributes.MOVEMENT_SPEED, faction() == Faction.WHISPERER ? 0.2 : 0.3 + Math.min(0.06, lv * 0.0002));
+        set(Attributes.MOVEMENT_SPEED, (faction() == Faction.WHISPERER ? 0.2 : 0.3 + Math.min(0.06, lv * 0.0002)) * (job == Job.SCOUT ? 1.15 : 1.0));
         set(Attributes.KNOCKBACK_RESISTANCE, Math.min(0.8, lv / 375.0));
         if (heal) setHealth(getMaxHealth());
         refreshBar();
@@ -212,6 +221,10 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         out.putString("Role", role().name());
         out.putInt("Xp", xp);
         out.putString("Profession", profession().name());
+        out.putString("Job", job.name());
+        out.putLong("AwayUntil", awayUntil);
+        out.putInt("AwayMinutes", awayMinutes);
+        out.putInt("AwayGroup", awayGroup);
         out.putInt("Gear", entityData.get(GEAR));
         out.putString("Order", order.name());
         out.putString("Community", community);
@@ -232,6 +245,10 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         try { entityData.set(FACTION, Faction.valueOf(in.getStringOr("Faction", "SURVIVOR")).ordinal()); } catch (IllegalArgumentException ignored) {}
         try { entityData.set(ROLE, Role.valueOf(in.getStringOr("Role", "MEMBER")).ordinal()); } catch (IllegalArgumentException ignored) {}
         xp = in.getIntOr("Xp", 0);
+        job = Job.byName(in.getStringOr("Job", "NONE"));
+        awayUntil = in.getLongOr("AwayUntil", 0L);
+        awayMinutes = in.getIntOr("AwayMinutes", 0);
+        awayGroup = in.getIntOr("AwayGroup", 1);
         String prof = in.getStringOr("Profession", "");
         if (!prof.isEmpty()) setProfession(Profession.byName(prof));
         else switch (Specialty.byName(in.getStringOr("Specialty", "NONE"))) {
@@ -328,6 +345,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
             shotCooldown = w.getItem() instanceof com.kiyamet.item.GunItem ? 22 : w.is(Items.CROSSBOW) ? 30 : 26;
             if (role() == Role.COMMANDER) shotCooldown = 12;
             if (specialty() == Specialty.HUNTRESS) shotCooldown = (int) (shotCooldown * 0.7);
+            if (job == Job.GUNNER) shotCooldown = (int) (shotCooldown * 0.8);
             Vec3 from = getEyePosition(), to = t.getEyePosition();
             float spread = (float) Math.max(0.05, 0.5 - lvl() / 600.0);
             boolean hit = random.nextFloat() > spread * 0.6 || specialty() == Specialty.HUNTRESS && d < 12;
@@ -336,7 +354,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
             sl.playSound(null, blockPosition(), w.getItem() instanceof com.kiyamet.item.GunItem ? SoundEvents.CROSSBOW_SHOOT : SoundEvents.ARROW_SHOOT, SoundSource.HOSTILE, 1f, 0.9f + random.nextFloat() * 0.2f);
             triggerAnim("attack", "attack");
             if (hit) {
-                float dmg = (float) (getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.85 * Weapon.tier(w) * (specialty() == Specialty.HUNTRESS ? 1.3 : 1.0));
+                float dmg = (float) (getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.85 * Weapon.tier(w) * (specialty() == Specialty.HUNTRESS ? 1.3 : 1.0) * (job == Job.GUNNER ? 1.25 : 1.0));
                 t.hurtServer(sl, sl.damageSources().arrow(null, HumanEntity.this), dmg);
             }
             if (w.getItem() instanceof com.kiyamet.item.GunItem) com.kiyamet.world.NoiseSystem.make(sl, blockPosition(), 20, 2);
@@ -397,6 +415,10 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         super.tick();
         if (!(level() instanceof ServerLevel sl)) return;
         if (!initialized) setup(faction(), role(), lvl(), null);
+        if (awayUntil > 0) { tickAway(sl); return; }
+        if (owner != null && job == Job.SCOUT && tickCount % 100 == 0) scout(sl);
+        if (owner != null && job == Job.GUARDIAN && tickCount % 40 == 0) guard(sl);
+        if (owner != null && job == Job.LOOTER && tickCount % 6000 == 3000) scavenge();
         if (shotCooldown > 0) shotCooldown--;
         if (home == null && owner == null && faction() == Faction.COMMUNITY) home = blockPosition();
         if (faction() == Faction.COMMUNITY && community.isEmpty() && tickCount > 5) community = Communities.assign(sl, this);
@@ -409,6 +431,75 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     }
 
     public void setCommunity(String key) { community = key; }
+
+    // ---------------------------------------------------------------- jobs & supply runs
+
+    private void scout(ServerLevel sl) {
+        List<net.minecraft.world.entity.Mob> foes = sl.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, getBoundingBox().inflate(40), m -> m instanceof net.minecraft.world.entity.monster.Enemy && m.isAlive());
+        for (net.minecraft.world.entity.Mob m : foes) m.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.GLOWING, 120, 0, false, false));
+        ServerPlayer p = ownerPlayer();
+        if (p != null && foes.size() >= 6 && tickCount % 600 == 0)
+            p.sendSystemMessage(Component.literal(getName().getString() + " (Scout): " + foes.size() + " hostiles nearby!").withStyle(ChatFormatting.GOLD));
+    }
+
+    private void guard(ServerLevel sl) {
+        ServerPlayer p = ownerPlayer();
+        if (p == null || distanceTo(p) > 16) return;
+        for (net.minecraft.world.entity.Mob m : sl.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, getBoundingBox().inflate(10), m -> m.getTarget() == p && !(m instanceof HumanEntity h && h.isOwnedBy(p))))
+            m.setTarget(this);
+    }
+
+    /** Sends this companion on a supply run with {@code group} people for {@code minutes}. */
+    public void sendAway(int minutes, int group) {
+        if (!(level() instanceof ServerLevel sl)) return;
+        awayMinutes = minutes;
+        awayGroup = Math.max(1, group);
+        awayUntil = sl.getGameTime() + minutes * 1200L;
+        setInvisible(true);
+        setInvulnerable(true);
+        setSilent(true);
+        setNoAi(true);
+        noPhysics = true;
+        setTarget(null);
+        sl.sendParticles(ParticleTypes.CLOUD, getX(), getY() + 1, getZ(), 20, 0.3, 0.6, 0.3, 0.02);
+    }
+
+    private void tickAway(ServerLevel sl) {
+        ServerPlayer p = ownerPlayer();
+        if (p != null && p.level() == sl) setPos(p.getX(), p.getY() + 0.1, p.getZ());   // stays with you, unseen
+        if (sl.getGameTime() < awayUntil) return;
+        awayUntil = 0;
+        setInvisible(false);
+        setInvulnerable(false);
+        setSilent(false);
+        setNoAi(false);
+        noPhysics = false;
+        setOrder(Order.FOLLOW);
+        // danger: the longer the run and the lower the level, the riskier
+        float risk = Math.max(0.01f, awayMinutes * 0.02f - lvl() / 400f - (awayGroup - 1) * 0.02f);
+        if (random.nextFloat() < risk * 0.25f) {
+            if (p != null) p.sendSystemMessage(Component.literal(getName().getString() + " never came back from the supply run...").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
+            discard();
+            return;
+        }
+        if (random.nextFloat() < risk) setHealth(Math.max(1, getHealth() * 0.4f));
+        int rolls = (int) Math.ceil(awayMinutes * (1 + lvl() / 150.0) * (job == Job.LOOTER ? 2 : 1) * (1 + (awayGroup - 1) * 0.15));
+        String[][] loot = {{"minecraft:bread", "4"}, {"minecraft:cooked_beef", "3"}, {"minecraft:arrow", "16"}, {"kiyamet:bandage", "2"}, {"minecraft:iron_ingot", "3"},
+                {"minecraft:coal", "6"}, {"kiyamet:metal_plate", "2"}, {"kiyamet:circuit", "1"}, {"kiyamet:fuel_canister", "1"}, {"minecraft:leather", "3"},
+                {"kiyamet:medkit", "1"}, {"kiyamet:ruby", "2"}, {"minecraft:gold_ingot", "2"}, {"kiyamet:energy_cell", "1"}, {"minecraft:diamond", "1"}, {"kiyamet:vaccine", "1"}};
+        int found = 0;
+        for (int i = 0; i < rolls; i++) {
+            int max = lvl() > 150 ? loot.length : lvl() > 60 ? loot.length - 2 : loot.length - 5;
+            String[] e = loot[random.nextInt(max)];
+            ItemStack rest = inventory.addItem(new ItemStack(Ui.item(e[0]), Integer.parseInt(e[1])));
+            if (rest.isEmpty()) found++;
+        }
+        xp += awayMinutes * 15;
+        onKill(sl, null);
+        sl.sendParticles(ParticleTypes.HAPPY_VILLAGER, getX(), getY() + 1, getZ(), 15, 0.4, 0.6, 0.4, 0);
+        if (p != null) p.sendSystemMessage(Component.literal(getName().getString() + " is back from the supply run with " + found + " finds" +
+                (getHealth() < getMaxHealth() * 0.5f ? " (badly hurt)" : "") + ". Check their inventory!").withStyle(ChatFormatting.GREEN));
+    }
 
     private void nurse(ServerLevel sl) {
         float amount = 2 + lvl() / 40f;
@@ -480,6 +571,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
 
     @Override
     public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
+        if (awayUntil > 0) return false;
         Entity attacker = source.getEntity();
         if (attacker instanceof Player p && isOwnedBy(p)) return false;                               // no friendly fire
         if (attacker instanceof HumanEntity h && h.owner != null && owner != null && h.owner.equals(owner)) return false;
@@ -488,9 +580,9 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     }
 
     /** Companions earn XP from kills and level up to 300. */
-    public void onKill(ServerLevel level, LivingEntity victim) {
+    public void onKill(ServerLevel level, @Nullable LivingEntity victim) {
         if (faction() != Faction.COMPANION) return;
-        int gain = victim instanceof BossEntity ? 400 : victim instanceof HumanEntity h ? 20 + h.lvl() / 3 : victim instanceof RobotEntity ? 25 : 10;
+        int gain = victim == null ? 0 : victim instanceof BossEntity ? 400 : victim instanceof HumanEntity h ? 20 + h.lvl() / 3 : victim instanceof RobotEntity ? 25 : 10;
         xp += gain;
         while (lvl() < MAX_LEVEL && xp >= xpToNext(lvl())) {
             xp -= xpToNext(lvl());

@@ -75,6 +75,7 @@ public final class KeyActions {
             }
             case KeyAction.NIGHT_VISION -> toggle(p, Powers.Power.NIGHT_VISION);
             case KeyAction.SHADOW_STEP -> toggle(p, Powers.Power.INVISIBLE);
+            case KeyAction.SQUAD -> com.kiyamet.npc.SquadMenu.open(p);
             case KeyAction.BACKPACK -> com.kiyamet.backpack.BackpackMenu.openWorn(p);
             default -> {}
         }

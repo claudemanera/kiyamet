@@ -25,7 +25,7 @@ public class RecruitMenu extends PanelMenu {
         redraw();
     }
 
-    public static int cost(HumanEntity h) { return 3 + h.level() / 8; }
+    public static int cost(HumanEntity h) { return 3 + h.lvl() / 8; }
 
     public static long companions(ServerPlayer p) {
         return ((net.minecraft.server.level.ServerLevel) p.level()).getEntitiesOfClass(HumanEntity.class, p.getBoundingBox().inflate(512), x -> x.isOwnedBy(p)).size();
@@ -34,7 +34,7 @@ public class RecruitMenu extends PanelMenu {
     @Override
     protected void draw() {
         c.setItem(4, Ui.icon(Items.PLAYER_HEAD, Component.literal(h.getName().getString()).withStyle(ChatFormatting.WHITE, ChatFormatting.BOLD),
-                Ui.text("Level " + h.level(), ChatFormatting.YELLOW), Ui.text("\"I could use some company out here.\"", ChatFormatting.GRAY)));
+                Ui.text("Level " + h.lvl(), ChatFormatting.YELLOW), Ui.text("\"I could use some company out here.\"", ChatFormatting.GRAY)));
         int cost = cost(h), have = Shop.count(player, Shop.RUBY);
         c.setItem(20, Ui.glint(Ui.icon(Ui.item(Shop.RUBY), Ui.text("Recruit for " + cost + " rubies", have >= cost ? ChatFormatting.GREEN : ChatFormatting.RED, ChatFormatting.BOLD),
                 Ui.text("You have " + have, ChatFormatting.GRAY), Ui.text("Companions: " + companions(player) + " / " + MAX_COMPANIONS, ChatFormatting.GRAY)), have >= cost));

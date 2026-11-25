@@ -32,7 +32,7 @@ public class CompanionMenu extends PanelMenu {
 
     @Override
     protected void draw() {
-        int lv = h.level();
+        int lv = h.lvl();
         Appearance a = h.appearance();
         ItemStack info = Ui.icon(Items.PLAYER_HEAD, Component.literal(h.getName().getString()).withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD),
                 Ui.text("Level " + lv + " / " + HumanEntity.MAX_LEVEL, ChatFormatting.YELLOW),

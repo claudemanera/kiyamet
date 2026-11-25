@@ -105,7 +105,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     public Appearance appearance() { return Appearance.unpack(entityData.get(APPEARANCE)); }
     public int appearanceCode() { return entityData.get(APPEARANCE); }
     public void setAppearance(Appearance a) { entityData.set(APPEARANCE, a.pack()); }
-    public int level() { return entityData.get(LEVEL); }
+    public int lvl() { return entityData.get(LEVEL); }
     public Faction faction() { return Faction.byId(entityData.get(FACTION)); }
     public Role role() { return Role.byId(entityData.get(ROLE)); }
     public boolean isWhisperer() { return faction() == Faction.WHISPERER; }
@@ -138,7 +138,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     }
 
     public void applyStats(boolean heal) {
-        int lv = level();
+        int lv = lvl();
         Role r = role();
         set(Attributes.MAX_HEALTH, (20 + lv * 1.1) * r.hpMult);
         set(Attributes.ATTACK_DAMAGE, (2 + lv * 0.07) * r.dmgMult);
@@ -179,7 +179,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     protected void addAdditionalSaveData(ValueOutput out) {
         super.addAdditionalSaveData(out);
         out.putInt("Appearance", entityData.get(APPEARANCE));
-        out.putInt("Level", level());
+        out.putInt("Level", lvl());
         out.putString("Faction", faction().name());
         out.putString("Role", role().name());
         out.putInt("Xp", xp);
@@ -285,7 +285,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
             shotCooldown = w.getItem() instanceof com.kiyamet.item.GunItem ? 22 : w.is(Items.CROSSBOW) ? 30 : 26;
             if (role() == Role.COMMANDER) shotCooldown = 12;
             Vec3 from = getEyePosition(), to = t.getEyePosition();
-            float spread = (float) Math.max(0.05, 0.5 - level() / 600.0);
+            float spread = (float) Math.max(0.05, 0.5 - lvl() / 600.0);
             boolean hit = random.nextFloat() > spread * 0.6;
             int n = (int) (from.distanceTo(to) * 2);
             for (int i = 0; i < n; i++) { Vec3 at = from.add(to.subtract(from).scale(i / (double) n)); sl.sendParticles(ParticleTypes.CRIT, at.x, at.y, at.z, 1, 0, 0, 0, 0); }
@@ -352,12 +352,12 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     public void tick() {
         super.tick();
         if (!(level() instanceof ServerLevel sl)) return;
-        if (!initialized) setup(faction(), role(), level(), null);
+        if (!initialized) setup(faction(), role(), lvl(), null);
         if (shotCooldown > 0) shotCooldown--;
         if (home == null && owner == null && faction() == Faction.COMMUNITY) home = blockPosition();
         if (faction() == Faction.COMMUNITY && community.isEmpty() && tickCount > 5) community = Communities.assign(sl, this);
         if (bar != null) bar.setProgress(getHealth() / getMaxHealth());
-        if (tickCount % 100 == 0 && getHealth() < getMaxHealth() && getTarget() == null) heal(1 + level() / 60f);
+        if (tickCount % 100 == 0 && getHealth() < getMaxHealth() && getTarget() == null) heal(1 + lvl() / 60f);
         if (faction() == Faction.COMPANION && owner != null && tickCount % 40 == 0 && ownerPlayer() == null && order == Order.FOLLOW) setOrder(Order.STAY);
     }
 
@@ -401,18 +401,18 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     /** Companions earn XP from kills and level up to 300. */
     public void onKill(ServerLevel level, LivingEntity victim) {
         if (faction() != Faction.COMPANION) return;
-        int gain = victim instanceof BossEntity ? 400 : victim instanceof HumanEntity h ? 20 + h.level() / 3 : victim instanceof RobotEntity ? 25 : 10;
+        int gain = victim instanceof BossEntity ? 400 : victim instanceof HumanEntity h ? 20 + h.lvl() / 3 : victim instanceof RobotEntity ? 25 : 10;
         xp += gain;
-        while (level() < MAX_LEVEL && xp >= xpToNext(level())) {
-            xp -= xpToNext(level());
-            entityData.set(LEVEL, level() + 1);
+        while (lvl() < MAX_LEVEL && xp >= xpToNext(lvl())) {
+            xp -= xpToNext(lvl());
+            entityData.set(LEVEL, lvl() + 1);
             applyStats(false);
             heal(getMaxHealth() * 0.25f);
             level.sendParticles(ParticleTypes.TOTEM_OF_UNDYING, getX(), getY() + 1, getZ(), 30, 0.4, 0.6, 0.4, 0.3);
             level.playSound(null, blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.NEUTRAL, 0.8f, 1.2f);
             ServerPlayer p = ownerPlayer();
-            if (p != null && level() % 5 == 0)
-                p.sendSystemMessage(Component.literal(getName().getString() + " reached level " + level() + "!").withStyle(ChatFormatting.AQUA));
+            if (p != null && lvl() % 5 == 0)
+                p.sendSystemMessage(Component.literal(getName().getString() + " reached level " + lvl() + "!").withStyle(ChatFormatting.AQUA));
         }
     }
 
@@ -421,7 +421,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         super.die(source);
         if (!(level() instanceof ServerLevel sl)) return;
         if (faction() != Faction.COMPANION) {
-            int rubies = level() / 40 + (role() == Role.COMMANDER ? 12 : role() == Role.LEADER ? 4 : 0);
+            int rubies = lvl() / 40 + (role() == Role.COMMANDER ? 12 : role() == Role.LEADER ? 4 : 0);
             if (rubies > 0) sl.addFreshEntity(new ItemEntity(sl, getX(), getY() + 0.5, getZ(), new ItemStack(Ui.item("kiyamet:ruby"), rubies)));
             if (random.nextFloat() < 0.4f) sl.addFreshEntity(new ItemEntity(sl, getX(), getY() + 0.5, getZ(), new ItemStack(Items.ARROW, 4 + random.nextInt(12))));
             if (random.nextFloat() < 0.2f) sl.addFreshEntity(new ItemEntity(sl, getX(), getY() + 0.5, getZ(), new ItemStack(Ui.item("kiyamet:bandage"))));
@@ -485,7 +485,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
             case COMMUNITY -> ChatFormatting.GREEN;
             default -> ChatFormatting.WHITE;
         };
-        return Component.empty().append(base).append(Component.literal(" [Lv " + level() + "]").withStyle(ChatFormatting.GRAY)).withStyle(c);
+        return Component.empty().append(base).append(Component.literal(" [Lv " + lvl() + "]").withStyle(ChatFormatting.GRAY)).withStyle(c);
     }
 
     @Override

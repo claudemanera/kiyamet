@@ -35,7 +35,7 @@ public class LeaderMenu extends PanelMenu {
         int members = h.allies((ServerLevel) player.level(), 64).size() + 1;
         String standing = rep >= 80 ? "Hero of the community" : rep >= 50 ? "Trusted friend" : rep >= 20 ? "Welcome guest" : "Stranger";
         c.setItem(4, Ui.glint(Ui.icon(Items.BELL, Component.literal(Communities.displayName(h.communityType())).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD),
-                Ui.text("Leader: " + h.getName().getString() + " (Lv " + h.level() + ")", ChatFormatting.YELLOW),
+                Ui.text("Leader: " + h.getName().getString() + " (Lv " + h.lvl() + ")", ChatFormatting.YELLOW),
                 Ui.text("Members nearby: " + members, ChatFormatting.GRAY),
                 Ui.text("Your standing: " + standing + " (" + rep + ")", ChatFormatting.GREEN), Ui.bar((rep + 100) / 200.0, 20)), true));
         c.setItem(20, Ui.icon(Ui.item(Shop.RUBY), Ui.text("Donate 5 rubies", ChatFormatting.RED), Ui.text("+10 reputation", ChatFormatting.GREEN)));
@@ -61,7 +61,7 @@ public class LeaderMenu extends PanelMenu {
                 HumanEntity v = ModHumans.HUMAN.create(sl, EntitySpawnReason.MOB_SUMMONED);
                 if (v == null) return false;
                 v.setPos(h.getX() + 1, h.getY(), h.getZ() + 1);
-                v.setup(Faction.SURVIVOR, Role.MEMBER, Math.max(20, h.level() / 2 + h.getRandom().nextInt(30)), null);
+                v.setup(Faction.SURVIVOR, Role.MEMBER, Math.max(20, h.lvl() / 2 + h.getRandom().nextInt(30)), null);
                 sl.addFreshEntity(v);
                 v.setOwner(player);
                 player.sendSystemMessage(Component.literal(v.getName().getString() + " volunteers to join you!").withStyle(ChatFormatting.AQUA));

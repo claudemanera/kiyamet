@@ -136,7 +136,7 @@ public final class ModHumans {
         int n = 4 + level.random.nextInt(3);
         for (int i = 0; i < n; i++)
             spawn(level, at.offset(level.random.nextInt(7) - 3, 0, level.random.nextInt(7) - 3), Faction.WHISPERER,
-                    i == 0 && power > 5000 ? Role.COMMANDER : i == 0 ? Role.LEADER : Role.MEMBER, i == 0 && power > 5000 ? 270 + level.random.nextInt(31) : base + level.random.nextInt(20));
+                    i == 0 && power > 5000 ? Role.COMMANDER : i == 0 ? Role.LEADER : Role.MEMBER, i == 0 && power > 5000 ? 270 + level.random.nextInt(31) : base + level.random.nextInt(20), null);
         for (int i = 0; i < 8; i++) {
             KZombie z = ModEntities.ZOMBIES.get(level.random.nextBoolean() ? ZombieKind.FARMER : ZombieKind.TOXIC).create(level, EntitySpawnReason.EVENT);
             if (z == null) continue;

@@ -90,5 +90,15 @@ public final class BlockDurability {
         return true;
     }
 
+    /** Damaged blocks within r blocks of a point. */
+    public static java.util.List<BlockPos> damagedNear(ServerLevel level, BlockPos c, int r) {
+        java.util.List<BlockPos> out = new java.util.ArrayList<>();
+        for (long l : DAMAGE.getOrDefault(level.dimension(), Map.of()).keySet()) {
+            BlockPos p = BlockPos.of(l);
+            if (p.distSqr(c) <= r * r) out.add(p);
+        }
+        return out;
+    }
+
     private BlockDurability() {}
 }

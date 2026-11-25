@@ -265,6 +265,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
             case NURSE -> setProfession(Profession.NURSE);
             case HUNTRESS -> setProfession(Profession.HUNTRESS);
             case SCAVENGER -> setProfession(Profession.SCAVENGER);
+            case ENGINEER -> setProfession(Profession.ENGINEER);
             default -> {}
         }
         entityData.set(GEAR, in.getIntOr("Gear", 0));
@@ -439,6 +440,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (faction() == Faction.COMPANION && owner != null && tickCount % 40 == 0 && ownerPlayer() == null && order == Order.FOLLOW) setOrder(Order.STAY);
         if (tickCount % 40 == 0 && getHealth() < getMaxHealth() * 0.4f) selfHeal();
         if (specialty() == Specialty.NURSE && tickCount % 200 == 0) nurse(sl);
+        if (specialty() == Specialty.ENGINEER && tickCount % 300 == 150) engineer(sl);
         if (specialty() == Specialty.SCAVENGER && owner != null && tickCount % 3600 == 1800) scavenge();
     }
 
@@ -527,6 +529,25 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         for (HumanEntity h : sl.getEntitiesOfClass(HumanEntity.class, getBoundingBox().inflate(8), h -> h.getHealth() < h.getMaxHealth()
                 && (owner != null ? owner.equals(h.owner) : !community.isEmpty() && community.equals(h.community)))) { h.heal(amount); healed = true; }
         if (healed) sl.sendParticles(ParticleTypes.HEART, getX(), getY() + 2.1, getZ(), 3, 0.4, 0.2, 0.4, 0);
+    }
+
+    private void engineer(ServerLevel sl) {
+        float f = lvl() >= 150 ? 0.4f : 0.2f;
+        int fixed = 0;
+        for (BlockPos p : com.kiyamet.defense.BlockDurability.damagedNear(sl, blockPosition(), 10)) {
+            if (fixed >= 6) break;
+            if (com.kiyamet.defense.BlockDurability.repair(sl, p, f)) {
+                fixed++;
+                sl.sendParticles(ParticleTypes.WAX_OFF, p.getX() + 0.5, p.getY() + 0.5, p.getZ() + 0.5, 5, 0.3, 0.3, 0.3, 0);
+            }
+        }
+        for (net.minecraft.world.entity.LivingEntity e : sl.getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class, getBoundingBox().inflate(10),
+                e -> (e instanceof com.kiyamet.robot.RobotEntity r && r.isAlly() || e instanceof com.kiyamet.ally.TurretDrone) && e.getHealth() < e.getMaxHealth())) {
+            e.heal(e.getMaxHealth() * f * 0.5f);
+            sl.sendParticles(ParticleTypes.WAX_OFF, e.getX(), e.getY() + 1, e.getZ(), 8, 0.4, 0.4, 0.4, 0);
+            fixed++;
+        }
+        if (fixed > 0) { swing(net.minecraft.world.InteractionHand.MAIN_HAND); sl.playSound(null, blockPosition(), net.minecraft.sounds.SoundEvents.ANVIL_USE, net.minecraft.sounds.SoundSource.NEUTRAL, 0.3f, 1.4f); }
     }
 
     private void scavenge() {

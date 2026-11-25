@@ -14,6 +14,7 @@ public enum Profession {
     NURSE        ("Nurse",             2, i(30),                       i(0),                  i(3, 0, 0),        i(0, 4),         "minecraft:iron_sword"),
     HUNTRESS     ("Huntress",          2, i(16, 14, 29),               i(9, 13, 0),           i(0, 14),          i(2),            "minecraft:bow,minecraft:crossbow"),
     SCAVENGER    ("Scavenger",         2, i(3, 21, 18, 19),            i(9, 1, 6, 15),        i(4, 14, 9, 0),    i(3, 7),         "minecraft:stone_axe,minecraft:crossbow"),
+    ENGINEER     ("Engineer",          2, i(17, 3, 21),                i(11, 7, 0),           i(0, 6),           i(7),            "kiyamet:arrow_pistol,minecraft:iron_axe"),
     POLICE       ("Police Officer",    0, i(5),                        i(5, 0),               i(0, 9),           i(6),            "kiyamet:arrow_pistol,minecraft:iron_sword"),
     SHERIFF      ("Sheriff",           1, i(4),                        i(2),                  i(0, 9),           i(6),            "kiyamet:arrow_pistol,kiyamet:arrow_rifle"),
     SOLDIER      ("Soldier",           0, i(6),                        i(3),                  i(0, 1, 9),        i(5, 2),         "kiyamet:arrow_rifle,kiyamet:arrow_repeater"),
@@ -48,7 +49,7 @@ public enum Profession {
     public boolean enemy() { return ordinal() >= RAIDER.ordinal(); }
 
     public Specialty specialty() {
-        return switch (this) { case NURSE -> Specialty.NURSE; case HUNTRESS -> Specialty.HUNTRESS; case SCAVENGER -> Specialty.SCAVENGER; default -> Specialty.NONE; };
+        return switch (this) { case NURSE -> Specialty.NURSE; case HUNTRESS -> Specialty.HUNTRESS; case SCAVENGER -> Specialty.SCAVENGER; case ENGINEER -> Specialty.ENGINEER; default -> Specialty.NONE; };
     }
 
     public static Profession byName(String s) {
@@ -67,7 +68,7 @@ public enum Profession {
             case "farm" -> r.nextBoolean() ? SHERIFF : HUNTER;
             default -> new Profession[]{GUARD, SOLDIER, POLICE, SHERIFF, GUARD}[r.nextInt(5)];
         };
-        if (r.nextFloat() < 0.25f) return new Profession[]{NURSE, HUNTRESS, SCAVENGER}[r.nextInt(3)];
+        if (r.nextFloat() < 0.25f) return new Profession[]{NURSE, HUNTRESS, SCAVENGER, ENGINEER}[r.nextInt(4)];
         Profession[] pool = switch (community == null ? "" : community) {
             case "prison" -> new Profession[]{PRISONER, PRISONER, COOK, MECHANIC, SURVIVOR, DOCTOR};
             case "farm" -> new Profession[]{FARMER, FARMER, COOK, HUNTER, SURVIVOR};
@@ -87,6 +88,7 @@ public enum Profession {
         if (enemy() || outfits.length == 0) return a;
         Appearance out = a.withOutfit(pick(r, outfits, a.outfit()), a.outfitColor());
         if (this == PRISONER || this == FIREFIGHTER || this == ROYAL_GUARD) out = out.withDetail(r.nextInt(4) == 0 ? 1 : 0);
+        if (this == NURSE) out = out.withOutfit(out.outfit(), new int[]{14, 14, 10, 4, 15, 1}[r.nextInt(6)]);
         if (gender == 2 && !out.female()) out = out.withFemale(true);
         if (gender == 1 && out.female()) out = out.withFemale(false);
         return out;

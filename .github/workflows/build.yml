@@ -32,6 +32,19 @@ jobs:
         run: |
           set -o pipefail
           gradle build --stacktrace 2>&1 | tee build.log
+      - name: API reference dump
+        if: always()
+        run: |
+          mkdir -p /tmp/ref
+          MC=$(find ~/.gradle/caches -path '*minecraft*' -name '*.jar' | grep -iE 'merged|common|client' | grep -i named | head -1)
+          [ -z "$MC" ] && MC=$(find ~/.gradle/caches ~/.gradle -name 'minecraft-merged*.jar' | head -1)
+          GL=$(find ~/.gradle/caches .gradle -name 'geckolib*.jar' 2>/dev/null | grep -v sources | head -1)
+          FA=$(find ~/.gradle/caches -name 'fabric-api-*.jar' | grep -v sources | head -1)
+          echo "MC=$MC GL=$GL" > /tmp/ref/paths.txt
+          find ~/.gradle/caches -path '*minecraft*' -name '*.jar' | head -40 >> /tmp/ref/paths.txt
+          [ -n "$GL" ] && unzip -l "$GL" | grep '\.class' | awk '{print $4}' > /tmp/ref/geckolib_classes.txt
+          CP="$MC:$GL:$(find ~/.gradle/caches -name '*.jar' -path '*fabric*' | tr '\n' ':')"
+          while read c; do [ -n "$c" ] && javap -public -cp "$CP" "$c" > "/tmp/ref/$c.txt" 2>&1; done < tools/javap_classes.txt
       - name: Save build log on failure
         if: failure()
         run: |
@@ -42,6 +55,16 @@ jobs:
           cp /tmp/build.log build.log
           git add build.log && git commit -qm "build log ${{ github.run_number }}"
           git push -f origin ci-log
+      - name: Publish API reference
+        if: always()
+        run: |
+          git config user.name ci && git config user.email ci@users.noreply.github.com
+          cp build.log /tmp/ref/build.log 2>/dev/null || true
+          git stash -u -q || true
+          git checkout -q --orphan ci-ref
+          git rm -rfq . || true
+          cp -r /tmp/ref/* .
+          git add -A && git commit -qm "ref ${{ github.run_number }}" && git push -qf origin ci-ref
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:

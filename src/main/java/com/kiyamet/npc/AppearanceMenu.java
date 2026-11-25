@@ -14,9 +14,10 @@ import net.minecraft.world.item.Items;
 /** Character creator for a companion: each row cycles one feature (◀ / ▶). The companion updates live. */
 public class AppearanceMenu extends PanelMenu {
     private final HumanEntity h;
-    private static final String[] ROWS = {"Skin tone", "Hair style", "Hair colour", "Eyes", "Beard", "Face detail", "Outfit", "Outfit colour"};
-    // rows 1-4 hold two features each: left half (cols 0-3) and right half (cols 5-8)
-    private static final int[][] LAYOUT = {{9, 0}, {14, 1}, {18, 2}, {23, 3}, {27, 4}, {32, 5}, {36, 6}, {41, 7}};
+    private static final String[] ROWS = {"Skin tone", "Hair style", "Hair colour", "Eyes", "Beard", "Face detail", "Outfit", "Outfit colour",
+            "Headwear", "Mask", "Accessory", "Gear colour"};
+    // rows 1-4 hold three features each (cols 0-2, 3-5, 6-8)
+    private static final int[][] LAYOUT = {{9, 0}, {12, 1}, {15, 2}, {18, 3}, {21, 4}, {24, 5}, {27, 6}, {30, 7}, {33, 11}, {36, 8}, {39, 9}, {42, 10}};
 
     public static void open(ServerPlayer p, HumanEntity h) {
         p.openMenu(new SimpleMenuProvider((id, inv, pl) -> new AppearanceMenu(id, inv, p, h), Component.literal("Appearance: " + h.getName().getString())));
@@ -31,12 +32,15 @@ public class AppearanceMenu extends PanelMenu {
     private static int count(int row) {
         return switch (row) {
             case 0 -> Appearance.SKINS; case 1 -> Appearance.HAIRS; case 2 -> Appearance.HAIR_COLORS; case 3 -> 4; case 4 -> 4;
-            case 5 -> Appearance.DETAILS; case 6 -> Appearance.OUTFITS; default -> Appearance.OUTFIT_COLORS;
+            case 5 -> Appearance.DETAILS; case 6 -> Appearance.OUTFITS; case 7 -> Appearance.OUTFIT_COLORS;
+            case 8 -> Gear.HEADWEAR; case 9 -> Gear.MASKS; case 10 -> Gear.ACCESSORIES; default -> Gear.COLORS;
         };
     }
 
-    private static int value(Appearance a, int row) {
+    private int value(Appearance a, int row) {
+        Gear g = h.gear();
         return switch (row) {
+            case 8 -> g.headwear(); case 9 -> g.mask(); case 10 -> g.accessory(); case 11 -> g.color();
             case 0 -> a.skin(); case 1 -> a.hair(); case 2 -> a.hairColor(); case 3 -> a.eyes(); case 4 -> a.beard();
             case 5 -> a.detail(); case 6 -> a.outfit(); default -> a.outfitColor();
         };
@@ -46,14 +50,16 @@ public class AppearanceMenu extends PanelMenu {
         return switch (row) {
             case 0 -> Appearance.SKIN_NAMES[v]; case 1 -> Appearance.HAIR_NAMES[v]; case 2 -> Appearance.HAIR_COLOR_NAMES[v];
             case 3 -> Appearance.EYE_NAMES[v]; case 4 -> Appearance.BEARD_NAMES[v]; case 5 -> Appearance.DETAIL_NAMES[v];
-            case 6 -> Appearance.OUTFIT_NAMES[v]; default -> Appearance.OUTFIT_COLOR_NAMES[v];
+            case 6 -> Appearance.OUTFIT_NAMES[v]; case 7 -> Appearance.OUTFIT_COLOR_NAMES[v];
+            case 8 -> Gear.HEADWEAR_NAMES[v]; case 9 -> Gear.MASK_NAMES[v]; case 10 -> Gear.ACCESSORY_NAMES[v]; default -> Appearance.OUTFIT_COLOR_NAMES[v];
         };
     }
 
     private static Item icon(int row) {
         return switch (row) {
             case 0 -> Items.PLAYER_HEAD; case 1 -> Items.SHEARS; case 2 -> Items.BROWN_DYE; case 3 -> Items.ENDER_EYE; case 4 -> Items.STRING;
-            case 5 -> Items.SPYGLASS; case 6 -> Items.LEATHER_CHESTPLATE; default -> Items.RED_DYE;
+            case 5 -> Items.SPYGLASS; case 6 -> Items.LEATHER_CHESTPLATE; case 7 -> Items.RED_DYE;
+            case 8 -> Items.LEATHER_HELMET; case 9 -> Items.CARVED_PUMPKIN; case 10 -> Items.LEAD; default -> Items.BLUE_DYE;
         };
     }
 
@@ -89,6 +95,7 @@ public class AppearanceMenu extends PanelMenu {
         }
         c.setItem(45, Ui.icon(Items.ARROW, Ui.text("Back", ChatFormatting.YELLOW)));
         c.setItem(47, Ui.icon(a.female() ? Items.PINK_DYE : Items.LIGHT_BLUE_DYE, Ui.text("Body: " + (a.female() ? "Woman" : "Man"), ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), Ui.text("Click to switch", ChatFormatting.GRAY)));
+        c.setItem(51, Ui.icon(Items.BUCKET, Ui.text("Remove all gear", ChatFormatting.GRAY)));
         c.setItem(49, Ui.icon(Items.ENCHANTED_BOOK, Ui.text("Randomize everything", ChatFormatting.AQUA)));
         c.setItem(53, Ui.icon(Items.LIME_CONCRETE, Ui.text("Done", ChatFormatting.GREEN)));
     }
@@ -98,14 +105,21 @@ public class AppearanceMenu extends PanelMenu {
         if (!h.isAlive() || !h.isOwnedBy(player)) { player.closeContainer(); return false; }
         if (slot == 45) { CompanionMenu.open(player, h); return false; }
         if (slot == 53) { player.closeContainer(); return false; }
-        if (slot == 49) { h.setAppearance(Appearance.random(h.getRandom(), Faction.SURVIVOR, Role.MEMBER, h.appearance().female())); return true; }
+        if (slot == 49) {
+            h.setAppearance(Appearance.random(h.getRandom(), Faction.SURVIVOR, Role.MEMBER, h.appearance().female()));
+            h.setGear(new Gear(h.getRandom().nextInt(3) == 0 ? 0 : h.getRandom().nextInt(Gear.HEADWEAR), h.getRandom().nextInt(3) == 0 ? h.getRandom().nextInt(Gear.MASKS) : 0,
+                    h.getRandom().nextInt(Gear.ACCESSORIES), h.getRandom().nextInt(Gear.COLORS)));
+            return true;
+        }
+        if (slot == 51) { h.setGear(Gear.NONE); return true; }
         if (slot == 47) { h.setAppearance(h.appearance().withFemale(!h.appearance().female())); return true; }
         for (int[] l : LAYOUT) {
             int row = l[1], n = count(row);
             if (slot == l[0] || slot == l[0] + 2) {
                 Appearance a = h.appearance();
                 int v = (value(a, row) + (slot == l[0] ? n - 1 : 1)) % n;
-                h.setAppearance(with(a, row, v));
+                if (row >= 8) h.setGear(h.gear().with(row - 8, v));
+                else h.setAppearance(with(a, row, v));
                 return true;
             }
         }

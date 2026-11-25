@@ -35,7 +35,8 @@ public class RecruitMenu extends PanelMenu {
     protected void draw() {
         c.setItem(4, Ui.icon(Items.PLAYER_HEAD, Component.literal(h.getName().getString()).withStyle(ChatFormatting.WHITE, ChatFormatting.BOLD),
                 Ui.text("Level " + h.lvl(), ChatFormatting.YELLOW),
-                Ui.text(h.specialty() == Specialty.NONE ? "Survivor" : "★ " + h.specialty().title + ": " + h.specialty().desc, h.specialty() == Specialty.NONE ? ChatFormatting.GRAY : ChatFormatting.LIGHT_PURPLE),
+                Ui.text("Type: " + h.profession().title, ChatFormatting.WHITE),
+                Ui.text(h.specialty() == Specialty.NONE ? "No specialty" : "★ " + h.specialty().title + ": " + h.specialty().desc, h.specialty() == Specialty.NONE ? ChatFormatting.GRAY : ChatFormatting.LIGHT_PURPLE),
                 Ui.text("\"I could use some company out here.\"", ChatFormatting.GRAY)));
         int cost = cost(h), have = Shop.count(player, Shop.RUBY);
         c.setItem(20, Ui.glint(Ui.icon(Ui.item(Shop.RUBY), Ui.text("Recruit for " + cost + " rubies", have >= cost ? ChatFormatting.GREEN : ChatFormatting.RED, ChatFormatting.BOLD),

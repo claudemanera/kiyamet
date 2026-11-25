@@ -83,9 +83,16 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     @Nullable private BlockPos home;
     private String community = "", communityType = "";
     private int shotCooldown;
-    private Specialty specialty = Specialty.NONE;
+    private static final EntityDataAccessor<Integer> GEAR = SynchedEntityData.defineId(HumanEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> PROFESSION = SynchedEntityData.defineId(HumanEntity.class, EntityDataSerializers.INT);
 
-    public Specialty specialty() { return specialty; }
+    public Specialty specialty() { return profession().specialty(); }
+    public Profession profession() { int p = entityData.get(PROFESSION); return p < 0 ? Profession.SURVIVOR : Profession.values()[Math.min(p, Profession.values().length - 1)]; }
+    public boolean hasProfession() { return entityData.get(PROFESSION) >= 0; }
+    public Gear gear() { return Gear.unpack(entityData.get(GEAR)); }
+    public int gearCode() { return entityData.get(GEAR); }
+    public void setGear(Gear g) { entityData.set(GEAR, g.pack()); }
+    public void setProfession(Profession p) { entityData.set(PROFESSION, p.ordinal()); }
     @Nullable private ServerBossEvent bar;
     /** Companion backpack: 27 slots, opened from the companion panel. Medkits and bandages inside are used automatically. */
     private final net.minecraft.world.SimpleContainer inventory = new net.minecraft.world.SimpleContainer(27);
@@ -107,6 +114,8 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         b.define(LEVEL, 1);
         b.define(FACTION, Faction.SURVIVOR.ordinal());
         b.define(ROLE, Role.MEMBER.ordinal());
+        b.define(GEAR, 0);
+        b.define(PROFESSION, -1);
     }
 
     public Appearance appearance() { return Appearance.unpack(entityData.get(APPEARANCE)); }
@@ -135,14 +144,20 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         entityData.set(ROLE, r.ordinal());
         entityData.set(LEVEL, Math.max(1, Math.min(MAX_LEVEL, level)));
         if (communityType != null) this.communityType = communityType;
-        if (specialty == Specialty.NONE && (f == Faction.SURVIVOR || f == Faction.COMMUNITY || f == Faction.COMPANION) && r != Role.LEADER && random.nextFloat() < 0.25f)
-            specialty = Specialty.values()[1 + random.nextInt(3)];
-        if (entityData.get(APPEARANCE) == 0) {
-            boolean female = specialty != Specialty.NONE || random.nextFloat() < 0.42f;
-            setAppearance(Appearance.random(random, f, r, female));
+        boolean fresh = entityData.get(APPEARANCE) == 0;
+        boolean female = fresh ? random.nextFloat() < (f == Faction.RAIDER ? 0.3f : 0.42f) : appearance().female();
+        if (!hasProfession()) setProfession(Profession.choose(random, f, r, this.communityType, female));
+        Profession prof = profession();
+        if (prof.gender == 2) female = true;
+        if (prof.gender == 1) female = false;
+        if (fresh) {
+            setAppearance(prof.dress(random, Appearance.random(random, f, r, female)));
+            setGear(prof.gear(random));
         }
-        if (getMainHandItem().isEmpty()) setItemSlot(EquipmentSlot.MAINHAND, specialty == Specialty.HUNTRESS
-                ? new ItemStack(random.nextBoolean() ? Items.BOW : Items.CROSSBOW) : specialty == Specialty.NURSE ? new ItemStack(Items.IRON_SWORD) : Weapon.random(random, f, r, level));
+        if (getMainHandItem().isEmpty()) {
+            String w = prof.randomWeapon(random);
+            setItemSlot(EquipmentSlot.MAINHAND, w.isEmpty() ? Weapon.random(random, f, r, level) : new ItemStack(Ui.item(w)));
+        }
         setDropChance(EquipmentSlot.MAINHAND, f == Faction.COMPANION ? 1f : 0.15f);
         String name = Names.random(random, f, r, appearance().female());
         if (name != null && !hasCustomName()) setCustomName(Component.literal(name));
@@ -196,7 +211,8 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         out.putString("Faction", faction().name());
         out.putString("Role", role().name());
         out.putInt("Xp", xp);
-        out.putString("Specialty", specialty.name());
+        out.putString("Profession", profession().name());
+        out.putInt("Gear", entityData.get(GEAR));
         out.putString("Order", order.name());
         out.putString("Community", community);
         out.putString("CommunityType", communityType);
@@ -216,7 +232,15 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         try { entityData.set(FACTION, Faction.valueOf(in.getStringOr("Faction", "SURVIVOR")).ordinal()); } catch (IllegalArgumentException ignored) {}
         try { entityData.set(ROLE, Role.valueOf(in.getStringOr("Role", "MEMBER")).ordinal()); } catch (IllegalArgumentException ignored) {}
         xp = in.getIntOr("Xp", 0);
-        specialty = Specialty.byName(in.getStringOr("Specialty", "NONE"));
+        String prof = in.getStringOr("Profession", "");
+        if (!prof.isEmpty()) setProfession(Profession.byName(prof));
+        else switch (Specialty.byName(in.getStringOr("Specialty", "NONE"))) {
+            case NURSE -> setProfession(Profession.NURSE);
+            case HUNTRESS -> setProfession(Profession.HUNTRESS);
+            case SCAVENGER -> setProfession(Profession.SCAVENGER);
+            default -> {}
+        }
+        entityData.set(GEAR, in.getIntOr("Gear", 0));
         try { order = Order.valueOf(in.getStringOr("Order", "FOLLOW")); } catch (IllegalArgumentException ignored) {}
         community = in.getStringOr("Community", "");
         communityType = in.getStringOr("CommunityType", "");
@@ -303,16 +327,16 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
             ItemStack w = getMainHandItem();
             shotCooldown = w.getItem() instanceof com.kiyamet.item.GunItem ? 22 : w.is(Items.CROSSBOW) ? 30 : 26;
             if (role() == Role.COMMANDER) shotCooldown = 12;
-            if (specialty == Specialty.HUNTRESS) shotCooldown = (int) (shotCooldown * 0.7);
+            if (specialty() == Specialty.HUNTRESS) shotCooldown = (int) (shotCooldown * 0.7);
             Vec3 from = getEyePosition(), to = t.getEyePosition();
             float spread = (float) Math.max(0.05, 0.5 - lvl() / 600.0);
-            boolean hit = random.nextFloat() > spread * 0.6 || specialty == Specialty.HUNTRESS && d < 12;
+            boolean hit = random.nextFloat() > spread * 0.6 || specialty() == Specialty.HUNTRESS && d < 12;
             int n = (int) (from.distanceTo(to) * 2);
             for (int i = 0; i < n; i++) { Vec3 at = from.add(to.subtract(from).scale(i / (double) n)); sl.sendParticles(ParticleTypes.CRIT, at.x, at.y, at.z, 1, 0, 0, 0, 0); }
             sl.playSound(null, blockPosition(), w.getItem() instanceof com.kiyamet.item.GunItem ? SoundEvents.CROSSBOW_SHOOT : SoundEvents.ARROW_SHOOT, SoundSource.HOSTILE, 1f, 0.9f + random.nextFloat() * 0.2f);
             triggerAnim("attack", "attack");
             if (hit) {
-                float dmg = (float) (getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.85 * Weapon.tier(w) * (specialty == Specialty.HUNTRESS ? 1.3 : 1.0));
+                float dmg = (float) (getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.85 * Weapon.tier(w) * (specialty() == Specialty.HUNTRESS ? 1.3 : 1.0));
                 t.hurtServer(sl, sl.damageSources().arrow(null, HumanEntity.this), dmg);
             }
             if (w.getItem() instanceof com.kiyamet.item.GunItem) com.kiyamet.world.NoiseSystem.make(sl, blockPosition(), 20, 2);
@@ -380,8 +404,8 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (tickCount % 100 == 0 && getHealth() < getMaxHealth() && getTarget() == null) heal(1 + lvl() / 60f);
         if (faction() == Faction.COMPANION && owner != null && tickCount % 40 == 0 && ownerPlayer() == null && order == Order.FOLLOW) setOrder(Order.STAY);
         if (tickCount % 40 == 0 && getHealth() < getMaxHealth() * 0.4f) selfHeal();
-        if (specialty == Specialty.NURSE && tickCount % 200 == 0) nurse(sl);
-        if (specialty == Specialty.SCAVENGER && owner != null && tickCount % 3600 == 1800) scavenge();
+        if (specialty() == Specialty.NURSE && tickCount % 200 == 0) nurse(sl);
+        if (specialty() == Specialty.SCAVENGER && owner != null && tickCount % 3600 == 1800) scavenge();
     }
 
     public void setCommunity(String key) { community = key; }
@@ -539,7 +563,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
 
     @Override
     public Component getTypeName() {
-        if (specialty != Specialty.NONE && faction() != Faction.RAIDER && faction() != Faction.WHISPERER) return Component.literal(specialty.title);
+        if (hasProfession() && faction() != Faction.RAIDER && faction() != Faction.WHISPERER && role() == Role.MEMBER) return Component.literal(profession().title);
         return Component.literal(faction() == Faction.COMMUNITY && role() == Role.MEMBER ? Communities.title(communityType) : role() == Role.MEMBER ? faction().title : faction().title + " " + role().title);
     }
 
@@ -556,7 +580,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     }
 
     @Override
-    public boolean shouldShowName() { return faction() == Faction.COMPANION || specialty != Specialty.NONE || role() == Role.LEADER || role() == Role.COMMANDER || role() == Role.TRADER || super.shouldShowName(); }
+    public boolean shouldShowName() { return faction() == Faction.COMPANION || specialty() != Specialty.NONE || role() == Role.LEADER || role() == Role.COMMANDER || role() == Role.TRADER || super.shouldShowName(); }
 
     // ---------------------------------------------------------------- GeckoLib
 

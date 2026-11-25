@@ -15,6 +15,7 @@ import software.bernie.geckolib.renderer.base.GeoRenderState;
  */
 public class HumanModel extends DefaultedEntityGeoModel<HumanEntity> {
     public static final DataTicket<Integer> APPEARANCE = DataTicket.create("kiyamet_appearance", Integer.class);
+    public static final DataTicket<Integer> GEAR = DataTicket.create("kiyamet_gear", Integer.class);
     public static final DataTicket<Integer> DESIGN = DataTicket.create("kiyamet_design", Integer.class);
     private static final String[] DESIGNS = {"human", "raider", "raider_commander", "masked_one", "raider_brute", "raider_woman"};
 
@@ -23,14 +24,10 @@ public class HumanModel extends DefaultedEntityGeoModel<HumanEntity> {
     }
 
     static int design(HumanEntity h) {
-        Faction f = h.faction();
-        if (f == Faction.RAIDER) {
-            if (h.role() == Role.COMMANDER) return 2;
-            if (h.appearance().female()) return 5;
-            return (h.appearanceCode() >> 4 & 3) == 0 ? 4 : 1;      // about a quarter of the men are brutes
-        }
-        if (f == Faction.WHISPERER) return 3;
-        return 0;
+        return switch (h.profession()) {
+            case RAIDER -> 1; case COMMANDER -> 2; case MASKED_ONE -> 3; case BRUTE -> 4; case RAIDER_WOMAN -> 5;
+            default -> h.faction() == Faction.RAIDER ? (h.role() == Role.COMMANDER ? 2 : 1) : h.faction() == Faction.WHISPERER ? 3 : 0;
+        };
     }
 
     @Override
@@ -38,6 +35,7 @@ public class HumanModel extends DefaultedEntityGeoModel<HumanEntity> {
         super.addAdditionalStateData(animatable, relatedObject, state);
         state.addGeckolibData(APPEARANCE, animatable.appearanceCode());
         state.addGeckolibData(DESIGN, design(animatable));
+        state.addGeckolibData(GEAR, animatable.gearCode());
     }
 
     @Override
@@ -50,7 +48,7 @@ public class HumanModel extends DefaultedEntityGeoModel<HumanEntity> {
     public Identifier getTextureResource(GeoRenderState state) {
         int d = state.getOrDefaultGeckolibData(DESIGN, 0);
         if (d != 0) return buildFormattedTexturePath(Kiyamet.id(DESIGNS[d]));
-        return HumanSkins.texture(state.getOrDefaultGeckolibData(APPEARANCE, 0));
+        return HumanSkins.texture(state.getOrDefaultGeckolibData(APPEARANCE, 0), state.getOrDefaultGeckolibData(GEAR, 0));
     }
 
     @Override

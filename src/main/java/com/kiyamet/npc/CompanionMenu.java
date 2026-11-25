@@ -36,6 +36,7 @@ public class CompanionMenu extends PanelMenu {
         Appearance a = h.appearance();
         ItemStack info = Ui.icon(Items.PLAYER_HEAD, Component.literal(h.getName().getString()).withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD),
                 Ui.text("Level " + lv + " / " + HumanEntity.MAX_LEVEL, ChatFormatting.YELLOW),
+                Ui.text("Type: " + h.profession().title, ChatFormatting.WHITE),
                 Ui.text(h.specialty() == Specialty.NONE ? "No specialty" : "★ " + h.specialty().title + ": " + h.specialty().desc, h.specialty() == Specialty.NONE ? ChatFormatting.DARK_GRAY : ChatFormatting.LIGHT_PURPLE),
                 lv >= HumanEntity.MAX_LEVEL ? Ui.text("★ MAX LEVEL", ChatFormatting.LIGHT_PURPLE) : Ui.bar(h.xp() / (double) HumanEntity.xpToNext(lv), 20),
                 Ui.text("XP " + h.xp() + " / " + HumanEntity.xpToNext(lv) + "  (earned from kills)", ChatFormatting.DARK_GRAY),

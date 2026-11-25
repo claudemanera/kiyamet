@@ -13,7 +13,7 @@ public record Appearance(int skin, int hair, int hairColor, int face, int detail
 
     public Appearance withFemale(boolean f) { return new Appearance(skin, hair, hairColor, f ? face & 3 : face, detail, outfit, outfitColor, mask, f); }
 
-    public static final int SKINS = 12, HAIRS = 16, HAIR_COLORS = 12, FACES = 16, DETAILS = 8, OUTFITS = 24, OUTFIT_COLORS = 16;
+    public static final int SKINS = 12, HAIRS = 16, HAIR_COLORS = 12, FACES = 16, DETAILS = 8, OUTFITS = 32, OUTFIT_COLORS = 16;
 
     public static final String[] SKIN_NAMES = {"Porcelain", "Fair", "Light", "Light tan", "Medium", "Olive", "Tan", "Bronze", "Brown", "Dark brown", "Deep", "Ebony"};
     public static final String[] HAIR_NAMES = {"Bald", "Buzz cut", "Short", "Side part", "Long", "Ponytail", "Mohawk", "Curly", "Bun", "Afro",
@@ -24,9 +24,14 @@ public record Appearance(int skin, int hair, int hairColor, int face, int detail
     public static final String[] DETAIL_NAMES = {"None", "Scar", "Eye patch", "Glasses", "Bandana", "Face paint", "Bandaged head", "Freckles"};
     public static final String[] OUTFIT_NAMES = {"T-shirt & jeans", "Flannel shirt", "Leather jacket", "Hoodie", "Sheriff uniform", "Police uniform",
             "Army camo", "Farmer overalls", "Prison jumpsuit", "Doctor coat", "Biker vest", "Business suit", "Tracksuit", "Tank top",
-            "Poncho", "Scrap armor", "Hunting jacket", "Mechanic overalls", "Puffer jacket", "Rags", "Riot gear", "Denim jacket", "Sweater", "Chef whites"};
+            "Poncho", "Scrap armor", "Hunting jacket", "Mechanic overalls", "Puffer jacket", "Rags", "Riot gear", "Denim jacket", "Sweater", "Chef whites",
+            "Firefighter gear", "Royal guard armor", "Trucker flannel", "Teacher cardigan", "Hazmat suit", "Ghillie suit", "Nurse scrubs", "Prison stripes"};
     public static final String[] OUTFIT_COLOR_NAMES = {"Red", "Navy", "Forest green", "Black", "White", "Gray", "Brown", "Tan", "Olive",
             "Maroon", "Teal", "Orange", "Purple", "Yellow", "Sky blue", "Pink"};
+
+    public Appearance withOutfit(int o, int oc) { return new Appearance(skin, hair, hairColor, face, detail, o, oc, mask, female); }
+    public Appearance withDetail(int d) { return new Appearance(skin, hair, hairColor, face, d, outfit, outfitColor, mask, female); }
+    public Appearance withHair(int h) { return new Appearance(skin, h, hairColor, face, detail, outfit, outfitColor, mask, female); }
 
     public int pack() {
         return (skin & 15) | (hair & 15) << 4 | (hairColor & 15) << 8 | (face & 15) << 12 | (detail & 7) << 16

@@ -90,11 +90,15 @@ public class SkillsMenu extends ChestMenu {
             c.setItem(SLOTS[i], Ui.glint(st, lv >= 250));
         }
         c.setItem(49, Ui.icon(Items.BARRIER, Ui.text("Close", ChatFormatting.RED)));
+        long un = java.util.Arrays.stream(Powers.Power.values()).filter(pw -> pw.unlocked(d)).count();
+        c.setItem(47, Ui.glint(Ui.icon(Items.BEACON, Ui.text("Super Powers", ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD),
+                Ui.text(un + " / " + Powers.Power.values().length + " unlocked", ChatFormatting.GRAY), Ui.text("Click to open", ChatFormatting.YELLOW)), true));
     }
 
     @Override
     public void clicked(int slot, int button, ClickType type, Player player) {
         if (slot == 49 && player instanceof ServerPlayer sp) sp.closeContainer();
+        if (slot == 47 && player instanceof ServerPlayer sp) { PowersMenu.open(sp); return; }
         if (slot < 0 || slot >= 54) { if (type != ClickType.QUICK_MOVE) super.clicked(slot, button, type, player); }
     }
 

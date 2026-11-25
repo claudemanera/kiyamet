@@ -171,5 +171,7 @@
  "kiyamet.msg.scan_none": "No structure found nearby.",
  "kiyamet.msg.scan_found": "Nearest structure: %s at X %s, Z %s (%s blocks).",
  "entity.kiyamet.auto_turret": "Auto Turret",
- "generator.kiyamet.flatter": "The Walking Dead: Flatter World"
+ "generator.kiyamet.flatter": "The Walking Dead: Flatter World",
+ "item.kiyamet.walker_guts": "Walker Guts",
+ "effect.kiyamet.walker_camouflage": "Walker Camouflage"
 }

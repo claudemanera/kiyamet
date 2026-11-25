@@ -106,6 +106,7 @@ public class KZombie extends Zombie implements GeoEntity {
         if (!(level() instanceof ServerLevel server)) return;
         com.kiyamet.defense.DefenseRules.tickZombie(server, this);
         LivingEntity target = getTarget();
+        if (target != null && com.kiyamet.twd.Camouflage.hides(target, this)) { setTarget(null); target = null; }
         if (screamCooldown > 0) screamCooldown--;
         if (leapCooldown > 0) leapCooldown--;
 
@@ -132,7 +133,14 @@ public class KZombie extends Zombie implements GeoEntity {
     }
 
     @Override
+    public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
+        return super.hurtServer(level, source, amount * com.kiyamet.twd.Headshot.multiplier(level, this, source));
+    }
+
+    @Override
     public void die(DamageSource source) {
+        if (level() instanceof ServerLevel sl && random.nextFloat() < 0.35f)
+            spawnAtLocation(sl, new net.minecraft.world.item.ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(com.kiyamet.Kiyamet.id("walker_guts"))));
         if (kind == ZombieKind.EXPLODER && level() instanceof ServerLevel server)
             server.explode(this, getX(), getY(), getZ(), 2.5f, Level.ExplosionInteraction.MOB);
         super.die(source);

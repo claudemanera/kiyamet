@@ -33,6 +33,8 @@ public class Kiyamet implements ModInitializer {
         com.kiyamet.robot.ModRobots.init();
         com.kiyamet.ally.ModAllies.init();
         com.kiyamet.defense.DeviceSwitch.init();
+        com.kiyamet.twd.Camouflage.init();
+        com.kiyamet.skill.Powers.init();
         SkillEvents.init();
         SkillCommand.init();
         com.kiyamet.stone.StoneEvents.init();

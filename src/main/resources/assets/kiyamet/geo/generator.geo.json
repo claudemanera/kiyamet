@@ -1,0 +1,144 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.kiyamet.generator",
+    "texture_width": 64,
+    "texture_height": 64
+   },
+   "bones": [
+    {
+     "name": "body",
+     "pivot": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -7,
+        1,
+        -5
+       ],
+       "size": [
+        14,
+        10,
+        10
+       ],
+       "uv": [
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "name": "frame",
+     "pivot": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8,
+        0,
+        -6
+       ],
+       "size": [
+        16,
+        1,
+        12
+       ],
+       "uv": [
+        0,
+        20
+       ]
+      }
+     ]
+    },
+    {
+     "name": "pipe",
+     "pivot": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        4,
+        11,
+        -3
+       ],
+       "size": [
+        2,
+        5,
+        2
+       ],
+       "uv": [
+        0,
+        39
+       ]
+      }
+     ]
+    },
+    {
+     "name": "cap",
+     "pivot": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -4,
+        11,
+        1
+       ],
+       "size": [
+        2,
+        1,
+        2
+       ],
+       "uv": [
+        8,
+        39
+       ]
+      }
+     ]
+    },
+    {
+     "name": "panel",
+     "pivot": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -6,
+        3,
+        5
+       ],
+       "size": [
+        8,
+        6,
+        1
+       ],
+       "uv": [
+        16,
+        39
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

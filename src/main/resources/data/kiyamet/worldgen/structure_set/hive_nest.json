@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "kiyamet:hive_nest",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 90,
+    "separation": 36,
+    "salt": 70038
+  }
+}

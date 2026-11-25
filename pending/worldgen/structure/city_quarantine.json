@@ -1,0 +1,8 @@
+{
+ "type": "kiyamet:tiled_city",
+ "layout": "kiyamet:quarantine",
+ "biomes": "#kiyamet:has_structure/city_quarantine",
+ "step": "surface_structures",
+ "terrain_adaptation": "beard_box",
+ "spawn_overrides": {}
+}

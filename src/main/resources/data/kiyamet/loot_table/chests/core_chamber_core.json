@@ -1,0 +1,69 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 3,
+        "max": 6
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:energy_core",
+          "weight": 8,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:void_shard",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:void_stone",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:storm_stone",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:black_hole_bomb",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:void_arrow_launcher",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:netherite_ingot",
+          "weight": 2
+        }
+      ]
+    }
+  ]
+}

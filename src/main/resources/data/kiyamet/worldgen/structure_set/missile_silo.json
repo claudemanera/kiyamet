@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "kiyamet:missile_silo",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 150,
+    "separation": 60,
+    "salt": 70029
+  }
+}

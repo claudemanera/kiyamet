@@ -1,0 +1,8 @@
+{
+ "type": "kiyamet:tiled_city",
+ "layout": "kiyamet:suburbs",
+ "biomes": "#kiyamet:has_structure/city_suburbs",
+ "step": "surface_structures",
+ "terrain_adaptation": "beard_box",
+ "spawn_overrides": {}
+}

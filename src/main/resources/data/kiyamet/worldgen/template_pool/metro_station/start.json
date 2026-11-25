@@ -1,0 +1,14 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "kiyamet:metro_station",
+        "processors": "kiyamet:apocalypse_decay",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

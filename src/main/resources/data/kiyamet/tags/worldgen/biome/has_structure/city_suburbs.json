@@ -1,0 +1,12 @@
+{
+ "values": [
+  "minecraft:plains",
+  "minecraft:forest",
+  "minecraft:birch_forest",
+  "minecraft:meadow",
+  {
+   "id": "#c:is_plains",
+   "required": false
+  }
+ ]
+}

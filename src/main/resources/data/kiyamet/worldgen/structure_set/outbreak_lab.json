@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "kiyamet:outbreak_lab",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 90,
+    "separation": 36,
+    "salt": 70018
+  }
+}

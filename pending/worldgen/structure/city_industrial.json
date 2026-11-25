@@ -1,0 +1,8 @@
+{
+ "type": "kiyamet:tiled_city",
+ "layout": "kiyamet:industrial",
+ "biomes": "#kiyamet:has_structure/city_industrial",
+ "step": "surface_structures",
+ "terrain_adaptation": "beard_box",
+ "spawn_overrides": {}
+}

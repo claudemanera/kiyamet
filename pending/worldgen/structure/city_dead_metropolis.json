@@ -1,0 +1,8 @@
+{
+ "type": "kiyamet:tiled_city",
+ "layout": "kiyamet:dead_metropolis",
+ "biomes": "#kiyamet:has_structure/city_dead_metropolis",
+ "step": "surface_structures",
+ "terrain_adaptation": "beard_box",
+ "spawn_overrides": {}
+}

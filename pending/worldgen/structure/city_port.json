@@ -1,0 +1,8 @@
+{
+ "type": "kiyamet:tiled_city",
+ "layout": "kiyamet:port",
+ "biomes": "#kiyamet:has_structure/city_port",
+ "step": "surface_structures",
+ "terrain_adaptation": "beard_box",
+ "spawn_overrides": {}
+}

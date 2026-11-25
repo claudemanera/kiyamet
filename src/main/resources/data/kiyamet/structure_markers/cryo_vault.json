@@ -1,0 +1,124 @@
+{
+  "markers": [
+    {
+      "pos": [
+        7,
+        1,
+        10
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        23,
+        1,
+        10
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        27,
+        1,
+        10
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        7,
+        1,
+        17
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        15,
+        1,
+        15
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        19,
+        1,
+        17
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        23,
+        1,
+        17
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        7,
+        1,
+        24
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        11,
+        1,
+        24
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        15,
+        1,
+        24
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        19,
+        1,
+        22
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        23,
+        1,
+        24
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        33,
+        1,
+        25
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        33,
+        1,
+        7
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        20,
+        1,
+        19
+      ],
+      "type": "robot"
+    }
+  ]
+}

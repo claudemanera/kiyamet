@@ -1,0 +1,20 @@
+{
+  "values": [
+    "minecraft:plains",
+    "minecraft:savanna",
+    "minecraft:badlands",
+    "minecraft:desert",
+    "minecraft:taiga",
+    "minecraft:meadow",
+    {
+      "id": "#c:is_plains",
+      "required": false
+    },
+    {
+      "id": "#c:is_savanna",
+      "required": false
+    },
+    "minecraft:snowy_plains",
+    "minecraft:windswept_hills"
+  ]
+}

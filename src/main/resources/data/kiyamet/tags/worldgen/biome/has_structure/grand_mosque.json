@@ -1,0 +1,15 @@
+{
+  "values": [
+    "minecraft:plains",
+    "minecraft:sunflower_plains",
+    "minecraft:meadow",
+    "minecraft:savanna",
+    "minecraft:forest",
+    "minecraft:birch_forest",
+    "minecraft:desert",
+    {
+      "id": "#c:is_plains",
+      "required": false
+    }
+  ]
+}

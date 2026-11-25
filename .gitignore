@@ -1,0 +1,8 @@
+.gradle/
+build/
+run/
+out/
+*.iml
+.idea/
+client.jar
+src/main/resources/assets/kiyamet/textures/item/*_stone.png

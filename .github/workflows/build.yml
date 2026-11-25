@@ -34,19 +34,21 @@ jobs:
           gradle build --stacktrace 2>&1 | tee build.log
       - name: API reference dump
         if: always()
+        continue-on-error: true
         run: |
+          set +e
           mkdir -p /tmp/ref
-          MC=$(find ~/.gradle/caches -path '*minecraft*' -name '*.jar' | grep -iE 'merged|common|client' | grep -i named | head -1)
-          [ -z "$MC" ] && MC=$(find ~/.gradle/caches ~/.gradle -name 'minecraft-merged*.jar' | head -1)
-          GL=$(find ~/.gradle/caches .gradle -name 'geckolib*.jar' 2>/dev/null | grep -v sources | head -1)
-          FA=$(find ~/.gradle/caches -name 'fabric-api-*.jar' | grep -v sources | head -1)
-          echo "MC=$MC GL=$GL" > /tmp/ref/paths.txt
-          find ~/.gradle/caches -path '*minecraft*' -name '*.jar' | head -40 >> /tmp/ref/paths.txt
-          [ -n "$GL" ] && unzip -l "$GL" | grep '\.class' | awk '{print $4}' > /tmp/ref/geckolib_classes.txt
-          CP="$MC:$GL:$(find ~/.gradle/caches -name '*.jar' -path '*fabric*' | tr '\n' ':')"
+          MC=$(find ~/.gradle/caches/fabric-loom -name 'minecraft-common-1.21.11*.jar' | grep -v intermediary | grep -v sources | head -1)
+          MCC=$(find ~/.gradle/caches/fabric-loom -name 'minecraft-clientonly-1.21.11*.jar' | grep -v intermediary | grep -v sources | head -1)
+          GL=$(find ~/.gradle/caches -name 'geckolib*.jar' | grep -v sources | head -1)
+          echo "MC=$MC MCC=$MCC GL=$GL" > /tmp/ref/paths.txt
+          unzip -l "$GL" | grep '\.class' | awk '{print $4}' > /tmp/ref/geckolib_classes.txt
+          unzip -l "$MC" | awk '{print $4}' | grep '\.class' > /tmp/ref/mc_classes.txt
+          unzip -l "$MCC" | awk '{print $4}' | grep '\.class' > /tmp/ref/mc_client_classes.txt
+          CP="$MC:$MCC:$GL:$(find ~/.gradle/caches -name '*.jar' -path '*fabric*' | grep -v sources | tr '\n' ':')"
           while read c; do [ -n "$c" ] && javap -public -constants -cp "$CP" "$c" > "/tmp/ref/$c.txt" 2>&1; done < tools/javap_classes.txt
-          javap -c -cp "$CP" software.bernie.geckolib.model.DefaultedGeoModel 2>&1 | grep -i ldc > /tmp/ref/geomodel_strings.txt || true
-          [ -n "$MC" ] && unzip -l "$MC" | awk '{print $4}' | grep -E '^net/minecraft/world/entity/(monster|ai/goal|projectile)' > /tmp/ref/mc_entity_classes.txt || true
+          javap -c -cp "$CP" software.bernie.geckolib.model.DefaultedGeoModel 2>&1 | grep -i ldc > /tmp/ref/geomodel_strings.txt
+          true
       - name: Save build log on failure
         if: failure()
         run: |
@@ -59,6 +61,7 @@ jobs:
           git push -f origin ci-log
       - name: Publish API reference
         if: always()
+        continue-on-error: true
         run: |
           git config user.name ci && git config user.email ci@users.noreply.github.com
           cp build.log /tmp/ref/build.log 2>/dev/null || true

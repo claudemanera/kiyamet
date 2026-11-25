@@ -1,0 +1,117 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "animation.assembly_mother.idle": {
+   "loop": true,
+   "animation_length": 3.0,
+   "bones": {
+    "head": {
+     "rotation": {
+      "0.00": [
+       0,
+       -6,
+       0
+      ],
+      "1.50": [
+       3,
+       6,
+       0
+      ],
+      "3.00": [
+       0,
+       -6,
+       0
+      ]
+     }
+    }
+   }
+  },
+  "animation.assembly_mother.walk": {
+   "loop": true,
+   "animation_length": 1.0,
+   "bones": {
+    "leg0": {
+     "rotation": {
+      "0.00": [
+       22,
+       0,
+       0
+      ],
+      "0.50": [
+       -22,
+       0,
+       0
+      ],
+      "1.00": [
+       22,
+       0,
+       0
+      ]
+     }
+    },
+    "leg1": {
+     "rotation": {
+      "0.00": [
+       -22,
+       0,
+       0
+      ],
+      "0.50": [
+       22,
+       0,
+       0
+      ],
+      "1.00": [
+       -22,
+       0,
+       0
+      ]
+     }
+    },
+    "leg2": {
+     "rotation": {
+      "0.00": [
+       22,
+       0,
+       0
+      ],
+      "0.50": [
+       -22,
+       0,
+       0
+      ],
+      "1.00": [
+       22,
+       0,
+       0
+      ]
+     }
+    },
+    "leg3": {
+     "rotation": {
+      "0.00": [
+       -22,
+       0,
+       0
+      ],
+      "0.50": [
+       22,
+       0,
+       0
+      ],
+      "1.00": [
+       -22,
+       0,
+       0
+      ]
+     }
+    }
+   }
+  },
+  "animation.assembly_mother.attack": {
+   "loop": false,
+   "animation_length": 0.5,
+   "bones": {}
+  }
+ }
+}

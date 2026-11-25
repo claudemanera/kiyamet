@@ -25,6 +25,8 @@ public class Kiyamet implements ModInitializer {
         ModItems.init();
         ModWorldgen.init();
         ModAttachments.init();
+        com.kiyamet.world.Infection.init();
+        com.kiyamet.entity.ModEntities.init();
         SkillEvents.init();
         SkillCommand.init();
         LOG.info("Kiyamet loaded: {} items, {} blocks", ModItems.ALL.size(), ModBlocks.ALL.size());

@@ -31,6 +31,7 @@ public final class SkillEvents {
     public static void init() {
         PlayerBlockBreakEvents.AFTER.register((level, player, pos, state, be) -> {
             if (!(player instanceof ServerPlayer p)) return;
+            if (level instanceof net.minecraft.server.level.ServerLevel sl) com.kiyamet.world.NoiseSystem.make(sl, pos, 10, 4);
             if (state.is(BlockTags.LOGS)) SkillManager.addXp(p, Skill.WOODCUTTING, 7);
             else if (state.getBlock() instanceof CropBlock crop) { if (crop.isMaxAge(state)) SkillManager.addXp(p, Skill.FARMING, 9); }
             else if (state.is(ConventionalBlockTags.ORES)) SkillManager.addXp(p, Skill.MINING, 14);
@@ -66,6 +67,7 @@ public final class SkillEvents {
             for (ServerPlayer p : server.getPlayerList().getPlayers()) {
                 if (p.isSpectator() || p.isCreative() || !p.isAlive()) continue;
                 SkillManager.tickRest(p);
+                com.kiyamet.world.Infection.tick(p);
                 Vec3 now = p.position(), last = LAST_POS.put(p.getUUID(), now);
                 boolean moved = last != null && last.distanceToSqr(now) > 1.0;
                 if (p.isSprinting() && moved) SkillManager.addXp(p, Skill.ATHLETICS, 1.2);

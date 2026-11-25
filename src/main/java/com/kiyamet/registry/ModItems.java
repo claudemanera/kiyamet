@@ -35,10 +35,20 @@ public final class ModItems {
 
     static {
         for (String s : STONES) simple(s, 1);
-        for (String s : GADGETS) simple(s, 1);
+        for (String s : GADGETS) {
+            if (s.equals("healing_syringe")) custom(s, p -> new com.kiyamet.item.HealItem(p.stacksTo(4), com.kiyamet.item.HealItem.Kind.SYRINGE));
+            else simple(s, 1);
+        }
         for (String s : WEAPONS) simple(s, 1);
-        for (String s : PARTS) simple(s, 64);
-        for (String s : SINGLE) simple(s, s.equals("medkit") ? 8 : 1);
+        for (String s : PARTS) {
+            if (s.equals("bandage")) custom(s, p -> new com.kiyamet.item.HealItem(p.stacksTo(16), com.kiyamet.item.HealItem.Kind.BANDAGE));
+            else if (s.equals("vaccine")) custom(s, p -> new com.kiyamet.item.HealItem(p.stacksTo(8), com.kiyamet.item.HealItem.Kind.VACCINE));
+            else simple(s, 64);
+        }
+        for (String s : SINGLE) {
+            if (s.equals("medkit")) custom(s, p -> new com.kiyamet.item.HealItem(p.stacksTo(8), com.kiyamet.item.HealItem.Kind.MEDKIT));
+            else simple(s, 1);
+        }
         for (Block b : ModBlocks.ALL) {
             ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, BuiltInRegistries.BLOCK.getKey(b));
             Item.Properties p = new Item.Properties().setId(key).useBlockDescriptionPrefix();
@@ -52,6 +62,13 @@ public final class ModItems {
     private static Item simple(String name, int stack) {
         ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Kiyamet.id(name));
         Item item = Registry.register(BuiltInRegistries.ITEM, key, new Item(new Item.Properties().setId(key).stacksTo(stack)));
+        ALL.add(item);
+        return item;
+    }
+
+    private static Item custom(String name, java.util.function.Function<Item.Properties, Item> factory) {
+        ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Kiyamet.id(name));
+        Item item = Registry.register(BuiltInRegistries.ITEM, key, factory.apply(new Item.Properties().setId(key)));
         ALL.add(item);
         return item;
     }

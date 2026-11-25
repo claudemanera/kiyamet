@@ -129,3 +129,10 @@ Normal (vanilla zombie ~0.23): police, screamer 0.23, alpha 0.24. Fast: runner 0
 
 ## Kıyamet 1.2 (planned, NOT in 1.0)
 - Boost skill perk/power effects (stronger perks every 50 levels and at 250/500/750/999).
+
+## TWD update (build-21)
+Done: headshots x2, walker guts camouflage, 39 super powers (/effect based) + toggle panel, humans (survivor/community/raider/masked/companion, level 1-300, commander 260-300),
+companion panel (orders, weapon swap, glow, heal, appearance editor: skin/hair/colour/eyes/beard/detail/outfit/outfit colour), communities with friend/enemy first contact + reputation,
+traders/leaders, roaming raiders/masked herds/survivors, 8 settlements (prison, farm, walled town, hilltop, kingdom, raider factory, terminal, masked camp), key bindings.
+Next: vehicles (5 cars + atv/motorcycle/armored truck, raider cars), raider tribute demands, shelter core + mission board, acid rain, blood moon, herds, lost notes,
+skill perks every 50 levels for remaining XP sources (Enchanting/Alchemy/Building/Exploration), balance pass. 1.2: stronger perks.

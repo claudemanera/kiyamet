@@ -197,5 +197,6 @@
  "key.kiyamet.backpack": "Open worn backpack",
  "entity.kiyamet.woman_zombie": "Walker",
  "entity.kiyamet.nurse_zombie": "Nurse Zombie",
- "key.kiyamet.squad": "Open group panel"
+ "key.kiyamet.squad": "Open group panel",
+ "item.kiyamet.radio": "Walkie-Talkie"
 }

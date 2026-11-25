@@ -25,6 +25,7 @@ public final class LabRecipes {
         r("kiyamet:energy_cell", 1, 30, "minecraft:redstone_block", 1, "minecraft:copper_ingot", 3, "kiyamet:circuit", 1);
         r("kiyamet:bandage", 3, 1, "minecraft:string", 3, "minecraft:paper", 1);
         r("kiyamet:medkit", 1, 40, "kiyamet:bandage", 3, "minecraft:golden_apple", 1, "minecraft:glass_bottle", 1);
+        r("kiyamet:radio", 1, 15, "kiyamet:circuit", 2, "minecraft:iron_ingot", 3, "minecraft:redstone", 4);
         r("kiyamet:repair_kit", 1, 60, "kiyamet:metal_plate", 2, "kiyamet:circuit", 1, "minecraft:iron_ingot", 2);
         r("kiyamet:tech_core", 1, 200, "kiyamet:circuit", 4, "kiyamet:energy_cell", 2, "minecraft:diamond", 1);
         r("kiyamet:energy_core", 1, 500, "kiyamet:tech_core", 2, "kiyamet:energy_cell", 4, "minecraft:nether_star", 1);

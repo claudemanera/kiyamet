@@ -39,6 +39,7 @@ public class Kiyamet implements ModInitializer {
         com.kiyamet.skill.Perks.init();
         com.kiyamet.npc.ModHumans.init();
         com.kiyamet.npc.Rename.init();
+        com.kiyamet.npc.Radio.init();
         com.kiyamet.net.KeyActions.init();
         SkillEvents.init();
         SkillCommand.init();

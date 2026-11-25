@@ -416,6 +416,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (!(level() instanceof ServerLevel sl)) return;
         if (!initialized) setup(faction(), role(), lvl(), null);
         if (awayUntil > 0) { tickAway(sl); return; }
+        if (owner != null && tickCount % 60 == 0) Radio.report(this);
         if (owner != null && job == Job.SCOUT && tickCount % 100 == 0) scout(sl);
         if (owner != null && job == Job.GUARDIAN && tickCount % 40 == 0) guard(sl);
         if (owner != null && job == Job.LOOTER && tickCount % 6000 == 3000) scavenge();
@@ -613,7 +614,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (bar != null) bar.removeAllPlayers();
         net.minecraft.world.Containers.dropContents(sl, this, inventory);
         // Everyone is infected: the dead come back.
-        if (faction() != Faction.WHISPERER && random.nextFloat() < 0.6f) {
+        if (faction() != Faction.WHISPERER && random.nextFloat() < 0.8f) {
             KZombie z = com.kiyamet.entity.ModEntities.ZOMBIES.get(com.kiyamet.entity.ZombieKind.RUNNER).create(sl, net.minecraft.world.entity.EntitySpawnReason.CONVERSION);
             if (z != null) {
                 z.setPos(getX(), getY(), getZ());

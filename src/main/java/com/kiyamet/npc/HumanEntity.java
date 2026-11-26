@@ -526,7 +526,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         int rolls = (int) Math.ceil(awayMinutes * (1 + lvl() / 150.0) * (job == Job.LOOTER ? 2 : 1) * (1 + (awayGroup - 1) * 0.15));
         String[][] loot = {{"minecraft:bread", "4"}, {"minecraft:cooked_beef", "3"}, {"minecraft:arrow", "16"}, {"kiyamet:bandage", "2"}, {"minecraft:iron_ingot", "3"},
                 {"minecraft:coal", "6"}, {"kiyamet:metal_plate", "2"}, {"kiyamet:circuit", "1"}, {"kiyamet:fuel_canister", "1"}, {"minecraft:leather", "3"},
-                {"kiyamet:medkit", "1"}, {"kiyamet:ruby", "2"}, {"minecraft:gold_ingot", "2"}, {"kiyamet:energy_cell", "1"}, {"minecraft:diamond", "1"}, {"kiyamet:vaccine", "1"}};
+                {"kiyamet:medkit", "1"}, {"kiyamet:dollar_10", "2"}, {"minecraft:gold_ingot", "2"}, {"kiyamet:energy_cell", "1"}, {"minecraft:diamond", "1"}, {"kiyamet:vaccine", "1"}};
         int found = 0;
         for (int i = 0; i < rolls; i++) {
             int max = lvl() > 150 ? loot.length : lvl() > 60 ? loot.length - 2 : loot.length - 5;
@@ -579,7 +579,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     private void scavenge() {
         String[][] finds = {{"minecraft:bread", "3"}, {"minecraft:arrow", "12"}, {"kiyamet:bandage", "2"}, {"minecraft:iron_ingot", "2"}, {"minecraft:cooked_chicken", "3"},
                 {"kiyamet:metal_plate", "1"}, {"minecraft:string", "4"}, {"kiyamet:fuel_canister", "1"}, {"kiyamet:circuit", "1"}, {"kiyamet:walker_guts", "2"},
-                {"kiyamet:medkit", "1"}, {"kiyamet:ruby", "1"}, {"minecraft:leather", "3"}, {"kiyamet:energy_cell", "1"}};
+                {"kiyamet:medkit", "1"}, {"kiyamet:dollar_10", "1"}, {"minecraft:leather", "3"}, {"kiyamet:energy_cell", "1"}};
         int pick = random.nextInt(lvl() >= 100 ? finds.length : finds.length - 3);
         ItemStack found = new ItemStack(Ui.item(finds[pick][0]), Integer.parseInt(finds[pick][1]) + lvl() / 100);
         ItemStack rest = inventory.addItem(found);
@@ -662,7 +662,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (!(level() instanceof ServerLevel sl)) return;
         if (faction() != Faction.COMPANION) {
             int rubies = lvl() / 40 + (role() == Role.COMMANDER ? 12 : role() == Role.LEADER ? 4 : 0);
-            if (rubies > 0) sl.addFreshEntity(new ItemEntity(sl, getX(), getY() + 0.5, getZ(), new ItemStack(Ui.item("kiyamet:ruby"), rubies)));
+            if (rubies > 0) sl.addFreshEntity(new ItemEntity(sl, getX(), getY() + 0.5, getZ(), com.kiyamet.money.Money.stack(rubies * com.kiyamet.money.Money.RATE)));
             if (random.nextFloat() < 0.4f) sl.addFreshEntity(new ItemEntity(sl, getX(), getY() + 0.5, getZ(), new ItemStack(Items.ARROW, 4 + random.nextInt(12))));
             if (random.nextFloat() < 0.2f) sl.addFreshEntity(new ItemEntity(sl, getX(), getY() + 0.5, getZ(), new ItemStack(Ui.item("kiyamet:bandage"))));
         } else {

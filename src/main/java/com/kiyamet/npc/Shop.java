@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-/** Inventory helpers for ruby payments. */
+/** Inventory helpers for payments. Prices written as "RUBY" are paid in dollars since 1.6 ($10 each). */
 public final class Shop {
     public static final String RUBY = "kiyamet:ruby";
 
@@ -15,9 +15,10 @@ public final class Shop {
         return n;
     }
 
-    public static int count(ServerPlayer p, String id) { return count(p, Ui.item(id)); }
+    public static int count(ServerPlayer p, String id) { return id.equals(RUBY) ? com.kiyamet.money.Money.total(p) / com.kiyamet.money.Money.RATE : count(p, Ui.item(id)); }
 
     public static boolean take(ServerPlayer p, String id, int amount) {
+        if (id.equals(RUBY)) return com.kiyamet.money.Money.take(p, amount * com.kiyamet.money.Money.RATE);   // 1.6: prices are paid in dollars
         Item it = Ui.item(id);
         if (p.isCreative()) return true;
         if (count(p, it) < amount) return false;

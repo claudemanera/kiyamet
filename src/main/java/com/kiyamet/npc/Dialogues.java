@@ -108,9 +108,9 @@ public final class Dialogues {
         int cost = RecruitMenu.cost(h);
         boolean hurt = h.getHealth() < h.getMaxHealth() * 0.7f;
         ask(p, h, 25, hurt ? "I'm hurt... and you want me to follow you? What's in it for me?" : "And what's in it for me?", null,
-                new Option("Rubies: " + cost + ". Yours now.", pl -> {
+                new Option(com.kiyamet.money.Money.fmt(cost * com.kiyamet.money.Money.RATE) + ". Yours now.", pl -> {
                     if (Shop.take(pl, Shop.RUBY, cost)) RecruitMenu.join(pl, h, "...Alright. You've got yourself a partner.");
-                    else say(pl, h, "You don't even have " + cost + " rubies. Come back when you do.");
+                    else say(pl, h, "You don't even have " + com.kiyamet.money.Money.fmt(cost * com.kiyamet.money.Money.RATE) + "." Come back when you do.");
                 }),
                 new Option(hurt ? "A medkit. You need it." : "A medkit, for when you need it.", pl -> {
                     if (Shop.take(pl, "kiyamet:medkit", 1)) RecruitMenu.join(pl, h, "You'd give that up for me? ...Okay. I'm with you.");
@@ -135,7 +135,7 @@ public final class Dialogues {
         int rep = Communities.reputation(p, h.community());
         say(p, h, rep >= 60 ? pick(r, "Good to see you again, friend.", "Our people speak well of you.") : pick(r, Communities.greeting(r, h.communityType()), "You're the one everyone's talking about."));
         ask(p, h, 25, "What brings you to me?", null,
-                new Option("Any work for me?", pl -> say(pl, h, "Check the mission board by the gate. Three jobs a day - we pay in rubies.")),
+                new Option("Any work for me?", pl -> say(pl, h, "Check the mission board by the gate. Three jobs a day - we pay in cash.")),
                 new Option("I want to help your people. (donate / volunteers)", pl -> LeaderMenu.open(pl, h)),
                 new Option("Can someone from here join me?", pl -> {
                     if (Communities.reputation(pl, h.community()) >= 40) { say(pl, h, "Some of ours would follow you. Let's talk."); LeaderMenu.open(pl, h); }
@@ -146,7 +146,7 @@ public final class Dialogues {
 
     static void trader(ServerPlayer p, HumanEntity h) {
         RandomSource r = h.getRandom();
-        say(p, h, pick(r, "Got goods, if you've got rubies.", "Take a look. No haggling, no stealing.", "Everything here was paid for in blood. Prices reflect that.",
+        say(p, h, pick(r, "Got goods, if you've got cash.", "Take a look. No haggling, no stealing.", "Everything here was paid for in blood. Prices reflect that.",
                 "Fresh stock from the last supply run."));
         TradeMenu.open(p, h);
     }
@@ -157,8 +157,8 @@ public final class Dialogues {
         RandomSource r = h.getRandom();
         int have = Shop.count(p, Shop.RUBY);
         say(p, h, pick(r, "Nice place you got. Shame if something happened to it.", "Relax. I'm just here to talk business.", "The Commander sends his regards."));
-        ask(p, h, 30, demand + " rubies. Pay, and nobody bothers you for a while. (You have " + have + ")", pl -> { },
-                new Option("Fine. Take them. (" + demand + " rubies)", pl -> {
+        ask(p, h, 30, com.kiyamet.money.Money.fmt(demand * com.kiyamet.money.Money.RATE) + ". Pay, and nobody bothers you for a while. (You have " + com.kiyamet.money.Money.fmt(have * com.kiyamet.money.Money.RATE) + ")", pl -> { },
+                new Option("Fine. Take it. (" + com.kiyamet.money.Money.fmt(demand * com.kiyamet.money.Money.RATE) + ")", pl -> {
                     if (Shop.count(pl, Shop.RUBY) >= demand) pay.run();
                     else say(pl, h, "You're short. Don't waste my time - get the rest before I leave.");
                 }),

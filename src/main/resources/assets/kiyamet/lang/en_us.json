@@ -368,5 +368,12 @@
  "item.kiyamet.smoke_grenade": "Smoke Grenade",
  "item.kiyamet.flashbang": "Flashbang",
  "entity.kiyamet.thrown_bomb": "Thrown Bomb",
- "block.kiyamet.vehicle_workshop": "Vehicle Workshop"
+ "block.kiyamet.vehicle_workshop": "Vehicle Workshop",
+ "item.kiyamet.dollar_1": "$1 Bill",
+ "item.kiyamet.dollar_5": "$5 Bill",
+ "item.kiyamet.dollar_10": "$10 Bill",
+ "item.kiyamet.dollar_20": "$20 Bill",
+ "item.kiyamet.dollar_50": "$50 Bill",
+ "item.kiyamet.dollar_100": "$100 Bill",
+ "item.kiyamet.money_bag": "Money Bag"
 }

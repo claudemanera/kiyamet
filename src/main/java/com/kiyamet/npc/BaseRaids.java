@@ -376,7 +376,7 @@ public final class BaseRaids {
                     Component.literal("Your base still stands").withStyle(ChatFormatting.GOLD));
             level.playSound(null, p.blockPosition(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS, 1f, 1f);
             List<ItemStack> loot = new ArrayList<>();
-            loot.add(new ItemStack(ModItems.get("ruby"), 5 + waves * 3 + power / 300));
+            loot.addAll(com.kiyamet.money.Money.bills((5 + waves * 3 + power / 300) * com.kiyamet.money.Money.RATE));
             loot.add(new ItemStack(ModItems.get("medkit"), 1 + waves / 2));
             loot.add(new ItemStack(Items.ARROW, 32 + waves * 8));
             loot.add(new ItemStack(Items.COOKED_BEEF, 8));

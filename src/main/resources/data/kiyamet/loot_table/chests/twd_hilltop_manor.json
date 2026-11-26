@@ -271,6 +271,36 @@
           "type": "minecraft:item",
           "name": "kiyamet:magazine",
           "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:dollar_20",
+          "weight": 4,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 4
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:dollar_5",
+          "weight": 4,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 4
+              }
+            }
+          ]
         }
       ]
     }

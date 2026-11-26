@@ -201,3 +201,32 @@ def flash():
     c.outline(); c.save(f'{T}/item/flashbang.png')
 grenade(); molotov(); smoke(); flash()
 print('throwables done')
+
+# ------------------------------------------------------------- dollars + money bag
+FONT = {'1': ["010", "110", "010", "010", "111"], '5': ["111", "100", "110", "001", "110"], '0': ["111", "101", "101", "101", "111"], '2': ["110", "001", "010", "100", "111"]}
+BAND = {1: (120, 160, 100), 5: (170, 120, 200), 10: (220, 160, 60), 20: (90, 170, 120), 50: (220, 90, 80), 100: (80, 150, 210)}
+for v, band in BAND.items():
+    c = C()
+    for y in range(4, 12):
+        for x in range(1, 15):
+            edge = x in (1, 14) or y in (4, 11)
+            c.px(x, y, (70, 120, 70) if edge else (150, 196, 140) if (x + y) % 5 else (136, 182, 128))
+    for y in range(5, 11): c.px(3, y, band); c.px(12, y, band)
+    for (x, y) in ((7, 6), (8, 6), (7, 7), (8, 7), (7, 8), (8, 8), (7, 9), (8, 9)): c.px(x, y, (110, 150, 100))   # portrait
+    c.px(7, 6, (90, 130, 84)); c.px(8, 7, (90, 130, 84))
+    s = str(v)
+    x0 = 15 - 4 * len(s)
+    for i, ch in enumerate(s):
+        for j, row in enumerate(FONT[ch]):
+            for k, b in enumerate(row):
+                if b == '1': c.px(x0 + i * 4 + k, 10 + j, (30, 70, 30))
+    # second bill peeking behind
+    for x in range(2, 15): c.px(x, 3, (110, 160, 104))
+    c.outline(0.4); c.save(f'{T}/item/dollar_{v}.png')
+c = C(); c.blob(8, 10, 6, 5.4, (150, 110, 60))
+for x in range(5, 11): c.px(x, 4, (120, 86, 46)); c.px(x, 5, (170, 130, 76))
+for (x, y) in ((6, 3), (9, 3), (7, 2), (8, 2)): c.px(x, y, (120, 86, 46))
+for x in range(5, 11): c.px(x, 6, (200, 170, 80))
+for (x, y) in ((8, 8), (7, 8), (6, 9), (7, 10), (8, 10), (9, 11), (8, 12), (7, 12), (6, 12), (7, 7), (7, 13)): c.px(x, y, (60, 150, 60))
+c.outline(); c.save(f'{T}/item/money_bag.png')
+print('money done')

@@ -30,7 +30,7 @@ public final class Communities {
 
     static {
         add("prison", "Prison Survivor", 0.65f, "These walls kept the dead out. Mostly.", "Don't go near cell block C.", "We grow what we can in the yard.");
-        add("farm", "Farmhand", 0.8f, "The barn? Don't open the barn.", "We've got eggs if you've got rubies.", "Wipe your boots, we're decent folk.");
+        add("farm", "Farmhand", 0.8f, "The barn? Don't open the barn.", "We've got eggs if you've got cash.", "Wipe your boots, we're decent folk.");
         add("walled_town", "Townsfolk", 0.6f, "Welcome to the Safe Zone. Rules are rules.", "We have showers. Real ones.", "Keep the gate shut behind you.");
         add("hilltop", "Hilltop Settler", 0.7f, "We trade, we farm, we survive.", "The blacksmith could use more iron.", "Watch out for the raiders on the roads.");
         add("kingdom", "Kingdom Citizen", 0.75f, "Hail, traveller! The Kingdom welcomes you.", "We grow pomegranates. Well, apples.", "Our guards train every morning.");

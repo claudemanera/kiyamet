@@ -82,7 +82,7 @@ public final class ModVehicles {
         VehicleKind k = WRECKS[level.random.nextInt(WRECKS.length)];
         VehicleEntity v = spawn(level, k, at.getX() + 0.5, at.getY(), at.getZ() + 0.5, level.random.nextFloat() * 360, 0.05f + level.random.nextFloat() * 0.3f, 0.4f + level.random.nextFloat() * 0.4f);
         if (v == null || k.trunk == 0) return;
-        String[][] loot = {{"minecraft:bread", "4"}, {"kiyamet:bandage", "2"}, {"minecraft:arrow", "16"}, {"kiyamet:fuel_canister", "1"}, {"kiyamet:circuit", "1"}, {"kiyamet:medkit", "1"}, {"kiyamet:ruby", "2"}, {"minecraft:iron_ingot", "3"}};
+        String[][] loot = {{"minecraft:bread", "4"}, {"kiyamet:bandage", "2"}, {"minecraft:arrow", "16"}, {"kiyamet:fuel_canister", "1"}, {"kiyamet:circuit", "1"}, {"kiyamet:medkit", "1"}, {"kiyamet:dollar_20", "2"}, {"minecraft:iron_ingot", "3"}};
         if (level.random.nextFloat() < 0.2f) v.trunk().setItem(0, com.kiyamet.enchant.EnchantLoot.weapon(level, 0));
         if (level.random.nextFloat() < 0.15f) v.trunk().setItem(1, com.kiyamet.enchant.GunTomeItem.random(level.random));
         int n = level.random.nextInt(4);

@@ -84,7 +84,7 @@ public final class Cinema {
         ServerLevel level = p.level();
         freeze(p, 40);
         title(p, 10, 60, 20, Component.literal(finale ? "THE END" : "MISSION PASSED").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD),
-                Component.literal("+" + reward + " rubies").withStyle(ChatFormatting.GREEN));
+                Component.literal("+" + com.kiyamet.money.Money.fmt(reward * com.kiyamet.money.Money.RATE)).withStyle(ChatFormatting.GREEN));
         level.playSound(null, p.blockPosition(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.MASTER, 1f, 1f);
         for (int i = 0; i < (finale ? 6 : 2); i++) {
             final int k = i;

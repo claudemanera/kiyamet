@@ -39,7 +39,7 @@ public class RecruitMenu extends PanelMenu {
                 Ui.text(h.specialty() == Specialty.NONE ? "No specialty" : "★ " + h.specialty().title + ": " + h.specialty().desc, h.specialty() == Specialty.NONE ? ChatFormatting.GRAY : ChatFormatting.LIGHT_PURPLE),
                 Ui.text("\"I could use some company out here.\"", ChatFormatting.GRAY)));
         int cost = cost(h), have = Shop.count(player, Shop.RUBY);
-        c.setItem(20, Ui.glint(Ui.icon(Ui.item(Shop.RUBY), Ui.text("Recruit for " + cost + " rubies", have >= cost ? ChatFormatting.GREEN : ChatFormatting.RED, ChatFormatting.BOLD),
+        c.setItem(20, Ui.glint(Ui.icon(Ui.item("kiyamet:dollar_100"), Ui.text("Recruit for " + com.kiyamet.money.Money.fmt(cost * com.kiyamet.money.Money.RATE), have >= cost ? ChatFormatting.GREEN : ChatFormatting.RED, ChatFormatting.BOLD),
                 Ui.text("You have " + have, ChatFormatting.GRAY), Ui.text("Companions: " + companions(player) + " / " + MAX_COMPANIONS, ChatFormatting.GRAY)), have >= cost));
         c.setItem(22, Ui.icon(Ui.item("kiyamet:medkit"), Ui.text("Give a medkit instead", ChatFormatting.AQUA), Ui.text("A kind deed: they join for free", ChatFormatting.GRAY)));
         c.setItem(24, Ui.icon(Items.BREAD, Ui.text("Share food (3 bread)", ChatFormatting.GOLD), Ui.text("50% chance they join", ChatFormatting.GRAY)));

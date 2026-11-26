@@ -176,7 +176,7 @@ public final class Captives {
                 h.blockPosition().offset((int) (Math.cos(a) * dist), 0, (int) (Math.sin(a) * dist)));
         level.setBlock(at, Blocks.BARREL.defaultBlockState(), 3);
         if (level.getBlockEntity(at) instanceof net.minecraft.world.level.block.entity.BarrelBlockEntity b) {
-            b.setItem(4, new ItemStack(ModItems.get("ruby"), 6 + level.random.nextInt(10)));
+            b.setItem(4, com.kiyamet.money.Money.stack((6 + level.random.nextInt(10)) * 10));
             b.setItem(10, new ItemStack(Items.ARROW, 32));
             b.setItem(13, new ItemStack(ModItems.get("medkit"), 1 + level.random.nextInt(2)));
             b.setItem(16, new ItemStack(ModItems.get("circuit"), 1 + level.random.nextInt(3)));

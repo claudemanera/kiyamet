@@ -313,7 +313,7 @@ public final class Story {
                 if (level.getBlockEntity(at) instanceof ChestBlockEntity chest) {
                     chest.setItem(13, questItem(c.item()));
                     chest.setItem(11, new ItemStack(ModItems.get("medkit"), 1 + level.random.nextInt(2)));
-                    chest.setItem(15, new ItemStack(ModItems.get("ruby"), 3 + chn / 4));
+                    chest.setItem(15, com.kiyamet.money.Money.stack((3 + chn / 4) * com.kiyamet.money.Money.RATE));
                 }
                 s[2] = "" + at.getX(); s[3] = "" + at.getY(); s[4] = "" + at.getZ();
                 guards(p, level, at, c.guards(), n, chn);
@@ -407,7 +407,7 @@ public final class Story {
         TRACKED.remove(p.getUUID());
         int reward = reward(chn);
         Cinema.passed(p, reward, chn == CHAPTERS.length);
-        Shop.give(p, new ItemStack(ModItems.get("ruby"), reward));
+        com.kiyamet.money.Money.give(p, reward * com.kiyamet.money.Money.RATE);
         SkillManager.addXp(p, Skill.SURVIVAL, 150 + chn * 40);
         SkillManager.addXp(p, Skill.SWORDS, 100 + chn * 30);
         if (chn % 10 == 0) Shop.give(p, new ItemStack(ModItems.get("tech_core"), 1 + chn / 20));

@@ -192,7 +192,7 @@ public final class WorldEvents {
         if (!Shop.take(p, Shop.RUBY, e.demand)) return;
         BaseRaids.paid(p);
         Talk.say(p, h, "Smart. Nobody touches your place for a while.");
-        p.sendSystemMessage(Component.literal("(" + e.demand + " rubies paid - no raids for at least a week)").withStyle(ChatFormatting.GOLD));
+        p.sendSystemMessage(Component.literal("(" + com.kiyamet.money.Money.fmt(e.demand * com.kiyamet.money.Money.RATE) + " paid - no raids for at least a week)").withStyle(ChatFormatting.GOLD));
         leave(h);
     }
 

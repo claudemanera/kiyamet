@@ -38,10 +38,10 @@ public class LeaderMenu extends PanelMenu {
                 Ui.text("Leader: " + h.getName().getString() + " (Lv " + h.lvl() + ")", ChatFormatting.YELLOW),
                 Ui.text("Members nearby: " + members, ChatFormatting.GRAY),
                 Ui.text("Your standing: " + standing + " (" + rep + ")", ChatFormatting.GREEN), Ui.bar((rep + 100) / 200.0, 20)), true));
-        c.setItem(20, Ui.icon(Ui.item(Shop.RUBY), Ui.text("Donate 5 rubies", ChatFormatting.RED), Ui.text("+10 reputation", ChatFormatting.GREEN)));
+        c.setItem(20, Ui.icon(Ui.item("kiyamet:dollar_50"), Ui.text("Donate $50", ChatFormatting.RED), Ui.text("+10 reputation", ChatFormatting.GREEN)));
         c.setItem(22, Ui.icon(Items.WHEAT, Ui.text("Donate 32 wheat", ChatFormatting.GOLD), Ui.text("+6 reputation", ChatFormatting.GREEN)));
         boolean canRecruit = rep >= 40;
-        c.setItem(24, Ui.glint(Ui.icon(Items.IRON_SWORD, Ui.text("Ask for a volunteer (12 rubies)", canRecruit ? ChatFormatting.AQUA : ChatFormatting.DARK_GRAY, ChatFormatting.BOLD),
+        c.setItem(24, Ui.glint(Ui.icon(Items.IRON_SWORD, Ui.text("Ask for a volunteer ($120)", canRecruit ? ChatFormatting.AQUA : ChatFormatting.DARK_GRAY, ChatFormatting.BOLD),
                 Ui.text(canRecruit ? "A skilled member joins you as a companion" : "Needs reputation 40", canRecruit ? ChatFormatting.GRAY : ChatFormatting.RED)), canRecruit));
         c.setItem(31, Ui.icon(Items.MAP, Ui.text("\"" + Communities.greeting(h.getRandom(), h.communityType()) + "\"", ChatFormatting.ITALIC, ChatFormatting.GRAY)));
         c.setItem(49, Ui.icon(Items.BARRIER, Ui.text("Close", ChatFormatting.RED)));

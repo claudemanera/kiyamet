@@ -159,7 +159,7 @@ public class MissionBoard extends PathfinderMob implements GeoEntity {
         protected void draw() {
             List<int[]> ms = load(player);
             c.setItem(4, Ui.glint(Ui.icon(Items.WRITABLE_BOOK, Ui.text("Mission Board", ChatFormatting.GOLD, ChatFormatting.BOLD),
-                    Ui.text("3 new jobs every day", ChatFormatting.GRAY), Ui.text("Rewards: rubies, XP" + (community.isEmpty() ? "" : ", reputation"), ChatFormatting.GRAY)), true));
+                    Ui.text("3 new jobs every day", ChatFormatting.GRAY), Ui.text("Rewards: cash, XP" + (community.isEmpty() ? "" : ", reputation"), ChatFormatting.GRAY)), true));
             for (int i = 0; i < ms.size() && i < 3; i++) {
                 int[] m = ms.get(i);
                 boolean done = m[5] == 1;
@@ -171,7 +171,7 @@ public class MissionBoard extends PathfinderMob implements GeoEntity {
                 boolean ready = !done && have >= m[2];
                 c.setItem(SLOTS[i], Ui.glint(Ui.icon(done ? Items.LIME_DYE : icon, Ui.text(title, done ? ChatFormatting.DARK_GREEN : ready ? ChatFormatting.GREEN : ChatFormatting.WHITE, ChatFormatting.BOLD),
                         Ui.bar(have / (double) m[2], 20), Ui.text(have + " / " + m[2], ChatFormatting.GRAY),
-                        Ui.text("Reward: " + m[4] + " rubies + XP", ChatFormatting.GOLD),
+                        Ui.text("Reward: " + com.kiyamet.money.Money.fmt(m[4] * com.kiyamet.money.Money.RATE) + " + XP", ChatFormatting.GOLD),
                         Ui.text(done ? "✔ Done for today" : ready ? "Click to turn in!" : "In progress", done ? ChatFormatting.DARK_GREEN : ready ? ChatFormatting.YELLOW : ChatFormatting.GRAY)), ready));
             }
             c.setItem(49, Ui.icon(Items.BARRIER, Ui.text("Close", ChatFormatting.RED)));
@@ -180,7 +180,7 @@ public class MissionBoard extends PathfinderMob implements GeoEntity {
                 StoryChapters.Chapter sc = Story.CHAPTERS[ch - 1];
                 c.setItem(40, Ui.glint(Ui.icon(Items.FILLED_MAP, Ui.text("★ STORY - Chapter " + ch + "/" + Story.CHAPTERS.length + ": " + sc.title(), ChatFormatting.GOLD, ChatFormatting.BOLD),
                         Ui.text("\"" + sc.tagline() + "\"", ChatFormatting.GRAY), Ui.text("The Long Road", ChatFormatting.DARK_GRAY),
-                        Ui.text("Reward: " + Story.reward(ch) + " rubies + XP", ChatFormatting.GREEN),
+                        Ui.text("Reward: " + com.kiyamet.money.Money.fmt(Story.reward(ch) * com.kiyamet.money.Money.RATE) + " + XP", ChatFormatting.GREEN),
                         Ui.text(st > 0 ? "In progress - follow the arrow on screen" : "Click: talk to Marcus", ChatFormatting.YELLOW)), st == 0));
             } else c.setItem(40, Ui.icon(Items.MAP, Ui.text("★ The Long Road - complete", ChatFormatting.GOLD), Ui.text("Thank you, hero.", ChatFormatting.GRAY)));
         }
@@ -208,8 +208,7 @@ public class MissionBoard extends PathfinderMob implements GeoEntity {
                 } else if (m[3] < m[2]) return false;
                 m[5] = 1;
                 save(player, ms);
-                ItemStack reward = new ItemStack(ModItems.get("ruby"), m[4]);
-                if (!player.getInventory().add(reward)) player.drop(reward, false);
+                com.kiyamet.money.Money.give(player, m[4] * com.kiyamet.money.Money.RATE);
                 SkillManager.addXp(player, m[0] == 2 ? Skill.SURVIVAL : Skill.SWORDS, 60 + m[4] * 8);
                 if (!community.isEmpty()) Communities.change(player, community, 5);
                 player.level().playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.6f, 1.2f);
@@ -218,7 +217,7 @@ public class MissionBoard extends PathfinderMob implements GeoEntity {
                     com.kiyamet.npc.Talk.say(player, h, thanks[player.getRandom().nextInt(thanks.length)]);
                     break;
                 }
-                player.sendSystemMessage(Component.literal("Mission done: +" + m[4] + " rubies" + (community.isEmpty() ? "" : ", +5 reputation")).withStyle(ChatFormatting.GREEN));
+                player.sendSystemMessage(Component.literal("Mission done: +" + com.kiyamet.money.Money.fmt(m[4] * com.kiyamet.money.Money.RATE) + (community.isEmpty() ? "" : ", +5 reputation")).withStyle(ChatFormatting.GREEN));
                 return true;
             }
             return false;

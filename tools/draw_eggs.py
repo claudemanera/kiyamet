@@ -158,7 +158,7 @@ sport('sports_gt', (196, 22, 26)); sport('sports_rs', (240, 196, 20)); sport('sp
 car('taxi', (242, 196, 30), 'police'); car('muscle_car', (28, 28, 32)); car('jeep', (86, 98, 56), 'pickup'); car('van', (236, 236, 236), 'suv')
 car('school_bus', (244, 186, 20), 'truck'); car('fire_truck', (196, 24, 24), 'truck')
 car('superbike_vortex', (40, 190, 60), 'moto'); car('superbike_blaze', (210, 30, 30), 'moto')
- car('atv', (200, 140, 30), 'atv'); car('motorcycle', (160, 30, 30), 'moto'); car('armored_truck', (80, 88, 64), 'truck')
+car('atv', (200, 140, 30), 'atv'); car('motorcycle', (160, 30, 30), 'moto'); car('armored_truck', (80, 88, 64), 'truck')
 
 # ------------------------------------------------------------- vehicle workshop block
 r = random.Random(3)

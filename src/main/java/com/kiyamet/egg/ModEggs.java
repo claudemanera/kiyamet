@@ -14,6 +14,7 @@ public final class ModEggs {
         for (com.kiyamet.entity.ZombieKind k : com.kiyamet.entity.ZombieKind.values()) egg(k.id, "entity:" + k.id);
         for (com.kiyamet.boss.BossKind k : com.kiyamet.boss.BossKind.values()) egg(k.id, "entity:" + k.id);
         for (com.kiyamet.robot.RobotKind k : com.kiyamet.robot.RobotKind.values()) egg(k.id, "entity:" + k.id);
+        for (com.kiyamet.wild.WildKind k : com.kiyamet.wild.WildKind.values()) egg(k.id, "entity:" + k.id);
         for (String[] h : HUMANS) egg(h[0], "human:" + h[1] + ":" + h[2]);
         for (com.kiyamet.vehicle.VehicleKind k : com.kiyamet.vehicle.VehicleKind.values()) {
             String id = k.id + "_kit";

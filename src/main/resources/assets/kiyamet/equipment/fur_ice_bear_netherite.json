@@ -1,0 +1,20 @@
+{
+ "layers": {
+  "humanoid": [
+   {
+    "texture": "minecraft:netherite"
+   },
+   {
+    "texture": "kiyamet:fur_ice_bear"
+   }
+  ],
+  "humanoid_leggings": [
+   {
+    "texture": "minecraft:netherite"
+   },
+   {
+    "texture": "kiyamet:fur_ice_bear"
+   }
+  ]
+ }
+}

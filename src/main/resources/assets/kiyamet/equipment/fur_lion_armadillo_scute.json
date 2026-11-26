@@ -1,0 +1,20 @@
+{
+ "layers": {
+  "humanoid": [
+   {
+    "texture": "minecraft:armadillo_scute"
+   },
+   {
+    "texture": "kiyamet:fur_lion"
+   }
+  ],
+  "humanoid_leggings": [
+   {
+    "texture": "minecraft:armadillo_scute"
+   },
+   {
+    "texture": "kiyamet:fur_lion"
+   }
+  ]
+ }
+}

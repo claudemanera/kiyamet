@@ -35,6 +35,7 @@ public class Kiyamet implements ModInitializer {
         com.kiyamet.food.Spoilage.init();
         com.kiyamet.furniture.Furniture.init();
         com.kiyamet.water.Thirst.init();
+        com.kiyamet.wild.ModWild.init();
         com.kiyamet.backpack.Backpacks.init();
         ModWorldgen.init();
         com.kiyamet.world.ModStructures.init();

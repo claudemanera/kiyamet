@@ -39,7 +39,8 @@ import net.minecraft.world.level.Level;
  */
 public final class Fur {
     public enum Kind {
-        WOLF("wolf_pelt", "Wolf Fur", 4f), FOX("fox_pelt", "Fox Fur", 4.5f), POLAR("polar_pelt", "Polar Bear Fur", 6f), SHEEP("sheepskin", "Sheepskin", 3.5f);
+        WOLF("wolf_pelt", "Wolf Fur", 4f), FOX("fox_pelt", "Fox Fur", 4.5f), POLAR("polar_pelt", "Polar Bear Fur", 6f), SHEEP("sheepskin", "Sheepskin", 3.5f),
+        LION("lion_pelt", "Lion Fur", 5f), TIGER("tiger_pelt", "Tiger Fur", 5.5f), BEAR("bear_pelt", "Bear Fur", 7f), ICE_BEAR("ice_bear_pelt", "Ice Bear Fur", 9f);
         public final String item, title; public final float warmth;
         Kind(String item, String title, float warmth) { this.item = item; this.title = title; this.warmth = warmth; }
         public String id() { return name().toLowerCase(); }

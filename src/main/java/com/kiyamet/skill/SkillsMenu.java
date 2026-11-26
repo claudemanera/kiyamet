@@ -84,9 +84,9 @@ public class SkillsMenu extends ChestMenu {
                 boolean big = m == 250 || m == 500 || m == 750 || m == 999;
                 lore.add(Ui.text((big ? "★ Big power at level " : "Next perk at level ") + m, big ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.AQUA));
             } else lore.add(Ui.text("★ MASTERED", ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
-            int steps = Perks.steps(lv);
             for (Perks.Perk pk : Perks.of(s))
-                lore.add(Ui.text("✦ " + (steps == 0 ? pk.label() + " (from level 50)" : pk.describe(steps)), steps == 0 ? ChatFormatting.DARK_GRAY : ChatFormatting.GREEN));
+                lore.add(Ui.text("✦ " + pk.describe(lv) + "  (" + pk.stepText() + ")", pk.value(lv) == 0 ? ChatFormatting.DARK_GRAY : ChatFormatting.GREEN));
+            lore.add(Ui.text("Click: open the road to 999", ChatFormatting.YELLOW));
             ItemStack st = Ui.logo("skill_" + s.name().toLowerCase(), Component.translatable(s.key()).withStyle(max ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.WHITE, ChatFormatting.BOLD));
             Ui.lore(st, lore);
             st.setCount(Math.max(1, Math.min(64, lv / 16 + 1)));
@@ -102,6 +102,7 @@ public class SkillsMenu extends ChestMenu {
     public void clicked(int slot, int button, ClickType type, Player player) {
         if (slot == 49 && player instanceof ServerPlayer sp) sp.closeContainer();
         if (slot == 47 && player instanceof ServerPlayer sp) { PowersMenu.open(sp); return; }
+        for (int i = 0; i < SLOTS.length; i++) if (SLOTS[i] == slot && player instanceof ServerPlayer sp) { SkillRoadMenu.open(sp, Skill.values()[i], -1); return; }
         if (slot < 0 || slot >= 54) { if (type != ClickType.QUICK_MOVE) super.clicked(slot, button, type, player); }
     }
 

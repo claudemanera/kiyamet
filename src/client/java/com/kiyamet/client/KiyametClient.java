@@ -24,6 +24,7 @@ public class KiyametClient implements ClientModInitializer {
         EntityRendererRegistry.register(com.kiyamet.furniture.Furniture.SEAT, net.minecraft.client.renderer.entity.NoopRenderer::new);
         ModKeys.init();
         Tooltips.init();
+        ThirstHud.init();
         net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback.EVENT.register((type, renderer, helper, ctx) -> {
             if (renderer instanceof net.minecraft.client.renderer.entity.player.AvatarRenderer<?> ar)
                 helper.register(new BackpackLayer((net.minecraft.client.renderer.entity.RenderLayerParent<net.minecraft.client.renderer.entity.state.AvatarRenderState, net.minecraft.client.model.player.PlayerModel>) (Object) ar));

@@ -1,0 +1,18 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "misc",
+ "pattern": [
+  " B ",
+  "PIP",
+  "PIP"
+ ],
+ "key": {
+  "B": "minecraft:black_dye",
+  "P": "kiyamet:metal_plate",
+  "I": "minecraft:iron_ingot"
+ },
+ "result": {
+  "id": "kiyamet:steel_thermos",
+  "count": 1
+ }
+}

@@ -694,5 +694,15 @@
  "item.kiyamet.chicken_soup": "Chicken Soup",
  "item.kiyamet.burger": "Burger",
  "item.kiyamet.cabbage_salad": "Cabbage Salad",
- "item.kiyamet.omelette": "Omelette"
+ "item.kiyamet.omelette": "Omelette",
+ "item.kiyamet.waterskin": "Leather Waterskin",
+ "tooltip.kiyamet.waterskin": "Holds 4 sips (each sip: 2 water drops)|Right-click water or snow: fill · lit campfire/furnace: boil|River water is dirty - boil it. Rain fills it outside.",
+ "item.kiyamet.tin_canteen": "Tin Canteen",
+ "tooltip.kiyamet.tin_canteen": "Holds 6 sips (each sip: 2 water drops)|Right-click water or snow: fill · lit campfire/furnace: boil|River water is dirty - boil it. Rain fills it outside.",
+ "item.kiyamet.army_canteen": "Army Canteen",
+ "tooltip.kiyamet.army_canteen": "Holds 9 sips (each sip: 2 water drops)|Right-click water or snow: fill · lit campfire/furnace: boil|River water is dirty - boil it. Rain fills it outside.",
+ "item.kiyamet.steel_thermos": "Steel Thermos",
+ "tooltip.kiyamet.steel_thermos": "Holds 13 sips (each sip: 2 water drops)|Right-click water or snow: fill · lit campfire/furnace: boil|River water is dirty - boil it. Rain fills it outside.",
+ "item.kiyamet.hydration_pack": "Tactical Hydration Pack",
+ "tooltip.kiyamet.hydration_pack": "Holds 20 sips (each sip: 2 water drops)|Right-click water or snow: fill · lit campfire/furnace: boil|River water is dirty - boil it. Rain fills it outside."
 }

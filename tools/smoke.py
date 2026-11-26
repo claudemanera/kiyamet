@@ -94,6 +94,10 @@ if p:
     # 1.5: gunsmith bench and a fully kitted gun
     cmd(p, 'setblock 2 101 2 kiyamet:gun_bench', 1)
     cmd(p, 'summon item 1 101 1 {Item:{id:"kiyamet:arrow_rifle",count:1,components:{"minecraft:custom_model_data":{strings:["acog","long","laser","drum"],colors:[9282650]},"minecraft:custom_data":{ModSCOPE:"acog",Paint:"olive"}}}}', 1)
+    # 1.5 bullets: ammo, a loaded drum magazine, the giant shotgun
+    for a in ('pistol_ammo', 'rifle_ammo', 'shotgun_shell', 'sniper_ammo', 'rocket_ammo', 'plasma_cell', 'behemoth_shotgun', 'ak_shotgun', 'ak47', 'bolt_sniper'):
+        cmd(p, 'summon item 3 101 3 {Item:{id:"kiyamet:%s",count:1}}' % a, 0.3)
+    cmd(p, 'summon item 3 101 3 {Item:{id:"kiyamet:magazine_drum",count:1,components:{"minecraft:custom_data":{Ammo:"SHELL",Rounds:200}}}}', 1)
     cmd(p, 'time add 168000', 1)
     cmd(p, 'time set 12400', 1)
     phase[0] = 'sprint'

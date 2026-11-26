@@ -123,7 +123,7 @@ public class BombProjectile extends ThrowableItemProjectile {
                     e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 120, 3));
                     if (e instanceof Mob m) m.setTarget(null);
                 }
-                level.sendParticles(ParticleTypes.FLASH, c.x, c.y + 0.5, c.z, 3, 0, 0, 0, 0);
+                level.sendParticles(ParticleTypes.EXPLOSION, c.x, c.y + 0.5, c.z, 2, 0.2, 0.2, 0.2, 0);
                 level.sendParticles(ParticleTypes.END_ROD, c.x, c.y + 0.5, c.z, 80, 1, 1, 1, 0.3);
                 level.playSound(null, BlockPos.containing(c), SoundEvents.FIREWORK_ROCKET_LARGE_BLAST, SoundSource.PLAYERS, 3f, 1.4f);
                 NoiseSystem.make(level, BlockPos.containing(c), 40, 8);

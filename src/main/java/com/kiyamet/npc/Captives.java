@@ -56,7 +56,7 @@ public final class Captives {
                 n++;
             }
             if (n == 0) return InteractionResult.PASS;
-            sl.playSound(null, pos, SoundEvents.LEASH_KNOT_PLACE, SoundSource.BLOCKS, 1f, 0.8f);
+            sl.playSound(null, pos, SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 1f, 0.8f);
             sp.displayClientMessage(Component.literal(n + " captive" + (n > 1 ? "s" : "") + " chained to the bars.").withStyle(ChatFormatting.GRAY), true);
             return InteractionResult.SUCCESS;
         });
@@ -121,7 +121,7 @@ public final class Captives {
             }
             p.sendSystemMessage(Component.literal("Captured! Tie them to a fence or iron bars (right-click the bars). Right-click them to talk.").withStyle(ChatFormatting.GRAY));
         }
-        level.playSound(null, m.blockPosition(), SoundEvents.LEASH_KNOT_PLACE, SoundSource.NEUTRAL, 1f, 0.8f);
+        level.playSound(null, m.blockPosition(), SoundEvents.WOOL_PLACE, SoundSource.NEUTRAL, 1f, 0.8f);
     }
 
     static int days(ServerLevel level, Data d) { return (int) ((level.getGameTime() - d.since) / 24000); }

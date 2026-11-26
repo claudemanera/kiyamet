@@ -40,7 +40,7 @@ import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import java.util.*;
 
 /**
- * "The Long Road": an 8-chapter story told at the mission boards, GTA-style. Marcus, who runs the settlement,
+ * "The Long Road": a 200-chapter story in four books told at the mission boards, GTA-style. Marcus, who runs the settlement,
  * sends you out: medicine runs, a missing scout, a raider camp, a truck, a siege, a herd, a heist, and the
  * Commander himself. Objectives show on the action bar with an arrow and distance; dying fails the mission
  * (just start it again from any board).
@@ -123,7 +123,7 @@ public final class Story {
         StoryChapters.Chapter c = CHAPTERS[ch - 1];
         BlockPos b = board.blockPosition();
         boolean defend = c.type() == StoryChapters.Type.DEFEND;
-        int dist = defend ? 0 : Math.min(700, 110 + ch * 11);
+        int dist = defend ? 0 : Math.min(600, 110 + ch * 3);
         BlockPos t = b;
         if (!defend) {
             double a = level.random.nextDouble() * Math.PI * 2;
@@ -273,10 +273,10 @@ public final class Story {
     private static void track(ServerPlayer p, Entity e) { TRACKED.computeIfAbsent(p.getUUID(), k -> new HashSet<>()).add(e.getUUID()); }
 
     /** Enemy level: grows with the chapter and with your power. */
-    private static int lv(ServerPlayer p, int ch) { return Mth.clamp(8 + ch * 4 + SkillManager.get(p).totalPower() / 40, 5, 290); }
+    private static int lv(ServerPlayer p, int ch) { return Mth.clamp(8 + Math.round(ch * 1.4f) + SkillManager.get(p).totalPower() / 40, 5, 290); }
 
     /** How many guards: the chapter's base count, growing with each chapter. */
-    private static int scale(int base, int ch) { return Math.round(base * (1 + ch / 25f)); }
+    private static int scale(int base, int ch) { return Math.min(40, Math.round(base * Math.min(2.2f, 1 + ch / 60f))); }
 
     private static void guards(ServerPlayer p, ServerLevel level, BlockPos at, char g, int n, int ch) {
         for (int i = 0; i < n; i++) {
@@ -359,8 +359,8 @@ public final class Story {
                 Talk.sayAs(p, RADIO, RC, "There it is. Keys should still be in it.");
             }
             case HERD -> {
-                walkers(p, level, t, n + 8);
-                s[10] = String.valueOf(level.getGameTime() + 20L * Math.max(150, 420 - chn * 4));
+                walkers(p, level, t, c.count() + 10);
+                s[10] = String.valueOf(level.getGameTime() + 20L * Math.max(240, 480 - chn));
                 KILLS.put(p.getUUID(), 0);
                 Talk.sayAs(p, RADIO, RC, "There they are. Thin them out before they reach us!");
             }
@@ -386,7 +386,7 @@ public final class Story {
         save(p, s);
         double a = level.random.nextDouble() * Math.PI * 2;
         BlockPos at = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, b.offset((int) (Math.cos(a) * 32), 0, (int) (Math.sin(a) * 32)));
-        int n = scale(4 + wave * 3, chn);
+        int n = Math.min(35, scale(4 + wave * 3, chn));
         guards(p, level, at, c.guards(), n, chn);
         if (c.guards() != 'W') walkers(p, level, at, 2 + wave * 2);
         for (UUID u : TRACKED.getOrDefault(p.getUUID(), Set.of())) if (level.getEntity(u) instanceof net.minecraft.world.entity.Mob m && m.getTarget() == null) m.setTarget(p);

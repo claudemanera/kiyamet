@@ -59,6 +59,7 @@ public final class ModItems {
         for (Block b : ModBlocks.ALL) {
             ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, BuiltInRegistries.BLOCK.getKey(b));
             Item.Properties p = new Item.Properties().setId(key).useBlockDescriptionPrefix();
+            if (b == ModBlocks.GENERATOR) p = p.stacksTo(21);
             Item item = b == ModBlocks.STEEL_GATE ? new DoubleHighBlockItem(b, p) : new BlockItem(b, p);
             ALL.add(Registry.register(BuiltInRegistries.ITEM, key, item));
         }

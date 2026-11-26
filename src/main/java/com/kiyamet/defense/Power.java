@@ -12,11 +12,11 @@ import java.util.*;
 
 /**
  * Generators power blocks around them. Generators placed touching each other (side by side or stacked)
- * form a cluster of up to 20: every extra running generator adds +3 blocks of range (8 alone, 65 with 20)
+ * form a cluster of up to 65: every extra running generator adds +1 block of range (8 alone, 72 with 65)
  * and the whole cluster burns fuel more slowly. Results are cached for 5 seconds.
  */
 public final class Power {
-    public static final int RANGE = 8, PER_EXTRA = 3, MAX_CLUSTER = 20;
+    public static final int RANGE = 8, PER_EXTRA = 1, MAX_CLUSTER = 65;
     private record Cached(boolean on, long until) {}
     private static final Map<Long, Cached> CACHE = new HashMap<>();
     /** Known generator positions per dimension (filled as generators are placed, fuelled and tick). */
@@ -33,7 +33,7 @@ public final class Power {
         Set<Long> seen = new HashSet<>();
         ArrayDeque<BlockPos> q = new ArrayDeque<>();
         q.add(start.immutable()); seen.add(start.asLong());
-        while (!q.isEmpty() && out.size() < 64) {
+        while (!q.isEmpty() && out.size() < 128) {
             BlockPos c = q.poll();
             if (!(level.getBlockState(c).getBlock() instanceof GeneratorBlock)) continue;
             out.add(c);

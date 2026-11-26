@@ -93,9 +93,9 @@ public class GeneratorBlock extends Block {
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         Power.track(level, pos);
         if (!state.getValue(ON)) { if (state.getValue(LIT)) level.scheduleTick(pos, this, MINUTE); return; }
-        // clusters burn slower: each extra running generator stretches every unit of fuel by 5%
+        // clusters burn slower: each extra running generator stretches every unit of fuel by 3% (up to 2.5x)
         int n = Power.runningInCluster(level, pos);
-        if (n > 1 && random.nextFloat() < Math.min(0.5f, (n - 1) * 0.05f / (1 + (n - 1) * 0.05f))) { level.scheduleTick(pos, this, MINUTE); return; }
+        if (n > 1 && random.nextFloat() < Math.min(0.6f, (n - 1) * 0.03f / (1 + (n - 1) * 0.03f))) { level.scheduleTick(pos, this, MINUTE); return; }
         int fuel = state.getValue(FUEL) - 1;
         if (fuel <= 0) {
             level.setBlock(pos, state.setValue(FUEL, 0).setValue(LIT, false), 3);

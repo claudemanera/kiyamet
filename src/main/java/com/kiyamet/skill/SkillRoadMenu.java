@@ -77,7 +77,22 @@ public class SkillRoadMenu extends PanelMenu {
             for (Powers.Power pw : Powers.Power.values()) if (pw.skill == skill && pw.level > prev && pw.level <= at) unlocks.add(pw);
             List<Component> lore = new ArrayList<>();
             lore.add(Ui.text(reached ? "✔ Reached" : current ? "► You are here (" + lv + ")" : "Locked", reached ? ChatFormatting.GREEN : current ? ChatFormatting.YELLOW : ChatFormatting.DARK_GRAY));
-            for (Perks.Perk pk : perks) lore.add(Ui.text("✦ " + pk.describe(at), reached ? ChatFormatting.GREEN : ChatFormatting.GRAY));
+            ChatFormatting[] col = {ChatFormatting.AQUA, ChatFormatting.GREEN, ChatFormatting.GOLD, ChatFormatting.LIGHT_PURPLE};
+            for (int L0 = prev + 1; L0 <= at; L0++) {
+                final int L = L0;
+                net.minecraft.network.chat.MutableComponent row = null;
+                for (int pi = 0; pi < perks.size(); pi++) {
+                    Perks.Perk pk = perks.get(pi);
+                    if (L % pk.every() != 0 || L / pk.every() > pk.totalSteps()) continue;
+                    Component part = Component.literal(pk.label() + " " + pk.fmt(pk.perStep())).withStyle(lv >= L ? col[pi % col.length] : ChatFormatting.DARK_GRAY);
+                    if (row == null) row = Component.literal("Lv " + L + ": ").withStyle(st -> st.withItalic(false).withColor(lv >= L ? ChatFormatting.WHITE : ChatFormatting.GRAY));
+                    else row.append(Component.literal(" · ").withStyle(ChatFormatting.DARK_GRAY));
+                    row.append(part);
+                }
+                if (row != null) lore.add(row);
+            }
+            lore.add(Ui.text("Total at " + at + ":", ChatFormatting.WHITE));
+            for (int pi = 0; pi < perks.size(); pi++) lore.add(Ui.text("  " + perks.get(pi).describe(at), col[pi % col.length]));
             for (Powers.Power pw : unlocks) lore.add(Ui.text("★ Super power: " + pw.title + " (lv " + pw.level + ")", ChatFormatting.LIGHT_PURPLE));
             if (at == 250 || at == 500 || at == 750 || at == Skill.MAX_LEVEL) lore.add(Ui.text("★ Big milestone", ChatFormatting.GOLD));
             ItemStack node;

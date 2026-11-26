@@ -26,7 +26,7 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Guns: fire instantly, hitscan. Since 1.5 they use bullets of their ammo type (magazines first, then loose rounds).
- * Damage grows with Archery level (+50% at 999).
+ * Damage grows with Firearms level (+50% at 999).
  */
 public class GunItem extends Item {
     public enum Mode { SINGLE, DOUBLE, SHOTGUN, BURST3, PIERCE, EXPLODE, VOID, HARPOON, TESLA, HOMING, CANNON }
@@ -126,7 +126,7 @@ public class GunItem extends Item {
         int arrows = stats.mode == Mode.SHOTGUN ? 1 : stats.mode == Mode.BURST3 ? 3 : stats.mode == Mode.DOUBLE ? 2 : 1;
         int archery = SkillManager.get(p).level(Skill.ARCHERY);
         int saver = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "ammo_saver");
-        int cost = p.getRandom().nextFloat() < Math.min(0.4f, archery / 2500f) + saver * 0.15f ? 0 : arrows;   // Archery and Ammo Saver keep arrows
+        int cost = p.getRandom().nextFloat() < Math.min(0.4f, archery / 2500f) + saver * 0.15f ? 0 : arrows;   // Firearms and Ammo Saver save rounds
         String gunId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
         com.kiyamet.ammo.Ammo.Type ammo = com.kiyamet.ammo.Ammo.typeFor(gunId);
         if (cost > 0 && !com.kiyamet.ammo.Ammo.take(p, ammo, cost)) {

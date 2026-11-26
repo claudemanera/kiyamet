@@ -385,7 +385,7 @@ public final class BaseRaids {
             if (blood) loot.add(new ItemStack(ModItems.get("vaccine"), 1));
             for (ItemStack s : loot) level.addFreshEntity(new ItemEntity(level, base.getX() + 0.5, base.getY() + 1.2, base.getZ() + 0.5, s));
             for (Skill s : new Skill[]{Skill.SWORDS, Skill.ARCHERY, Skill.DEFENSE}) SkillManager.addXp(p, s, 150 + waves * 60);
-            p.sendSystemMessage(Component.literal("The raiders are dead. Their supplies are at your base. (+XP Swords, Archery, Defense)").withStyle(ChatFormatting.GREEN));
+            p.sendSystemMessage(Component.literal("The raiders are dead. Their supplies are at your base. (+XP Swords, Firearms, Defense)").withStyle(ChatFormatting.GREEN));
         }
 
         void lose(ServerLevel level, ServerPlayer p, List<Mob> alive) {

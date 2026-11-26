@@ -16,7 +16,7 @@ import java.util.*;
 /**
  * TWD 1.4 enchanting. Every enchantment gets a higher cap (Sharpness to X, Protection to X, Unbreaking to X...)
  * and each level is unlocked one by one along the Enchanting road (e.g. "Lv 13: Fire Protection III").
- * Gun enchantments (blue tomes) unlock along the Archery road from level 100.
+ * Gun enchantments (blue tomes) unlock along the Firearms road from level 100.
  */
 public final class Enchants {
     /** id, vanilla max, new max. Single-level enchantments (Mending, Silk Touch...) are left alone. */

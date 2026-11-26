@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * Enchantment Forge: hold an item, sneak + right-click an enchanting table. Add or raise any enchantment the item can take,
- * up to the level your Enchanting skill has unlocked (gun enchantments: Archery, and a blue tome to learn each one).
+ * up to the level your Enchanting skill has unlocked (gun enchantments: Firearms, and a blue tome to learn each one).
  * Costs XP levels and lapis.
  */
 public class ForgeMenu extends PanelMenu {
@@ -54,7 +54,7 @@ public class ForgeMenu extends PanelMenu {
         if (cur >= max) block = "MAX";
         else if (next > cap) {
             int at = Enchants.nextUnlock(id, cur);
-            block = Enchants.isGun(id) ? (at > 0 ? "Unlocks at Archery " + at : "Locked") : (at > 0 ? "Unlocks at Enchanting " + at : "Locked");
+            block = Enchants.isGun(id) ? (at > 0 ? "Unlocks at Firearms " + at : "Locked") : (at > 0 ? "Unlocks at Enchanting " + at : "Locked");
         } else if (cur == 0 && !EnchantmentHelper.isEnchantmentCompatible(en.keySet(), h)) block = "Conflicts with an enchantment on this item";
         else if (cur == 0 && Enchants.isGun(id) && !hasTome(id)) block = "Needs a blue Gunsmith Tome: " + Enchants.gunTitle(id);
         return new Offer(h, id, cur, next, cap, max, xp, lapis, block);
@@ -88,7 +88,7 @@ public class ForgeMenu extends PanelMenu {
         c.setItem(8, Ui.icon(Items.BOOK, Ui.text("How it works", ChatFormatting.GOLD),
                 Ui.text("Each click raises one enchantment by one level.", ChatFormatting.GRAY),
                 Ui.text("Higher levels unlock along the Enchanting road.", ChatFormatting.GRAY),
-                Ui.text("Gun enchantments: Archery road + blue tomes.", ChatFormatting.AQUA)));
+                Ui.text("Gun enchantments: Firearms road + blue tomes.", ChatFormatting.AQUA)));
         if (stack.isEmpty()) return;
         List<Holder<Enchantment>> all = new ArrayList<>();
         player.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).listElements().forEach(h -> { if (h.value().canEnchant(stack) || stack.getEnchantments().getLevel(h) > 0) all.add(h); });

@@ -40,7 +40,7 @@ public class SkillsMenu extends ChestMenu {
     private static Item icon(Skill s) {
         return switch (s) {
             case HEALTH -> Items.GOLDEN_APPLE; case ATHLETICS -> Items.LEATHER_BOOTS; case MINING -> Items.IRON_PICKAXE;
-            case SWORDS -> Items.IRON_SWORD; case ARCHERY -> Items.BOW; case DEFENSE -> Items.SHIELD; case ACROBATICS -> Items.FEATHER;
+            case SWORDS -> Items.IRON_SWORD; case ARCHERY -> com.kiyamet.ui.Ui.item("kiyamet:ak47"); case DEFENSE -> Items.SHIELD; case ACROBATICS -> Items.FEATHER;
             case SWIMMING -> Items.PRISMARINE_SHARD; case FARMING -> Items.WHEAT; case WOODCUTTING -> Items.IRON_AXE;
             case HUNTING -> Items.COOKED_BEEF; case ENCHANTING -> Items.ENCHANTING_TABLE; case ALCHEMY -> Items.BREWING_STAND;
             case EXPLORATION -> Items.COMPASS; case ENGINEERING -> Items.REDSTONE; case SURVIVAL -> Items.CAMPFIRE;

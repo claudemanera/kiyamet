@@ -26,7 +26,7 @@ public class GunTomeItem extends Item {
         for (String[] g : Enchants.GUN) if (("kiyamet:" + g[0]).equals(id)) what = g[3] + " (max " + Enchants.roman(Integer.parseInt(g[2])) + ")";
         s.set(DataComponents.LORE, new ItemLore(List.of(
                 Component.literal(what).withStyle(st -> st.withItalic(false).withColor(ChatFormatting.GRAY)),
-                Component.literal("Arrow guns only · needs Archery 100+").withStyle(st -> st.withItalic(false).withColor(ChatFormatting.DARK_AQUA)),
+                Component.literal("Guns only · needs Firearms 100+").withStyle(st -> st.withItalic(false).withColor(ChatFormatting.DARK_AQUA)),
                 Component.literal("Hold your gun, sneak + right-click an enchanting table").withStyle(st -> st.withItalic(false).withColor(ChatFormatting.DARK_GRAY)))));
         s.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
         return s;

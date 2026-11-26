@@ -77,7 +77,7 @@ public final class Powers {
         ALCHEMY_RESIST("Iron Stomach", MobEffects.RESISTANCE, 0, Skill.ALCHEMY, 250, Items.BREWING_STAND),
         ENGINEER_HASTE("Tinkerer", MobEffects.HASTE, 0, Skill.ENGINEERING, 250, Items.REDSTONE),
         WOOD_HASTE("Lumberjack", MobEffects.HASTE, 0, Skill.WOODCUTTING, 100, Items.GOLDEN_AXE),
-        ARCHER_SPEED("Ranger's Stride", MobEffects.SPEED, 0, Skill.ARCHERY, 250, Items.BOW),
+        ARCHER_SPEED("Ranger's Stride", MobEffects.SPEED, 0, Skill.ARCHERY, 250, Items.CROSSBOW),
         EMERGENCY_HEAL("Second Wind (instant heal at low HP, 2 min cooldown)", MobEffects.INSTANT_HEALTH, 1, Skill.MEDICINE, 250, Items.TOTEM_OF_UNDYING);
 
         public final String title;

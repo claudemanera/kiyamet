@@ -41,4 +41,4 @@ motorcycle
 armored_truck
 human
 shelter_core
-mission_board
+mission_board lion tiger brown_bear ice_bear crocodile wild_boar deer moose zombie_lion zombie_tiger zombie_bear zombie_crocodile zombie_deer zombie_wolf german_shepherd husky rottweiler pitbull stray_cat

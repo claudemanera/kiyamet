@@ -115,6 +115,16 @@ if p:
     for a in ('ratatouille', 'survivor_ration', 'gold_money_bag', 'spoiled_food'):
         cmd(p, 'summon item 3 101 -3 {Item:{id:"kiyamet:%s",count:1}}' % a, 0.2)
     cmd(p, 'twd date', 0.3)
+    # 1.9: stations, power, settlement, meals, guns, family
+    for i, b in enumerate(('main_table', 'cooking_table', 'settlement_bell', 'solar_panel', 'wind_turbine', 'chest')):
+        cmd(p, 'setblock %d 101 -16 %s' % (-6 + 2 * i, b if b == 'chest' else 'kiyamet:' + b), 0.3)
+    cmd(p, 'item replace block 4 101 -16 container.0 with minecraft:beef 8', 0.3)
+    cmd(p, 'item replace block 4 101 -16 container.1 with minecraft:iron_ingot 4', 0.3)
+    for a in ('venison', 'cooked_bear_meat', 'jerky', 'moose_roast', 'electric_drill', 'chainsaw', 'mission_board', 'lion_pelt', 'ice_bear_pelt', 'waterskin', 'hydration_pack', 'pitbull_spawn_egg'):
+        cmd(p, 'summon item 3 101 -3 {Item:{id:"kiyamet:%s",count:1}}' % a, 0.2)
+    cmd(p, 'summon kiyamet:human 0 101 -14 {Faction:"COMPANION",Work:"FARMER",SettleAt:%dL}' % (((-2 & 0x3FFFFFF) << 38) | ((-16 & 0x3FFFFFF) << 12) | (101 & 0xFFF)), 0.5)
+    cmd(p, 'summon kiyamet:human 1 101 -14 {Faction:"COMPANION",Partner:1b,PregnantDay:-400L}', 0.5)
+    cmd(p, 'summon kiyamet:human 2 101 -14 {Faction:"COMPANION",BornDay:0L}', 0.5)
     # 1.6 more: auto turret, thrown bombs, cars, eggs, cash
     cmd(p, 'summon kiyamet:auto_turret 2 101 -4', 0.5)
     cmd(p, 'summon kiyamet:thrown_bomb 2 104 -2 {Item:{id:"kiyamet:frag_grenade",count:1}}', 0.5)

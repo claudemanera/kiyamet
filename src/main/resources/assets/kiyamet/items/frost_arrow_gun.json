@@ -1,128 +1,264 @@
 {
  "model": {
-  "type": "minecraft:composite",
-  "models": [
+  "type": "minecraft:range_dispatch",
+  "property": "minecraft:cooldown",
+  "scale": 1.0,
+  "entries": [
    {
-    "type": "minecraft:model",
-    "model": "kiyamet:item/frost_arrow_gun",
-    "tints": [
-     {
-      "type": "minecraft:custom_model_data",
-      "index": 0,
-      "default": -1
-     }
-    ]
-   },
-   {
-    "type": "minecraft:select",
-    "property": "minecraft:custom_model_data",
-    "index": 0,
-    "cases": [
-     {
-      "when": "red_dot",
-      "model": {
+    "threshold": 0.6,
+    "model": {
+     "type": "minecraft:composite",
+     "models": [
+      {
        "type": "minecraft:model",
-       "model": "kiyamet:item/att/frost_arrow_gun_red_dot"
+       "model": "kiyamet:item/frost_arrow_gun_recoil",
+       "tints": [
+        {
+         "type": "minecraft:custom_model_data",
+         "index": 0,
+         "default": -1
+        }
+       ]
+      },
+      {
+       "type": "minecraft:select",
+       "property": "minecraft:custom_model_data",
+       "index": 0,
+       "cases": [
+        {
+         "when": "red_dot",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/frost_arrow_gun_red_dot_recoil"
+         }
+        },
+        {
+         "when": "holo",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/frost_arrow_gun_holo_recoil"
+         }
+        },
+        {
+         "when": "acog",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/frost_arrow_gun_acog_recoil"
+         }
+        },
+        {
+         "when": "sniper",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/frost_arrow_gun_sniper_recoil"
+         }
+        }
+       ],
+       "fallback": {
+        "type": "minecraft:empty"
+       }
+      },
+      {
+       "type": "minecraft:select",
+       "property": "minecraft:custom_model_data",
+       "index": 1,
+       "cases": [
+        {
+         "when": "short",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/frost_arrow_gun_short_recoil"
+         }
+        },
+        {
+         "when": "long",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/frost_arrow_gun_long_recoil"
+         }
+        }
+       ],
+       "fallback": {
+        "type": "minecraft:empty"
+       }
+      },
+      {
+       "type": "minecraft:select",
+       "property": "minecraft:custom_model_data",
+       "index": 2,
+       "cases": [
+        {
+         "when": "flashlight",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/frost_arrow_gun_flashlight_recoil"
+         }
+        },
+        {
+         "when": "laser",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/frost_arrow_gun_laser_recoil"
+         }
+        }
+       ],
+       "fallback": {
+        "type": "minecraft:empty"
+       }
+      },
+      {
+       "type": "minecraft:select",
+       "property": "minecraft:custom_model_data",
+       "index": 3,
+       "cases": [
+        {
+         "when": "extended",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/frost_arrow_gun_extended_recoil"
+         }
+        },
+        {
+         "when": "drum",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/frost_arrow_gun_drum_recoil"
+         }
+        }
+       ],
+       "fallback": {
+        "type": "minecraft:empty"
+       }
       }
-     },
-     {
-      "when": "holo",
-      "model": {
-       "type": "minecraft:model",
-       "model": "kiyamet:item/att/frost_arrow_gun_holo"
-      }
-     },
-     {
-      "when": "acog",
-      "model": {
-       "type": "minecraft:model",
-       "model": "kiyamet:item/att/frost_arrow_gun_acog"
-      }
-     },
-     {
-      "when": "sniper",
-      "model": {
-       "type": "minecraft:model",
-       "model": "kiyamet:item/att/frost_arrow_gun_sniper"
-      }
-     }
-    ],
-    "fallback": {
-     "type": "minecraft:empty"
-    }
-   },
-   {
-    "type": "minecraft:select",
-    "property": "minecraft:custom_model_data",
-    "index": 1,
-    "cases": [
-     {
-      "when": "short",
-      "model": {
-       "type": "minecraft:model",
-       "model": "kiyamet:item/att/frost_arrow_gun_short"
-      }
-     },
-     {
-      "when": "long",
-      "model": {
-       "type": "minecraft:model",
-       "model": "kiyamet:item/att/frost_arrow_gun_long"
-      }
-     }
-    ],
-    "fallback": {
-     "type": "minecraft:empty"
-    }
-   },
-   {
-    "type": "minecraft:select",
-    "property": "minecraft:custom_model_data",
-    "index": 2,
-    "cases": [
-     {
-      "when": "flashlight",
-      "model": {
-       "type": "minecraft:model",
-       "model": "kiyamet:item/att/frost_arrow_gun_flashlight"
-      }
-     },
-     {
-      "when": "laser",
-      "model": {
-       "type": "minecraft:model",
-       "model": "kiyamet:item/att/frost_arrow_gun_laser"
-      }
-     }
-    ],
-    "fallback": {
-     "type": "minecraft:empty"
-    }
-   },
-   {
-    "type": "minecraft:select",
-    "property": "minecraft:custom_model_data",
-    "index": 3,
-    "cases": [
-     {
-      "when": "extended",
-      "model": {
-       "type": "minecraft:model",
-       "model": "kiyamet:item/att/frost_arrow_gun_extended"
-      }
-     },
-     {
-      "when": "drum",
-      "model": {
-       "type": "minecraft:model",
-       "model": "kiyamet:item/att/frost_arrow_gun_drum"
-      }
-     }
-    ],
-    "fallback": {
-     "type": "minecraft:empty"
+     ]
     }
    }
-  ]
+  ],
+  "fallback": {
+   "type": "minecraft:composite",
+   "models": [
+    {
+     "type": "minecraft:model",
+     "model": "kiyamet:item/frost_arrow_gun",
+     "tints": [
+      {
+       "type": "minecraft:custom_model_data",
+       "index": 0,
+       "default": -1
+      }
+     ]
+    },
+    {
+     "type": "minecraft:select",
+     "property": "minecraft:custom_model_data",
+     "index": 0,
+     "cases": [
+      {
+       "when": "red_dot",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/frost_arrow_gun_red_dot"
+       }
+      },
+      {
+       "when": "holo",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/frost_arrow_gun_holo"
+       }
+      },
+      {
+       "when": "acog",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/frost_arrow_gun_acog"
+       }
+      },
+      {
+       "when": "sniper",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/frost_arrow_gun_sniper"
+       }
+      }
+     ],
+     "fallback": {
+      "type": "minecraft:empty"
+     }
+    },
+    {
+     "type": "minecraft:select",
+     "property": "minecraft:custom_model_data",
+     "index": 1,
+     "cases": [
+      {
+       "when": "short",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/frost_arrow_gun_short"
+       }
+      },
+      {
+       "when": "long",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/frost_arrow_gun_long"
+       }
+      }
+     ],
+     "fallback": {
+      "type": "minecraft:empty"
+     }
+    },
+    {
+     "type": "minecraft:select",
+     "property": "minecraft:custom_model_data",
+     "index": 2,
+     "cases": [
+      {
+       "when": "flashlight",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/frost_arrow_gun_flashlight"
+       }
+      },
+      {
+       "when": "laser",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/frost_arrow_gun_laser"
+       }
+      }
+     ],
+     "fallback": {
+      "type": "minecraft:empty"
+     }
+    },
+    {
+     "type": "minecraft:select",
+     "property": "minecraft:custom_model_data",
+     "index": 3,
+     "cases": [
+      {
+       "when": "extended",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/frost_arrow_gun_extended"
+       }
+      },
+      {
+       "when": "drum",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/frost_arrow_gun_drum"
+       }
+      }
+     ],
+     "fallback": {
+      "type": "minecraft:empty"
+     }
+    }
+   ]
+  }
  }
 }

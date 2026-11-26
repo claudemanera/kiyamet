@@ -28,7 +28,8 @@ public final class ModItems {
     public static final String[] WEAPONS = {"arrow_pistol", "arrow_rifle", "double_arrow_rifle", "arrow_shotgun", "silenced_arrow_pistol",
             "arrow_repeater", "toxic_arrow_rifle", "frost_arrow_gun", "arrow_sniper", "incendiary_repeater", "tesla_arrow_gun", "arrow_gatling",
             "harpoon_gun", "arrow_railgun", "arrow_launcher", "void_arrow_launcher", "homing_arrow_gun", "apocalypse_cannon",
-            "service_pistol", "compact_pistol", "tactical_pistol", "hand_cannon", "revolver", "magnum_revolver", "machine_pistol", "golden_pistol", "flare_pistol", "ak47", "akm_classic", "ak74", "aks74u", "ak_tactical", "rpk", "golden_ak", "ak12", "ak_grenadier", "bolt_sniper", "hunting_rifle", "marksman_rifle", "anti_materiel_rifle", "ghillie_sniper", "silent_sniper", "lever_rifle", "longshot_rifle", "survivor_smg"};
+            "service_pistol", "compact_pistol", "tactical_pistol", "hand_cannon", "revolver", "magnum_revolver", "machine_pistol", "golden_pistol", "flare_pistol", "ak47", "akm_classic", "ak74", "aks74u", "ak_tactical", "rpk", "golden_ak", "ak12", "ak_grenadier", "bolt_sniper", "hunting_rifle", "marksman_rifle", "anti_materiel_rifle", "ghillie_sniper", "silent_sniper", "lever_rifle", "longshot_rifle", "survivor_smg",
+            "pump_shotgun", "sawed_off", "auto_shotgun", "ak_shotgun", "behemoth_shotgun"};
     public static final String[] PARTS = {"circuit", "energy_cell", "vaccine", "bandage", "tech_core", "metal_plate", "fuel_canister",
             "lens", "void_shard", "energy_core", "ruby"};
     public static final String[] SINGLE = {"robot_core_trooper", "robot_core_drone", "robot_core_heavy", "radio", "walker_guts", "medkit", "repair_kit", "stone_gauntlet", "stone_codex_page_1", "stone_codex_page_2",
@@ -41,6 +42,8 @@ public final class ModItems {
             else { String id = s; custom(s, p -> new com.kiyamet.item.GadgetItem(p.stacksTo(id.equals("emp_bomb") || id.equals("black_hole_bomb") || id.equals("sonic_lure") ? 8 : 1), id)); }
         }
         for (String s : WEAPONS) { com.kiyamet.item.GunItem.Stats st = com.kiyamet.item.GunItem.statsFor(s); custom(s, p -> new com.kiyamet.item.GunItem(p.stacksTo(1), st)); }
+        for (String s : com.kiyamet.ammo.Ammo.AMMO) simple(s, 99);
+        for (String[] m : com.kiyamet.ammo.Ammo.MAGS) { int cap = Integer.parseInt(m[1]); custom(m[0], p -> new com.kiyamet.ammo.MagazineItem(p.stacksTo(1), cap)); }
         for (String s : PARTS) {
             if (s.equals("bandage")) custom(s, p -> new com.kiyamet.item.HealItem(p.stacksTo(16), com.kiyamet.item.HealItem.Kind.BANDAGE));
             else if (s.equals("vaccine")) custom(s, p -> new com.kiyamet.item.HealItem(p.stacksTo(8), com.kiyamet.item.HealItem.Kind.VACCINE));

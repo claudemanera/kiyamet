@@ -75,12 +75,21 @@ public final class LabRecipes {
         r("kiyamet:robot_core_drone", 1, 650, "kiyamet:tech_core", 2, "kiyamet:lens", 4, "kiyamet:circuit", 8, "kiyamet:energy_core", 1);
         r("kiyamet:robot_core_heavy", 1, 800, "kiyamet:tech_core", 4, "kiyamet:metal_plate", 24, "kiyamet:energy_core", 2, "minecraft:iron_block", 4);
         r("kiyamet:energy_sword", 1, 999, "kiyamet:energy_core", 2, "minecraft:netherite_sword", 1, "kiyamet:tech_core", 2);
+        // 1.5 ammo in bulk
+        r("kiyamet:pistol_ammo", 64, 30, "minecraft:iron_ingot", 3, "minecraft:gunpowder", 3, "minecraft:copper_ingot", 2);
+        r("kiyamet:rifle_ammo", 64, 60, "minecraft:iron_ingot", 3, "minecraft:gunpowder", 5, "minecraft:copper_ingot", 3);
+        r("kiyamet:shotgun_shell", 48, 60, "minecraft:paper", 4, "minecraft:gunpowder", 4, "minecraft:iron_ingot", 3);
+        r("kiyamet:sniper_ammo", 32, 120, "minecraft:iron_ingot", 6, "minecraft:gunpowder", 6, "minecraft:copper_ingot", 4);
+        r("kiyamet:rocket_ammo", 12, 200, "minecraft:tnt", 4, "kiyamet:metal_plate", 2, "minecraft:gunpowder", 4);
+        r("kiyamet:plasma_cell", 32, 300, "kiyamet:energy_cell", 2, "minecraft:redstone", 6, "minecraft:glowstone_dust", 4);
+        r("kiyamet:magazine_drum", 1, 100, "kiyamet:metal_plate", 4, "minecraft:iron_ingot", 6, "kiyamet:circuit", 1);
         // arrow weapons
         String[][] guns = {{"arrow_pistol", "50"}, {"arrow_rifle", "100"}, {"double_arrow_rifle", "150"}, {"arrow_shotgun", "200"}, {"silenced_arrow_pistol", "250"},
                 {"arrow_repeater", "300"}, {"toxic_arrow_rifle", "350"}, {"frost_arrow_gun", "400"}, {"arrow_sniper", "450"}, {"incendiary_repeater", "500"},
                 {"tesla_arrow_gun", "550"}, {"arrow_gatling", "600"}, {"harpoon_gun", "650"}, {"arrow_railgun", "700"}, {"arrow_launcher", "750"},
                 {"void_arrow_launcher", "850"}, {"homing_arrow_gun", "900"}, {"apocalypse_cannon", "999"},
-                {"service_pistol", "60"}, {"compact_pistol", "80"}, {"tactical_pistol", "180"}, {"hand_cannon", "320"}, {"revolver", "120"}, {"magnum_revolver", "380"}, {"machine_pistol", "280"}, {"golden_pistol", "800"}, {"flare_pistol", "220"}, {"ak47", "300"}, {"akm_classic", "340"}, {"ak74", "400"}, {"aks74u", "360"}, {"ak_tactical", "520"}, {"rpk", "600"}, {"golden_ak", "900"}, {"ak12", "680"}, {"ak_grenadier", "720"}, {"bolt_sniper", "420"}, {"hunting_rifle", "160"}, {"marksman_rifle", "560"}, {"anti_materiel_rifle", "860"}, {"ghillie_sniper", "640"}, {"silent_sniper", "760"}, {"lever_rifle", "240"}, {"longshot_rifle", "950"}, {"survivor_smg", "200"}};
+                {"service_pistol", "60"}, {"compact_pistol", "80"}, {"tactical_pistol", "180"}, {"hand_cannon", "320"}, {"revolver", "120"}, {"magnum_revolver", "380"}, {"machine_pistol", "280"}, {"golden_pistol", "800"}, {"flare_pistol", "220"}, {"ak47", "300"}, {"akm_classic", "340"}, {"ak74", "400"}, {"aks74u", "360"}, {"ak_tactical", "520"}, {"rpk", "600"}, {"golden_ak", "900"}, {"ak12", "680"}, {"ak_grenadier", "720"}, {"bolt_sniper", "420"}, {"hunting_rifle", "160"}, {"marksman_rifle", "560"}, {"anti_materiel_rifle", "860"}, {"ghillie_sniper", "640"}, {"silent_sniper", "760"}, {"lever_rifle", "240"}, {"longshot_rifle", "950"}, {"survivor_smg", "200"},
+                {"pump_shotgun", "140"}, {"sawed_off", "90"}, {"auto_shotgun", "460"}, {"ak_shotgun", "540"}, {"behemoth_shotgun", "820"}};
         for (String[] g : guns) {
             int lv = Integer.parseInt(g[1]);
             r("kiyamet:" + g[0], 1, lv, "kiyamet:metal_plate", 2 + lv / 200, "kiyamet:circuit", 1 + lv / 250, "minecraft:crossbow", 1);

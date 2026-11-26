@@ -45,6 +45,11 @@
   "kiyamet:silent_sniper",
   "kiyamet:lever_rifle",
   "kiyamet:longshot_rifle",
-  "kiyamet:survivor_smg"
+  "kiyamet:survivor_smg",
+  "kiyamet:pump_shotgun",
+  "kiyamet:sawed_off",
+  "kiyamet:auto_shotgun",
+  "kiyamet:ak_shotgun",
+  "kiyamet:behemoth_shotgun"
  ]
 }

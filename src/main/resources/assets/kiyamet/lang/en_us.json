@@ -251,5 +251,20 @@
  "item.kiyamet.silent_sniper": "Silent Sniper",
  "item.kiyamet.lever_rifle": "Lever-Action Rifle",
  "item.kiyamet.longshot_rifle": "Longshot Rifle",
- "item.kiyamet.survivor_smg": "Survivor SMG"
+ "item.kiyamet.survivor_smg": "Survivor SMG",
+ "item.kiyamet.pistol_ammo": "9mm Rounds",
+ "item.kiyamet.rifle_ammo": "7.62mm Rounds",
+ "item.kiyamet.shotgun_shell": "12 Gauge Shells",
+ "item.kiyamet.sniper_ammo": ".50 BMG Rounds",
+ "item.kiyamet.rocket_ammo": "Rockets",
+ "item.kiyamet.plasma_cell": "Plasma Cells",
+ "item.kiyamet.magazine_small": "Small Magazine",
+ "item.kiyamet.magazine": "Magazine",
+ "item.kiyamet.magazine_large": "Large Magazine",
+ "item.kiyamet.magazine_drum": "Drum Magazine",
+ "item.kiyamet.pump_shotgun": "Pump Shotgun",
+ "item.kiyamet.sawed_off": "Sawed-Off Shotgun",
+ "item.kiyamet.auto_shotgun": "Auto Shotgun",
+ "item.kiyamet.ak_shotgun": "AK Shotgun",
+ "item.kiyamet.behemoth_shotgun": "Behemoth Shotgun"
 }

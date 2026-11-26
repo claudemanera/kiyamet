@@ -112,7 +112,7 @@ for g in W:
         for k in kinds:
             name = f'{g}_{k}'
             fn(k, a, base).save(f'{A}/textures/item/att/{name}.png')
-            json.dump({"parent": "minecraft:item/handheld", "textures": {"layer0": f"kiyamet:item/att/{name}"}}, open(f'{A}/models/item/att/{name}.json', 'w'))
+            json.dump({"parent": "kiyamet:item/giant_handheld" if g == "behemoth_shotgun" else "minecraft:item/handheld", "textures": {"layer0": f"kiyamet:item/att/{name}"}}, open(f'{A}/models/item/att/{name}.json', 'w'))
             cases.append({"when": k, "model": {"type": "minecraft:model", "model": f"kiyamet:item/att/{name}"}})
         models.append({"type": "minecraft:select", "property": "minecraft:custom_model_data", "index": idx, "cases": cases, "fallback": {"type": "minecraft:empty"}})
     json.dump({"model": {"type": "minecraft:composite", "models": models}}, open(f'{A}/items/{g}.json', 'w'), indent=1)

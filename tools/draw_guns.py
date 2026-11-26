@@ -640,7 +640,143 @@ def survivor_smg(g):
     guard(g, 10, 15)
 
 
+# ---------------------------------------------------------------- shotguns (1.5 ammo update)
+@gun
+def pump_shotgun(g):
+    g.poly([(0, 13), (8, 12), (9, 16), (3, 17), (0, 19)], 'black')
+    g.rect(0, 13, 0, 19, 'rubber')
+    g.rect(8, 11, 15, 15, 'gunmetal'); g.px(12, 13, MAT['gunmetal'][0])
+    g.rect(15, 11, 30, 12, 'steel')
+    g.rect(15, 13, 27, 14, 'gunmetal')
+    g.rect(18, 13, 24, 16, 'black')
+    for x in range(19, 24, 2): g.px(x, 16, MAT['black'][3])
+    grip(g, 9, 16, 4, 'black', 1); guard(g, 12, 16)
+    g.px(29, 10, MAT['brass'][2])
+    g.rect(2, 15, 3, 15, 'red'); g.rect(5, 15, 6, 15, 'red')            # side-saddle shells
+    g.px(2, 16, MAT['brass'][2]).px(5, 16, MAT['brass'][2])
+
+@gun
+def sawed_off(g):
+    g.poly([(4, 14), (9, 12), (10, 16), (6, 20), (3, 21)], 'wood')
+    g.rect(9, 11, 13, 15, 'steel')
+    for y in (11, 13): g.rect(13, y, 22, y + 1, 'gunmetal')
+    g.rect(13, 12, 22, 12, 'black'); g.rect(22, 10, 23, 15, 'black')
+    g.rect(14, 15, 19, 16, 'wood')
+    g.px(10, 10, MAT['black'][1]).px(11, 10, MAT['black'][1])         # hammers
+    guard(g, 11, 16)
+    g.rect(15, 17, 16, 17, 'tan')                                     # tape
+
+@gun
+def auto_shotgun(g):
+    g.poly([(0, 12), (8, 11), (8, 15), (4, 16), (0, 18)], 'olive')
+    g.rect(8, 10, 18, 15, 'black')
+    g.rect(9, 8, 17, 9, 'gunmetal')
+    for x in range(9, 18, 2): g.px(x, 8, MAT['gunmetal'][3])
+    g.rect(18, 11, 26, 14, 'olive')
+    for x in range(19, 26, 2): g.px(x, 12, MAT['olive'][0])
+    g.rect(26, 11, 30, 12, 'steel'); g.rect(29, 10, 31, 13, 'black')
+    g.rect(11, 16, 17, 17, 'black')
+    g.poly([(10, 18), (18, 18), (19, 21), (18, 24), (10, 24), (9, 21)], 'black')   # shell drum
+    g.rect(12, 20, 16, 22, 'red'); g.px(14, 21, MAT['brass'][3])
+    grip(g, 9, 16, 5, 'olive', 1)
+
+@gun
+def ak_shotgun(g):
+    ak(g, 'black', 'black', stock='poly', hand='black', mag='none')
+    g.rect(23, 10, 30, 13, 'steel'); g.rect(28, 9, 31, 14, 'black')
+    for y in (10, 12): g.px(30, y, (14, 14, 16))
+    g.poly([(12, 15), (17, 15), (18, 21), (13, 21)], 'gunmetal')     # box shell mag
+    for y in (17, 19): g.rect(13, y, 16, y, 'red')
+    g.rect(8, 8, 16, 8, 'gunmetal')
+
+@gun
+def behemoth_shotgun(g):
+    g.poly([(0, 11), (7, 9), (7, 18), (3, 19), (0, 22)], 'darkwood')
+    g.rect(0, 11, 0, 22, 'rubber')
+    g.rect(7, 8, 17, 19, 'gunmetal')
+    g.rect(8, 9, 16, 9, 'brass')
+    for (x, y) in ((9, 11), (15, 11), (9, 17), (15, 17)): g.px(x, y, MAT['brass'][3])   # rivets
+    for y in (8, 12, 16): g.rect(17, y, 30, y + 2, 'steel')          # three huge barrels
+    for y in (9, 13, 17): g.rect(30, y, 31, y, 'black')
+    g.rect(22, 7, 24, 19, 'brass')                                   # barrel band
+    g.rect(18, 19, 26, 21, 'darkwood')
+    g.rect(9, 20, 14, 26, 'red'); g.rect(10, 21, 13, 25, 'brass')     # shell box
+    for y in (21, 23, 25): g.rect(10, y, 13, y, 'red')
+    g.rect(10, 4, 14, 7, 'black'); g.px(14, 5, GLOW['red'])          # top sight
+    grip(g, 3, 19, 6, 'darkwood', 1)
+
+# ---------------------------------------------------------------- ammo and magazines
+AMMO_ICONS = {}
+def ammo_icon(f):
+    AMMO_ICONS[f.__name__] = f
+    return f
+
+def bullet(g, x, y, case='brass', tip='copper', h=10, w=3):
+    g.rect(x, y + 3, x + w - 1, y + h, case)
+    g.rect(x, y + 1, x + w - 1, y + 2, tip); g.rect(x + w // 2 - (0 if w < 3 else 0), y, x + w // 2, y, tip)
+    g.rect(x - 0, y + h, x + w - 1, y + h, case)
+
+@ammo_icon
+def pistol_ammo(g):
+    for i, (x, y) in enumerate(((8, 12), (13, 10), (18, 13))): bullet(g, x, y, 'brass', 'copper', 8, 4)
+    g.rect(6, 22, 25, 23, 'darkwood')
+
+@ammo_icon
+def rifle_ammo(g):
+    for i, x in enumerate((7, 12, 17, 22)): bullet(g, x, 6 + (i % 2) * 2, 'brass', 'copper', 15, 3)
+    g.rect(5, 23, 26, 24, 'gunmetal')
+
+@ammo_icon
+def shotgun_shell(g):
+    for x, y in ((7, 8), (14, 6), (21, 9)):
+        g.rect(x, y, x + 4, y + 11, 'red')
+        g.rect(x, y + 12, x + 4, y + 15, 'brass'); g.rect(x - 1, y + 15, x + 5, y + 15, 'brass')
+        g.px(x + 1, y + 2, MAT['red'][3])
+
+@ammo_icon
+def sniper_ammo(g):
+    for x in (9, 17): bullet(g, x, 3, 'brass', 'steel', 23, 5)
+    g.px(10, 2, MAT['steel'][3]).px(18, 2, MAT['steel'][3])
+
+@ammo_icon
+def rocket_ammo(g):
+    g.rect(6, 13, 21, 18, 'olive')
+    g.poly([(21, 13), (27, 15), (27, 16), (21, 18)], 'red')
+    g.rect(3, 11, 6, 20, 'black'); g.px(2, 11, MAT['black'][2]).px(2, 20, MAT['black'][2])
+    g.rect(10, 13, 11, 18, 'tan'); g.rect(16, 13, 16, 18, 'tan')
+
+@ammo_icon
+def plasma_cell(g):
+    g.rect(9, 6, 22, 25, 'white')
+    g.rect(11, 8, 20, 23, 'navy')
+    for y in range(9, 23, 2): g.glowline(12, y, 19, 'purple' if y % 4 else 'cyan')
+    g.rect(13, 3, 18, 5, 'steel'); g.rect(13, 26, 18, 27, 'steel')
+
+def magazine_shape(g, h, drum=False):
+    if drum:
+        g.poly([(9, 7), (23, 7), (27, 12), (27, 22), (23, 27), (9, 27), (5, 22), (5, 12)], 'black')
+        g.rect(11, 12, 21, 22, 'gunmetal'); g.rect(14, 15, 18, 19, 'steel'); g.px(16, 17, MAT['black'][1])
+        g.rect(13, 3, 19, 6, 'black'); g.rect(14, 2, 18, 2, 'brass')
+        return
+    top = 28 - h
+    g.poly([(11, top), (19, top), (22, 28), (14, 28)], 'black')
+    g.rect(12, top - 2, 17, top - 1, 'gunmetal'); g.rect(13, top - 3, 15, top - 3, 'brass')
+    g.rect(14, 28, 22, 29, 'steel')
+    for y in range(top + 3, 27, 3): g.px(13 + (y - top) * 3 // h + 2, y, MAT['black'][3])
+
+@ammo_icon
+def magazine_small(g): magazine_shape(g, 12)
+@ammo_icon
+def magazine(g): magazine_shape(g, 17)
+@ammo_icon
+def magazine_large(g): magazine_shape(g, 23)
+@ammo_icon
+def magazine_drum(g): magazine_shape(g, 0, True)
+
+
 if __name__ == '__main__':
     for name, f in D.items():
         g = G(); f(g); g.render().save(f'{OUT}/{name}.png')
-    print(len(D), 'guns drawn')
+    for name, f in AMMO_ICONS.items():
+        g = G(); f(g); g.render().save(f'{OUT}/{name}.png')
+    print(len(D), 'guns drawn,', len(AMMO_ICONS), 'ammo icons')

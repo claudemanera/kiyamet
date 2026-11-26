@@ -21,12 +21,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Arrow weapons: fire instantly (no bow pull), use 1 arrow per shot from the inventory, hitscan.
+ * Guns: fire instantly, hitscan. Since 1.5 they use bullets of their ammo type (magazines first, then loose rounds).
  * Damage grows with Archery level (+50% at 999).
  */
 public class GunItem extends Item {
@@ -83,20 +82,13 @@ public class GunItem extends Item {
             case "lever_rifle" -> new Stats(14, 14, Mode.SINGLE, 26, 0);
             case "longshot_rifle" -> new Stats(48, 55, Mode.PIERCE, 36, 2);
             case "survivor_smg" -> new Stats(5, 4, Mode.SINGLE, 24, 0);
+            case "pump_shotgun" -> new Stats(6, 22, Mode.SHOTGUN, 30, 0);
+            case "sawed_off" -> new Stats(8, 26, Mode.SHOTGUN, 32, 0);
+            case "auto_shotgun" -> new Stats(5, 9, Mode.SHOTGUN, 32, 0);
+            case "ak_shotgun" -> new Stats(6, 11, Mode.SHOTGUN, 30, 0);
+            case "behemoth_shotgun" -> new Stats(14, 40, Mode.SHOTGUN, 48, 4);
             default -> new Stats(5, 20, Mode.SINGLE, 20, 0);
         };
-    }
-
-    private static boolean useArrow(ServerPlayer p, int n) {
-        if (p.isCreative()) return true;
-        int have = 0;
-        for (int i = 0; i < p.getInventory().getContainerSize(); i++) { ItemStack s = p.getInventory().getItem(i); if (s.is(Items.ARROW)) have += s.getCount(); }
-        if (have < n) return false;
-        for (int i = 0; i < p.getInventory().getContainerSize() && n > 0; i++) {
-            ItemStack s = p.getInventory().getItem(i);
-            if (s.is(Items.ARROW)) { int t = Math.min(n, s.getCount()); s.shrink(t); n -= t; }
-        }
-        return true;
     }
 
     // enchantment levels of the shot being fired (set in use())
@@ -135,7 +127,14 @@ public class GunItem extends Item {
         int archery = SkillManager.get(p).level(Skill.ARCHERY);
         int saver = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "ammo_saver");
         int cost = p.getRandom().nextFloat() < Math.min(0.4f, archery / 2500f) + saver * 0.15f ? 0 : arrows;   // Archery and Ammo Saver keep arrows
-        if (cost > 0 && !useArrow(p, cost)) { level.playSound(null, p.blockPosition(), SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, 0.8f, 1.4f); return InteractionResult.FAIL; }
+        String gunId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
+        com.kiyamet.ammo.Ammo.Type ammo = com.kiyamet.ammo.Ammo.typeFor(gunId);
+        if (cost > 0 && !com.kiyamet.ammo.Ammo.take(p, ammo, cost)) {
+            level.playSound(null, p.blockPosition(), SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, 0.8f, 1.4f);
+            p.displayClientMessage(net.minecraft.network.chat.Component.literal("Out of " + ammo.label + " ammo!").withStyle(net.minecraft.ChatFormatting.RED), true);
+            p.getCooldowns().addCooldown(stack, 10);
+            return InteractionResult.FAIL;
+        }
         // 1.5 attachments
         String scope = com.kiyamet.gunsmith.GunMods.get(stack, com.kiyamet.gunsmith.GunMods.Slot.SCOPE), muzzle = com.kiyamet.gunsmith.GunMods.get(stack, com.kiyamet.gunsmith.GunMods.Slot.MUZZLE);
         String light = com.kiyamet.gunsmith.GunMods.get(stack, com.kiyamet.gunsmith.GunMods.Slot.LIGHT), mag = com.kiyamet.gunsmith.GunMods.get(stack, com.kiyamet.gunsmith.GunMods.Slot.MAG);
@@ -215,11 +214,17 @@ public class GunItem extends Item {
             }
         }
         if (stats.effect == 4) p.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 10, 1, true, false));
-        level.playSound(null, p.blockPosition(), stats.noise == 0 ? SoundEvents.CROSSBOW_SHOOT : SoundEvents.CROSSBOW_SHOOT, SoundSource.PLAYERS,
-                stats.noise == 0 || modNoise < 0 ? 0.2f : 1.0f, stats.mode == Mode.CANNON ? 0.5f : 1.3f);
+        boolean quiet = stats.noise == 0 || modNoise < 0;
+        if (quiet) level.playSound(null, p.blockPosition(), SoundEvents.CROSSBOW_SHOOT, SoundSource.PLAYERS, 0.25f, 1.6f);
+        else if (ammo == com.kiyamet.ammo.Ammo.Type.SHELL || ammo == com.kiyamet.ammo.Ammo.Type.ROCKET)
+            level.playSound(null, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 0.45f, stats.mode == Mode.CANNON ? 0.6f : 1.5f);
+        else level.playSound(null, p.blockPosition(), SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.PLAYERS, 1.0f,
+                ammo == com.kiyamet.ammo.Ammo.Type.SNIPER ? 0.55f : ammo == com.kiyamet.ammo.Ammo.Type.PISTOL ? 1.25f : 0.9f);
+        if (!quiet) level.sendParticles(ParticleTypes.SMOKE, eye.x + p.getLookAngle().x, eye.y + p.getLookAngle().y, eye.z + p.getLookAngle().z, 3, 0.05, 0.05, 0.05, 0.01);
         int noise = Math.max(0, stats.noise + modNoise);
         if (noise > 0) NoiseSystem.make(level, p.blockPosition(), noise, 6);
         p.getCooldowns().addCooldown(stack, Math.max(2, Math.round(modCd * stats.cooldown * (1 - 0.1f * com.kiyamet.enchant.Enchants.gunLevel(level, stack, "rapid_fire")))));
+        p.displayClientMessage(com.kiyamet.ammo.Ammo.hud(p, stack, ammo), true);
         return InteractionResult.CONSUME;
     }
 }

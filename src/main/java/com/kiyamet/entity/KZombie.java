@@ -43,6 +43,10 @@ public class KZombie extends Zombie implements GeoEntity {
     public static final RawAnimation ATTACK = RawAnimation.begin().thenPlay("attack.swing");
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public final ZombieKind kind;
+    /** Prisoner state (see Captives) and who this walker used to be. */
+    public final com.kiyamet.npc.Captives.Data captives = new com.kiyamet.npc.Captives.Data();
+    public String formerName;
+    public java.util.UUID formerOwner;
     private int screamCooldown, leapCooldown, noiseCheck;
 
     public KZombie(EntityType<? extends Zombie> type, Level level, ZombieKind kind) {
@@ -86,6 +90,7 @@ public class KZombie extends Zombie implements GeoEntity {
 
     @Override
     public boolean doHurtTarget(ServerLevel level, Entity target) {
+        if (captives.captive) return false;
         boolean hit = super.doHurtTarget(level, target);
         if (hit) triggerAnim("attack", "attack");
         if (hit && target instanceof LivingEntity living) {
@@ -104,6 +109,8 @@ public class KZombie extends Zombie implements GeoEntity {
     public void tick() {
         super.tick();
         if (!(level() instanceof ServerLevel server)) return;
+        com.kiyamet.npc.Captives.tick(server, this, captives);
+        if (captives.captive) return;
         com.kiyamet.defense.DefenseRules.tickZombie(server, this);
         LivingEntity target = getTarget();
         if (target != null && com.kiyamet.twd.Camouflage.hides(target, this)) { setTarget(null); target = null; }
@@ -136,7 +143,7 @@ public class KZombie extends Zombie implements GeoEntity {
     protected void addBehaviourGoals() {
         super.addBehaviourGoals();
         targetSelector.addGoal(3, new net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal<>(this, com.kiyamet.npc.HumanEntity.class, 10, true, false,
-                (t, l) -> t instanceof com.kiyamet.npc.HumanEntity h && !h.isWhisperer() && !h.raiding && !com.kiyamet.twd.Camouflage.hides(t, this)));
+                (t, l) -> t instanceof com.kiyamet.npc.HumanEntity h && !h.isWhisperer() && !h.raiding && !h.captives.captive && !com.kiyamet.twd.Camouflage.hides(t, this)));
         targetSelector.addGoal(4, new net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal<>(this, com.kiyamet.robot.RobotEntity.class, 10, true, false,
                 (t, l) -> t instanceof com.kiyamet.robot.RobotEntity r && r.isAlly()));
     }
@@ -154,6 +161,36 @@ public class KZombie extends Zombie implements GeoEntity {
         if (kind == ZombieKind.EXPLODER && level() instanceof ServerLevel server)
             server.explode(this, getX(), getY(), getZ(), 2.5f, Level.ExplosionInteraction.MOB);
         super.die(source);
+    }
+
+    @Override
+    public boolean canBeLeashed() { return com.kiyamet.npc.Captives.canCapture(this); }
+
+    @Override
+    protected net.minecraft.world.InteractionResult mobInteract(Player player, net.minecraft.world.InteractionHand hand) {
+        if (captives.captive && hand == net.minecraft.world.InteractionHand.MAIN_HAND && !player.getItemInHand(hand).is(net.minecraft.world.item.Items.LEAD)) {
+            if (player instanceof ServerPlayer sp) com.kiyamet.npc.Captives.walker(sp, this);
+            return net.minecraft.world.InteractionResult.SUCCESS;
+        }
+        return super.mobInteract(player, hand);
+    }
+
+    @Override
+    protected void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput out) {
+        super.addAdditionalSaveData(out);
+        com.kiyamet.npc.Captives.save(out, captives);
+        if (formerName != null) out.putString("FormerName", formerName);
+        if (formerOwner != null) out.putString("FormerOwner", formerOwner.toString());
+    }
+
+    @Override
+    protected void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput in) {
+        super.readAdditionalSaveData(in);
+        com.kiyamet.npc.Captives.load(in, captives);
+        String n = in.getStringOr("FormerName", "");
+        formerName = n.isEmpty() ? null : n;
+        String o = in.getStringOr("FormerOwner", "");
+        try { formerOwner = o.isEmpty() ? null : java.util.UUID.fromString(o); } catch (IllegalArgumentException e) { formerOwner = null; }
     }
 
     /** Apocalypse zombies spawn day and night on any solid ground, never in water. */

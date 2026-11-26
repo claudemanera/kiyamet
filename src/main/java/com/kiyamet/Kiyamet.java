@@ -44,6 +44,7 @@ public class Kiyamet implements ModInitializer {
         com.kiyamet.npc.BaseRaids.init();
         com.kiyamet.npc.WorldEvents.init();
         com.kiyamet.npc.Talk.init();
+        com.kiyamet.npc.Captives.init();
         com.kiyamet.twd.ModTwd.init();
         com.kiyamet.net.KeyActions.init();
         SkillEvents.init();

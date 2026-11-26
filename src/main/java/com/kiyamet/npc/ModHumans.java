@@ -50,7 +50,9 @@ public final class ModHumans {
                 KZombie z = ModEntities.ZOMBIES.get(p.level().random.nextBoolean() ? ZombieKind.RUNNER : ZombieKind.FARMER).create(p.level(), EntitySpawnReason.CONVERSION);
                 if (z != null) {
                     z.setPos(p.getX(), p.getY(), p.getZ());
-                    z.setCustomName(Component.literal(p.getName().getString() + " (walker)").withStyle(ChatFormatting.DARK_GREEN));
+                    z.setCustomName(Component.literal(p.getName().getString()).withStyle(ChatFormatting.DARK_GREEN));
+                    z.setCustomNameVisible(true);
+                    z.formerName = p.getName().getString();
                     z.setPersistenceRequired();
                     p.level().addFreshEntity(z);
                 }

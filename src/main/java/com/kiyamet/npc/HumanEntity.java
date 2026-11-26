@@ -142,6 +142,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     public boolean raiding;
     /** A raider envoy who came to demand tribute: peaceful until refused. */
     public boolean envoy;
+    public final Captives.Data captives = new Captives.Data();
     public String community() { return community; }
     public String communityType() { return communityType; }
     @Nullable public UUID owner() { return owner; }
@@ -227,6 +228,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         out.putInt("Level", lvl());
         out.putBoolean("Raiding", raiding);
         out.putBoolean("Envoy", envoy);
+        Captives.save(out, captives);
         out.putString("Faction", faction().name());
         out.putString("Role", role().name());
         out.putInt("Xp", xp);
@@ -255,6 +257,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         entityData.set(LEVEL, Math.max(1, in.getIntOr("Level", 1)));
         raiding = in.getBooleanOr("Raiding", false);
         envoy = in.getBooleanOr("Envoy", false);
+        Captives.load(in, captives);
         try { entityData.set(FACTION, Faction.valueOf(in.getStringOr("Faction", "SURVIVOR")).ordinal()); } catch (IllegalArgumentException ignored) {}
         try { entityData.set(ROLE, Role.valueOf(in.getStringOr("Role", "MEMBER")).ordinal()); } catch (IllegalArgumentException ignored) {}
         xp = in.getIntOr("Xp", 0);
@@ -319,7 +322,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     /** Who this person wants to fight. */
     public boolean isHostileTo(LivingEntity e) {
         if (e == this || !e.isAlive()) return false;
-        if (envoy || e instanceof HumanEntity he && he.envoy) return false;
+        if (envoy || e instanceof HumanEntity he && (he.envoy || he.captives.captive) || captives.captive) return false;
         Faction f = faction();
         if (e instanceof Player p) {
             if (p.isCreative() || p.isSpectator()) return false;
@@ -436,7 +439,8 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (owner != null && job == Job.SCOUT && tickCount % 100 == 0) scout(sl);
         if (owner != null && job == Job.GUARDIAN && tickCount % 40 == 0) guard(sl);
         if (owner != null && job == Job.LOOTER && tickCount % 6000 == 3000) scavenge();
-        if (raiding) com.kiyamet.defense.DefenseRules.tickRaider(sl, this);
+        Captives.tick(sl, this, captives);
+        if (raiding && !captives.captive) com.kiyamet.defense.DefenseRules.tickRaider(sl, this);
         if (faction() == Faction.COMPANION && tickCount % 20 == 7 && random.nextInt(450) == 0 && ownerPlayer() instanceof ServerPlayer op
                 && op.level() == sl && distanceTo(op) < 24 && !Talk.busy(op) && !isAway()) Dialogues.chatter(op, this);
         if (role() == Role.LEADER && faction() == Faction.COMMUNITY && tickCount % 400 == 100
@@ -665,9 +669,17 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         net.minecraft.world.Containers.dropContents(sl, this, inventory);
         // Everyone is infected: the dead come back.
         if (faction() != Faction.WHISPERER && random.nextFloat() < 0.8f) {
-            KZombie z = com.kiyamet.entity.ModEntities.ZOMBIES.get(com.kiyamet.entity.ZombieKind.RUNNER).create(sl, net.minecraft.world.entity.EntitySpawnReason.CONVERSION);
+            com.kiyamet.entity.ZombieKind zk = appearance().female() ? com.kiyamet.entity.ZombieKind.WOMAN : profession() == Profession.DOCTOR ? com.kiyamet.entity.ZombieKind.DOCTOR
+                    : profession() == Profession.POLICE ? com.kiyamet.entity.ZombieKind.POLICE : profession() == Profession.FARMER ? com.kiyamet.entity.ZombieKind.FARMER : com.kiyamet.entity.ZombieKind.RUNNER;
+            KZombie z = com.kiyamet.entity.ModEntities.ZOMBIES.get(zk).create(sl, net.minecraft.world.entity.EntitySpawnReason.CONVERSION);
             if (z != null) {
                 z.setPos(getX(), getY(), getZ());
+                // the dead keep their name: you can see who they were
+                z.setCustomName(Component.literal(getName().getString()).withStyle(ChatFormatting.DARK_GREEN));
+                z.setCustomNameVisible(true);
+                z.setPersistenceRequired();
+                z.formerName = getName().getString();
+                if (faction() == Faction.COMPANION && ownerPlayer() != null) z.formerOwner = ownerPlayer().getUUID();
                 sl.getServer().execute(() -> { if (sl.getEntity(z.getUUID()) == null) sl.addFreshEntity(z); });
             }
         }
@@ -676,11 +688,15 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     // ---------------------------------------------------------------- interaction
 
     @Override
+    public boolean canBeLeashed() { return Captives.canCapture(this); }
+
+    @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack held = player.getItemInHand(hand);
         if (held.is(Items.NAME_TAG)) return InteractionResult.PASS;
         if (!(player instanceof ServerPlayer sp) || !(level() instanceof ServerLevel)) return InteractionResult.SUCCESS;
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
+        if (captives.captive && !held.is(Items.LEAD)) { Captives.talk(sp, this); return InteractionResult.SUCCESS; }
         if (getTarget() == player) return InteractionResult.FAIL;
         if (envoy) { WorldEvents.envoyTalk(sp, this); return InteractionResult.SUCCESS; }
         if (com.kiyamet.twd.Story.interact(sp, this)) return InteractionResult.SUCCESS;

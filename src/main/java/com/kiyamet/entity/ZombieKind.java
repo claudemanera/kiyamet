@@ -25,6 +25,8 @@ public enum ZombieKind {
     WOMAN    ("woman_zombie",     20,   0.17,  3.0,  0,    0.6f, 1.95f, 1.0f, 34, 0),
     NURSE    ("nurse_zombie",     20,   0.17,  3.0,  0,    0.6f, 1.95f, 1.0f, 12, 0);
 
+    public boolean capturable() { return this != TANK && this != ALPHA && this != MUTANT && this != EXPLODER; }
+
     public final String id;
     public final double health, speed, damage, armor;
     public final float width, height, scale;

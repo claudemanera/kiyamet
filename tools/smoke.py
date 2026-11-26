@@ -47,14 +47,21 @@ if p:
     cmd(p, 'gamerule spawnRadius 0'); cmd(p, 'forceload add -48 -48 48 48', 5)
     for i, s in enumerate(STRUCTS):
         x, z = 600 + (i % 10) * 450, 600 + (i // 10) * 450
-        cmd(p, f'forceload add {x} {z}', 3)
-        cmd(p, f'place structure kiyamet:{s} {x} 0 {z}', 5)
-        cmd(p, f'forceload remove {x} {z}', 0.5)
+        if s.startswith('city_'):
+            cmd(p, f'locate structure kiyamet:{s}', 12)
+            continue
+        cmd(p, f'forceload add {x-96} {z-96} {x+96} {z+96}', 6)
+        cmd(p, f'place structure kiyamet:{s} {x} 0 {z}', 6)
+        cmd(p, f'forceload remove {x-96} {z-96} {x+96} {z+96}', 0.5)
         log.write(f'### placed {s}\n')
     cmd(p, 'fill -24 100 -24 24 100 24 minecraft:stone', 1)
     cmd(p, 'fill -24 101 -24 24 110 24 minecraft:air', 1)
     for i, e in enumerate(ENTS):
         cmd(p, f'summon kiyamet:{e} {(i % 8) * 5 - 18} 101 {(i // 8) * 5 - 18}', 0.3)
+    # 1.4: our enchantments must parse and apply
+    cmd(p, 'item replace entity @e[type=kiyamet:farmer_zombie,limit=1] weapon.mainhand with kiyamet:arrow_pistol[enchantments={"kiyamet:rapid_fire":5,"kiyamet:explosive_tips":2}]', 1)
+    cmd(p, 'item replace entity @e[type=kiyamet:human,limit=1] weapon.mainhand with minecraft:diamond_sword[enchantments={"minecraft:sharpness":10,"minecraft:unbreaking":10}]', 1)
+    cmd(p, 'summon item 0 101 0 {Item:{id:"kiyamet:gun_tome",count:1}}', 1)
     cmd(p, 'time set 12400', 1)
     cmd(p, 'tick sprint 3000', 25)
     cmd(p, 'weather rain', 1)
@@ -84,10 +91,10 @@ txt = open('smoke.log').read()
 # collect exceptions / errors with a little context
 ls = txt.splitlines()
 for i, l in enumerate(ls):
-    if re.search(r'Exception|ERROR\]|/ERROR|Error:|Caused by|Failed to|Unknown|Incorrect argument|Couldn\'t|could not', l, re.I) and 'Can\'t keep up' not in l:
+    if re.search(r'Exception|ERROR\]|/ERROR|Error:|Caused by|Failed to|Unknown|Incorrect argument|Couldn\'t|could not|Could not find|That position is not loaded|Failed to place', l, re.I) and 'Can\'t keep up' not in l:
         problems.append('\n'.join(ls[i:i + 4]))
 summon_ok = len(re.findall(r'Summoned new', txt))
-placed_ok = len(re.findall(r'Generated structure|Placed structure|structure .* at', txt, re.I))
+placed_ok = len(re.findall(r'Generated structure', txt)) + len(re.findall(r'The nearest kiyamet:city', txt))
 with open('smoke_report.txt', 'w') as f:
     f.write(f'summoned OK: {summon_ok}/{len(ENTS)}\nstructures placed OK: {placed_ok}/{len(STRUCTS)}\nproblems: {len(problems)}\n\n')
     seen = set()

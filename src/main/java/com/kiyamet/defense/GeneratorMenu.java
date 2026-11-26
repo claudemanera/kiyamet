@@ -66,7 +66,7 @@ public class GeneratorMenu extends ChestMenu {
     private void scan() {
         Set<BlockPos> seen = new HashSet<>();
         List<Group> out = new ArrayList<>();
-        int r = Power.RANGE;
+        int r = Math.min(40, Power.range(level, pos));
         for (BlockPos p0 : BlockPos.betweenClosed(pos.offset(-r, -r, -r), pos.offset(r, r, r))) {
             Block b = level.getBlockState(p0).getBlock();
             if (!powered(b) || seen.contains(p0)) continue;
@@ -106,7 +106,9 @@ public class GeneratorMenu extends ChestMenu {
         shown.setItem(STATUS, Ui.glint(Ui.icon(lit && on ? Items.BLAST_FURNACE : Items.FURNACE,
                 Ui.text("Generator", ChatFormatting.AQUA, ChatFormatting.BOLD),
                 Ui.text(lit && on ? "● Running" : on ? "● Out of fuel" : "● Paused", lit && on ? ChatFormatting.GREEN : ChatFormatting.RED),
-                Ui.text("Range: " + Power.RANGE + " blocks", ChatFormatting.GRAY),
+                Ui.text("Range: " + Power.range(level, pos) + " blocks", ChatFormatting.GRAY),
+                Ui.text("Cluster: " + Power.cluster(level, pos).size() + " generators (" + Power.runningInCluster(level, pos) + " running, max " + Power.MAX_CLUSTER + ")", ChatFormatting.GRAY),
+                Ui.text("Place generators touching each other: +" + Power.PER_EXTRA + " range each, slower fuel use", ChatFormatting.DARK_GRAY),
                 Ui.text("Devices in range: " + groups.size() + " groups", ChatFormatting.GRAY)), lit && on));
         shown.setItem(MASTER, Ui.icon(on ? Items.LIME_DYE : Items.RED_DYE,
                 Ui.text(on ? "Master switch: ON" : "Master switch: OFF", on ? ChatFormatting.GREEN : ChatFormatting.RED, ChatFormatting.BOLD),

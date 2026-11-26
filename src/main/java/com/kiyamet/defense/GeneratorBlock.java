@@ -60,6 +60,7 @@ public class GeneratorBlock extends Block {
             boolean wasLit = state.getValue(LIT);
             level.setBlock(pos, state.setValue(FUEL, Math.min(15, fuel + v)).setValue(LIT, true), 3);
             if (!wasLit) level.scheduleTick(pos, this, MINUTE);
+            if (level instanceof ServerLevel sl0) Power.track(sl0, pos);
             Power.invalidate();
             level.playSound(null, pos, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1f, 0.8f);
         }
@@ -81,6 +82,7 @@ public class GeneratorBlock extends Block {
         boolean wasLit = state.getValue(LIT);
         level.setBlock(pos, state.setValue(FUEL, Math.min(15, fuel + v)).setValue(LIT, true), 3);
         if (!wasLit) level.scheduleTick(pos, g, MINUTE);
+        Power.track(level, pos);
         Power.invalidate();
         level.playSound(null, pos, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1f, 0.8f);
         return true;
@@ -89,7 +91,11 @@ public class GeneratorBlock extends Block {
 
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        Power.track(level, pos);
         if (!state.getValue(ON)) { if (state.getValue(LIT)) level.scheduleTick(pos, this, MINUTE); return; }
+        // clusters burn slower: each extra running generator stretches every unit of fuel by 5%
+        int n = Power.runningInCluster(level, pos);
+        if (n > 1 && random.nextFloat() < Math.min(0.5f, (n - 1) * 0.05f / (1 + (n - 1) * 0.05f))) { level.scheduleTick(pos, this, MINUTE); return; }
         int fuel = state.getValue(FUEL) - 1;
         if (fuel <= 0) {
             level.setBlock(pos, state.setValue(FUEL, 0).setValue(LIT, false), 3);
@@ -99,6 +105,12 @@ public class GeneratorBlock extends Block {
             level.setBlock(pos, state.setValue(FUEL, fuel), 3);
             level.scheduleTick(pos, this, MINUTE);
         }
+    }
+
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState old, boolean moved) {
+        super.onPlace(state, level, pos, old, moved);
+        if (level instanceof ServerLevel sl) { Power.track(sl, pos); Power.invalidate(); }
     }
 
     @Override

@@ -16,7 +16,7 @@ import net.minecraft.world.item.Items;
 /** Companion panel: stats, orders, gear, glow, looks editor, dismiss. */
 public class CompanionMenu extends PanelMenu {
     private static final int INFO = 4, FOLLOW = 19, STAY = 20, GUARD = 21, WEAPON = 23, LOOKS = 24, GLOW = 25,
-            HEAL = 30, BAG = 31, TP = 32, DISMISS = 49, JOB = 28, RENAME = 34, RUN = 39, SQUAD = 41, GATHER = 37;
+            HEAL = 30, BAG = 31, TP = 32, DISMISS = 49, JOB = 28, RENAME = 34, RUN = 39, SQUAD = 41, GATHER = 37, SETTLE = 40, FAMILY = 42;
     private final HumanEntity h;
     private boolean confirmDismiss;
 
@@ -84,6 +84,12 @@ public class CompanionMenu extends PanelMenu {
         c.setItem(GATHER, Ui.glint(Ui.icon(Items.IRON_PICKAXE, Ui.text("Gather resources", ChatFormatting.GREEN, ChatFormatting.BOLD),
                 Ui.text(o == HumanEntity.Order.GATHER ? "Now: " + h.gather : "Wood, stone, ores, or 'Develop'", ChatFormatting.GRAY),
                 Ui.text("Develop: tools → stone → iron armor → ores", ChatFormatting.DARK_GRAY)), o == HumanEntity.Order.GATHER));
+        c.setItem(SETTLE, Ui.glint(Ui.icon(Items.BELL, Ui.text(h.work.isEmpty() ? "Settle here" : "Settler: " + com.kiyamet.settle.Settlement.title(h.work), ChatFormatting.GREEN, ChatFormatting.BOLD),
+                Ui.text(h.work.isEmpty() ? "Live and work at the nearest Settlement Bell" : "Click to bring them back with you", ChatFormatting.GRAY)), !h.work.isEmpty()));
+        if (h.partner || com.kiyamet.settle.Family.canPartner(h) || h.bornDay >= 0)
+            c.setItem(FAMILY, Ui.glint(Ui.icon(h.bornDay >= 0 ? Items.CAKE : Items.POPPY, Ui.text(h.bornDay >= 0 ? "Your child · " + com.kiyamet.settle.Family.stage((net.minecraft.server.level.ServerLevel) h.level(), h).title
+                    : h.partner ? (h.pregnantDay >= 0 ? "♥ Partner · expecting" : "♥ Partner") : "Ask to be your partner", ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD),
+                    Ui.text(h.partner ? "Sleep near each other at night..." : h.bornDay >= 0 ? "Grows up with the calendar" : "Needs morale 60+", ChatFormatting.GRAY)), h.partner));
         c.setItem(SQUAD, Ui.icon(Items.BELL, Ui.text("Group panel", ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), Ui.text("Orders for everyone, group supply runs", ChatFormatting.GRAY)));
         c.setItem(DISMISS, Ui.icon(confirmDismiss ? Items.TNT : Items.RED_DYE, Ui.text(confirmDismiss ? "Click again to confirm" : "Dismiss companion", ChatFormatting.RED),
                 Ui.text("They become a free survivor again", ChatFormatting.GRAY)));
@@ -94,6 +100,8 @@ public class CompanionMenu extends PanelMenu {
         if (!h.isAlive() || !h.isOwnedBy(player) || h.isAway()) { player.closeContainer(); return false; }
         if (slot != DISMISS) confirmDismiss = false;
         switch (slot) {
+            case SETTLE -> com.kiyamet.settle.Settlement.toggle(player, h);
+            case FAMILY -> { if (h.bornDay < 0) com.kiyamet.settle.Family.propose(player, h); }
             case FOLLOW -> h.setOrder(HumanEntity.Order.FOLLOW);
             case STAY -> h.setOrder(HumanEntity.Order.STAY);
             case GUARD -> h.setOrder(HumanEntity.Order.GUARD);

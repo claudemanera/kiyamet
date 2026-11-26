@@ -71,6 +71,7 @@ public final class Power {
             BlockState s = level.getBlockState(p);
             if (s.getBlock() instanceof GeneratorBlock) { track(level, p); if (running(s)) { on = true; break; } }
         }
+        if (!on) on = com.kiyamet.power.Renewables.near(level, pos, RANGE);   // 1.9 solar panels and wind turbines
         if (!on) {
             Set<Long> gens = GENS.getOrDefault(level.dimension(), Set.of());
             for (Iterator<Long> it = gens.iterator(); it.hasNext(); ) {

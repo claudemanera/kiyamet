@@ -53,6 +53,11 @@ public class MainTable extends Block {
             new Station("kiyamet:lab_table", "Research and the vaccine", "minecraft:iron_ingot", 6, "minecraft:copper_ingot", 2, "minecraft:redstone", 4, "minecraft:crafting_table", 1),
             new Station("kiyamet:vehicle_workshop", "Build cars and bikes", "minecraft:iron_block", 6, "minecraft:anvil", 1, "minecraft:crafting_table", 1),
             new Station("kiyamet:generator", "Powers turrets, fences and electric tools", "minecraft:iron_ingot", 8, "minecraft:redstone", 6, "minecraft:furnace", 1),
+            new Station("kiyamet:settlement_bell", "Found your own settlement - settlers live and work here", "minecraft:gold_ingot", 4, "minecraft:iron_ingot", 4, "minecraft:oak_planks", 8, "minecraft:bell", 1),
+            new Station("kiyamet:solar_panel", "Free power while the sun shines (8 blocks)", "minecraft:glass_pane", 6, "minecraft:iron_ingot", 3, "minecraft:redstone", 4, "minecraft:lapis_lazuli", 2),
+            new Station("kiyamet:wind_turbine", "Free power day and night - best up high", "minecraft:iron_ingot", 8, "minecraft:redstone", 4, "minecraft:white_wool", 3),
+            new Station("kiyamet:electric_drill", "Mines 3x3 - charges in power", "minecraft:iron_ingot", 6, "minecraft:diamond", 2, "minecraft:redstone", 8),
+            new Station("kiyamet:chainsaw", "Fells a whole tree - charges in power", "minecraft:iron_ingot", 6, "minecraft:diamond", 1, "minecraft:redstone", 6),
             new Station("kiyamet:mission_board", "Your own mission board: 3 new jobs every day", "minecraft:oak_planks", 10, "minecraft:paper", 6, "minecraft:stick", 4)));
 
     public MainTable(Properties p) { super(p); }

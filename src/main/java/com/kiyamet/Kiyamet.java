@@ -35,6 +35,9 @@ public class Kiyamet implements ModInitializer {
         com.kiyamet.food.CookingTable.init();
         com.kiyamet.twd.MainTable.init();
         com.kiyamet.gunsmith.GunHandling.init();
+        com.kiyamet.power.Renewables.init();
+        com.kiyamet.settle.Settlement.init();
+        com.kiyamet.settle.Family.init();
         com.kiyamet.food.Spoilage.init();
         com.kiyamet.furniture.Furniture.init();
         com.kiyamet.water.Thirst.init();

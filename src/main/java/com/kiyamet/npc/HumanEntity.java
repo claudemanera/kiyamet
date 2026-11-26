@@ -147,6 +147,13 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     public final Captives.Data captives = new Captives.Data();
     /** Companion morale 0-100 (see Mind). */
     public float morale = 70;
+    /** 1.9 settlement + family */
+    public String work = "";                       // settlement job: FARMER, SMITH, DOCTOR, GUARD, COOK ("" = not settled)
+    @Nullable public BlockPos settleAt;            // the settlement bell they live by
+    public boolean partner;                        // your partner
+    public long pregnantDay = -1, bornDay = -1;    // calendar day index
+    public @Nullable BlockPos home() { return home; }
+    public void setHome(@Nullable BlockPos h) { home = h; }
     public String community() { return community; }
     public String communityType() { return communityType; }
     @Nullable public UUID owner() { return owner; }
@@ -264,6 +271,11 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         out.putString("Order", order.name());
         out.putString("Gather", gather);
         out.putString("Community", community);
+        out.putString("Work", work);
+        if (settleAt != null) out.putLong("SettleAt", settleAt.asLong());
+        out.putBoolean("Partner", partner);
+        out.putLong("PregnantDay", pregnantDay);
+        out.putLong("BornDay", bornDay);
         out.putString("CommunityType", communityType);
         if (owner != null) out.putString("Owner", owner.toString());
         if (home != null) out.putLong("Home", home.asLong());
@@ -282,6 +294,11 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         envoy = in.getBooleanOr("Envoy", false);
         Captives.load(in, captives);
         morale = in.getFloatOr("Morale", 70f);
+        work = in.getStringOr("Work", "");
+        long sa = in.getLongOr("SettleAt", Long.MIN_VALUE); settleAt = sa == Long.MIN_VALUE ? null : BlockPos.of(sa);
+        partner = in.getBooleanOr("Partner", false);
+        pregnantDay = in.getLongOr("PregnantDay", -1L);
+        bornDay = in.getLongOr("BornDay", -1L);
         try { entityData.set(FACTION, Faction.valueOf(in.getStringOr("Faction", "SURVIVOR")).ordinal()); } catch (IllegalArgumentException ignored) {}
         try { entityData.set(ROLE, Role.valueOf(in.getStringOr("Role", "MEMBER")).ordinal()); } catch (IllegalArgumentException ignored) {}
         xp = in.getIntOr("Xp", 0);
@@ -461,6 +478,8 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (!(level() instanceof ServerLevel sl)) return;
         if (!initialized) setup(faction(), role(), lvl(), null);
         if (awayUntil > 0) { tickAway(sl); return; }
+        if (owner != null && (tickCount + getId()) % 1200 == 0) com.kiyamet.settle.Settlement.work(sl, this);
+        if (bornDay >= 0 && tickCount % 40 == 0) com.kiyamet.settle.Family.grow(sl, this);
         if (owner != null && tickCount % 60 == 0) Radio.report(this);
         if (owner != null && job == Job.SCOUT && tickCount % 100 == 0) scout(sl);
         if (owner != null && job == Job.GUARDIAN && tickCount % 40 == 0) guard(sl);

@@ -53,42 +53,9 @@ public final class Story {
     static final String MARCUS = "Marcus", ELENA = "Elena", DANI = "Dani", RADIO = "Radio";
     static final ChatFormatting MC = ChatFormatting.GREEN, EC = ChatFormatting.LIGHT_PURPLE, DC = ChatFormatting.AQUA, RC = ChatFormatting.RED;
 
-    public record Chapter(String title, String tagline, int reward, String[] intro, String accept) {}
-    public static final Chapter[] CHAPTERS = {
-            new Chapter("Medicine Run", "Elena's daughter is burning up", 20, new String[]{
-                    "You. You're the one who answered the three questions right. I'm Marcus. I keep this place running.",
-                    "Elena's girl has a fever. Bad one. We're out of antibiotics.",
-                    "There's a pharmacy crate out past the old road. Walkers got there first. Bring the medicine back."}, "I'll get the medicine."),
-            new Chapter("The Missing Scout", "Dani went out and didn't come back", 25, new String[]{
-                    "Lily's fever broke. Elena hasn't stopped crying. Thank you.",
-                    "Now I need you again. Dani - our best scout - went out three days ago. Her radio's gone quiet.",
-                    "Last signal came from out there. Find her. If she's alive, bring her home."}, "I'll find her."),
-            new Chapter("Stolen Fuel", "Raiders took the generator fuel", 30, new String[]{
-                    "Dani's tough. She says she'd follow you anywhere now. Can't blame her.",
-                    "Bad news: raiders hit our fuel depot last night. A man called Spike leads that crew.",
-                    "No fuel, no fence. No fence... you know. Get it back. Spike has it."}, "Spike won't keep it."),
-            new Chapter("Wheels", "The settlement needs a truck", 35, new String[]{
-                    "With that fuel we can finally run a truck. Problem is, we don't have one.",
-                    "Dani spotted an old pickup on the highway. Half a tank, maybe.",
-                    "Drive it back here. Try not to hit too many walkers... actually, hit as many as you want."}, "I'll bring the truck."),
-            new Chapter("The Siege", "The Commander wants an answer", 45, new String[]{
-                    "We've got a problem. A man came to the gate. Says he speaks for 'the Commander'.",
-                    "Half of everything we have, every month. Or they burn us.",
-                    "I told him no. They're coming tonight - maybe sooner. Stand with us at the board."}, "We hold the line."),
-            new Chapter("The Herd", "A herd is heading for the walls", 45, new String[]{
-                    "We held. Barely. But the noise drew something worse.",
-                    "Dani counted over thirty walkers moving this way. A whole herd.",
-                    "Meet them out there before they reach the walls. Thin them out - twenty-five at least."}, "I'll thin the herd."),
-            new Chapter("Inside Man", "The Commander's map", 55, new String[]{
-                    "Elena overheard one of the raiders we captured. The Commander keeps a map of every settlement he taxes.",
-                    "If we had it, we could warn them all. Maybe even find where he sleeps.",
-                    "It's in a crate at their outpost. Guarded. Some of those masked freaks are with them now. Get it."}, "I'll get the map."),
-            new Chapter("The Commander", "End this", 100, new String[]{
-                    "The map shows everything. His convoy, his route... and where he'll be tonight.",
-                    "This is it. Kill the Commander and this whole region breathes again.",
-                    "Take whatever you need. And come back alive. That's an order."}, "Let's end this.")};
-
-    static final String[] QUEST_ITEM = {"Antibiotics", "", "Stolen Fuel", "", "", "", "Commander's Map", ""};
+    public static final StoryChapters.Chapter[] CHAPTERS = StoryChapters.ALL;
+    public static int total() { return CHAPTERS.length; }
+    public static int reward(int ch) { return 15 + ch * 4 + (ch % 10 == 0 ? 40 : 0); }
 
     // stages: 0 = not started, 1 = go to target, 2 = do the thing there, 3 = return to the board, 4+ = special
     private static final Map<UUID, Set<UUID>> TRACKED = new HashMap<>();
@@ -135,104 +102,127 @@ public final class Story {
         int ch = chapter(p);
         if (ch > CHAPTERS.length) { Talk.sayAs(p, MARCUS, MC, "You've done more than anyone could ask. The road is yours now."); return; }
         if (stage(p) > 0) { Talk.sayAs(p, MARCUS, MC, "You're already on a job. Finish it first."); return; }
-        Chapter c = CHAPTERS[ch - 1];
+        StoryChapters.Chapter c = CHAPTERS[ch - 1];
         int d = 0;
-        for (String line : c.intro) { Talk.sayAsLater(p, d, MARCUS, MC, line); d += Math.min(60, 20 + line.length() / 2); }
+        for (String line : c.intro()) { speak(p, d, line); d += Math.min(60, 20 + line.length() / 2); }
         Talk.askAs(p, board, MARCUS, MC, d, "", null,
-                new Talk.Option(c.accept, pl -> start(pl, board, ch)),
+                new Talk.Option(c.accept(), pl -> start(pl, board, ch)),
                 new Talk.Option("Not now.", pl -> Talk.sayAs(pl, MARCUS, MC, "Don't take too long.")));
     }
 
+    static void speak(ServerPlayer p, int delay, String line) {
+        String[] kv = line.contains("|") ? line.split("\\|", 2) : new String[]{MARCUS, line};
+        ChatFormatting col = kv[0].equals(ELENA) ? EC : kv[0].equals(DANI) ? DC : kv[0].equals(MARCUS) ? MC : ChatFormatting.YELLOW;
+        Talk.sayAsLater(p, delay, kv[0], col, kv[1]);
+    }
+
+    static StoryChapters.Chapter ch(ServerPlayer p) { return CHAPTERS[Math.min(CHAPTERS.length, chapter(p)) - 1]; }
+
     static void start(ServerPlayer p, MissionBoard board, int ch) {
         ServerLevel level = (ServerLevel) p.level();
+        StoryChapters.Chapter c = CHAPTERS[ch - 1];
         BlockPos b = board.blockPosition();
-        int dist = ch == 5 ? 0 : 110 + ch * 20;
+        boolean defend = c.type() == StoryChapters.Type.DEFEND;
+        int dist = defend ? 0 : Math.min(700, 110 + ch * 11);
         BlockPos t = b;
-        if (dist > 0) {
+        if (!defend) {
             double a = level.random.nextDouble() * Math.PI * 2;
             BlockPos raw = b.offset((int) (Math.cos(a) * dist), 0, (int) (Math.sin(a) * dist));
             t = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, raw);
         }
-        String[] s = {String.valueOf(ch), ch == 5 ? "4" : "1", "" + t.getX(), "" + t.getY(), "" + t.getZ(), "" + b.getX(), "" + b.getY(), "" + b.getZ(), "", "0", "0"};
+        String[] s = {String.valueOf(ch), defend ? "4" : "1", "" + t.getX(), "" + t.getY(), "" + t.getZ(), "" + b.getX(), "" + b.getY(), "" + b.getZ(), "", "0", "0"};
         save(p, s);
         TRACKED.put(p.getUUID(), new HashSet<>());
         KILLS.put(p.getUUID(), 0);
-        title(p, Component.literal("CHAPTER " + ch + ": " + CHAPTERS[ch - 1].title.toUpperCase()).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD),
-                Component.literal(CHAPTERS[ch - 1].tagline).withStyle(ChatFormatting.GRAY));
+        title(p, Component.literal("CHAPTER " + ch + ": " + c.title().toUpperCase()).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD),
+                Component.literal(c.tagline()).withStyle(ChatFormatting.GRAY));
         level.playSound(null, p.blockPosition(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS, 0.5f, 0.6f);
-        if (ch == 5) siegeWave(p, level, b, 0);
+        if (defend) siegeWave(p, level, b, 0);
     }
 
     // ------------------------------------------------------------------ ticking
 
     private static void tick(ServerPlayer p) {
         String[] s = state(p);
-        int ch = Integer.parseInt(s[0]), stage = Integer.parseInt(s[1]);
-        if (stage == 0 || ch > CHAPTERS.length) return;
+        int chn = Integer.parseInt(s[0]), stage = Integer.parseInt(s[1]);
+        if (stage == 0 || chn > CHAPTERS.length) return;
+        StoryChapters.Chapter c = CHAPTERS[chn - 1];
         ServerLevel level = (ServerLevel) p.level();
         BlockPos t = target(s), b = board(s);
         Set<UUID> tracked = TRACKED.computeIfAbsent(p.getUUID(), k -> new HashSet<>());
+        Entity tgt = s[8].isEmpty() ? null : level.getEntity(UUID.fromString(s[8]));
         switch (stage) {
-            case 1 -> { // go there
-                hud(p, goal(ch), t);
-                if (p.blockPosition().distSqr(t) < 28 * 28) { arrive(p, level, ch, t); }
+            case 1 -> {
+                hud(p, goal(c), t);
+                if (p.blockPosition().distSqr(t) < 28 * 28) arrive(p, level, chn, t);
             }
-            case 2 -> { // do the thing
-                switch (ch) {
-                    case 1, 7 -> { hud(p, ch == 1 ? "Grab the Antibiotics from the crate" : "Steal the map from the crate", t); if (hasQuestItem(p, QUEST_ITEM[ch - 1])) { setStage(p, 3); Talk.sayAs(p, RADIO, RC, ch == 1 ? "Marcus: Got it? Good. Get back here, fast." : "Marcus: You have it?! Get out of there!"); } }
-                    case 2 -> {
-                        Entity e = s[8].isEmpty() ? null : level.getEntity(UUID.fromString(s[8]));
-                        if (e instanceof HumanEntity d && d.isAlive()) {
-                            if (d.isOwnedBy(p)) { setStage(p, 3); Talk.sayAs(p, DANI, DC, "Let's go home. I'll watch your back."); }
-                            else hud(p, "Find Dani and talk to her", d.blockPosition());
-                        } else if (e == null && level.isLoaded(t)) fail(p, "Dani didn't make it");
+            case 2 -> {
+                switch (c.type()) {
+                    case FETCH -> {
+                        hud(p, "Take the " + c.item() + " from the crate", t);
+                        if (hasQuestItem(p, c.item())) { setStage(p, 3); Talk.sayAs(p, RADIO, RC, pick(level, "Got it? Get back here, fast.", "Good. Now get out of there!", "That's it. Come home.")); }
                     }
-                    case 3, 8 -> hud(p, ch == 3 ? "Kill Spike and take the fuel" : "Kill the Commander", t);
-                    case 4 -> {
-                        Entity e = s[8].isEmpty() ? null : level.getEntity(UUID.fromString(s[8]));
-                        if (e instanceof VehicleEntity v && v.isAlive()) {
-                            hud(p, v.hasPassenger(p) ? "Drive the pickup back to the settlement" : "Get in the pickup", v.hasPassenger(p) ? b : v.blockPosition());
+                    case RESCUE -> {
+                        if (tgt instanceof HumanEntity d && d.isAlive()) {
+                            if (d.isOwnedBy(p)) { setStage(p, 3); Talk.say(p, d, "Let's go. I'll stay close."); }
+                            else hud(p, "Reach " + name(c) + " and talk to them", d.blockPosition());
+                        } else if (tgt == null && level.isLoaded(t) && p.blockPosition().distSqr(t) < 48 * 48 && !s[8].isEmpty()) fail(p, name(c) + " didn't make it");
+                    }
+                    case KILL -> hud(p, "Kill " + name(c), tgt != null ? tgt.blockPosition() : t);
+                    case DRIVE -> {
+                        if (tgt instanceof VehicleEntity v && v.isAlive()) {
+                            hud(p, v.hasPassenger(p) ? "Drive it back to the settlement" : "Get in the vehicle", v.hasPassenger(p) ? b : v.blockPosition());
                             if (v.hasPassenger(p) && v.blockPosition().distSqr(b) < 18 * 18) complete(p, level);
-                        } else if (e == null && level.isLoaded(t) && p.blockPosition().distSqr(t) < 64 * 64) fail(p, "The pickup was destroyed");
+                        } else if (tgt == null && level.isLoaded(t) && p.blockPosition().distSqr(t) < 64 * 64 && !s[8].isEmpty()) fail(p, "The vehicle was destroyed");
                     }
-                    case 6 -> {
+                    case HERD -> {
                         int k = KILLS.getOrDefault(p.getUUID(), 0);
                         long left = Long.parseLong(s[10]) - level.getGameTime();
-                        p.displayClientMessage(Component.literal("▶ Thin the herd: " + k + " / 25   ⏱ " + Math.max(0, left / 20) + "s").withStyle(ChatFormatting.GOLD), true);
-                        if (k >= 25) complete(p, level);
-                        else if (left <= 0) fail(p, "The herd reached the walls");
+                        p.displayClientMessage(Component.literal("▶ Thin the herd: " + k + " / " + c.count() + "   ⏱ " + Math.max(0, left / 20) + "s").withStyle(ChatFormatting.GOLD), true);
+                        if (k >= c.count()) complete(p, level);
+                        else if (left <= 0) fail(p, "The herd got through");
                     }
+                    default -> {}
                 }
             }
-            case 3 -> { // back to the board
-                if (ch == 2 && !s[8].isEmpty()) {
-                    Entity dani = level.getEntity(UUID.fromString(s[8]));
-                    if (dani == null && level.isLoaded(p.blockPosition()) && p.blockPosition().distSqr(b) < 32 * 32) { /* she may lag behind */ }
-                    else if (dani != null && !dani.isAlive()) { fail(p, "Dani didn't make it"); return; }
-                }
-                hud(p, ch == 2 ? "Bring Dani home" : ch == 3 || ch == 1 || ch == 7 ? "Bring it back to Marcus" : "Return to Marcus", b);
+            case 3 -> {
+                if (c.type() == StoryChapters.Type.RESCUE && tgt != null && !tgt.isAlive()) { fail(p, name(c) + " didn't make it"); return; }
+                hud(p, c.type() == StoryChapters.Type.RESCUE ? "Bring " + name(c) + " home" : !c.item().isEmpty() ? "Bring the " + c.item() + " to Marcus" : "Return to Marcus", b);
                 if (p.blockPosition().distSqr(b) < 10 * 10) {
-                    if (QUEST_ITEM[ch - 1].isEmpty() || takeQuestItem(p, QUEST_ITEM[ch - 1])) complete(p, level);
-                    else p.displayClientMessage(Component.literal("You lost the " + QUEST_ITEM[ch - 1] + "! Go back for it.").withStyle(ChatFormatting.RED), true);
+                    if (c.type() == StoryChapters.Type.RESCUE && tgt instanceof HumanEntity d && d.distanceTo(p) > 16) {
+                        p.displayClientMessage(Component.literal("Wait for " + name(c) + "!").withStyle(ChatFormatting.YELLOW), true);
+                    } else if (c.item().isEmpty() || takeQuestItem(p, c.item())) complete(p, level);
+                    else p.displayClientMessage(Component.literal("You lost the " + c.item() + "! Go back for it.").withStyle(ChatFormatting.RED), true);
                 }
             }
-            case 4, 5, 6 -> { // siege waves at the board
+            default -> { // 4.. : defend waves
                 int wave = stage - 4;
                 tracked.removeIf(u -> !(level.getEntity(u) instanceof LivingEntity l) || !l.isAlive());
-                p.displayClientMessage(Component.literal("▶ Defend the settlement - wave " + (wave + 1) + "/3 · " + tracked.size() + " left").withStyle(ChatFormatting.GOLD), true);
+                p.displayClientMessage(Component.literal("▶ Defend the settlement - wave " + (wave + 1) + "/" + c.count() + " · " + tracked.size() + " left").withStyle(ChatFormatting.GOLD), true);
                 if (tracked.isEmpty() && level.getGameTime() > Long.parseLong(s[10])) {
-                    if (wave == 2) complete(p, level);
+                    if (wave + 1 >= c.count()) complete(p, level);
                     else { setStage(p, stage + 1); siegeWave(p, level, b, wave + 1); }
                 }
             }
-            default -> {}
         }
     }
 
-    static String goal(int ch) {
-        return switch (ch) {
-            case 1 -> "Go to the pharmacy crate"; case 2 -> "Follow Dani's last signal"; case 3 -> "Find Spike's camp"; case 4 -> "Find the pickup on the highway";
-            case 6 -> "Meet the herd"; case 7 -> "Reach the raider outpost"; case 8 -> "Find the Commander's convoy"; default -> "Go";
+    static String pick(ServerLevel l, String... o) { return o[l.random.nextInt(o.length)]; }
+
+    static String name(StoryChapters.Chapter c) {
+        String n = c.target().replace("+", "").replace("!", "").replace("&truck", "");
+        if (n.startsWith("boss:")) { try { return com.kiyamet.boss.BossKind.valueOf(n.substring(5).toUpperCase()).title; } catch (IllegalArgumentException e) { return "the beast"; } }
+        return n;
+    }
+
+    static String goal(StoryChapters.Chapter c) {
+        return switch (c.type()) {
+            case FETCH -> "Find the " + c.item();
+            case RESCUE -> "Find " + name(c);
+            case KILL -> "Hunt down " + name(c);
+            case DRIVE -> "Find the vehicle";
+            case HERD -> "Meet the herd";
+            default -> "Go";
         };
     }
 
@@ -282,59 +272,97 @@ public final class Story {
 
     private static void track(ServerPlayer p, Entity e) { TRACKED.computeIfAbsent(p.getUUID(), k -> new HashSet<>()).add(e.getUUID()); }
 
-    private static int lv(ServerPlayer p, int min) { return Mth.clamp(min + SkillManager.get(p).totalPower() / 30, min, 250); }
+    /** Enemy level: grows with the chapter and with your power. */
+    private static int lv(ServerPlayer p, int ch) { return Mth.clamp(8 + ch * 4 + SkillManager.get(p).totalPower() / 40, 5, 290); }
 
-    private static void arrive(ServerPlayer p, ServerLevel level, int ch, BlockPos t) {
+    /** How many guards: the chapter's base count, growing with each chapter. */
+    private static int scale(int base, int ch) { return Math.round(base * (1 + ch / 25f)); }
+
+    private static void guards(ServerPlayer p, ServerLevel level, BlockPos at, char g, int n, int ch) {
+        for (int i = 0; i < n; i++) {
+            char k = g == 'X' ? "WWRMB".charAt(level.random.nextInt(ch >= 29 ? 5 : 4)) : g;
+            switch (k) {
+                case 'R' -> human(p, level, at, Faction.RAIDER, i == 0 ? Role.LEADER : Role.MEMBER, lv(p, ch), null);
+                case 'M' -> human(p, level, at, Faction.WHISPERER, Role.MEMBER, lv(p, ch), null);
+                case 'B' -> robot(p, level, at, ch);
+                default -> walkers(p, level, at, 1);
+            }
+        }
+        if (g == 'M') walkers(p, level, at, n / 2);   // the masked always bring walkers
+    }
+
+    private static void robot(ServerPlayer p, ServerLevel level, BlockPos at, int ch) {
+        com.kiyamet.robot.RobotKind k = ch >= 36 && level.random.nextFloat() < 0.3f ? com.kiyamet.robot.RobotKind.ROBOT_HEAVY
+                : level.random.nextFloat() < 0.25f ? com.kiyamet.robot.RobotKind.SCOUT_DRONE : com.kiyamet.robot.RobotKind.ROBOT_TROOPER;
+        var r = com.kiyamet.robot.ModRobots.TYPES.get(k).create(level, EntitySpawnReason.EVENT);
+        if (r == null) return;
+        BlockPos q = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, at.offset(level.random.nextInt(11) - 5, 0, level.random.nextInt(11) - 5));
+        r.setPos(q.getX() + 0.5, q.getY(), q.getZ() + 0.5);
+        r.setPersistenceRequired();
+        level.addFreshEntity(r);
+        track(p, r);
+    }
+
+    private static void arrive(ServerPlayer p, ServerLevel level, int chn, BlockPos t) {
+        StoryChapters.Chapter c = CHAPTERS[chn - 1];
         String[] s = state(p);
         s[1] = "2";
-        switch (ch) {
-            case 1, 7 -> {
-                BlockPos c = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, t);
-                level.setBlock(c, Blocks.CHEST.defaultBlockState(), 3);
-                if (level.getBlockEntity(c) instanceof ChestBlockEntity chest) {
-                    chest.setItem(13, questItem(QUEST_ITEM[ch - 1]));
+        int n = scale(c.count(), chn);
+        switch (c.type()) {
+            case FETCH -> {
+                BlockPos at = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, t);
+                level.setBlock(at, Blocks.CHEST.defaultBlockState(), 3);
+                if (level.getBlockEntity(at) instanceof ChestBlockEntity chest) {
+                    chest.setItem(13, questItem(c.item()));
                     chest.setItem(11, new ItemStack(ModItems.get("medkit"), 1 + level.random.nextInt(2)));
-                    chest.setItem(15, new ItemStack(ModItems.get("ruby"), 3 + level.random.nextInt(5)));
+                    chest.setItem(15, new ItemStack(ModItems.get("ruby"), 3 + chn / 4));
                 }
-                s[2] = "" + c.getX(); s[3] = "" + c.getY(); s[4] = "" + c.getZ();
-                if (ch == 1) { walkers(p, level, c, 8); Talk.sayAs(p, RADIO, RC, "Marcus: Careful. There'll be walkers around the crate."); }
-                else {
-                    for (int i = 0; i < 4; i++) human(p, level, c, Faction.RAIDER, i == 0 ? Role.LEADER : Role.MEMBER, lv(p, 30), null);
-                    for (int i = 0; i < 3; i++) human(p, level, c, Faction.WHISPERER, Role.MEMBER, lv(p, 30), null);
-                    Talk.sayAs(p, RADIO, RC, "Dani: I see raiders... and the masked ones. Stay low.");
+                s[2] = "" + at.getX(); s[3] = "" + at.getY(); s[4] = "" + at.getZ();
+                guards(p, level, at, c.guards(), n, chn);
+                Talk.sayAs(p, RADIO, RC, pick(level, "Careful. You won't be alone out there.", "Eyes open. Something's guarding it.", "Stay low. Grab it and go."));
+            }
+            case RESCUE -> {
+                HumanEntity d = human(p, level, t, Faction.SURVIVOR, Role.MEMBER, lv(p, chn), name(c));
+                if (d != null) { d.setHealth(d.getMaxHealth() * 0.35f); s[8] = d.getUUID().toString(); TRACKED.get(p.getUUID()).remove(d.getUUID()); }
+                guards(p, level, t, c.guards(), n, chn);
+                if (d != null) Talk.say(p, d, pick(level, "Over here! Help me!", "Please - they've got me pinned!", "Is someone there?! I'm hurt!"));
+            }
+            case KILL -> {
+                LivingEntity target;
+                String tn = c.target();
+                if (tn.startsWith("boss:")) {
+                    target = null;
+                    try {
+                        var kind = com.kiyamet.boss.BossKind.valueOf(tn.substring(5).toUpperCase());
+                        var boss = com.kiyamet.boss.ModBosses.TYPES.get(kind).create(level, EntitySpawnReason.EVENT);
+                        if (boss != null) { boss.setPos(t.getX() + 0.5, t.getY(), t.getZ() + 0.5); boss.setPersistenceRequired(); level.addFreshEntity(boss); target = boss; track(p, boss); }
+                    } catch (IllegalArgumentException ignored) {}
+                } else {
+                    boolean cmd = tn.startsWith("!");
+                    target = human(p, level, t, c.guards() == 'M' ? Faction.WHISPERER : Faction.RAIDER, cmd ? Role.COMMANDER : Role.LEADER, cmd ? 300 : Math.min(290, lv(p, chn) + 20), name(c));
                 }
+                if (target != null) s[8] = target.getUUID().toString();
+                if (c.target().contains("&truck")) {
+                    List<HumanEntity> crew = new ArrayList<>();
+                    for (int i = 0; i < 5; i++) { HumanEntity h = human(p, level, t, Faction.RAIDER, Role.MEMBER, lv(p, chn), null); if (h != null) crew.add(h); }
+                    ModVehicles.raiderRide(level, t, crew, true, 9999);
+                }
+                guards(p, level, t, c.guards(), n, chn);
+                Talk.sayAs(p, name(c), RC, pick(level, "You shouldn't have come here.", "So you're the one everyone talks about. Let's see.", "Nobody leaves this place alive.", "..."));
             }
-            case 2 -> {
-                HumanEntity d = human(p, level, t, Faction.SURVIVOR, Role.MEMBER, lv(p, 20), DANI);
-                if (d != null) { d.setHealth(d.getMaxHealth() * 0.35f); s[8] = d.getUUID().toString(); }
-                walkers(p, level, t, 7);
-                Talk.sayAs(p, DANI, DC, "Over here! I'm hurt - they've got me pinned!");
-            }
-            case 3 -> {
-                HumanEntity spike = human(p, level, t, Faction.RAIDER, Role.LEADER, lv(p, 40) + 15, "Spike");
-                for (int i = 0; i < 5; i++) human(p, level, t, Faction.RAIDER, Role.MEMBER, lv(p, 25), null);
-                if (spike != null) s[8] = spike.getUUID().toString();
-                Talk.sayAs(p, "Spike", RC, "You lost, friend? This fuel's ours now. Walk away... or don't.");
-            }
-            case 4 -> {
-                VehicleEntity v = ModVehicles.spawn(level, VehicleKind.PICKUP, t.getX() + 0.5, t.getY(), t.getZ() + 0.5, level.random.nextFloat() * 360, 0.5f, 0.7f);
+            case DRIVE -> {
+                VehicleKind k;
+                try { k = VehicleKind.valueOf(c.target()); } catch (IllegalArgumentException e) { k = VehicleKind.PICKUP; }
+                VehicleEntity v = ModVehicles.spawn(level, k, t.getX() + 0.5, t.getY(), t.getZ() + 0.5, level.random.nextFloat() * 360, 0.5f, 0.7f);
                 if (v != null) s[8] = v.getUUID().toString();
-                walkers(p, level, t, 6);
-                Talk.sayAs(p, RADIO, RC, "Dani: That's it, the red pickup. Keys should still be in it.");
+                guards(p, level, t, c.guards(), n, chn);
+                Talk.sayAs(p, RADIO, RC, "There it is. Keys should still be in it.");
             }
-            case 6 -> {
-                walkers(p, level, t, 32);
-                s[10] = String.valueOf(level.getGameTime() + 20 * 60 * 6);
+            case HERD -> {
+                walkers(p, level, t, n + 8);
+                s[10] = String.valueOf(level.getGameTime() + 20L * Math.max(150, 420 - chn * 4));
                 KILLS.put(p.getUUID(), 0);
-                Talk.sayAs(p, RADIO, RC, "Dani: There they are. God, there's so many. You've got six minutes before they reach us.");
-            }
-            case 8 -> {
-                List<HumanEntity> crew = new ArrayList<>();
-                HumanEntity cmd = human(p, level, t, Faction.RAIDER, Role.COMMANDER, 300, "The Commander");
-                for (int i = 0; i < 6; i++) { HumanEntity h = human(p, level, t, Faction.RAIDER, Role.MEMBER, lv(p, 60), null); if (h != null) crew.add(h); }
-                ModVehicles.raiderRide(level, t, crew, true, 9999);
-                if (cmd != null) s[8] = cmd.getUUID().toString();
-                Talk.sayAs(p, "The Commander", RC, "So you're the one who's been killing my men. Let's see what you're made of.");
+                Talk.sayAs(p, RADIO, RC, "There they are. Thin them out before they reach us!");
             }
             default -> {}
         }
@@ -342,68 +370,56 @@ public final class Story {
     }
 
     private static void onTargetDeath(ServerPlayer p, LivingEntity e) {
-        int ch = chapter(p);
+        StoryChapters.Chapter c = ch(p);
+        if (c.type() != StoryChapters.Type.KILL || stage(p) != 2) return;
         ServerLevel level = (ServerLevel) e.level();
-        if (ch == 3) {
-            level.addFreshEntity(new ItemEntity(level, e.getX(), e.getY() + 0.5, e.getZ(), questItem(QUEST_ITEM[2])));
-            Talk.sayAs(p, RADIO, RC, "Marcus: Spike's down? Grab the fuel and come home.");
-            setStage(p, 3);
-        } else if (ch == 8) {
-            Talk.sayAs(p, RADIO, RC, "Marcus: ...Is it done? Is he really dead? Come home. Come home now.");
-            setStage(p, 3);
-        }
+        if (!c.item().isEmpty()) level.addFreshEntity(new ItemEntity(level, e.getX(), e.getY() + 0.5, e.getZ(), questItem(c.item())));
+        Talk.sayAs(p, RADIO, RC, c.item().isEmpty() ? "Is it done? ...Come home." : "Grab the " + c.item() + " and come home.");
+        setStage(p, 3);
     }
 
     private static void siegeWave(ServerPlayer p, ServerLevel level, BlockPos b, int wave) {
+        StoryChapters.Chapter c = ch(p);
+        int chn = chapter(p);
         String[] s = state(p);
         s[10] = String.valueOf(level.getGameTime() + 100);
         save(p, s);
         double a = level.random.nextDouble() * Math.PI * 2;
         BlockPos at = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, b.offset((int) (Math.cos(a) * 32), 0, (int) (Math.sin(a) * 32)));
-        int raiders = 3 + wave * 2;
-        for (int i = 0; i < raiders; i++) { HumanEntity h = human(p, level, at, Faction.RAIDER, i == 0 ? Role.LEADER : Role.MEMBER, lv(p, 30), null); if (h != null) h.setTarget(p); }
-        walkers(p, level, at, 4 + wave * 3);
+        int n = scale(4 + wave * 3, chn);
+        guards(p, level, at, c.guards(), n, chn);
+        if (c.guards() != 'W') walkers(p, level, at, 2 + wave * 2);
+        for (UUID u : TRACKED.getOrDefault(p.getUUID(), Set.of())) if (level.getEntity(u) instanceof net.minecraft.world.entity.Mob m && m.getTarget() == null) m.setTarget(p);
         level.playSound(null, b, SoundEvents.RAID_HORN.value(), SoundSource.HOSTILE, 3f, 1f);
-        Talk.sayAs(p, MARCUS, MC, wave == 0 ? "Here they come! Everyone to the walls!" : wave == 1 ? "More of them! Hold!" : "Last push - they're throwing everything at us!");
+        Talk.sayAs(p, MARCUS, MC, wave == 0 ? "Here they come! Everyone to the walls!" : wave + 1 == c.count() ? "Last push - they're throwing everything at us!" : "More of them! Hold!");
     }
 
     // ------------------------------------------------------------------ end
 
     static void complete(ServerPlayer p, ServerLevel level) {
-        int ch = chapter(p);
-        Chapter c = CHAPTERS[ch - 1];
-        String[] s = {String.valueOf(ch + 1), "0"};
-        save(p, s);
+        int chn = chapter(p);
+        StoryChapters.Chapter c = CHAPTERS[chn - 1];
+        String[] st = state(p);
+        Entity tgt = st[8].isEmpty() ? null : level.getEntity(UUID.fromString(st[8]));
+        if (c.type() == StoryChapters.Type.RESCUE && tgt instanceof HumanEntity h && !c.target().startsWith("+")) {
+            Talk.say(p, h, "Thank you. I'll be safe here now.");
+            h.discard();
+        }
+        save(p, new String[]{String.valueOf(chn + 1), "0"});
         TRACKED.remove(p.getUUID());
-        title(p, Component.literal("MISSION PASSED").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), Component.literal("+" + c.reward + " rubies").withStyle(ChatFormatting.GREEN));
+        int reward = reward(chn);
+        title(p, Component.literal("MISSION PASSED").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), Component.literal("+" + reward + " rubies").withStyle(ChatFormatting.GREEN));
         level.playSound(null, p.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1f, 0.8f);
-        Shop.give(p, new ItemStack(ModItems.get("ruby"), c.reward));
-        SkillManager.addXp(p, Skill.SURVIVAL, 150 + ch * 60);
-        SkillManager.addXp(p, Skill.SWORDS, 100 + ch * 40);
-        String[] outro = switch (ch) {
-            case 1 -> new String[]{ELENA + "|You... you brought it. Thank you. I won't forget this."};
-            case 2 -> new String[]{DANI + "|Marcus, I'm fine. Thanks to this one. I'm sticking with them from now on."};
-            case 3 -> new String[]{MARCUS + "|The fence is humming again. Spike won't be bothering anyone."};
-            case 4 -> new String[]{MARCUS + "|She runs! Keep her - you earned it. Just bring her back for supply runs."};
-            case 5 -> new String[]{MARCUS + "|We're still standing. Because of you. The Commander won't like this."};
-            case 6 -> new String[]{DANI + "|The herd's scattered. The walls held. You're insane, you know that?"};
-            case 7 -> new String[]{MARCUS + "|This map... he's got eleven settlements under his boot. Not for long."};
-            case 8 -> new String[]{MARCUS + "|It's over. The Commander's dead. Every settlement on that map is free.", ELENA + "|Lily drew you a picture. She says you're a hero.",
-                    MARCUS + "|Whatever comes next - you've got a home here. Always."};
-            default -> new String[0];
-        };
+        Shop.give(p, new ItemStack(ModItems.get("ruby"), reward));
+        SkillManager.addXp(p, Skill.SURVIVAL, 150 + chn * 40);
+        SkillManager.addXp(p, Skill.SWORDS, 100 + chn * 30);
+        if (chn % 10 == 0) Shop.give(p, new ItemStack(ModItems.get("tech_core"), 1 + chn / 20));
+        if (chn == 8) Shop.give(p, new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(Kiyamet.id("armored_truck_keys"))));
         int d = 20;
-        for (String o : outro) {
-            String[] kv = o.split("\\|", 2);
-            ChatFormatting col = kv[0].equals(ELENA) ? EC : kv[0].equals(DANI) ? DC : MC;
-            Talk.sayAsLater(p, d, kv[0], col, kv[1]);
-            d += 50;
-        }
-        if (ch == 8) {
-            Shop.give(p, new ItemStack(ModItems.get("tech_core"), 2));
-            Shop.give(p, new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(Kiyamet.id("armored_truck_keys"))));
-            Talk.later(p, d + 20, () -> p.sendSystemMessage(Component.literal("★ THE LONG ROAD - COMPLETE. You received the Commander's armored truck.").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)));
-        }
+        for (String o : c.outro()) { speak(p, d, o); d += 50; }
+        if (chn == CHAPTERS.length)
+            Talk.later(p, d + 20, () -> p.sendSystemMessage(Component.literal("★ THE LONG ROAD - COMPLETE. Thank you for playing the story.").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)));
+        else Talk.later(p, d + 20, () -> p.sendSystemMessage(Component.literal("Chapter " + (chn + 1) + " is waiting at any mission board.").withStyle(ChatFormatting.GRAY)));
     }
 
     static void fail(ServerPlayer p, String why) {
@@ -443,10 +459,10 @@ public final class Story {
         return false;
     }
 
-    /** Dani needs help: right-click her with a medkit or bandage (or just talk) and she follows you. */
+    /** The person you came to rescue: talk to them (a medkit or bandage in hand heals them) and they follow you. */
     public static boolean interact(ServerPlayer p, HumanEntity h) {
         String[] s = state(p);
-        if (!"2".equals(s[0]) || !"2".equals(s[1]) || !h.getUUID().toString().equals(s[8])) return false;
+        if (!"2".equals(s[1]) || !h.getUUID().toString().equals(s[8])) return false;
         ItemStack held = p.getMainHandItem();
         if (held.is(ModItems.get("medkit")) || held.is(ModItems.get("bandage"))) { held.shrink(1); h.heal(12); Talk.say(p, h, "Oh god, that's better. Thank you."); }
         else Talk.say(p, h, "Marcus sent you? ...Okay. Get me out of here.");

@@ -176,10 +176,10 @@ public class MissionBoard extends PathfinderMob implements GeoEntity {
             c.setItem(49, Ui.icon(Items.BARRIER, Ui.text("Close", ChatFormatting.RED)));
             int ch = Story.chapter(player), st = Story.stage(player);
             if (ch <= Story.CHAPTERS.length) {
-                Story.Chapter sc = Story.CHAPTERS[ch - 1];
+                StoryChapters.Chapter sc = Story.CHAPTERS[ch - 1];
                 c.setItem(40, Ui.glint(Ui.icon(Items.FILLED_MAP, Ui.text("★ STORY - Chapter " + ch + "/" + Story.CHAPTERS.length + ": " + sc.title(), ChatFormatting.GOLD, ChatFormatting.BOLD),
                         Ui.text("\"" + sc.tagline() + "\"", ChatFormatting.GRAY), Ui.text("The Long Road", ChatFormatting.DARK_GRAY),
-                        Ui.text("Reward: " + sc.reward() + " rubies + XP", ChatFormatting.GREEN),
+                        Ui.text("Reward: " + Story.reward(ch) + " rubies + XP", ChatFormatting.GREEN),
                         Ui.text(st > 0 ? "In progress - follow the arrow on screen" : "Click: talk to Marcus", ChatFormatting.YELLOW)), st == 0));
             } else c.setItem(40, Ui.icon(Items.MAP, Ui.text("★ The Long Road - complete", ChatFormatting.GOLD), Ui.text("Thank you, hero.", ChatFormatting.GRAY)));
         }

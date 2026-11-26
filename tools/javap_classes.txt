@@ -102,3 +102,6 @@ net.minecraft.client.model.geom.PartPose
 software.bernie.geckolib.renderer.base.RenderPassInfo
 net.minecraft.world.entity.animal.equine.AbstractHorse
 net.minecraft.world.entity.animal.horse.AbstractHorse
+net.minecraft.world.entity.Leashable
+net.minecraft.world.entity.decoration.LeashFenceKnotEntity
+net.minecraft.world.item.LeadItem

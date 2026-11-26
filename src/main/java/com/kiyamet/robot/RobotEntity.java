@@ -129,12 +129,16 @@ public class RobotEntity extends Monster implements GeoEntity {
     public RobotEntity(EntityType<? extends Monster> type, Level level, RobotKind kind) {
         super(type, level);
         this.kind = kind;
+        registerGoals();                 // Mob's constructor calls registerGoals() before kind is set
         this.xpReward = 8 + (int) (kind.health / 8);
         if (kind.flying) setNoGravity(true);
     }
 
+    @Override public boolean canBreatheUnderwater() { return true; }
+
     @Override
     protected void registerGoals() {
+        if (kind == null) return;
         goalSelector.addGoal(0, new FloatGoal(this));
         if (!kind.flying) {
             goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0, true));

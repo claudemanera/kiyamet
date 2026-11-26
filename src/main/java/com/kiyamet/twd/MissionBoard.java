@@ -134,6 +134,7 @@ public class MissionBoard extends PathfinderMob implements GeoEntity {
         return source.getEntity() instanceof Player p && p.isCreative() && super.hurtServer(level, source, amount);
     }
     @Override public boolean removeWhenFarAway(double d) { return false; }
+    @Override public boolean canBreatheUnderwater() { return true; }
     @Override public boolean isPushable() { return false; }
     @Override protected boolean shouldDropLoot(ServerLevel level) { return false; }
     @Override public boolean canBeLeashed() { return false; }

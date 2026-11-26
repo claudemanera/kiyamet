@@ -255,6 +255,7 @@ public class VehicleEntity extends PathfinderMob implements GeoEntity {
     // ------------------------------------------------------------------ misc
 
     @Override public boolean removeWhenFarAway(double d) { return false; }
+    @Override public boolean canBreatheUnderwater() { return true; }
     @Override public boolean isPushable() { return false; }
     @Override public boolean canBeCollidedWith(Entity other) { return true; }
     @Override public boolean isPickable() { return !isRemoved(); }

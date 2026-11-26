@@ -67,6 +67,10 @@ public class KZombie extends Zombie implements GeoEntity {
     @Override
     protected boolean isSunSensitive() { return false; }
 
+    /** Walkers stay walkers underwater (no turning into vanilla Drowned). */
+    @Override
+    protected boolean convertsInWater() { return false; }
+
     @Override
     public boolean isBaby() { return false; }
 

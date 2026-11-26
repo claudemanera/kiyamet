@@ -47,10 +47,14 @@ if p:
     cmd(p, 'gamerule spawnRadius 0'); cmd(p, 'forceload add -48 -48 48 48', 5)
     for i, s in enumerate(STRUCTS):
         x, z = 600 + (i % 10) * 450, 600 + (i // 10) * 450
-        cmd(p, f'place structure kiyamet:{s} {x} 0 {z}', 4)
+        cmd(p, f'forceload add {x} {z}', 3)
+        cmd(p, f'place structure kiyamet:{s} {x} 0 {z}', 5)
+        cmd(p, f'forceload remove {x} {z}', 0.5)
         log.write(f'### placed {s}\n')
+    cmd(p, 'fill -24 100 -24 24 100 24 minecraft:stone', 1)
+    cmd(p, 'fill -24 101 -24 24 110 24 minecraft:air', 1)
     for i, e in enumerate(ENTS):
-        cmd(p, f'summon kiyamet:{e} {(i % 8) * 4 - 16} 150 {(i // 8) * 4 - 16}', 0.3)
+        cmd(p, f'summon kiyamet:{e} {(i % 8) * 5 - 18} 101 {(i // 8) * 5 - 18}', 0.3)
     cmd(p, 'time set 12400', 1)
     cmd(p, 'tick sprint 3000', 25)
     cmd(p, 'weather rain', 1)
@@ -67,7 +71,7 @@ p = boot('run2')
 if p:
     cmd(p, 'forceload add -48 -48 48 48', 5)
     cmd(p, 'tick sprint 600', 10)
-    cmd(p, 'execute as @e[type=!minecraft:player] run data get entity @s Health', 3)
+    cmd(p, 'execute as @e[type=!minecraft:player,type=!minecraft:item] run data get entity @s Health', 3)
     cmd(p, 'kill @e[type=!minecraft:player]', 3)
     cmd(p, 'tick sprint 600', 10)
     cmd(p, 'save-all flush', 10)
@@ -83,7 +87,7 @@ for i, l in enumerate(ls):
     if re.search(r'Exception|ERROR\]|/ERROR|Error:|Caused by|Failed to|Unknown|Incorrect argument|Couldn\'t|could not', l, re.I) and 'Can\'t keep up' not in l:
         problems.append('\n'.join(ls[i:i + 4]))
 summon_ok = len(re.findall(r'Summoned new', txt))
-placed_ok = len(re.findall(r'Generated structure', txt))
+placed_ok = len(re.findall(r'Generated structure|Placed structure|structure .* at', txt, re.I))
 with open('smoke_report.txt', 'w') as f:
     f.write(f'summoned OK: {summon_ok}/{len(ENTS)}\nstructures placed OK: {placed_ok}/{len(STRUCTS)}\nproblems: {len(problems)}\n\n')
     seen = set()

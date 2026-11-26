@@ -234,7 +234,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         out.putInt("Xp", xp);
         out.putString("Profession", profession().name());
         out.putString("Job", job.name());
-        out.putInt("Team", team);
+        out.putInt("KTeam", team);
         out.putLong("AwayUntil", awayUntil);
         out.putInt("AwayMinutes", awayMinutes);
         out.putInt("AwayGroup", awayGroup);
@@ -262,7 +262,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         try { entityData.set(ROLE, Role.valueOf(in.getStringOr("Role", "MEMBER")).ordinal()); } catch (IllegalArgumentException ignored) {}
         xp = in.getIntOr("Xp", 0);
         job = Job.byName(in.getStringOr("Job", "NONE"));
-        team = in.getIntOr("Team", 0);
+        team = in.getIntOr("KTeam", 0);
         awayUntil = in.getLongOr("AwayUntil", 0L);
         awayMinutes = in.getIntOr("AwayMinutes", 0);
         awayGroup = in.getIntOr("AwayGroup", 1);

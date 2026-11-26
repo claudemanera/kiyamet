@@ -118,6 +118,7 @@ public class ShelterCore extends PathfinderMob implements GeoEntity {
     }
 
     @Override public boolean removeWhenFarAway(double d) { return false; }
+    @Override public boolean canBreatheUnderwater() { return true; }
     @Override public boolean isPushable() { return false; }
     @Override protected boolean shouldDropLoot(ServerLevel level) { return false; }
     @Override public boolean canBeLeashed() { return false; }

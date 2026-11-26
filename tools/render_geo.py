@@ -13,6 +13,7 @@ def rmat(rx, ry, rz):
 
 def render(geo, tex, out, size=512, yaw=35, pitch=24, pose=None):
     g = json.load(open(geo))["minecraft:geometry"][0]; T = Image.open(tex).convert('RGBA'); tw, th = T.size
+    K = tw / g["description"].get("texture_width", tw)
     bones = {b["name"]: b for b in g["bones"]}
     pose = pose or {}
     def chain(name):
@@ -74,7 +75,7 @@ def render(geo, tex, out, size=512, yaw=35, pitch=24, pose=None):
         inside = (sS >= 0) & (sS < 1) & (tT >= 0) & (tT < 1)
         if not inside.any(): continue
         z = a[2] + e1[2] * sS + e2[2] * tT
-        tu = np.clip((fu + np.floor(sS * fw)).astype(int), 0, tw - 1); tv = np.clip((fv + np.floor(tT * fh)).astype(int), 0, th - 1)
+        tu = np.clip((fu * K + np.floor(sS * fw * K)).astype(int), 0, tw - 1); tv = np.clip((fv * K + np.floor(tT * fh * K)).astype(int), 0, th - 1)
         px = Tn[tv, tu]
         sub = zb[y0:y1 + 1, x0:x1 + 1]
         m = inside & (z < sub - 1e-4) & (px[..., 3] > 20)

@@ -365,6 +365,8 @@ def humanoid(name, mats, kind, weapon, crest):
             b.cube('head', (-0.4, 32.6, -4), (0.8, 3, 8), 'glow')
         if lord:
             for x in (-3.5, -1.2, 1.2, 3.5): b.cube('head', (x - 0.5, 32.4, -4.6), (1, 2.5, 1), 'trim')   # crown
+            b.bone('emblem', 'head', pivot=(0, 43, 0))                                                      # 2.1: the element's logo floats above
+            b.cube('emblem', (-3.5, 39.5, -0.3), (7, 7, 0.6), 'emblem'); b.emblem = len(b.uvs) - 1
     # arms
     for n, x, s in (('arm_r', -8, -1), ('arm_l', 4, 1)):
         b.cube(n, (x, 12, -2), (4, 12, 4), 'cloth' if sage else 'armor2')
@@ -433,10 +435,14 @@ def humanoid(name, mats, kind, weapon, crest):
             "arm_r": {"rotation": {"0.00": [-10, 0, 0], "0.20": [-150, 10, 0], "0.40": [20, -10, 0], "0.60": [-10, 0, 0]}},
             "body": {"rotation": {"0.00": [0, 0, 0], "0.20": [-6, 15, 0], "0.40": [8, -20, 0], "0.60": [0, 0, 0]}},
             "weapon": {"rotation": {"0.00": [0, 0, 0], "0.20": [-20, 0, 0], "0.40": [30, 0, 0], "0.60": [0, 0, 0]}}}}}
+    for clip in (anims.values() if lord else []):
+        clip["bones"]["emblem"] = {"rotation": {"0.00": [0, 0, 0], f'{clip["animation_length"]:.2f}': [0, 360 if clip["animation_length"] >= 1 else 90, 0]},
+                                   "position": {"0.00": [0, 0, 0], f'{clip["animation_length"] / 2:.2f}': [0, 0.6, 0], f'{clip["animation_length"]:.2f}': [0, 0, 0]}}
     if sage:
         anims["misc.idle"]["bones"]["arm_r"] = {"rotation": {"0.00": [-30, 0, 0], "1.50": [-34, 0, 0], "3.00": [-30, 0, 0]}}
         anims["misc.idle"]["bones"]["weapon"] = {"rotation": {"0.00": [30, 0, 0]}}
-    b.save(mats, anims, scale_bounds=4)
+    b.save(dict(mats, emblem=((255, 255, 255), 'skin')), anims, scale_bounds=4)
+    return b
 
 
 CREST = {'flame': 'spikes', 'lightning': 'fins', 'earth': 'horns', 'shadow': 'horns', 'smoke': 'plume', 'spirit': 'halo', 'electric': 'fins', 'thunder': 'spikes',
@@ -449,9 +455,13 @@ for eid, title, wid, wtitle, col in EL:
     g = dict(base, armor=(armor, 'metal'), armor2=(dark(armor, 0.8), 'metal'), trim=((200, 170, 80), 'metal'), cloth=(dark(col, 0.65), 'cloth'))
     humanoid(f'{eid}_guardian', g, 'guardian', wid, CREST[eid])
     lord = dict(base, armor=(dark(col, 0.55), 'metal'), armor2=(dark(col, 0.4), 'metal'), trim=((236, 196, 70), 'metal'), cloth=(dark(col, 0.35), 'cloth'), glow=(light(col, 0.4), 'glow'))
-    humanoid(f'{eid}_lord', lord, 'lord', wid, CREST[eid])
+    lb = humanoid(f'{eid}_lord', lord, 'lord', wid, CREST[eid])
+    from hires import upscale, logo_on
+    from make_logos import LOGOS
+    big = upscale(f'{A}/textures/entity/{eid}_lord.png', seed=hash(eid) & 0xffff)
+    logo_on(big, lb, lb.emblem, LOGOS[eid]); big.save(f'{A}/textures/entity/{eid}_lord.png')
     sage = dict(base, cloth=(mix(col, (110, 100, 90), 0.45), 'cloth'), trim=(light(col, 0.3), 'cloth'), skin=((210, 170, 140), 'skin'))
-    humanoid(f'{eid}_sage', sage, 'sage', wid, None)
+    # sages: drawn in detail by make_sages.py
     L[f'entity.kiyamet.{eid}_guardian'] = f'{title} Guardian'
     L[f'entity.kiyamet.{eid}_lord'] = f'{title} Lord'
     L[f'entity.kiyamet.{eid}_sage'] = f'{title} Sage'

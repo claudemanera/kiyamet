@@ -33,7 +33,8 @@ public final class ElementMobs {
     public static void init() {
         GUARDIANS.forEach((e, t) -> FabricDefaultAttributeRegistry.register(t, Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 110).add(Attributes.ATTACK_DAMAGE, 13)
                 .add(Attributes.ARMOR, 14).add(Attributes.ARMOR_TOUGHNESS, 6).add(Attributes.MOVEMENT_SPEED, 0.29).add(Attributes.FOLLOW_RANGE, 28).add(Attributes.KNOCKBACK_RESISTANCE, 0.6)));
-        SAGES.forEach((e, t) -> FabricDefaultAttributeRegistry.register(t, PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH, 40).add(Attributes.MOVEMENT_SPEED, 0.2)));
+        SAGES.forEach((e, t) -> FabricDefaultAttributeRegistry.register(t, PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH, 80).add(Attributes.MOVEMENT_SPEED, 0.3)
+                .add(Attributes.ATTACK_DAMAGE, 8).add(Attributes.ARMOR, 10).add(Attributes.FOLLOW_RANGE, 24)));
     }
 
     private ElementMobs() {}

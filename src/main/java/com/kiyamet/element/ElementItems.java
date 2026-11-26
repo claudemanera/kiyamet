@@ -33,9 +33,15 @@ public final class ElementItems {
                     .component(DataComponents.UNBREAKABLE, net.minecraft.util.Unit.INSTANCE), e)));
             CORES.put(e, ModItems.custom(e.core(), p -> new Item(p.stacksTo(1).fireResistant().rarity(Rarity.EPIC).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true))));
         }
-        ROD = ModItems.custom("ancient_rod", p -> new Item(p.stacksTo(16).fireResistant().rarity(Rarity.RARE)));
+        ROD = ModItems.custom("ancient_rod", p -> new Item(p.sword(ToolMaterial.IRON, 4f, -2.4f).fireResistant().rarity(Rarity.RARE).component(DataComponents.UNBREAKABLE, net.minecraft.util.Unit.INSTANCE)));
         SAGE_MAP = ModItems.custom("sage_map", p -> new SageMapItem(p.stacksTo(1).rarity(Rarity.UNCOMMON)));
 
+        // walkers felled with a sage's rod count for that sage's quest
+        net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents.AFTER_DEATH.register((dead, src) -> {
+            if (!(src.getEntity() instanceof ServerPlayer p) || !(dead instanceof net.minecraft.world.entity.monster.Enemy)) return;
+            Element e = Sage.rodElement(p.getMainHandItem());
+            if (e != null) Sage.addKill(p, e);
+        });
         // forging: hold the element core, have an ancient rod in your inventory, right-click an anvil
         UseBlockCallback.EVENT.register((player, level, hand, hit) -> {
             if (hand != InteractionHand.MAIN_HAND || !(player instanceof ServerPlayer p) || !(level instanceof ServerLevel l)) return InteractionResult.PASS;

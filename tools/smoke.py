@@ -91,6 +91,10 @@ if p:
     cmd(p, 'item replace entity @e[type=kiyamet:farmer_zombie,limit=1] weapon.mainhand with kiyamet:arrow_pistol[enchantments={"kiyamet:rapid_fire":5,"kiyamet:explosive_tips":2}]', 1)
     cmd(p, 'item replace entity @e[type=kiyamet:human,limit=1] weapon.mainhand with minecraft:diamond_sword[enchantments={"minecraft:sharpness":10,"minecraft:unbreaking":10}]', 1)
     cmd(p, 'summon item 0 101 0 {Item:{id:"kiyamet:gun_tome",count:1}}', 1)
+    # 1.5: gunsmith bench and a fully kitted gun
+    cmd(p, 'setblock 2 101 2 kiyamet:gun_bench', 1)
+    cmd(p, 'summon item 1 101 1 {Item:{id:"kiyamet:arrow_rifle",count:1,components:{"minecraft:custom_model_data":{strings:["acog","long","laser","drum"],colors:[9282650]},"minecraft:custom_data":{ModSCOPE:"acog",Paint:"olive"}}}}', 1)
+    cmd(p, 'time add 168000', 1)
     cmd(p, 'time set 12400', 1)
     phase[0] = 'sprint'
     cmd(p, 'tick sprint 3000', 25)

@@ -1,0 +1,16 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "kiyamet:corn",
+  "kiyamet:corn",
+  "kiyamet:corn",
+  "minecraft:wheat",
+  "minecraft:wheat",
+  "minecraft:egg"
+ ],
+ "result": {
+  "id": "kiyamet:cornbread",
+  "count": 2
+ }
+}

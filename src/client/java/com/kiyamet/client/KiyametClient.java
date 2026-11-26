@@ -21,6 +21,7 @@ public class KiyametClient implements ClientModInitializer {
         EntityRendererRegistry.register(com.kiyamet.twd.ModTwd.MISSION_BOARD, ctx -> new SimpleGeoRenderer<>(ctx, "mission_board", 1.0f));
         EntityRendererRegistry.register(com.kiyamet.ally.ModAllies.TURRET, ctx -> new SimpleGeoRenderer<>(ctx, "auto_turret", 1.0f));
         EntityRendererRegistry.register(com.kiyamet.item.BombProjectile.TYPE, net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
+        EntityRendererRegistry.register(com.kiyamet.furniture.Furniture.SEAT, net.minecraft.client.renderer.entity.NoopRenderer::new);
         ModKeys.init();
         Tooltips.init();
         net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback.EVENT.register((type, renderer, helper, ctx) -> {

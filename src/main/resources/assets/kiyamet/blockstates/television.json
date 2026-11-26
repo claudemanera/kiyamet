@@ -1,0 +1,20 @@
+{
+ "variants": {
+  "facing=north": {
+   "model": "kiyamet:block/television",
+   "y": 0
+  },
+  "facing=east": {
+   "model": "kiyamet:block/television",
+   "y": 90
+  },
+  "facing=south": {
+   "model": "kiyamet:block/television",
+   "y": 180
+  },
+  "facing=west": {
+   "model": "kiyamet:block/television",
+   "y": 270
+  }
+ }
+}

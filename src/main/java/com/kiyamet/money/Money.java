@@ -89,17 +89,41 @@ public final class Money {
         public BillItem(Properties p) { super(p); }
     }
 
-    /** Money Bag: right-click puts all your bills in; sneak + right-click takes $100 out (or what is left). */
+    /** Money Bag ($20,000) / Gold Money Bag ($100,000): all your cash lives here. Bills you pick up go straight in.
+     *  Right-click: put loose bills in · sneak + right-click: take $100 out · sneak + right-click a block: put it down. */
     public static class BagItem extends Item {
-        public BagItem(Properties p) { super(p); }
+        public final int cap;
+        public BagItem(Properties p, int cap) { super(p); this.cap = cap; }
+        @Override
+        public InteractionResult useOn(net.minecraft.world.item.context.UseOnContext ctx) {
+            InteractionResult r = com.kiyamet.furniture.BagBlock.place(ctx);
+            return r != InteractionResult.PASS ? r : super.useOn(ctx);
+        }
         static int balance(ItemStack s) { return s.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr("Dollars", 0); }
         static void set(ItemStack s, int d) {
             CompoundTag t = s.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
             t.putInt("Dollars", Math.max(0, d));
             s.set(DataComponents.CUSTOM_DATA, CustomData.of(t));
-            s.set(DataComponents.LORE, new ItemLore(List.of(Component.literal("Holds " + fmt(Math.max(0, d))).withStyle(st -> st.withItalic(false).withColor(ChatFormatting.GREEN)),
+            int cap = s.getItem() instanceof BagItem b ? b.cap : 0;
+            s.set(DataComponents.LORE, new ItemLore(List.of(Component.literal("Holds " + fmt(Math.max(0, d)) + " / " + fmt(cap)).withStyle(st -> st.withItalic(false).withColor(ChatFormatting.GREEN)),
                     Component.literal("Right-click: put your bills in · Sneak: take $100 out").withStyle(st -> st.withItalic(false).withColor(ChatFormatting.DARK_GRAY)))));
         }
+        /** Moves loose bills into the bag up to its limit (gives change back as smaller bills if needed). */
+        static int deposit(ServerPlayer p, ItemStack bag) {
+            int room = ((BagItem) bag.getItem()).cap - balance(bag);
+            if (room <= 0) return 0;
+            Inventory inv = p.getInventory();
+            int add = 0;
+            for (int v : BILLS) for (int i = 0; i < inv.getContainerSize() && room - add >= v; i++) {
+                ItemStack s = inv.getItem(i);
+                if (value(s) != v) continue;
+                int k = Math.min(s.getCount(), (room - add) / v);
+                s.shrink(k); add += k * v;
+            }
+            if (add > 0) set(bag, balance(bag) + add);
+            return add;
+        }
+
         @Override
         public InteractionResult use(Level level, Player player, InteractionHand hand) {
             if (!(player instanceof ServerPlayer p)) return InteractionResult.SUCCESS;
@@ -110,11 +134,8 @@ public final class Money {
                 if (k <= 0) return InteractionResult.FAIL;
                 set(bag, b - k); give(p, k);
             } else {
-                int add = 0;
-                Inventory inv = p.getInventory();
-                for (int i = 0; i < inv.getContainerSize(); i++) { ItemStack s = inv.getItem(i); int v = value(s); if (v > 0) { add += v * s.getCount(); inv.setItem(i, ItemStack.EMPTY); } }
-                if (add == 0) { p.displayClientMessage(Component.literal("Bag: " + fmt(b)).withStyle(ChatFormatting.GREEN), true); return InteractionResult.FAIL; }
-                set(bag, b + add);
+                int add = deposit(p, bag);
+                if (add == 0) { p.displayClientMessage(Component.literal("Bag: " + fmt(b) + " / " + fmt(cap)).withStyle(ChatFormatting.GREEN), true); return InteractionResult.FAIL; }
             }
             level.playSound(null, p.blockPosition(), SoundEvents.BUNDLE_INSERT, SoundSource.PLAYERS, 0.8f, 1.1f);
             p.displayClientMessage(Component.literal("Money Bag: " + fmt(balance(bag)) + "   ·   You carry " + fmt(total(p))).withStyle(ChatFormatting.GREEN), true);
@@ -140,7 +161,19 @@ public final class Money {
 
     public static void init() {
         for (int v : BILLS) ModItems.custom("dollar_" + v, BillItem::new);
-        ModItems.custom("money_bag", p -> new BagItem(p.stacksTo(1)));
+        ModItems.custom("money_bag", p -> new BagItem(p.stacksTo(1), 20_000));
+        ModItems.custom("gold_money_bag", p -> new BagItem(p.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 100_000));
+        // cash you pick up goes straight into your bag
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_SERVER_TICK.register(server -> {
+            if (server.getTickCount() % 20 != 7) return;
+            for (ServerPlayer p : server.getPlayerList().getPlayers()) {
+                Inventory inv = p.getInventory();
+                boolean bills = false;
+                for (int i = 0; i < inv.getContainerSize() && !bills; i++) bills = value(inv.getItem(i)) > 0;
+                if (!bills) continue;
+                for (int i = 0; i < inv.getContainerSize(); i++) if (inv.getItem(i).getItem() instanceof BagItem) BagItem.deposit(p, inv.getItem(i));
+            }
+        });
         UseEntityCallback.EVENT.register((player, level, hand, entity, hit) -> {
             if (!level.isClientSide() && entity instanceof net.minecraft.world.entity.npc.villager.AbstractVillager v) convert(v.getOffers());
             return InteractionResult.PASS;

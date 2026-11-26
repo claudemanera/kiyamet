@@ -1,0 +1,16 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "kiyamet:peach",
+  "kiyamet:peach",
+  "kiyamet:peach",
+  "minecraft:wheat",
+  "minecraft:sugar",
+  "minecraft:egg"
+ ],
+ "result": {
+  "id": "kiyamet:peach_pie",
+  "count": 1
+ }
+}

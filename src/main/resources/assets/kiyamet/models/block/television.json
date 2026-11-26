@@ -1,0 +1,142 @@
+{
+ "parent": "minecraft:block/block",
+ "ambientocclusion": false,
+ "textures": {
+  "black": "kiyamet:block/furn_black",
+  "red": "kiyamet:block/furn_red",
+  "screen": "kiyamet:block/furn_screen",
+  "particle": "kiyamet:block/furn_oak"
+ },
+ "elements": [
+  {
+   "from": [
+    4,
+    0,
+    6
+   ],
+   "to": [
+    12,
+    1,
+    11
+   ],
+   "faces": {
+    "north": {
+     "texture": "#black"
+    },
+    "south": {
+     "texture": "#black"
+    },
+    "east": {
+     "texture": "#black"
+    },
+    "west": {
+     "texture": "#black"
+    },
+    "up": {
+     "texture": "#black"
+    },
+    "down": {
+     "texture": "#black"
+    }
+   }
+  },
+  {
+   "from": [
+    7,
+    1,
+    8
+   ],
+   "to": [
+    9,
+    4,
+    9
+   ],
+   "faces": {
+    "north": {
+     "texture": "#black"
+    },
+    "south": {
+     "texture": "#black"
+    },
+    "east": {
+     "texture": "#black"
+    },
+    "west": {
+     "texture": "#black"
+    },
+    "up": {
+     "texture": "#black"
+    },
+    "down": {
+     "texture": "#black"
+    }
+   }
+  },
+  {
+   "from": [
+    0,
+    4,
+    7.5
+   ],
+   "to": [
+    16,
+    14,
+    9
+   ],
+   "faces": {
+    "north": {
+     "texture": "#black"
+    },
+    "south": {
+     "texture": "#black"
+    },
+    "east": {
+     "texture": "#black"
+    },
+    "west": {
+     "texture": "#black"
+    },
+    "up": {
+     "texture": "#black"
+    },
+    "down": {
+     "texture": "#black"
+    }
+   }
+  },
+  {
+   "from": [
+    0.8,
+    4.8,
+    7.4
+   ],
+   "to": [
+    15.2,
+    13.2,
+    7.5
+   ],
+   "faces": {
+    "north": {
+     "texture": "#screen"
+    }
+   }
+  },
+  {
+   "from": [
+    7.5,
+    4.2,
+    7.4
+   ],
+   "to": [
+    8.5,
+    4.6,
+    7.5
+   ],
+   "faces": {
+    "north": {
+     "texture": "#red"
+    }
+   }
+  }
+ ]
+}

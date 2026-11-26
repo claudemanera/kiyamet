@@ -1,0 +1,125 @@
+{
+ "parent": "minecraft:block/block",
+ "ambientocclusion": false,
+ "textures": {
+  "bag11": "kiyamet:block/furn_bag11",
+  "black": "kiyamet:block/furn_black",
+  "brown": "kiyamet:block/furn_brown",
+  "particle": "kiyamet:block/furn_bag11"
+ },
+ "elements": [
+  {
+   "from": [
+    3,
+    0,
+    3
+   ],
+   "to": [
+    13,
+    6,
+    13
+   ],
+   "faces": {
+    "north": {
+     "texture": "#bag11"
+    },
+    "south": {
+     "texture": "#bag11"
+    },
+    "east": {
+     "texture": "#bag11"
+    },
+    "west": {
+     "texture": "#bag11"
+    },
+    "up": {
+     "texture": "#bag11"
+    },
+    "down": {
+     "texture": "#bag11"
+    }
+   }
+  },
+  {
+   "from": [
+    4,
+    6,
+    4
+   ],
+   "to": [
+    12,
+    7,
+    12
+   ],
+   "faces": {
+    "north": {
+     "texture": "#bag11"
+    },
+    "south": {
+     "texture": "#bag11"
+    },
+    "east": {
+     "texture": "#bag11"
+    },
+    "west": {
+     "texture": "#bag11"
+    },
+    "up": {
+     "texture": "#bag11"
+    },
+    "down": {
+     "texture": "#bag11"
+    }
+   }
+  },
+  {
+   "from": [
+    6,
+    7,
+    6
+   ],
+   "to": [
+    10,
+    8,
+    10
+   ],
+   "faces": {
+    "north": {
+     "texture": "#brown"
+    },
+    "south": {
+     "texture": "#brown"
+    },
+    "east": {
+     "texture": "#brown"
+    },
+    "west": {
+     "texture": "#brown"
+    },
+    "up": {
+     "texture": "#brown"
+    },
+    "down": {
+     "texture": "#brown"
+    }
+   }
+  },
+  {
+   "from": [
+    6.5,
+    2,
+    2.8
+   ],
+   "to": [
+    9.5,
+    5,
+    3
+   ],
+   "faces": {
+    "north": {
+     "texture": "#black"
+    }
+   }
+  }
+ ]
+}

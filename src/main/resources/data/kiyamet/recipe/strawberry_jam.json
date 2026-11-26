@@ -1,0 +1,16 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "minecraft:glass_bottle",
+  "kiyamet:strawberry",
+  "kiyamet:strawberry",
+  "kiyamet:strawberry",
+  "kiyamet:strawberry",
+  "minecraft:sugar"
+ ],
+ "result": {
+  "id": "kiyamet:strawberry_jam",
+  "count": 2
+ }
+}

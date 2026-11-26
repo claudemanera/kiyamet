@@ -30,6 +30,10 @@ public class Kiyamet implements ModInitializer {
         com.kiyamet.money.Money.init();
         com.kiyamet.npc.Starter.init();
         com.kiyamet.vehicle.Autopilot.init();
+        com.kiyamet.season.Calendar.init();
+        com.kiyamet.food.Recipes.init();
+        com.kiyamet.food.Spoilage.init();
+        com.kiyamet.furniture.Furniture.init();
         com.kiyamet.backpack.Backpacks.init();
         ModWorldgen.init();
         com.kiyamet.world.ModStructures.init();
@@ -59,6 +63,7 @@ public class Kiyamet implements ModInitializer {
         SkillEvents.init();
         SkillCommand.init();
         com.kiyamet.stone.StoneEvents.init();
+        com.kiyamet.registry.CreativeTabs.init();
         LOG.info("Kiyamet loaded: {} items, {} blocks", ModItems.ALL.size(), ModBlocks.ALL.size());
     }
 }

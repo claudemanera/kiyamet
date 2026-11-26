@@ -55,11 +55,16 @@ public final class Seasons {
 
     public static Season season(Level level) {
         if (forced >= 0) return Season.values()[forced];
-        long day = level.getServer() == null ? 0 : level.getServer().overworld().getDayTime() / 24000;
-        return Season.values()[(int) ((day / DAYS) % 4)];
+        if (level.getServer() == null) return Season.SPRING;
+        return Calendar.seasonOf(Calendar.date(level));
     }
 
-    public static int dayOfSeason(Level level) { return (int) ((level.getServer().overworld().getDayTime() / 24000) % DAYS) + 1; }
+    public static int dayOfSeason(Level level) {
+        java.time.LocalDate d = Calendar.date(level);
+        java.time.LocalDate first = java.time.LocalDate.of(d.getMonthValue() == 12 ? d.getYear() : d.getMonthValue() <= 2 ? d.getYear() - 1 : d.getYear(), switch (Calendar.seasonOf(d)) { case SPRING -> 3; case SUMMER -> 6; case AUTUMN -> 9; case WINTER -> 12; }, 1);
+        return (int) java.time.temporal.ChronoUnit.DAYS.between(first, d) + 1;
+    }
+    private static long lastDay = Long.MIN_VALUE;
 
     public static void init() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
@@ -67,6 +72,11 @@ public final class Seasons {
             ServerLevel ow = server.overworld();
             Season s = season(ow);
             if (t % 100 == 0 && s.ordinal() != lastSeason) { if (lastSeason >= 0) announce(server, s); lastSeason = s.ordinal(); weather(ow, s); }
+            if (t % 20 == 0) {
+                long day = Calendar.dayIndex(ow);
+                if (day != lastDay) { boolean first = lastDay == Long.MIN_VALUE; lastDay = day; if (!first || ow.getDayTime() % 24000 < 200) SeasonEvents.newDay(server, ow, s); }
+            }
+            SeasonEvents.tick(server, ow, s, t);
             if (t % 20 != 0) return;
             for (ServerPlayer p : server.getPlayerList().getPlayers()) {
                 if (p.isSpectator()) continue;
@@ -79,7 +89,7 @@ public final class Seasons {
                 .then(Commands.literal("season").executes(c -> {
                     ServerPlayer p = c.getSource().getPlayerOrException();
                     Season s = season(p.level());
-                    p.sendSystemMessage(Component.literal(s.title + ", day " + dayOfSeason(p.level()) + " of " + DAYS + ". ").withStyle(s.color, ChatFormatting.BOLD)
+                    p.sendSystemMessage(Component.literal(Calendar.format(Calendar.date(p.level())) + " · " + s.title + ", day " + dayOfSeason(p.level()) + ". ").withStyle(s.color, ChatFormatting.BOLD)
                             .append(tempText(p.getAttachedOrElse(BODY, 20f))));
                     return 1;
                 }).then(Commands.argument("set", com.mojang.brigadier.arguments.IntegerArgumentType.integer(-1, 3)).executes(c -> {
@@ -188,6 +198,9 @@ public final class Seasons {
                 case AUTUMN -> { if (!crop.isMaxAge(st) && r.nextFloat() < 0.3f) level.setBlock(pos, crop.getStateForAge(age + 1), 2); }
                 case SPRING -> { if (!crop.isMaxAge(st) && r.nextFloat() < 0.15f) level.setBlock(pos, crop.getStateForAge(age + 1), 2); }
             }
+            float boost = SeasonEvents.cropBoost();
+            st = level.getBlockState(pos);
+            if (boost > 0 && st.getBlock() instanceof CropBlock c2 && !c2.isMaxAge(st) && r.nextFloat() < boost) level.setBlock(pos, c2.getStateForAge(c2.getAge(st) + 1), 2);
         }
     }
 
@@ -215,7 +228,7 @@ public final class Seasons {
     /** The air temperature where the player stands, in °C. */
     public static float ambient(ServerLevel level, ServerPlayer p, Season s) {
         BlockPos pos = p.blockPosition();
-        float t = level.dimension() == Level.NETHER ? 45 : level.dimension() == Level.END ? 5 : s.base;
+        float t = level.dimension() == Level.NETHER ? 45 : level.dimension() == Level.END ? 5 : s.base + SeasonEvents.tempShift();
         if (level.dimension() == Level.OVERWORLD) {
             float biome = level.getBiome(pos).value().getBaseTemperature();
             t += (biome - 0.8f) * 18;

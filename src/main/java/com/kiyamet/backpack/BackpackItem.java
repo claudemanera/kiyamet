@@ -22,6 +22,12 @@ public class BackpackItem extends Item {
     }
 
     @Override
+    public InteractionResult useOn(net.minecraft.world.item.context.UseOnContext ctx) {
+        InteractionResult r = com.kiyamet.furniture.BagBlock.place(ctx);
+        return r != InteractionResult.PASS ? r : super.useOn(ctx);
+    }
+
+    @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         if (!(player instanceof ServerPlayer sp)) return InteractionResult.SUCCESS;
         ItemStack stack = sp.getItemInHand(hand);

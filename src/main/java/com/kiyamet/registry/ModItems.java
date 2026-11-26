@@ -89,13 +89,7 @@ public final class ModItems {
         return BuiltInRegistries.ITEM.getValue(Kiyamet.id(name));
     }
 
-    public static void init() {
-        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, TAB_KEY, FabricItemGroup.builder()
-                .icon(() -> new ItemStack(get("medkit")))
-                .title(Component.translatable("itemGroup.kiyamet"))
-                .displayItems((params, out) -> ALL.forEach(out::accept))
-                .build());
-    }
+    public static void init() {}
 
     private ModItems() {}
 }

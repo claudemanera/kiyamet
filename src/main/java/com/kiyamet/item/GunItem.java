@@ -34,6 +34,7 @@ public class GunItem extends Item {
     private final Stats stats;
 
     public GunItem(Properties p, Stats stats) { super(p); this.stats = stats; }
+    public Stats stats() { return stats; }
 
     public static Stats statsFor(String id) {
         return switch (id) {
@@ -155,10 +156,8 @@ public class GunItem extends Item {
         int cost = p.getRandom().nextFloat() < Math.min(0.4f, archery / 2500f) + saver * 0.12f ? 0 : arrows;   // Firearms and Ammo Saver save rounds
         String gunId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
         com.kiyamet.ammo.Ammo.Type ammo = com.kiyamet.ammo.Ammo.typeFor(gunId);
-        if (cost > 0 && !com.kiyamet.ammo.Ammo.take(p, ammo, cost)) {
-            level.playSound(null, p.blockPosition(), SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, 0.8f, 1.4f);
-            p.displayClientMessage(net.minecraft.network.chat.Component.literal("Out of " + ammo.label + " ammo!").withStyle(net.minecraft.ChatFormatting.RED), true);
-            p.getCooldowns().addCooldown(stack, 10);
+        if (!com.kiyamet.gunsmith.GunHandling.beforeShot(p, stack, cost)) {   // 1.9: clip, wear and jams
+            p.getCooldowns().addCooldown(stack, 6);
             return InteractionResult.FAIL;
         }
         // 1.5 attachments
@@ -260,7 +259,7 @@ public class GunItem extends Item {
         int noise = Math.max(0, Math.round((stats.noise + modNoise) * Math.max(0.1f, 1 - 0.3f * silent)));
         if (noise > 0) NoiseSystem.make(level, p.blockPosition(), noise, 6);
         p.getCooldowns().addCooldown(stack, Math.max(2, Math.round(modCd * stats.cooldown * (1 - 0.1f * com.kiyamet.enchant.Enchants.gunLevel(level, stack, "rapid_fire")))));
-        p.displayClientMessage(com.kiyamet.ammo.Ammo.hud(p, stack, ammo), true);
+        p.displayClientMessage(com.kiyamet.ammo.Ammo.hud(p, stack, ammo).copy().append(net.minecraft.network.chat.Component.literal("  |  ").withStyle(net.minecraft.ChatFormatting.DARK_GRAY)).append(com.kiyamet.gunsmith.GunHandling.hud(stack)), true);
         return InteractionResult.CONSUME;
     }
 }

@@ -41,7 +41,7 @@ public final class ModItems {
             if (s.equals("healing_syringe")) custom(s, p -> new com.kiyamet.item.HealItem(p.stacksTo(4), com.kiyamet.item.HealItem.Kind.SYRINGE));
             else { String id = s; custom(s, p -> new com.kiyamet.item.GadgetItem(p.stacksTo(id.equals("emp_bomb") || id.equals("black_hole_bomb") || id.equals("sonic_lure") ? 8 : 1), id)); }
         }
-        for (String s : WEAPONS) { com.kiyamet.item.GunItem.Stats st = com.kiyamet.item.GunItem.statsFor(s); custom(s, p -> new com.kiyamet.item.GunItem(p.stacksTo(1), st)); }
+        for (String s : WEAPONS) { com.kiyamet.item.GunItem.Stats st = com.kiyamet.item.GunItem.statsFor(s); custom(s, p -> new com.kiyamet.item.GunItem(p.durability(500 + Math.round(st.damage() * 20)), st)); }
         for (String s : com.kiyamet.ammo.Ammo.AMMO) simple(s, 99);
         for (String[] m : com.kiyamet.ammo.Ammo.MAGS) { int cap = Integer.parseInt(m[1]); custom(m[0], p -> new com.kiyamet.ammo.MagazineItem(p.stacksTo(1), cap)); }
         for (String s : PARTS) {

@@ -53,6 +53,7 @@ public final class KeyActions {
                 msg(p, anyFollow ? "Companions: hold position!" : "Companions: follow me!", ChatFormatting.AQUA);
             }
             case KeyAction.GAUNTLET_USE, KeyAction.GAUNTLET_CYCLE -> {
+                if (action == KeyAction.GAUNTLET_USE && p.getMainHandItem().getItem() instanceof com.kiyamet.item.GunItem) { com.kiyamet.gunsmith.GunHandling.reload(p, p.getMainHandItem()); return; }
                 ItemStack g = gauntlet(p);
                 if (g.isEmpty()) { msg(p, "You don't carry a Stone Gauntlet.", ChatFormatting.GRAY); return; }
                 GauntletData d = g.getOrDefault(GauntletData.TYPE, GauntletData.EMPTY);

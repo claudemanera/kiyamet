@@ -437,6 +437,8 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (owner != null && job == Job.GUARDIAN && tickCount % 40 == 0) guard(sl);
         if (owner != null && job == Job.LOOTER && tickCount % 6000 == 3000) scavenge();
         if (raiding) com.kiyamet.defense.DefenseRules.tickRaider(sl, this);
+        if (faction() == Faction.COMPANION && tickCount % 20 == 7 && random.nextInt(450) == 0 && ownerPlayer() instanceof ServerPlayer op
+                && op.level() == sl && distanceTo(op) < 24 && !Talk.busy(op) && !isAway()) Dialogues.chatter(op, this);
         if (role() == Role.LEADER && faction() == Faction.COMMUNITY && tickCount % 400 == 100
                 && sl.getEntitiesOfClass(com.kiyamet.twd.MissionBoard.class, getBoundingBox().inflate(40)).isEmpty()) {
             com.kiyamet.twd.MissionBoard b = com.kiyamet.twd.ModTwd.MISSION_BOARD.create(sl, net.minecraft.world.entity.EntitySpawnReason.EVENT);
@@ -686,12 +688,12 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
                 if (isOwnedBy(sp)) CompanionMenu.open(sp, this);
                 else sp.displayClientMessage(Component.literal("This companion follows someone else."), true);
             }
-            case SURVIVOR -> RecruitMenu.open(sp, this);
+            case SURVIVOR -> Dialogues.survivor(sp, this);
             case COMMUNITY -> {
                 if (Communities.reputation(sp, community) < 0) { sp.displayClientMessage(Component.literal("They don't trust you.").withStyle(ChatFormatting.RED), true); break; }
                 switch (role()) {
-                    case TRADER -> TradeMenu.open(sp, this);
-                    case LEADER -> LeaderMenu.open(sp, this);
+                    case TRADER -> Dialogues.trader(sp, this);
+                    case LEADER -> Dialogues.leader(sp, this);
                     default -> sp.displayClientMessage(Component.literal(getName().getString() + ": " + Communities.greeting(random, communityType)), false);
                 }
             }

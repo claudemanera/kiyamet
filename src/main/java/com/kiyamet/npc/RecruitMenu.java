@@ -46,6 +46,13 @@ public class RecruitMenu extends PanelMenu {
         c.setItem(49, Ui.icon(Items.BARRIER, Ui.text("Leave", ChatFormatting.RED)));
     }
 
+    public static void join(ServerPlayer player, HumanEntity h, String line) {
+        Talk.say(player, h, line);
+        h.setOwner(player);
+        player.sendSystemMessage(Component.literal(h.getName().getString() + " joins you! Right-click them for orders.").withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD));
+        player.level().playSound(null, h.blockPosition(), net.minecraft.sounds.SoundEvents.VILLAGER_YES, net.minecraft.sounds.SoundSource.NEUTRAL, 1f, 1f);
+    }
+
     private void join() {
         h.setOwner(player);
         player.closeContainer();

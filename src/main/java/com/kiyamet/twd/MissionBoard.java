@@ -199,6 +199,11 @@ public class MissionBoard extends PathfinderMob implements GeoEntity {
                 SkillManager.addXp(player, m[0] == 2 ? Skill.SURVIVAL : Skill.SWORDS, 60 + m[4] * 8);
                 if (!community.isEmpty()) Communities.change(player, community, 5);
                 player.level().playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.6f, 1.2f);
+                for (HumanEntity h : player.level().getEntitiesOfClass(HumanEntity.class, player.getBoundingBox().inflate(16), h -> h.faction() == Faction.COMMUNITY)) {
+                    String[] thanks = {"Thank you. That'll keep us going another week.", "You did good out there.", "We won't forget this.", "Here, you earned it.", "Fewer of them, more of us. Good work."};
+                    com.kiyamet.npc.Talk.say(player, h, thanks[player.getRandom().nextInt(thanks.length)]);
+                    break;
+                }
                 player.sendSystemMessage(Component.literal("Mission done: +" + m[4] + " rubies" + (community.isEmpty() ? "" : ", +5 reputation")).withStyle(ChatFormatting.GREEN));
                 return true;
             }

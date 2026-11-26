@@ -82,6 +82,12 @@ public final class Communities {
     }
 
     /** First contact: called every 2 s for players near a community member they have never met. */
+    public static void set(ServerPlayer p, String key, int value) {
+        Map<String, Integer> m = new HashMap<>(p.getAttachedOrElse(REPUTATION, Map.of()));
+        m.put(key, value);
+        p.setAttached(REPUTATION, Map.copyOf(m));
+    }
+
     public static void firstContact(ServerLevel level, ServerPlayer p, HumanEntity h) {
         String key = h.community();
         if (key.isEmpty() || known(p, key)) return;
@@ -89,6 +95,11 @@ public final class Communities {
         float friendly = t == null ? 0.6f : t.friendly;
         friendly += Math.min(0.15f, com.kiyamet.skill.SkillManager.get(p).totalPower() / 40000f);   // famous survivors are trusted more
         boolean ok = level.random.nextFloat() < friendly;
+        if (ok && !Talk.busy(p)) {                       // friendly communities stop you at the gate and ask
+            set(p, key, 0);
+            Dialogues.threeQuestions(level, p, h);
+            return;
+        }
         Map<String, Integer> m = new HashMap<>(p.getAttachedOrElse(REPUTATION, Map.of()));
         m.put(key, ok ? 20 : -50);
         p.setAttached(REPUTATION, Map.copyOf(m));

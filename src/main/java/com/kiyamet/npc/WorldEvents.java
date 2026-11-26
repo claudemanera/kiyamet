@@ -174,27 +174,26 @@ public final class WorldEvents {
         h.setCustomName(Component.literal("Raider Envoy").withStyle(ChatFormatting.GOLD));
         int demand = Mth.clamp(8 + power / 150, 8, 40);
         ENVOYS.put(h.getUUID(), new Envoy(h.getUUID(), p.getUUID(), demand, level.getGameTime() + 20 * 150));
-        p.sendSystemMessage(Component.literal("A raider walks up with his hands raised. He wants to talk.").withStyle(ChatFormatting.GOLD));
+        p.sendSystemMessage(Component.literal("A raider walks up with his hands raised. He wants to talk - right-click him.").withStyle(ChatFormatting.GOLD));
     }
 
     static void envoyTalk(ServerPlayer p, HumanEntity h) {
         Envoy e = ENVOYS.get(h.getUUID());
-        if (e == null || !e.player.equals(p.getUUID())) { p.displayClientMessage(Component.literal("\"Not you. Where's the one in charge?\"").withStyle(ChatFormatting.GOLD), true); return; }
-        ItemStack ruby = new ItemStack(ModItems.get("ruby"));
-        int have = p.getInventory().countItem(ruby.getItem());
-        if (have >= e.demand) {
-            int left = e.demand;
-            for (int i = 0; i < p.getInventory().getContainerSize() && left > 0; i++) {
-                ItemStack s = p.getInventory().getItem(i);
-                if (s.is(ruby.getItem())) { int take = Math.min(left, s.getCount()); s.shrink(take); left -= take; }
-            }
-            BaseRaids.paid(p);
-            p.sendSystemMessage(Component.literal("[Envoy] \"Smart. Nobody touches your place for a while.\" (" + e.demand + " rubies paid - no raids for at least a week)").withStyle(ChatFormatting.GOLD));
-            leave(h);
-        } else {
-            p.sendSystemMessage(Component.literal("[Envoy] \"Half of what you've got belongs to us now. " + e.demand + " rubies, or we come tonight.\"").withStyle(ChatFormatting.GOLD));
-            p.sendSystemMessage(Component.literal("Right-click him with " + e.demand + " rubies in your inventory to pay. Hit him to refuse. (You have " + have + ".) He waits about 2 minutes.").withStyle(ChatFormatting.GRAY));
-        }
+        if (e == null || !e.player.equals(p.getUUID())) { Talk.say(p, h, "Not you. Where's the one in charge?"); return; }
+        Dialogues.envoy(p, h, e.demand,
+                d -> { Envoy cur = ENVOYS.get(h.getUUID()); if (cur != null) ENVOYS.put(h.getUUID(), new Envoy(cur.human, cur.player, d, cur.until)); },
+                () -> pay(p, h),
+                () -> refuse(p, h));
+    }
+
+    private static void pay(ServerPlayer p, HumanEntity h) {
+        Envoy e = ENVOYS.get(h.getUUID());
+        if (e == null) return;
+        if (!Shop.take(p, Shop.RUBY, e.demand)) return;
+        BaseRaids.paid(p);
+        Talk.say(p, h, "Smart. Nobody touches your place for a while.");
+        p.sendSystemMessage(Component.literal("(" + e.demand + " rubies paid - no raids for at least a week)").withStyle(ChatFormatting.GOLD));
+        leave(h);
     }
 
     private static void refuse(ServerPlayer p, HumanEntity h) {
@@ -205,7 +204,7 @@ public final class WorldEvents {
         ServerPlayer owner = p.level().getServer().getPlayerList().getPlayer(e.player);
         if (owner == null) return;
         BaseRaids.scheduleTonight(owner);
-        owner.sendSystemMessage(Component.literal("[Envoy] \"Bad choice. See you tonight.\" - Raiders will hit your base after dark!").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
+        owner.sendSystemMessage(Component.literal("Raiders will hit your base after dark!").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
     }
 
     private static void leave(HumanEntity h) {

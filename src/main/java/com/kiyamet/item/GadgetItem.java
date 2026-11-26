@@ -169,11 +169,7 @@ public class GadgetItem extends Item {
                 level.playSound(null, at, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1f, 1f);
                 cd = 60;
             }
-            case "emp_bomb" -> {
-                for (LivingEntity e : enemies(level, p.position(), 16)) { e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 200, 5)); e.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 2)); }
-                level.sendParticles(ParticleTypes.ELECTRIC_SPARK, p.getX(), p.getY() + 1, p.getZ(), 200, 6, 1, 6, 0.5);
-                cd = 100; consume = true;
-            }
+            case "emp_bomb" -> { BombProjectile.toss(level, p, stack); cd = 20; consume = true; }
             case "laser_rifle" -> {
                 List<LivingEntity> es = Raycast.entities(p, 64, 0.3);
                 if (!es.isEmpty()) es.get(0).hurtServer(level, level.damageSources().playerAttack(p), 16);
@@ -190,17 +186,7 @@ public class GadgetItem extends Item {
                 level.sendParticles(ParticleTypes.ENCHANT, p.getX(), p.getY() + 1, p.getZ(), 300, 8, 2, 8, 0.5);
                 cd = 1800;
             }
-            case "black_hole_bomb" -> {
-                Vec3 c = Raycast.impact(p, 32);
-                for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, new AABB(c, c).inflate(14))) {
-                    if (e == p) continue;
-                    Vec3 pull = c.subtract(e.position()).normalize().scale(1.8);
-                    e.setDeltaMovement(pull.x, pull.y + 0.3, pull.z); e.hurtMarked = true;
-                    e.hurtServer(level, level.damageSources().playerAttack(p), 20);
-                }
-                level.sendParticles(ParticleTypes.REVERSE_PORTAL, c.x, c.y, c.z, 400, 2, 2, 2, 0.3);
-                cd = 600; consume = true;
-            }
+            case "black_hole_bomb" -> { BombProjectile.toss(level, p, stack); cd = 40; consume = true; }
             case "energy_sword" -> {
                 Vec3 look = p.getViewVector(1f);
                 p.setDeltaMovement(look.x * 1.6, 0.2, look.z * 1.6); p.hurtMarked = true;
@@ -214,12 +200,15 @@ public class GadgetItem extends Item {
             case "auto_turret" -> {
                 com.kiyamet.ally.TurretDrone t = com.kiyamet.ally.ModAllies.TURRET.create(level, EntitySpawnReason.TRIGGERED);
                 if (t != null) {
-                    Vec3 at = p.position().add(p.getLookAngle().multiply(1, 0, 1).normalize().scale(1.5)).add(0, 2.2, 0);
+                    Vec3 at = p.position().add(p.getLookAngle().multiply(1, 0, 1).normalize().scale(1.5));
                     t.setPos(at.x, at.y, at.z);
+                    t.setYRot(p.getYRot()); t.yBodyRot = p.getYRot();
                     t.bonus = com.kiyamet.skill.SkillManager.get(p).level(com.kiyamet.skill.Skill.ENGINEERING) / 100f;
                     level.addFreshEntity(t);
+                    level.playSound(null, t.blockPosition(), SoundEvents.ANVIL_PLACE, SoundSource.PLAYERS, 0.6f, 1.3f);
+                    p.displayClientMessage(net.minecraft.network.chat.Component.literal("Auto Turret deployed. Sneak + right-click it to pack it up.").withStyle(net.minecraft.ChatFormatting.GREEN), true);
                 }
-                cd = 1200;
+                cd = 40; consume = true;
             }
             default -> { return InteractionResult.PASS; }
         }

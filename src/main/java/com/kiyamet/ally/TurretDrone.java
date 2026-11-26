@@ -21,22 +21,24 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Comparator;
 
-/** Deployed by the Auto Turret gadget: hovers where it was placed and lasers enemies for 5 minutes (faster when powered). */
+/**
+ * Auto Turret (1.6): a 3D tripod gun placed on the ground. Turns to the nearest walker, raider or masked one within
+ * 22 blocks and fires on its own. Faster on generator power. Sneak + right-click to pack it back up.
+ */
 public class TurretDrone extends PathfinderMob implements GeoEntity {
-    private static final RawAnimation HOVER = RawAnimation.begin().thenLoop("move.walk");
+    private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("misc.idle");
+    private static final RawAnimation SHOOT = RawAnimation.begin().thenPlay("attack.swing");
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    private Vec3 anchor;
-    private int life = 6000, cooldown;
+    private int cooldown;
     public float bonus;
 
     public TurretDrone(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
-        setNoGravity(true);
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar c) {
-        c.add(new AnimationController<TurretDrone>("main", 0, t -> t.setAndContinue(HOVER)));
+        c.add(new AnimationController<TurretDrone>("main", 0, t -> t.setAndContinue(IDLE)).triggerableAnim("shoot", SHOOT));
     }
 
     @Override
@@ -49,24 +51,48 @@ public class TurretDrone extends PathfinderMob implements GeoEntity {
     public boolean isPushable() { return false; }
 
     @Override
+    public boolean removeWhenFarAway(double d) { return false; }
+
+    @Override
+    protected net.minecraft.world.InteractionResult mobInteract(net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+        if (!player.isShiftKeyDown()) return net.minecraft.world.InteractionResult.PASS;
+        if (level() instanceof ServerLevel) {
+            net.minecraft.world.item.ItemStack it = new net.minecraft.world.item.ItemStack(com.kiyamet.registry.ModItems.get("auto_turret"));
+            if (!player.getInventory().add(it)) player.drop(it, false);
+            playSound(SoundEvents.ARMOR_EQUIP_IRON.value(), 1f, 0.8f);
+            discard();
+        }
+        return net.minecraft.world.InteractionResult.SUCCESS;
+    }
+
+    static boolean hostile(LivingEntity e) {
+        if (e instanceof Enemy) return true;
+        return e instanceof com.kiyamet.npc.HumanEntity h && (h.faction() == com.kiyamet.npc.Faction.RAIDER || h.faction() == com.kiyamet.npc.Faction.WHISPERER);
+    }
+
+    @Override
     public void tick() {
         super.tick();
+        setDeltaMovement(0, getDeltaMovement().y, 0);
         if (!(level() instanceof ServerLevel level)) return;
-        if (anchor == null) anchor = position();
-        Vec3 d = anchor.add(0, Math.sin(tickCount / 15.0) * 0.2, 0).subtract(position());
-        setDeltaMovement(d.scale(0.3));
-        if (--life <= 0) { level.sendParticles(ParticleTypes.SMOKE, getX(), getY(), getZ(), 20, 0.3, 0.3, 0.3, 0.05); discard(); return; }
         if (cooldown-- > 0) return;
-        LivingEntity target = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(16), e -> e instanceof Enemy && e.isAlive() && hasLineOfSight(e))
+        LivingEntity target = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(22), e -> hostile(e) && e.isAlive() && hasLineOfSight(e))
                 .stream().min(Comparator.comparingDouble(this::distanceToSqr)).orElse(null);
         if (target == null) { cooldown = 10; return; }
         boolean powered = Power.isPowered(level, blockPosition());
-        cooldown = powered ? 8 : 15;
-        getLookControl().setLookAt(target);
-        Vec3 from = position().add(0, 0.2, 0), to = target.getEyePosition();
-        int n = (int) (from.distanceTo(to) * 3);
-        for (int i = 0; i < n; i++) { Vec3 at = from.add(to.subtract(from).scale(i / (double) n)); level.sendParticles(ParticleTypes.END_ROD, at.x, at.y, at.z, 1, 0, 0, 0, 0); }
-        target.hurtServer(level, level.damageSources().mobAttack(this), 6 + bonus);
-        level.playSound(null, blockPosition(), SoundEvents.BEACON_POWER_SELECT, SoundSource.NEUTRAL, 0.5f, 2f);
+        cooldown = powered ? 5 : 9;
+        double dx = target.getX() - getX(), dz = target.getZ() - getZ();
+        float yaw = (float) (Math.atan2(dz, dx) * 180 / Math.PI) - 90f;
+        setYRot(yaw); yBodyRot = yaw; yHeadRot = yaw;
+        Vec3 look = new Vec3(dx, 0, dz).normalize();
+        Vec3 from = position().add(0, 0.8, 0).add(look.scale(0.8)), to = target.getEyePosition().add(0, -0.3, 0);
+        int n = (int) (from.distanceTo(to) * 2);
+        for (int i = 0; i < n; i++) { Vec3 at = from.add(to.subtract(from).scale(i / (double) n)); level.sendParticles(ParticleTypes.CRIT, at.x, at.y, at.z, 1, 0, 0, 0, 0); }
+        level.sendParticles(ParticleTypes.SMOKE, from.x, from.y, from.z, 3, 0.05, 0.05, 0.05, 0.01);
+        level.sendParticles(ParticleTypes.FLAME, from.x, from.y, from.z, 1, 0, 0, 0, 0);
+        target.hurtServer(level, level.damageSources().mobAttack(this), 5 + bonus * 2);
+        level.playSound(null, blockPosition(), SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.NEUTRAL, 0.7f, 1.4f);
+        triggerAnim("main", "shoot");
+        com.kiyamet.world.NoiseSystem.make(level, blockPosition(), 18, 4);
     }
 }

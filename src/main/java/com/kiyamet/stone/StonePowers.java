@@ -53,10 +53,15 @@ public final class StonePowers {
     public static void tickPassives(ServerPlayer p) {
         Set<StoneKind> s = active(p);
         if (s.isEmpty() && !p.getAttributes().hasModifier(Attributes.KNOCKBACK_RESISTANCE, EARTH_KB)) return;
-        if (s.contains(StoneKind.FIRE)) p.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 60, 0, true, false));
-        if (s.contains(StoneKind.STORM)) p.addEffect(new MobEffectInstance(MobEffects.SPEED, 60, 0, true, false));
-        if (s.contains(StoneKind.NATURE) && p.tickCount % 100 < 20) p.heal(1f);
-        if (s.contains(StoneKind.SHADOW) && p.level().isDarkOutside()) p.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 260, 0, true, false));
+        if (s.contains(StoneKind.FIRE)) { p.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 80, 0, true, false)); p.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 80, 0, true, false)); }
+        if (s.contains(StoneKind.STORM)) { p.addEffect(new MobEffectInstance(MobEffects.SPEED, 80, 1, true, false)); p.addEffect(new MobEffectInstance(MobEffects.JUMP_BOOST, 80, 1, true, false)); }
+        if (s.contains(StoneKind.NATURE)) { p.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 80, 0, true, false)); if (p.tickCount % 60 < 20) p.getFoodData().eat(1, 0.3f); }
+        if (s.contains(StoneKind.SHADOW)) { p.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 260, 0, true, false)); if (p.isShiftKeyDown()) p.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 40, 0, true, false)); }
+        if (s.contains(StoneKind.EARTH)) p.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 80, 0, true, false));
+        if (s.contains(StoneKind.TIME)) p.addEffect(new MobEffectInstance(MobEffects.HASTE, 80, 1, true, false));
+        if (s.contains(StoneKind.SOUL) && p.tickCount % 200 < 20) p.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 400, 1, true, false));
+        if (s.contains(StoneKind.VOID)) p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 80, 0, true, false));
+        if (s.contains(StoneKind.BLOOD)) p.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 80, 0, true, false));
         AttributeInstance kb = p.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
         if (kb != null) {
             kb.removeModifier(EARTH_KB);
@@ -67,12 +72,17 @@ public final class StonePowers {
     /** Called when a player damages a living entity. */
     public static void onPlayerHit(ServerPlayer p, LivingEntity target, float damage) {
         Set<StoneKind> s = active(p);
-        if (s.contains(StoneKind.FROST)) target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 60, 1));
-        if (s.contains(StoneKind.BLOOD)) p.heal(damage * 0.15f);
+        if (s.contains(StoneKind.FROST)) { target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 100, 2)); target.setTicksFrozen(Math.min(300, target.getTicksFrozen() + 60)); }
+        if (s.contains(StoneKind.BLOOD)) p.heal(damage * 0.25f);
+        if (s.contains(StoneKind.FIRE)) target.igniteForSeconds(4);
+        if (s.contains(StoneKind.STORM) && p.getRandom().nextFloat() < 0.12f && p.level() instanceof ServerLevel sl) {
+            LightningBolt b = EntityType.LIGHTNING_BOLT.create(sl, EntitySpawnReason.TRIGGERED);
+            if (b != null) { b.setPos(target.getX(), target.getY(), target.getZ()); b.setCause(p); sl.addFreshEntity(b); }
+        }
     }
 
     public static int cooldown(Player p, StoneKind k) {
-        return active(p).contains(StoneKind.TIME) ? (int) (k.cooldown * 0.9) : k.cooldown;
+        return (int) (k.cooldown * 0.5 * (active(p).contains(StoneKind.TIME) ? 0.75 : 1));
     }
 
     private static List<LivingEntity> enemies(ServerLevel level, Player p, double r) {
@@ -93,60 +103,115 @@ public final class StonePowers {
     /** Active ability. Returns false if nothing happened. */
     public static boolean activate(ServerPlayer p, StoneKind k) {
         ServerLevel level = p.level();
-        float power = 1f + SkillManager.get(p).totalPower() / 10000f;
+        float power = 2f + SkillManager.get(p).totalPower() / 2500f;
         switch (k) {
-            case FIRE -> { for (LivingEntity e : enemies(level, p, 6)) { e.igniteForSeconds(6); hurt(level, p, e, 6 * power); } burst(level, p, ParticleTypes.FLAME, 120, 4); }
-            case FROST -> { for (LivingEntity e : enemies(level, p, 8)) { e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 120, 4)); e.setTicksFrozen(200); hurt(level, p, e, 3 * power); } burst(level, p, ParticleTypes.SNOWFLAKE, 150, 5); }
-            case STORM -> {
-                Vec3 eye = p.getEyePosition(), look = p.getViewVector(1f);
-                LivingEntity best = null; double bd = 40;
-                for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(32))) {
-                    if (e == p) continue;
-                    Vec3 to = e.position().add(0, e.getBbHeight() / 2, 0).subtract(eye);
-                    double along = to.dot(look);
-                    if (along > 0 && to.subtract(look.scale(along)).length() < 2.0 && along < bd) { bd = along; best = e; }
-                }
-                Vec3 at = best != null ? best.position() : eye.add(look.scale(20));
-                LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level, EntitySpawnReason.TRIGGERED);
-                if (bolt == null) return false;
-                bolt.setPos(at.x, at.y, at.z);
-                bolt.setCause(p);
-                level.addFreshEntity(bolt);
-                if (best != null) hurt(level, p, best, 10 * power);
+            case FIRE -> {   // inferno: big fire ring, burning for 12 s, fire resistance + strength for you
+                for (LivingEntity e : enemies(level, p, 12)) { e.igniteForSeconds(12); hurt(level, p, e, 9 * power); e.knockback(0.8, p.getX() - e.getX(), p.getZ() - e.getZ()); }
+                p.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 400, 1)); burst(level, p, ParticleTypes.FLAME, 400, 8); burst(level, p, ParticleTypes.LAVA, 60, 5);
             }
-            case NATURE -> { p.heal(8 * power); for (LivingEntity e : enemies(level, p, 7)) e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 100, 6)); burst(level, p, ParticleTypes.HAPPY_VILLAGER, 80, 4); }
-            case BLOOD -> { float total = 0; for (LivingEntity e : enemies(level, p, 6)) { hurt(level, p, e, 5 * power); total += 5 * power; } p.heal(total * 0.3f); burst(level, p, ParticleTypes.DAMAGE_INDICATOR, 60, 3); }
-            case SHADOW -> { p.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 200, 0)); for (LivingEntity e : enemies(level, p, 24)) if (e instanceof net.minecraft.world.entity.Mob m && m.getTarget() == p) m.setTarget(null); burst(level, p, ParticleTypes.SMOKE, 80, 1); }
-            case SOUL -> {
-                for (int i = 0; i < 2; i++) {
+            case FROST -> {  // blizzard: everything around frozen solid for 10 s
+                for (LivingEntity e : enemies(level, p, 14)) { e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 200, 6)); e.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 2)); e.setTicksFrozen(400); hurt(level, p, e, 6 * power); }
+                burst(level, p, ParticleTypes.SNOWFLAKE, 500, 10);
+            }
+            case STORM -> {  // chain storm: up to 6 bolts on the closest enemies
+                List<LivingEntity> es = enemies(level, p, 24);
+                es.sort(java.util.Comparator.comparingDouble(e -> e.distanceToSqr(p)));
+                int n = 0;
+                for (LivingEntity e : es) {
+                    if (n++ >= 6) break;
+                    LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level, EntitySpawnReason.TRIGGERED);
+                    if (bolt != null) { bolt.setPos(e.getX(), e.getY(), e.getZ()); bolt.setCause(p); level.addFreshEntity(bolt); }
+                    hurt(level, p, e, 14 * power);
+                }
+                if (n == 0) {
+                    Vec3 at = p.getEyePosition().add(p.getViewVector(1f).scale(20));
+                    LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level, EntitySpawnReason.TRIGGERED);
+                    if (bolt != null) { bolt.setPos(at.x, at.y, at.z); bolt.setCause(p); level.addFreshEntity(bolt); }
+                }
+                p.addEffect(new MobEffectInstance(MobEffects.SPEED, 400, 2));
+            }
+            case NATURE -> {  // full heal, regeneration III, roots everyone around
+                p.heal(20 * power); p.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 300, 2)); p.removeEffect(MobEffects.POISON); p.removeEffect(MobEffects.WITHER);
+                for (LivingEntity e : enemies(level, p, 12)) { e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 240, 9)); e.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 1)); }
+                burst(level, p, ParticleTypes.HAPPY_VILLAGER, 300, 8);
+            }
+            case BLOOD -> {  // blood drain: heavy damage to all around, half comes back as health
+                float total = 0;
+                for (LivingEntity e : enemies(level, p, 12)) { hurt(level, p, e, 10 * power); total += 10 * power; e.addEffect(new MobEffectInstance(MobEffects.WITHER, 160, 1)); }
+                p.heal(total * 0.5f); p.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 600, 3));
+                burst(level, p, ParticleTypes.DAMAGE_INDICATOR, 200, 6);
+            }
+            case SHADOW -> {  // 30 s invisible, faster, every enemy forgets you
+                p.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 600, 0)); p.addEffect(new MobEffectInstance(MobEffects.SPEED, 600, 1));
+                p.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 600, 1));
+                for (LivingEntity e : enemies(level, p, 40)) { if (e instanceof net.minecraft.world.entity.Mob m && m.getTarget() == p) m.setTarget(null); e.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 200, 0)); }
+                burst(level, p, ParticleTypes.LARGE_SMOKE, 200, 2);
+            }
+            case SOUL -> {   // 3 spirit golems for 3 minutes, stronger with power
+                for (int i = 0; i < 3; i++) {
                     IronGolem g = EntityType.IRON_GOLEM.create(level, EntitySpawnReason.TRIGGERED);
                     if (g == null) continue;
-                    g.setPos(p.getX() + (i == 0 ? 2 : -2), p.getY(), p.getZ());
+                    g.setPos(p.getX() + (i - 1) * 2.5, p.getY(), p.getZ() + (i == 1 ? 2 : 0));
                     g.setPlayerCreated(true);
+                    g.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 3600, Math.min(4, (int) power - 1)));
+                    g.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 3600, 1));
                     level.addFreshEntity(g);
-                    SPIRITS.put(g.getUUID(), level.getGameTime() + 1200);
+                    SPIRITS.put(g.getUUID(), level.getGameTime() + 3600);
                 }
-                burst(level, p, ParticleTypes.SOUL, 80, 2);
+                burst(level, p, ParticleTypes.SOUL, 200, 3);
             }
-            case TIME -> { for (LivingEntity e : enemies(level, p, 16)) { e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 100, 9)); e.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 2)); } p.addEffect(new MobEffectInstance(MobEffects.SPEED, 100, 2)); burst(level, p, ParticleTypes.ENCHANT, 150, 6); }
-            case VOID -> {
-                Vec3 c = p.getEyePosition().add(p.getViewVector(1f).scale(8));
-                for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, new AABB(c, c).inflate(10))) {
-                    if (e == p || !(e instanceof Enemy)) continue;
-                    Vec3 pull = c.subtract(e.position()).normalize().scale(1.4);
-                    e.setDeltaMovement(pull.x, pull.y + 0.2, pull.z); e.hurtMarked = true;
-                    hurt(level, p, e, 8 * power);
+            case TIME -> {   // time stop: enemies frozen for 12 s, you get speed + haste
+                for (LivingEntity e : enemies(level, p, 24)) {
+                    e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 240, 255)); e.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 240, 4));
+                    if (e instanceof net.minecraft.world.entity.Mob m) { m.setNoAi(true); FROZEN.put(m.getUUID(), level.getGameTime() + 240); }
                 }
-                level.sendParticles(ParticleTypes.REVERSE_PORTAL, c.x, c.y, c.z, 200, 1.5, 1.5, 1.5, 0.2);
+                p.addEffect(new MobEffectInstance(MobEffects.SPEED, 240, 3)); p.addEffect(new MobEffectInstance(MobEffects.HASTE, 240, 2));
+                burst(level, p, ParticleTypes.ENCHANT, 400, 10);
             }
-            case EARTH -> { for (LivingEntity e : enemies(level, p, 7)) { e.setDeltaMovement(e.getDeltaMovement().add(0, 0.9, 0)); e.hurtMarked = true; hurt(level, p, e, 7 * power); } burst(level, p, ParticleTypes.CAMPFIRE_COSY_SMOKE, 60, 4); }
+            case VOID -> {   // black hole: pulls in everything for 4 seconds, crushes it
+                Vec3 c = p.getEyePosition().add(p.getViewVector(1f).scale(10));
+                HOLES.add(new Object[]{p.getUUID(), c, level.getGameTime() + 80, power});
+                level.sendParticles(ParticleTypes.REVERSE_PORTAL, c.x, c.y, c.z, 400, 2, 2, 2, 0.3);
+            }
+            case EARTH -> {   // quake: everything around launched, slowed and battered
+                for (LivingEntity e : enemies(level, p, 12)) { e.setDeltaMovement(e.getDeltaMovement().add(0, 1.4, 0)); e.hurtMarked = true; hurt(level, p, e, 12 * power); e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 200, 3)); }
+                p.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 400, 2));
+                burst(level, p, ParticleTypes.CAMPFIRE_COSY_SMOKE, 200, 8); burst(level, p, ParticleTypes.EXPLOSION, 12, 6);
+            }
         }
         level.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.5f, 0.8f);
         return true;
     }
 
+    private static final Map<UUID, Long> FROZEN = new HashMap<>();
+    private static final List<Object[]> HOLES = new ArrayList<>();
+
     /** Spirit golems vanish after one minute. */
+    /** Every tick: black holes from the Void stone. */
+    public static void tickHoles(ServerLevel level) {
+        if (HOLES.isEmpty()) return;
+        long t = level.getGameTime();
+        HOLES.removeIf(h -> {
+            Vec3 c = (Vec3) h[1];
+            ServerPlayer owner = level.getServer().getPlayerList().getPlayer((UUID) h[0]);
+            for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, new AABB(c, c).inflate(14))) {
+                if (e == owner || !(e instanceof Enemy)) continue;
+                Vec3 pull = c.subtract(e.position()).normalize().scale(0.6);
+                e.setDeltaMovement(pull.x, pull.y + 0.08, pull.z); e.hurtMarked = true;
+                if (t % 10 == 0 && owner != null) hurt(level, owner, e, 3 * (Float) h[3]);
+            }
+            level.sendParticles(ParticleTypes.PORTAL, c.x, c.y, c.z, 30, 1, 1, 1, 0.5);
+            return t >= (Long) h[2];
+        });
+    }
+
     public static void tickSpirits(ServerLevel level) {
+        long t = level.getGameTime();
+        FROZEN.entrySet().removeIf(en -> {
+            if (en.getValue() > t) return false;
+            if (level.getEntity(en.getKey()) instanceof net.minecraft.world.entity.Mob m) m.setNoAi(false);
+            return true;
+        });
         if (SPIRITS.isEmpty()) return;
         long now = level.getGameTime();
         SPIRITS.entrySet().removeIf(en -> {

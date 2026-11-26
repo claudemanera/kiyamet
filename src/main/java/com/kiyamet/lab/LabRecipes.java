@@ -83,6 +83,11 @@ public final class LabRecipes {
         r("kiyamet:rocket_ammo", 12, 200, "minecraft:tnt", 4, "kiyamet:metal_plate", 2, "minecraft:gunpowder", 4);
         r("kiyamet:plasma_cell", 32, 300, "kiyamet:energy_cell", 2, "minecraft:redstone", 6, "minecraft:glowstone_dust", 4);
         r("kiyamet:magazine_drum", 1, 100, "kiyamet:metal_plate", 4, "minecraft:iron_ingot", 6, "kiyamet:circuit", 1);
+        // 1.6 throwables
+        r("kiyamet:frag_grenade", 4, 120, "minecraft:iron_ingot", 4, "minecraft:gunpowder", 4);
+        r("kiyamet:molotov", 4, 40, "minecraft:glass_bottle", 4, "kiyamet:fuel_canister", 1, "minecraft:string", 2);
+        r("kiyamet:smoke_grenade", 4, 60, "minecraft:iron_ingot", 2, "minecraft:coal", 4, "minecraft:gunpowder", 1);
+        r("kiyamet:flashbang", 4, 160, "minecraft:iron_ingot", 3, "minecraft:glowstone_dust", 4, "minecraft:gunpowder", 2);
         // arrow weapons
         String[][] guns = {{"arrow_pistol", "50"}, {"arrow_rifle", "100"}, {"double_arrow_rifle", "150"}, {"arrow_shotgun", "200"}, {"silenced_arrow_pistol", "250"},
                 {"arrow_repeater", "300"}, {"toxic_arrow_rifle", "350"}, {"frost_arrow_gun", "400"}, {"arrow_sniper", "450"}, {"incendiary_repeater", "500"},

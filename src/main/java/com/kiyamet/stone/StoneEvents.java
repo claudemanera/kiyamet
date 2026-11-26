@@ -18,6 +18,7 @@ public final class StoneEvents {
 
     public static void init() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
+            for (ServerLevel l : server.getAllLevels()) StonePowers.tickHoles(l);
             if (++tick % 20 != 0) return;
             for (ServerPlayer p : server.getPlayerList().getPlayers()) if (p.isAlive()) StonePowers.tickPassives(p);
             for (ServerLevel l : server.getAllLevels()) { StonePowers.tickSpirits(l); com.kiyamet.item.GadgetItem.tick(l); }

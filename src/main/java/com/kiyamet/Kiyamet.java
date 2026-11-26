@@ -25,6 +25,8 @@ public class Kiyamet implements ModInitializer {
         ModBlocks.init();
         ModItems.init();
         com.kiyamet.farm.ModFarm.init();
+        com.kiyamet.egg.ModEggs.init();
+        com.kiyamet.item.BombProjectile.init();
         com.kiyamet.backpack.Backpacks.init();
         ModWorldgen.init();
         com.kiyamet.world.ModStructures.init();

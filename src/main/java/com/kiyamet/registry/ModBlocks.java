@@ -53,6 +53,8 @@ public final class ModBlocks {
 
     public static final Block GUN_BENCH = reg("gun_bench", com.kiyamet.gunsmith.GunBenchBlock::new,
             BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(3f, 6f).sound(SoundType.WOOD));
+    public static final Block VEHICLE_WORKSHOP = reg("vehicle_workshop", com.kiyamet.vehicle.WorkshopBlock::new,
+            BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 8f).sound(SoundType.METAL));
     public static final Block LAB_TABLE = reg("lab_table", com.kiyamet.lab.LabTableBlock::new,
             BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 8f).sound(SoundType.METAL).noOcclusion());
 

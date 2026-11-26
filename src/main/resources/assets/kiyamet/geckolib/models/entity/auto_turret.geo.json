@@ -1,0 +1,441 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.kiyamet.auto_turret",
+    "texture_width": 64,
+    "texture_height": 64,
+    "visible_bounds_width": 3,
+    "visible_bounds_height": 3,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "legs",
+     "pivot": [
+      0,
+      6,
+      0
+     ],
+     "cubes": [],
+     "parent": "root"
+    },
+    {
+     "name": "leg0",
+     "pivot": [
+      0,
+      6,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -1,
+        0,
+        4.5
+       ],
+       "size": [
+        2,
+        1,
+        2
+       ],
+       "uv": [
+        4,
+        0
+       ]
+      }
+     ],
+     "parent": "legs",
+     "rotation": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "name": "leg0_s",
+     "pivot": [
+      0,
+      6,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -0.5,
+        0,
+        -0.5
+       ],
+       "size": [
+        1,
+        7,
+        1
+       ],
+       "uv": [
+        0,
+        0
+       ]
+      }
+     ],
+     "parent": "leg0",
+     "rotation": [
+      35,
+      0,
+      0
+     ]
+    },
+    {
+     "name": "leg1",
+     "pivot": [
+      0,
+      6,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -1,
+        0,
+        4.5
+       ],
+       "size": [
+        2,
+        1,
+        2
+       ],
+       "uv": [
+        16,
+        0
+       ]
+      }
+     ],
+     "parent": "legs",
+     "rotation": [
+      0,
+      120,
+      0
+     ]
+    },
+    {
+     "name": "leg1_s",
+     "pivot": [
+      0,
+      6,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -0.5,
+        0,
+        -0.5
+       ],
+       "size": [
+        1,
+        7,
+        1
+       ],
+       "uv": [
+        12,
+        0
+       ]
+      }
+     ],
+     "parent": "leg1",
+     "rotation": [
+      35,
+      0,
+      0
+     ]
+    },
+    {
+     "name": "leg2",
+     "pivot": [
+      0,
+      6,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -1,
+        0,
+        4.5
+       ],
+       "size": [
+        2,
+        1,
+        2
+       ],
+       "uv": [
+        28,
+        0
+       ]
+      }
+     ],
+     "parent": "legs",
+     "rotation": [
+      0,
+      240,
+      0
+     ]
+    },
+    {
+     "name": "leg2_s",
+     "pivot": [
+      0,
+      6,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -0.5,
+        0,
+        -0.5
+       ],
+       "size": [
+        1,
+        7,
+        1
+       ],
+       "uv": [
+        24,
+        0
+       ]
+      }
+     ],
+     "parent": "leg2",
+     "rotation": [
+      35,
+      0,
+      0
+     ]
+    },
+    {
+     "name": "mount",
+     "pivot": [
+      0,
+      6,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -3,
+        5,
+        -3
+       ],
+       "size": [
+        6,
+        2,
+        6
+       ],
+       "uv": [
+        36,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -1,
+        7,
+        -1
+       ],
+       "size": [
+        2,
+        3,
+        2
+       ],
+       "uv": [
+        0,
+        8
+       ]
+      }
+     ],
+     "parent": "root"
+    },
+    {
+     "name": "head",
+     "pivot": [
+      0,
+      11,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -3,
+        10,
+        -4
+       ],
+       "size": [
+        6,
+        5,
+        8
+       ],
+       "uv": [
+        8,
+        8
+       ]
+      },
+      {
+       "origin": [
+        -4,
+        9.5,
+        3
+       ],
+       "size": [
+        8,
+        6,
+        1
+       ],
+       "uv": [
+        36,
+        8
+       ]
+      },
+      {
+       "origin": [
+        3,
+        10,
+        -2
+       ],
+       "size": [
+        2,
+        4,
+        4
+       ],
+       "uv": [
+        0,
+        21
+       ]
+      },
+      {
+       "origin": [
+        -1,
+        15,
+        -2
+       ],
+       "size": [
+        2,
+        2,
+        3
+       ],
+       "uv": [
+        12,
+        21
+       ]
+      },
+      {
+       "origin": [
+        -0.5,
+        15.5,
+        1
+       ],
+       "size": [
+        1,
+        1,
+        1
+       ],
+       "uv": [
+        22,
+        21
+       ]
+      },
+      {
+       "origin": [
+        -3,
+        10,
+        -5
+       ],
+       "size": [
+        6,
+        4,
+        1
+       ],
+       "uv": [
+        34,
+        32
+       ]
+      }
+     ],
+     "parent": "mount"
+    },
+    {
+     "name": "barrels",
+     "pivot": [
+      0,
+      12.5,
+      4
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -2,
+        11.5,
+        4
+       ],
+       "size": [
+        1.5,
+        1.5,
+        9
+       ],
+       "uv": [
+        26,
+        21
+       ]
+      },
+      {
+       "origin": [
+        0.5,
+        11.5,
+        4
+       ],
+       "size": [
+        1.5,
+        1.5,
+        9
+       ],
+       "uv": [
+        0,
+        32
+       ]
+      },
+      {
+       "origin": [
+        -2.5,
+        11,
+        12
+       ],
+       "size": [
+        5,
+        2.5,
+        1.5
+       ],
+       "uv": [
+        21,
+        32
+       ]
+      }
+     ],
+     "parent": "head"
+    }
+   ]
+  }
+ ]
+}

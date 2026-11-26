@@ -11,6 +11,7 @@
   "kiyamet:spike_trap",
   "kiyamet:electric_fence",
   "kiyamet:lab_table",
-  "kiyamet:generator"
+  "kiyamet:generator",
+  "kiyamet:vehicle_workshop"
  ]
 }

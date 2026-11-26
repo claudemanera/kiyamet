@@ -14,10 +14,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 public final class ModAllies {
     private static final ResourceKey<EntityType<?>> TURRET_KEY = ResourceKey.create(Registries.ENTITY_TYPE, Kiyamet.id("auto_turret"));
     public static final EntityType<TurretDrone> TURRET = Registry.register(BuiltInRegistries.ENTITY_TYPE, TURRET_KEY,
-            EntityType.Builder.<TurretDrone>of(TurretDrone::new, MobCategory.MISC).sized(0.8f, 0.5f).fireImmune().clientTrackingRange(8).build(TURRET_KEY));
+            EntityType.Builder.<TurretDrone>of(TurretDrone::new, MobCategory.MISC).sized(0.9f, 1.1f).fireImmune().clientTrackingRange(8).build(TURRET_KEY));
 
     public static void init() {
-        FabricDefaultAttributeRegistry.register(TURRET, Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 30).add(Attributes.ARMOR, 10));
+        FabricDefaultAttributeRegistry.register(TURRET, Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 60).add(Attributes.ARMOR, 14).add(Attributes.KNOCKBACK_RESISTANCE, 1.0));
     }
 
     private ModAllies() {}

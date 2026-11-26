@@ -103,6 +103,14 @@ if p:
     for a in ('orange', 'peach', 'strawberry', 'cabbage_seeds', 'wolf_pelt', 'polar_pelt', 'orange_sapling'):
         cmd(p, 'summon item 4 101 4 {Item:{id:"kiyamet:%s",count:1}}' % a, 0.3)
     cmd(p, 'summon item 4 101 4 {Item:{id:"minecraft:iron_chestplate",count:1,components:{"minecraft:equippable":{slot:"chest",asset_id:"kiyamet:fur_wolf_iron"},"minecraft:custom_data":{Fur:"WOLF",FurBase:"minecraft:iron"}}}}', 1)
+    # 1.6 more: auto turret, thrown bombs, cars, eggs, cash
+    cmd(p, 'summon kiyamet:auto_turret 2 101 -4', 0.5)
+    cmd(p, 'summon kiyamet:thrown_bomb 2 104 -2 {Item:{id:"kiyamet:frag_grenade",count:1}}', 0.5)
+    cmd(p, 'summon kiyamet:thrown_bomb 4 104 -2 {Item:{id:"kiyamet:molotov",count:1}}', 0.5)
+    cmd(p, 'summon kiyamet:car_sedan -6 101 -6', 0.5)
+    cmd(p, 'setblock -3 101 3 kiyamet:vehicle_workshop', 0.3)
+    for a in ('dollar_100', 'money_bag', 'runner_zombie_spawn_egg', 'car_sedan_kit', 'flashbang'):
+        cmd(p, 'summon item 3 101 -3 {Item:{id:"kiyamet:%s",count:1}}' % a, 0.3)
     # 1.5 bullets: ammo, a loaded drum magazine, the giant shotgun
     for a in ('pistol_ammo', 'rifle_ammo', 'shotgun_shell', 'sniper_ammo', 'rocket_ammo', 'plasma_cell', 'behemoth_shotgun', 'ak_shotgun', 'ak47', 'bolt_sniper'):
         cmd(p, 'summon item 3 101 3 {Item:{id:"kiyamet:%s",count:1}}' % a, 0.3)

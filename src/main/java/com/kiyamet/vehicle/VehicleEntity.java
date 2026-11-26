@@ -93,7 +93,7 @@ public class VehicleEntity extends PathfinderMob implements GeoEntity {
     protected Vec3 getPassengerAttachmentPoint(Entity e, EntityDimensions dims, float scale) {
         int i = Math.max(0, getPassengers().indexOf(e));
         float[] s = kind.seats[Math.min(i, kind.seats.length - 1)];
-        return new Vec3(s[0], s[1], s[2]);
+        return new Vec3(s[0], s[1], s[2]).yRot(-getYRot() * Mth.DEG_TO_RAD);   // seats turn with the car
     }
 
     @Override
@@ -138,6 +138,7 @@ public class VehicleEntity extends PathfinderMob implements GeoEntity {
         if (kind == VehicleKind.AMBULANCE && tickCount % 100 == 0)
             for (Entity e : getPassengers()) if (e instanceof LivingEntity le) le.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 110, 0, true, false));
         if (getFirstPassenger() instanceof HumanEntity h && h.faction() == Faction.RAIDER) raiderDrive(sl);
+        else if (getFirstPassenger() instanceof HumanEntity h && h.faction() == Faction.COMPANION) autopilot(sl, h, speed);
         if (getHealth() < getMaxHealth() * 0.3f && tickCount % 10 == 0)
             sl.sendParticles(ParticleTypes.LARGE_SMOKE, getX(), getY() + kind.height, getZ(), 2, 0.3, 0.1, 0.3, 0.01);
     }
@@ -169,6 +170,46 @@ public class VehicleEntity extends PathfinderMob implements GeoEntity {
     }
 
     /** Raiders drive at the nearest player, jump out 12 blocks away; the armored truck's turret shoots while manned. */
+    // ------------------------------------------------------------------ companion driver (1.6)
+    public Vec3 autoDest;
+    private int autoStuck;
+
+    /** A companion takes the wheel and drives you to the spot (an Xaero's map waypoint, or coordinates). */
+    public void driveTo(ServerPlayer p, HumanEntity driver, Vec3 dest) {
+        List<Entity> others = new java.util.ArrayList<>(getPassengers());
+        ejectPassengers();
+        driver.startRiding(this, true, true);
+        p.startRiding(this, true, true);
+        for (Entity e : others) if (e != driver && e != p && canAddPassenger(e)) e.startRiding(this, true, true);
+        autoDest = dest;
+        p.sendSystemMessage(Component.literal("<" + driver.getName().getString() + "> ").withStyle(ChatFormatting.AQUA)
+                .append(Component.literal("Hold on. Driving to " + (int) dest.x + ", " + (int) dest.z + " (" + (int) Math.sqrt(distanceToSqr(dest.x, getY(), dest.z)) + " blocks).").withStyle(ChatFormatting.WHITE)));
+    }
+
+    private void autopilot(ServerLevel sl, HumanEntity h, double speed) {
+        if (autoDest == null) { getNavigation().stop(); return; }
+        double dx = autoDest.x - getX(), dz = autoDest.z - getZ(), d = Math.sqrt(dx * dx + dz * dz);
+        ServerPlayer owner = h.ownerPlayer();
+        if (d < 6 || fuel() <= 0) {
+            autoDest = null; getNavigation().stop();
+            if (owner != null) owner.sendSystemMessage(Component.literal("<" + h.getName().getString() + "> ").withStyle(ChatFormatting.AQUA)
+                    .append(Component.literal(fuel() <= 0 ? "We're out of fuel." : "We're here.").withStyle(ChatFormatting.WHITE)));
+            return;
+        }
+        if (speed > 0.02 && fuel() > 0) setFuel(fuel() - 1);
+        if (speed > 0.22) ram(sl, speed);
+        if (owner != null && tickCount % 10 == 0) hud(owner, speed);
+        if (tickCount % 5 == 0) {
+            double step = Math.min(d, 24);
+            double tx = getX() + dx / d * step, tz = getZ() + dz / d * step;
+            if (horizontalCollision && speed < 0.05) {               // blocked: steer around
+                if (++autoStuck > 8) { float a = (random.nextBoolean() ? 70 : -70) * Mth.DEG_TO_RAD; double rx = dx / d * Math.cos(a) - dz / d * Math.sin(a), rz = dx / d * Math.sin(a) + dz / d * Math.cos(a); tx = getX() + rx * 10; tz = getZ() + rz * 10; }
+            } else autoStuck = 0;
+            int ty = sl.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (int) tx, (int) tz);
+            getMoveControl().setWantedPosition(tx, ty, tz, 1.0);
+        }
+    }
+
     private void raiderDrive(ServerLevel sl) {
         Player target = sl.getNearestPlayer(this, 96);
         if (target == null || target.isCreative() || target.isSpectator()) { getNavigation().stop(); return; }

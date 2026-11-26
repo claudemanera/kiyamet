@@ -450,6 +450,12 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (owner != null && job == Job.LOOTER && tickCount % 6000 == 3000) scavenge();
         Captives.tick(sl, this, captives);
         if (faction() == Faction.COMPANION && tickCount % 20 == 3 && ownerPlayer() instanceof ServerPlayer mo && mo.level() == sl && !isAway()) Mind.companion(sl, this, mo);
+        // 1.6: ride along in the owner's vehicle, get out when they do
+        if (faction() == Faction.COMPANION && tickCount % 10 == 7 && ownerPlayer() instanceof ServerPlayer op && op.level() == sl) {
+            if (op.getVehicle() instanceof com.kiyamet.vehicle.VehicleEntity v && order == Order.FOLLOW && getVehicle() != v && distanceTo(v) < 16
+                    && v.getPassengers().size() < v.kind.seats.length) { stopRiding(); startRiding(v, true, true); }
+            else if (getVehicle() instanceof com.kiyamet.vehicle.VehicleEntity v && op.getVehicle() != v && v.autoDest == null) stopRiding();
+        }
         if (raiding && !captives.captive) com.kiyamet.defense.DefenseRules.tickRaider(sl, this);
         if (faction() == Faction.COMPANION && tickCount % 20 == 7 && random.nextInt(450) == 0 && ownerPlayer() instanceof ServerPlayer op
                 && op.level() == sl && distanceTo(op) < 24 && !Talk.busy(op) && !isAway()) Dialogues.chatter(op, this);

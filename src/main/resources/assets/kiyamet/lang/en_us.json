@@ -569,5 +569,6 @@
  "tooltip.kiyamet.trader_spawn_egg": "Use on a block to spawn it",
  "tooltip.kiyamet.raider_spawn_egg": "Use on a block to spawn it",
  "tooltip.kiyamet.raider_guard_spawn_egg": "Use on a block to spawn it",
- "tooltip.kiyamet.masked_one_spawn_egg": "Use on a block to spawn it"
+ "tooltip.kiyamet.masked_one_spawn_egg": "Use on a block to spawn it",
+ "key.kiyamet.autopilot": "Autopilot (companion drives to Xaero waypoint)"
 }

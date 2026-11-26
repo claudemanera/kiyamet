@@ -43,6 +43,7 @@ public final class KeyActions {
         if (!p.isAlive()) return;
         switch (action) {
             case KeyAction.SKILLS -> SkillsMenu.open(p);
+            case KeyAction.GAUNTLET_MENU -> { if (p.getMainHandItem().getItem() instanceof GauntletItem) com.kiyamet.stone.GauntletMenu.open(p); }
             case KeyAction.POWERS -> PowersMenu.open(p);
             case KeyAction.COMPANIONS -> {
                 List<HumanEntity> mine = ((ServerLevel) p.level()).getEntitiesOfClass(HumanEntity.class, p.getBoundingBox().inflate(128), h -> h.isOwnedBy(p));

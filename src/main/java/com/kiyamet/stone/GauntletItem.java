@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 
 /**
  * Stone Gauntlet. Slots open at Total Power 200 / 1000 / 3000 / 6000 / 10000 (tier I–V).
- * Stone in offhand + right click: socket it. Sneak + right click: select next stone. Right click: use selected stone.
+ * Stone in offhand + right click: socket it. Sneak + right click: select next stone. Right click: use selected stone. Left click: gauntlet panel.
  */
 public class GauntletItem extends Item {
     public static final int[] SLOT_POWER = {200, 1000, 3000, 6000, 10000};

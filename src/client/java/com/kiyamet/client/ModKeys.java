@@ -19,6 +19,13 @@ public final class ModKeys {
     public static void init() {
         for (int i = 0; i < NAMES.length; i++)
             MAPPINGS[i] = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.kiyamet." + NAMES[i], InputConstants.Type.KEYSYM, KEYS[i], CATEGORY));
+        // left-click with the Stone Gauntlet in hand opens its panel
+        ClientTickEvents.START_CLIENT_TICK.register(mc -> {
+            if (mc.player == null || mc.screen != null || !(mc.player.getMainHandItem().getItem() instanceof com.kiyamet.stone.GauntletItem)) return;
+            boolean any = false;
+            while (mc.options.keyAttack.consumeClick()) any = true;
+            if (any) ClientPlayNetworking.send(new KeyAction(KeyAction.GAUNTLET_MENU));
+        });
         ClientTickEvents.END_CLIENT_TICK.register(mc -> {
             if (mc.player == null) return;
             for (int i = 0; i < MAPPINGS.length; i++)

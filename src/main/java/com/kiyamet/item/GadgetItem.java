@@ -140,12 +140,26 @@ public class GadgetItem extends Item {
                 for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(48))) if (e instanceof Enemy) e.addEffect(new MobEffectInstance(MobEffects.GLOWING, 300, 0));
                 cd = 400;
             }
-            case "clone_device" -> {
-                IronGolem g = EntityType.IRON_GOLEM.create(level, EntitySpawnReason.TRIGGERED);
-                if (g == null) return InteractionResult.FAIL;
-                g.setPos(p.getX() + 1.5, p.getY(), p.getZ()); g.setPlayerCreated(true); level.addFreshEntity(g);
-                CLONES.put(g.getUUID(), level.getGameTime() + 1800);
-                cd = 2400;
+            case "clone_device" -> {   // 1.6: clones you into a permanent companion with your name, 2 uses
+                if (com.kiyamet.npc.RecruitMenu.companions(p) >= com.kiyamet.npc.RecruitMenu.MAX_COMPANIONS) {
+                    p.displayClientMessage(net.minecraft.network.chat.Component.literal("You already lead " + com.kiyamet.npc.RecruitMenu.MAX_COMPANIONS + " companions.").withStyle(net.minecraft.ChatFormatting.RED), true);
+                    return InteractionResult.FAIL;
+                }
+                int lv = Math.max(10, Math.min(com.kiyamet.npc.HumanEntity.MAX_LEVEL, SkillManager.get(p).totalPower() / 40));
+                com.kiyamet.npc.HumanEntity h = com.kiyamet.npc.ModHumans.spawn(level, p.blockPosition().east(), com.kiyamet.npc.Faction.SURVIVOR, com.kiyamet.npc.Role.GUARD, lv, "");
+                if (h == null) return InteractionResult.FAIL;
+                h.setOwner(p);
+                h.setCustomName(net.minecraft.network.chat.Component.literal(p.getName().getString()));
+                h.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, p.getMainHandItem().getItem() == this ? new ItemStack(net.minecraft.world.item.Items.IRON_SWORD) : p.getMainHandItem().copy());
+                level.sendParticles(ParticleTypes.REVERSE_PORTAL, h.getX(), h.getY() + 1, h.getZ(), 120, 0.4, 1, 0.4, 0.05);
+                level.playSound(null, h.blockPosition(), SoundEvents.ILLUSIONER_MIRROR_MOVE, SoundSource.PLAYERS, 1f, 1f);
+                net.minecraft.nbt.CompoundTag t = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+                int used = t.getIntOr("CloneUses", 0) + 1;
+                t.putInt("CloneUses", used);
+                stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(t));
+                p.sendSystemMessage(net.minecraft.network.chat.Component.literal("A clone of you steps out. " + (used >= 2 ? "The device burns out." : "1 charge left.")).withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE, net.minecraft.ChatFormatting.BOLD));
+                if (used >= 2) consume = true;
+                cd = 200;
             }
             case "teleport_gun" -> {
                 BlockHitResult b = Raycast.block(p, 64);

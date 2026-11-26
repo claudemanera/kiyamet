@@ -193,13 +193,13 @@ public final class Seasons {
 
     // ------------------------------------------------------------------ temperature
 
-    static boolean heatBlock(BlockState b) {
+    public static boolean heatBlock(BlockState b) {
         if (b.is(Blocks.FIRE) || b.is(Blocks.SOUL_FIRE) || b.is(Blocks.LAVA) || b.is(Blocks.MAGMA_BLOCK)) return true;
         if ((b.getBlock() instanceof CampfireBlock || b.getBlock() instanceof AbstractFurnaceBlock) && b.hasProperty(BlockStateProperties.LIT)) return b.getValue(BlockStateProperties.LIT);
         return b.getBlock() instanceof com.kiyamet.defense.GeneratorBlock && b.getValue(BlockStateProperties.LIT);
     }
 
-    static boolean warmNear(ServerLevel level, BlockPos c, int r) {
+    public static boolean warmNear(ServerLevel level, BlockPos c, int r) {
         for (BlockPos q : BlockPos.betweenClosed(c.offset(-r, -2, -r), c.offset(r, 2, r))) if (heatBlock(level.getBlockState(q))) return true;
         return false;
     }

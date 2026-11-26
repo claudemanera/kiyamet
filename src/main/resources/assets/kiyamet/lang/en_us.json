@@ -214,5 +214,14 @@
  "item.kiyamet.lost_note": "Lost Note",
  "entity.kiyamet.shelter_core": "Shelter Core",
  "entity.kiyamet.mission_board": "Mission Board",
- "item.kiyamet.quest_item": "Mission Item"
+ "item.kiyamet.quest_item": "Mission Item",
+ "enchantment.kiyamet.rapid_fire": "Rapid Fire",
+ "enchantment.kiyamet.high_caliber": "High Caliber",
+ "enchantment.kiyamet.long_barrel": "Long Barrel",
+ "enchantment.kiyamet.ammo_saver": "Ammo Saver",
+ "enchantment.kiyamet.incendiary_rounds": "Incendiary Rounds",
+ "enchantment.kiyamet.frost_rounds": "Frost Rounds",
+ "enchantment.kiyamet.vampiric_rounds": "Vampiric Rounds",
+ "enchantment.kiyamet.explosive_tips": "Explosive Tips",
+ "item.kiyamet.gun_tome": "Gunsmith Tome"
 }

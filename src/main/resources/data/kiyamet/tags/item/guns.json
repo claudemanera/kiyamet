@@ -1,0 +1,23 @@
+{
+ "replace": false,
+ "values": [
+  "kiyamet:arrow_pistol",
+  "kiyamet:arrow_rifle",
+  "kiyamet:double_arrow_rifle",
+  "kiyamet:arrow_shotgun",
+  "kiyamet:silenced_arrow_pistol",
+  "kiyamet:arrow_repeater",
+  "kiyamet:toxic_arrow_rifle",
+  "kiyamet:frost_arrow_gun",
+  "kiyamet:arrow_sniper",
+  "kiyamet:incendiary_repeater",
+  "kiyamet:tesla_arrow_gun",
+  "kiyamet:arrow_gatling",
+  "kiyamet:harpoon_gun",
+  "kiyamet:arrow_railgun",
+  "kiyamet:arrow_launcher",
+  "kiyamet:void_arrow_launcher",
+  "kiyamet:homing_arrow_gun",
+  "kiyamet:apocalypse_cannon"
+ ]
+}

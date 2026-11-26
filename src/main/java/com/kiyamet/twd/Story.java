@@ -414,6 +414,7 @@ public final class Story {
         SkillManager.addXp(p, Skill.SURVIVAL, 150 + chn * 40);
         SkillManager.addXp(p, Skill.SWORDS, 100 + chn * 30);
         if (chn % 10 == 0) Shop.give(p, new ItemStack(ModItems.get("tech_core"), 1 + chn / 20));
+        if (chn % 5 == 0) { Shop.give(p, com.kiyamet.enchant.EnchantLoot.weapon(level, SkillManager.get(p).totalPower())); Shop.give(p, com.kiyamet.enchant.GunTomeItem.random(level.random)); }
         if (chn == 8) Shop.give(p, new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(Kiyamet.id("armored_truck_keys"))));
         int d = 20;
         for (String o : c.outro()) { speak(p, d, o); d += 50; }

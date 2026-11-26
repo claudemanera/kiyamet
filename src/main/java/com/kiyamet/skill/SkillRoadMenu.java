@@ -91,6 +91,8 @@ public class SkillRoadMenu extends PanelMenu {
                 }
                 if (row != null) lore.add(row);
             }
+            for (com.kiyamet.enchant.Enchants.Unlock u : com.kiyamet.enchant.Enchants.unlocksBetween(skill, prev, at))
+                lore.add(Ui.text("✧ Lv " + u.at() + ": " + com.kiyamet.enchant.Enchants.title(u.id()) + " " + com.kiyamet.enchant.Enchants.roman(u.level()), lv >= u.at() ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.DARK_PURPLE));
             lore.add(Ui.text("Total at " + at + ":", ChatFormatting.WHITE));
             for (int pi = 0; pi < perks.size(); pi++) lore.add(Ui.text("  " + perks.get(pi).describe(at), col[pi % col.length]));
             for (Powers.Power pw : unlocks) lore.add(Ui.text("★ Super power: " + pw.title + " (lv " + pw.level + ")", ChatFormatting.LIGHT_PURPLE));

@@ -72,8 +72,20 @@ public class GunItem extends Item {
         return true;
     }
 
+    // enchantment levels of the shot being fired (set in use())
+    private int fire, frost, vamp, boom;
+
     private void hit(ServerLevel level, ServerPlayer p, LivingEntity e, float dmg) {
         e.hurtServer(level, level.damageSources().arrow(null, p), dmg);
+        if (fire > 0) e.igniteForSeconds(3 * fire);
+        if (frost > 0) { e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 40 + 30 * frost, frost - 1)); e.setTicksFrozen(Math.min(300, e.getTicksFrozen() + 50 * frost)); }
+        if (vamp > 0) p.heal(dmg * 0.06f * vamp);
+        if (boom > 0) {
+            level.sendParticles(boom > 1 ? ParticleTypes.EXPLOSION_EMITTER : ParticleTypes.EXPLOSION, e.getX(), e.getY() + 1, e.getZ(), 1, 0, 0, 0, 0);
+            level.playSound(null, e.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 0.6f, 1.4f);
+            for (LivingEntity o : level.getEntitiesOfClass(LivingEntity.class, e.getBoundingBox().inflate(1.5 + boom), o -> o != p && o != e && o.isAlive()))
+                o.hurtServer(level, level.damageSources().explosion(p, p), dmg * 0.35f * boom);
+        }
         switch (stats.effect) {
             case 1 -> e.addEffect(new MobEffectInstance(MobEffects.POISON, 120, 1));
             case 2 -> { e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 80, 2)); e.setTicksFrozen(Math.min(300, e.getTicksFrozen() + 80)); }
@@ -94,11 +106,16 @@ public class GunItem extends Item {
         if (!(player instanceof ServerPlayer p) || !(lvl instanceof ServerLevel level)) return InteractionResult.SUCCESS;
         int arrows = stats.mode == Mode.SHOTGUN ? 1 : stats.mode == Mode.BURST3 ? 3 : stats.mode == Mode.DOUBLE ? 2 : 1;
         int archery = SkillManager.get(p).level(Skill.ARCHERY);
-        int cost = p.getRandom().nextFloat() < Math.min(0.4f, archery / 2500f) ? 0 : arrows;            // 1.2: high Archery sometimes saves ammo
+        int saver = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "ammo_saver");
+        int cost = p.getRandom().nextFloat() < Math.min(0.4f, archery / 2500f) + saver * 0.15f ? 0 : arrows;   // Archery and Ammo Saver keep arrows
         if (cost > 0 && !useArrow(p, cost)) { level.playSound(null, p.blockPosition(), SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, 0.8f, 1.4f); return InteractionResult.FAIL; }
-        float dmg = stats.damage * (1f + SkillManager.get(p).level(Skill.ARCHERY) / 2000f);
+        float dmg = stats.damage * (1f + SkillManager.get(p).level(Skill.ARCHERY) / 2000f) * (1f + 0.12f * com.kiyamet.enchant.Enchants.gunLevel(level, stack, "high_caliber"));
+        fire = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "incendiary_rounds");
+        frost = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "frost_rounds");
+        vamp = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "vampiric_rounds");
+        boom = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "explosive_tips");
         Vec3 eye = p.getEyePosition().add(0, -0.1, 0);
-        double range = stats.mode == Mode.PIERCE ? 96 : 48;
+        double range = (stats.mode == Mode.PIERCE ? 96 : 48) * (1 + 0.15 * com.kiyamet.enchant.Enchants.gunLevel(level, stack, "long_barrel"));
         switch (stats.mode) {
             case SINGLE, HOMING -> {
                 List<LivingEntity> es = Raycast.entities(p, range, stats.mode == Mode.HOMING ? 2.5 : 0.3);
@@ -165,7 +182,7 @@ public class GunItem extends Item {
         level.playSound(null, p.blockPosition(), stats.noise == 0 ? SoundEvents.CROSSBOW_SHOOT : SoundEvents.CROSSBOW_SHOOT, SoundSource.PLAYERS,
                 stats.noise == 0 ? 0.2f : 1.0f, stats.mode == Mode.CANNON ? 0.5f : 1.3f);
         if (stats.noise > 0) NoiseSystem.make(level, p.blockPosition(), stats.noise, 6);
-        p.getCooldowns().addCooldown(stack, stats.cooldown);
+        p.getCooldowns().addCooldown(stack, Math.max(2, Math.round(stats.cooldown * (1 - 0.1f * com.kiyamet.enchant.Enchants.gunLevel(level, stack, "rapid_fire")))));
         return InteractionResult.CONSUME;
     }
 }

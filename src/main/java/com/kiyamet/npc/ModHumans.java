@@ -45,6 +45,16 @@ public final class ModHumans {
             if (source.getEntity() instanceof HumanEntity killer && entity.level() instanceof ServerLevel sl) killer.onKill(sl, entity);
             if (entity instanceof HumanEntity dead && dead.faction() == Faction.RAIDER && entity.level() instanceof ServerLevel sl4 && sl4.random.nextFloat() < 0.1f)
                 dead.spawnAtLocation(sl4, new net.minecraft.world.item.ItemStack(com.kiyamet.twd.ModTwd.LOST_NOTE));
+            // 1.4: enchanted weapons and blue gun tomes out in the world
+            if (entity.level() instanceof ServerLevel sl5 && source.getEntity() instanceof ServerPlayer killerP) {
+                int pw = power(killerP);
+                boolean boss = entity instanceof com.kiyamet.boss.BossEntity;
+                boolean raider = entity instanceof HumanEntity hd && (hd.faction() == Faction.RAIDER || hd.faction() == Faction.WHISPERER);
+                float wc = boss ? 1f : raider ? (((HumanEntity) entity).role() == Role.MEMBER ? 0.05f : 0.18f) : 0f;
+                if (sl5.random.nextFloat() < wc) entity.spawnAtLocation(sl5, com.kiyamet.enchant.EnchantLoot.weapon(sl5, pw));
+                float tc = boss ? 0.6f : raider ? 0.04f : entity instanceof KZombie ? 0.004f : 0f;
+                if (sl5.random.nextFloat() < tc) entity.spawnAtLocation(sl5, com.kiyamet.enchant.GunTomeItem.random(sl5.random));
+            }
             // everyone is infected: 80% of dead players rise again as a walker
             if (entity instanceof ServerPlayer p && p.level().random.nextFloat() < 0.8f) {
                 KZombie z = ModEntities.ZOMBIES.get(p.level().random.nextBoolean() ? ZombieKind.RUNNER : ZombieKind.FARMER).create(p.level(), EntitySpawnReason.CONVERSION);

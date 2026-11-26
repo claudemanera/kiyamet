@@ -110,7 +110,7 @@ public final class Dialogues {
         ask(p, h, 25, hurt ? "I'm hurt... and you want me to follow you? What's in it for me?" : "And what's in it for me?", null,
                 new Option(com.kiyamet.money.Money.fmt(cost * com.kiyamet.money.Money.RATE) + ". Yours now.", pl -> {
                     if (Shop.take(pl, Shop.RUBY, cost)) RecruitMenu.join(pl, h, "...Alright. You've got yourself a partner.");
-                    else say(pl, h, "You don't even have " + com.kiyamet.money.Money.fmt(cost * com.kiyamet.money.Money.RATE) + "." Come back when you do.");
+                    else say(pl, h, "You don't even have " + com.kiyamet.money.Money.fmt(cost * com.kiyamet.money.Money.RATE) + ". Come back when you do.");
                 }),
                 new Option(hurt ? "A medkit. You need it." : "A medkit, for when you need it.", pl -> {
                     if (Shop.take(pl, "kiyamet:medkit", 1)) RecruitMenu.join(pl, h, "You'd give that up for me? ...Okay. I'm with you.");

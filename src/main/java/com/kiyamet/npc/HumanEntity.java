@@ -217,6 +217,23 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         setTarget(null);
     }
 
+    /** 1.9: a companion whose mind broke turns on you - steals something and joins the raiders. */
+    public void betray(ServerPlayer from) {
+        owner = null; community = ""; home = null;
+        entityData.set(FACTION, Faction.RAIDER.ordinal());
+        var inv = from.getInventory();
+        java.util.List<Integer> slots = new java.util.ArrayList<>();
+        for (int i = 9; i < 36; i++) if (!inv.getItem(i).isEmpty()) slots.add(i);
+        if (!slots.isEmpty()) {
+            int i = slots.get(random.nextInt(slots.size()));
+            ItemStack stolen = inv.removeItemNoUpdate(i);
+            from.sendSystemMessage(Component.literal(getName().getString() + " stole your " + stolen.getHoverName().getString() + " (x" + stolen.getCount() + ")! Kill them to get it back.").withStyle(ChatFormatting.RED));
+            setItemSlot(EquipmentSlot.OFFHAND, stolen); setDropChance(EquipmentSlot.OFFHAND, 1f);
+        }
+        setTarget(from);
+        refreshBar();
+    }
+
     public void setOrder(Order o) {
         order = o;
         if (o != Order.FOLLOW) home = blockPosition();

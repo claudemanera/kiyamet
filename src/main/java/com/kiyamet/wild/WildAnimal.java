@@ -46,7 +46,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
  */
 public class WildAnimal extends TamableAnimal implements GeoEntity {
     static final RawAnimation IDLE = RawAnimation.begin().thenLoop("misc.idle"), WALK = RawAnimation.begin().thenLoop("move.walk"),
-            RUN = RawAnimation.begin().thenLoop("move.run"), ATTACK = RawAnimation.begin().thenPlay("attack.swing");
+            RUN = RawAnimation.begin().thenLoop("move.run"), ATTACK = RawAnimation.begin().thenPlay("attack.swing"), SIT = RawAnimation.begin().thenLoop("misc.sit");
     public final WildKind kind;
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private int stalk, trust;
@@ -198,6 +198,59 @@ public class WildAnimal extends TamableAnimal implements GeoEntity {
         return n.contains("beef") || n.contains("pork") || n.contains("chicken") || n.contains("mutton") || n.contains("rabbit") || n.contains("meat") || n.contains("venison");
     }
 
+    // ---- sounds: each animal gets its own voice (vanilla sounds re-pitched), walkers sound rotten and deep
+    private net.minecraft.world.entity.animal.wolf.WolfSoundVariant wolf() { return SoundEvents.WOLF_SOUNDS.get(net.minecraft.world.entity.animal.wolf.WolfSoundVariants.SoundSet.CLASSIC); }
+    @Override protected net.minecraft.sounds.SoundEvent getAmbientSound() {
+        if (kind == null) return null;
+        return switch (kind) {
+            case LION, TIGER, ZOMBIE_LION, ZOMBIE_TIGER -> getTarget() != null || random.nextInt(4) == 0 ? SoundEvents.RAVAGER_AMBIENT : SoundEvents.CAT_PURR;
+            case BROWN_BEAR, ICE_BEAR, ZOMBIE_BEAR -> SoundEvents.POLAR_BEAR_AMBIENT;
+            case CROCODILE, ZOMBIE_CROC -> SoundEvents.HOGLIN_AMBIENT;
+            case WILD_BOAR -> SoundEvents.HOGLIN_AMBIENT;
+            case DEER, ZOMBIE_DEER -> SoundEvents.GOAT_AMBIENT;
+            case MOOSE -> SoundEvents.COW_AMBIENT;
+            case SHEPHERD, HUSKY, ROTTWEILER, PITBULL, ZOMBIE_WOLF -> getTarget() != null ? wolf().growlSound().value() : isTame() && getHealth() < getMaxHealth() * 0.4f ? wolf().whineSound().value() : wolf().ambientSound().value();
+            case CAT -> isTame() ? SoundEvents.CAT_PURREOW : SoundEvents.CAT_STRAY_AMBIENT;
+        };
+    }
+    @Override protected net.minecraft.sounds.SoundEvent getHurtSound(DamageSource src) {
+        if (kind == null) return null;
+        return switch (kind) {
+            case LION, TIGER, ZOMBIE_LION, ZOMBIE_TIGER, CAT -> SoundEvents.CAT_HURT;
+            case BROWN_BEAR, ICE_BEAR, ZOMBIE_BEAR -> SoundEvents.POLAR_BEAR_HURT;
+            case CROCODILE, ZOMBIE_CROC -> SoundEvents.TURTLE_HURT;
+            case WILD_BOAR -> SoundEvents.HOGLIN_HURT;
+            case DEER, ZOMBIE_DEER -> SoundEvents.GOAT_HURT;
+            case MOOSE -> SoundEvents.COW_HURT;
+            default -> wolf().hurtSound().value();
+        };
+    }
+    @Override protected net.minecraft.sounds.SoundEvent getDeathSound() {
+        if (kind == null) return null;
+        return switch (kind) {
+            case LION, TIGER, ZOMBIE_LION, ZOMBIE_TIGER, CAT -> SoundEvents.CAT_DEATH;
+            case BROWN_BEAR, ICE_BEAR, ZOMBIE_BEAR -> SoundEvents.POLAR_BEAR_DEATH;
+            case CROCODILE, ZOMBIE_CROC -> SoundEvents.TURTLE_DEATH;
+            case WILD_BOAR -> SoundEvents.HOGLIN_DEATH;
+            case DEER, ZOMBIE_DEER -> SoundEvents.GOAT_DEATH;
+            case MOOSE -> SoundEvents.COW_DEATH;
+            default -> wolf().deathSound().value();
+        };
+    }
+    @Override public float getVoicePitch() {
+        float base = kind == null ? 1f : switch (kind) {
+            case LION -> 0.55f; case TIGER -> 0.6f; case BROWN_BEAR -> 0.8f; case ICE_BEAR -> 0.7f; case CROCODILE -> 0.5f; case WILD_BOAR -> 1.2f;
+            case DEER -> 1.25f; case MOOSE -> 0.6f; case HUSKY -> 1.1f; case ROTTWEILER, PITBULL -> 0.8f; case SHEPHERD -> 0.95f; case CAT -> 1.1f;
+            default -> 0.5f;   // walkers: deep and wrong
+        };
+        return base + (random.nextFloat() - 0.5f) * 0.12f;
+    }
+    @Override public int getAmbientSoundInterval() { return kind != null && kind.zombie ? 140 : 260; }
+    @Override protected void playStepSound(net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState st) {
+        if (kind == null) return;
+        playSound(kind.width >= 1.3f ? SoundEvents.POLAR_BEAR_STEP : kind == WildKind.DEER || kind == WildKind.MOOSE || kind == WildKind.WILD_BOAR ? SoundEvents.HORSE_STEP : SoundEvents.WOLF_STEP, 0.25f, 1f);
+    }
+
     @Override public boolean isFood(ItemStack s) { return false; }
     @Override public AgeableMob getBreedOffspring(ServerLevel l, AgeableMob m) { return null; }
     @Override public boolean removeWhenFarAway(double d) { return kind != null && kind.zombie && !isTame() && !hasCustomName(); }
@@ -209,7 +262,7 @@ public class WildAnimal extends TamableAnimal implements GeoEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar c) {
-        c.add(new AnimationController<WildAnimal>("main", 4, t -> t.setAndContinue(isInSittingPose() ? IDLE : t.isMoving() ? (getTarget() != null || getDeltaMovement().horizontalDistanceSqr() > 0.02 ? RUN : WALK) : IDLE))
+        c.add(new AnimationController<WildAnimal>("main", 4, t -> t.setAndContinue(isInSittingPose() ? SIT : t.isMoving() ? (getTarget() != null || getDeltaMovement().horizontalDistanceSqr() > 0.02 ? RUN : WALK) : IDLE))
                 .triggerableAnim("attack", ATTACK));
     }
 

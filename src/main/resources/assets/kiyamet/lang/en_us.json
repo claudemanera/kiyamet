@@ -758,5 +758,16 @@
  "item.kiyamet.zombie_wolf_spawn_egg": "Walker Wolf Spawn Egg",
  "entity.kiyamet.zombie_wolf": "Walker Wolf",
  "item.kiyamet.zombie_crocodile_spawn_egg": "Walker Crocodile Spawn Egg",
- "entity.kiyamet.zombie_crocodile": "Walker Crocodile"
+ "entity.kiyamet.zombie_crocodile": "Walker Crocodile",
+ "item.kiyamet.venison_stew": "Venison Stew",
+ "item.kiyamet.bear_steak": "Bear Steak and Potatoes",
+ "item.kiyamet.boar_sausages": "Boar Sausages",
+ "item.kiyamet.moose_roast": "Moose Roast",
+ "item.kiyamet.meat_skewers": "Meat Skewers",
+ "item.kiyamet.croc_wrap": "Crocodile Wrap",
+ "item.kiyamet.hunters_pie": "Hunter's Pie",
+ "item.kiyamet.bear_chili": "Bear Chili",
+ "item.kiyamet.jerky": "Jerky",
+ "item.kiyamet.meatballs": "Meatballs in Tomato Sauce",
+ "block.kiyamet.cooking_table": "Cooking Table"
 }

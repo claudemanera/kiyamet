@@ -81,6 +81,7 @@ public final class Mind {
     public static float sanity(ServerPlayer p) { return p.getAttachedOrElse(SANITY, 80f); }
 
     public static void change(ServerPlayer p, float d, String why) {
+        if (d < 0) return;                                    // 1.9: your own mind stays steady
         float s = Mth.clamp(sanity(p) + d, 0, 100);
         p.setAttached(SANITY, s);
         if (why != null) p.sendSystemMessage(Component.literal("🧠 " + why + " (" + (d > 0 ? "+" : "") + Math.round(d) + ")").withStyle(d > 0 ? ChatFormatting.DARK_AQUA : ChatFormatting.DARK_PURPLE));
@@ -91,6 +92,8 @@ public final class Mind {
     static int bucket(float s) { return s >= 70 ? 4 : s >= 50 ? 3 : s >= 30 ? 2 : s >= 12 ? 1 : 0; }
 
     private static void tick(ServerPlayer p) {
+        if (sanity(p) < 100) p.setAttached(SANITY, 100f);    // 1.9: the player's mind no longer breaks - only companions' minds do
+        if (true) return;
         ServerLevel level = p.level();
         RandomSource r = level.random;
         BlockPos pos = p.blockPosition();
@@ -188,6 +191,12 @@ public final class Mind {
         RandomSource r = h.getRandom();
         if (h.morale < 25 && r.nextInt(240) == 0 && !Talk.busy(owner))
             Talk.say(owner, h, Talk.pick(r, "I can't keep doing this...", "How long until it ends? Ever?", "I'm so tired. Can we stop somewhere safe?", "I keep seeing their faces."));
+        if (h.morale < 8 && r.nextInt(4000) == 0 && !Talk.busy(owner)) {      // very rare: the broken mind turns on you
+            Talk.say(owner, h, Talk.pick(r, "You did this to us. All of it.", "I'm taking what I'm owed.", "They were right about you."));
+            owner.sendSystemMessage(Component.literal("⚠ " + h.getName().getString() + "'s mind broke - they've turned against you!").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
+            h.betray(owner);
+            return;
+        }
         if (h.morale < 10 && r.nextInt(600) == 0) {
             Talk.say(owner, h, "I'm sorry. I can't. I'm leaving.");
             h.setOwner(null);

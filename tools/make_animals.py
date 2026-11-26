@@ -116,6 +116,7 @@ def rot_px(c, r, x, y, kind):
     return [max(0, min(255, int(k))) for k in c]
 
 
+LAST_LEG = 8
 ZNAME = {'lion': 'zombie_lion', 'tiger': 'zombie_tiger', 'brown_bear': 'zombie_bear', 'deer': 'zombie_deer', 'crocodile': 'zombie_crocodile', 'grey_wolf': 'zombie_wolf'}
 ONLY_ZOMBIE = {'grey_wolf'}
 
@@ -138,6 +139,8 @@ def zanims(anims):
 def quad(name, *, L, W, H, legH, legT, clear=None, head, snout, neck=(0, 0), neck_len=0, tail, ears=(2, 2, 1), paws='paw', tw=256, th=256,
          body_mat='fur', head_mat=None, leg_mat=None, hump=0, splay=0, low_head=0):
     """L,W,H body; legH leg length; head (w,h,d); snout (w,h,d); tail (len, thick, droop deg)"""
+    global LAST_LEG
+    LAST_LEG = legH
     b = Beast(name, tw, th)
     y0 = legH if clear is None else clear
     z0 = -L / 2
@@ -238,7 +241,12 @@ def anims(gait=24, run=40, rear=False, jaw=34, tail_sway=12, croc=False, tl=1.0)
     else:  # croc: death-roll snap
         atk["body"] = {"rotation": {"0.00": [0, 0, 0], "0.20": [0, 0, 25], "0.45": [0, 0, -20], "0.70": [0, 0, 0]}}
         atk["jaw"]["rotation"] = {"0.00": [0, 0, 0], "0.12": [jaw, 0, 0], "0.25": [0, 0, 0], "0.70": [0, 0, 0]}
-    return {"misc.idle": {"loop": True, "animation_length": 3.0, "bones": idle},
+    lie = max(1.0, LAST_LEG - 1.2)
+    sit = {"body": {"position": {"0.00": [0, -lie, 0]}}, "fl": {"rotation": {"0.00": [-82, 0, 0]}}, "fr": {"rotation": {"0.00": [-82, 0, 0]}},
+           "bl": {"rotation": {"0.00": [82, 0, 0]}}, "br": {"rotation": {"0.00": [82, 0, 0]}},
+           "head": {"rotation": {"0.00": [8, 0, 0], "2.00": [10, 12, 0], "4.00": [8, 0, 0]}}, "tail": {"rotation": {"0.00": [0, 25, 0]}}}
+    return {"misc.sit": {"loop": True, "animation_length": 4.0, "bones": sit},
+            "misc.idle": {"loop": True, "animation_length": 3.0, "bones": idle},
             "move.walk": {"loop": True, "animation_length": 1.0, "bones": legs(gait, 1.0)},
             "move.run": {"loop": True, "animation_length": 0.5, "bones": run_b},
             "attack.swing": {"loop": False, "animation_length": 0.7, "bones": atk}}

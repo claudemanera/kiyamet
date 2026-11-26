@@ -35,7 +35,17 @@ public final class Recipes {
             new Meal("chicken_soup", "Chicken Soup", 12, 1.3f, 6, 6, true),
             new Meal("burger", "Burger", 14, 1.3f, 4, 7, false),
             new Meal("cabbage_salad", "Cabbage Salad", 8, 1.0f, 5, 4, true),
-            new Meal("omelette", "Omelette", 10, 1.2f, 3, 5, false));
+            new Meal("omelette", "Omelette", 10, 1.2f, 3, 5, false),
+            new Meal("venison_stew", "Venison Stew", 14, 1.4f, 6, 8, true),
+            new Meal("bear_steak", "Bear Steak and Potatoes", 16, 1.5f, 5, 9, false),
+            new Meal("boar_sausages", "Boar Sausages", 12, 1.3f, 10, 6, false),
+            new Meal("moose_roast", "Moose Roast", 18, 1.5f, 6, 10, false),
+            new Meal("meat_skewers", "Meat Skewers", 12, 1.3f, 4, 6, false),
+            new Meal("croc_wrap", "Crocodile Wrap", 12, 1.3f, 4, 6, false),
+            new Meal("hunters_pie", "Hunter's Pie", 16, 1.4f, 8, 9, false),
+            new Meal("bear_chili", "Bear Chili", 14, 1.4f, 6, 8, true),
+            new Meal("jerky", "Jerky", 8, 1.1f, 120, 4, false),
+            new Meal("meatballs", "Meatballs in Tomato Sauce", 14, 1.4f, 5, 8, true));
 
     public static Meal meal(String id) { for (Meal m : MEALS) if (m.id().equals(id)) return m; return null; }
 

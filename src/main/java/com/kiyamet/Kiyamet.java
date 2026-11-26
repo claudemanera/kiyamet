@@ -32,6 +32,7 @@ public class Kiyamet implements ModInitializer {
         com.kiyamet.vehicle.Autopilot.init();
         com.kiyamet.season.Calendar.init();
         com.kiyamet.food.Recipes.init();
+        com.kiyamet.food.CookingTable.init();
         com.kiyamet.food.Spoilage.init();
         com.kiyamet.furniture.Furniture.init();
         com.kiyamet.water.Thirst.init();

@@ -25,7 +25,12 @@ public final class Recipes {
             new Meal("fruit_salad", "Fruit Salad", 9, 1.0f, 7, 4, true),
             new Meal("peach_pie", "Peach Pie", 12, 1.2f, 15, 6, false),
             new Meal("strawberry_jam", "Strawberry Jam", 8, 1.0f, 120, 4, false),
-            new Meal("survivor_ration", "Survivor's Ration", 16, 1.5f, 365, 10, false));
+            new Meal("survivor_ration", "Survivor's Ration", 16, 1.5f, 365, 10, false),
+            new Meal("hunters_breakfast", "Hunter's Breakfast", 14, 1.3f, 6, 7, false),
+            new Meal("fish_and_chips", "Fish and Chips", 12, 1.2f, 5, 5, false),
+            new Meal("mushroom_risotto", "Mushroom Risotto", 12, 1.3f, 6, 6, true),
+            new Meal("honey_glazed_ham", "Honey Glazed Ham", 14, 1.4f, 9, 8, false),
+            new Meal("berry_pancakes", "Berry Pancakes", 10, 1.2f, 6, 5, false));
 
     public static Meal meal(String id) { for (Meal m : MEALS) if (m.id().equals(id)) return m; return null; }
 

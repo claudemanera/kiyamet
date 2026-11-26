@@ -43,6 +43,14 @@ for mf in sorted(glob.glob(D + '/structure_markers/*.json')):
     marks = json.load(open(mf))['markers']
     root = N.load(nbt)
     r = random.Random(sid)
+    _pal = [q['Name'].v for q in root['palette'].v[1]]
+    _at = {tuple(b['pos'].v[1]): _pal[b['state'].v] for b in root['blocks'].v[1]}
+    def free(x, y, z):
+        for dx, dz in ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, -1), (0, 0)):
+            p = (x + dx, y, z + dz)
+            if _at.get(p, 'minecraft:air') in ('minecraft:air',) and _at.get((p[0], y + 1, p[2]), 'minecraft:air') == 'minecraft:air' and _at.get((p[0], y - 1, p[2]), 'minecraft:air') != 'minecraft:air':
+                return p
+        return None
     ents = []
     for m in marks:
         if m['type'] == 'zombie' and sid not in SANCTUARY:
@@ -51,6 +59,15 @@ for mf in sorted(glob.glob(D + '/structure_markers/*.json')):
             x, y, z = m['pos']; ents.append(N.T(N.COMP, N.entity(x, y, z, 'kiyamet:' + BOSS[sid])))
         elif m['type'].startswith('human:'):
             x, y, z = m['pos']; ents.append(N.T(N.COMP, N.entity(x, y, z, 'kiyamet:human', human_nbt(sid, m['type'][6:], r))))
+        elif m['type'] in ('survivor', 'guard'):          # 1.7: lone survivors and their guards actually show up (two per spot)
+            x, y, z = m['pos']
+            role = 'guard' if m['type'] == 'guard' else ('trader' if r.random() < 0.15 else 'member')
+            ents.append(N.T(N.COMP, N.entity(x, y, z, 'kiyamet:human', human_nbt(sid, role, r))))
+            q = free(x, y, z) if m['type'] == 'survivor' and r.random() < 0.7 else None
+            if q and q != (x, y, z): ents.append(N.T(N.COMP, N.entity(*q, 'kiyamet:human', human_nbt(sid, 'member', r))))
+        elif m['type'] == 'loot' and sid not in BOSS and sid not in TWD and r.random() < 0.35:   # someone else got here first
+            q = free(*m['pos'])
+            if q: ents.append(N.T(N.COMP, N.entity(*q, 'kiyamet:human', human_nbt(sid, 'member', r))))
         elif m['type'] == 'robot':
             x, y, z = m['pos']; ents.append(N.T(N.COMP, N.entity(x, y, z, 'kiyamet:' + r.choice(ROBOTS))))
     root['entities'] = N.T(N.LIST, (N.COMP, [e.v for e in ents]) if ents else (N.END, []))

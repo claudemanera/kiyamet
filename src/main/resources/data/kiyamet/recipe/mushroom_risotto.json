@@ -1,0 +1,16 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "minecraft:bowl",
+  "minecraft:brown_mushroom",
+  "minecraft:red_mushroom",
+  "minecraft:wheat",
+  "minecraft:wheat",
+  "minecraft:cooked_chicken"
+ ],
+ "result": {
+  "id": "kiyamet:mushroom_risotto",
+  "count": 1
+ }
+}

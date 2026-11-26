@@ -684,5 +684,10 @@
  "item.kiyamet.superbike_blaze_keys": "Blaze Superbike Keys",
  "item.kiyamet.superbike_blaze_kit": "Blaze Superbike Kit",
  "tooltip.kiyamet.superbike_blaze_keys": "Keys for your vehicle - keep them safe",
- "tooltip.kiyamet.superbike_blaze_kit": "Place it on the ground to get the vehicle|Build kits at the Vehicle Workshop"
+ "tooltip.kiyamet.superbike_blaze_kit": "Place it on the ground to get the vehicle|Build kits at the Vehicle Workshop",
+ "item.kiyamet.hunters_breakfast": "Hunter's Breakfast",
+ "item.kiyamet.fish_and_chips": "Fish and Chips",
+ "item.kiyamet.mushroom_risotto": "Mushroom Risotto",
+ "item.kiyamet.honey_glazed_ham": "Honey Glazed Ham",
+ "item.kiyamet.berry_pancakes": "Berry Pancakes"
 }

@@ -22,12 +22,14 @@ public final class ModTwd {
     public static final EntityType<MissionBoard> MISSION_BOARD = Registry.register(BuiltInRegistries.ENTITY_TYPE, BOARD_KEY,
             EntityType.Builder.<MissionBoard>of(MissionBoard::new, MobCategory.MISC).sized(1.1f, 1.1f).clientTrackingRange(10).fireImmune().build(BOARD_KEY));
     public static final Item SHELTER_CORE_ITEM = ModItems.custom("shelter_core", p -> new ShelterCore.CoreItem(p.stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC)));
+    public static final Item QUEST_ITEM = ModItems.custom("quest_item", p -> new Item(p.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE)));
     public static final Item LOST_NOTE = ModItems.custom("lost_note", p -> new com.kiyamet.item.LostNoteItem(p.stacksTo(1)));
 
     public static void init() {
         FabricDefaultAttributeRegistry.register(SHELTER_CORE, Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 300).add(Attributes.ARMOR, 10).add(Attributes.KNOCKBACK_RESISTANCE, 1).add(Attributes.MOVEMENT_SPEED, 0));
         FabricDefaultAttributeRegistry.register(MISSION_BOARD, Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 100).add(Attributes.KNOCKBACK_RESISTANCE, 1).add(Attributes.MOVEMENT_SPEED, 0));
         MissionBoard.init();
+        Story.init();
     }
 
     private ModTwd() {}

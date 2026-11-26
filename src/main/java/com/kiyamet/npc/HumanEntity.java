@@ -683,6 +683,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
         if (getTarget() == player) return InteractionResult.FAIL;
         if (envoy) { WorldEvents.envoyTalk(sp, this); return InteractionResult.SUCCESS; }
+        if (com.kiyamet.twd.Story.interact(sp, this)) return InteractionResult.SUCCESS;
         switch (faction()) {
             case COMPANION -> {
                 if (isOwnedBy(sp)) CompanionMenu.open(sp, this);

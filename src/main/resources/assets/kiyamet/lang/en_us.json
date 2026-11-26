@@ -213,5 +213,6 @@
  "item.kiyamet.shelter_core": "Shelter Core",
  "item.kiyamet.lost_note": "Lost Note",
  "entity.kiyamet.shelter_core": "Shelter Core",
- "entity.kiyamet.mission_board": "Mission Board"
+ "entity.kiyamet.mission_board": "Mission Board",
+ "item.kiyamet.quest_item": "Mission Item"
 }

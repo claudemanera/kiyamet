@@ -174,11 +174,24 @@ public class MissionBoard extends PathfinderMob implements GeoEntity {
                         Ui.text(done ? "✔ Done for today" : ready ? "Click to turn in!" : "In progress", done ? ChatFormatting.DARK_GREEN : ready ? ChatFormatting.YELLOW : ChatFormatting.GRAY)), ready));
             }
             c.setItem(49, Ui.icon(Items.BARRIER, Ui.text("Close", ChatFormatting.RED)));
+            int ch = Story.chapter(player), st = Story.stage(player);
+            if (ch <= Story.CHAPTERS.length) {
+                Story.Chapter sc = Story.CHAPTERS[ch - 1];
+                c.setItem(40, Ui.glint(Ui.icon(Items.FILLED_MAP, Ui.text("★ STORY - Chapter " + ch + "/" + Story.CHAPTERS.length + ": " + sc.title(), ChatFormatting.GOLD, ChatFormatting.BOLD),
+                        Ui.text("\"" + sc.tagline() + "\"", ChatFormatting.GRAY), Ui.text("The Long Road", ChatFormatting.DARK_GRAY),
+                        Ui.text("Reward: " + sc.reward() + " rubies + XP", ChatFormatting.GREEN),
+                        Ui.text(st > 0 ? "In progress - follow the arrow on screen" : "Click: talk to Marcus", ChatFormatting.YELLOW)), st == 0));
+            } else c.setItem(40, Ui.icon(Items.MAP, Ui.text("★ The Long Road - complete", ChatFormatting.GOLD), Ui.text("Thank you, hero.", ChatFormatting.GRAY)));
         }
 
         @Override
         protected boolean click(int slot, ClickType type) {
             if (slot == 49) { player.closeContainer(); return false; }
+            if (slot == 40) {
+                player.closeContainer();
+                for (MissionBoard b : player.level().getEntitiesOfClass(MissionBoard.class, player.getBoundingBox().inflate(10))) { Story.offer(player, b); break; }
+                return false;
+            }
             for (int i = 0; i < 3; i++) if (SLOTS[i] == slot) {
                 List<int[]> ms = load(player);
                 int[] m = ms.get(i);

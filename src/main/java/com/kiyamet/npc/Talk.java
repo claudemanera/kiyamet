@@ -83,7 +83,7 @@ public final class Talk {
 
     private static long now() { return server == null ? 0 : server.getTickCount(); }
 
-    static void later(ServerPlayer p, int ticks, Runnable r) {
+    public static void later(ServerPlayer p, int ticks, Runnable r) {
         if (ticks <= 0) r.run(); else QUEUE.add(new Later(now() + ticks, p.getUUID(), r));
     }
 
@@ -112,17 +112,29 @@ public final class Talk {
         later(p, delay, () -> { if (h.isAlive()) say(p, h, line); });
     }
 
+    /** A line from a named character that isn't (or needn't be) a visible person. */
+    public static void sayAs(ServerPlayer p, String name, ChatFormatting col, String line) {
+        p.sendSystemMessage(Component.literal(name + ": ").withStyle(col, ChatFormatting.BOLD).append(Component.literal(line).withStyle(ChatFormatting.WHITE)));
+    }
+
+    public static void sayAsLater(ServerPlayer p, int delay, String name, ChatFormatting col, String line) { later(p, delay, () -> sayAs(p, name, col, line)); }
+
     /** Say a question after a delay, then show the options and wait for the answer. */
     public static void ask(ServerPlayer p, HumanEntity h, int delay, String line, Consumer<ServerPlayer> onTimeout, Option... options) {
+        askAs(p, h, h.getName().getString(), color(h), delay, line, onTimeout, options);
+    }
+
+    /** Like ask, for any speaker; the talk ends if you walk 28 blocks from {@code anchor}. */
+    public static void askAs(ServerPlayer p, Entity anchor, String name, ChatFormatting col, int delay, String line, Consumer<ServerPlayer> onTimeout, Option... options) {
         Convo c = new Convo();
-        c.npc = h.getUUID();
+        c.npc = anchor.getUUID();
         c.options = List.of(options);
         c.onTimeout = onTimeout;
         c.expires = now() + delay + 20 * 60;
         ACTIVE.put(p.getUUID(), c);
         later(p, delay, () -> {
-            if (!h.isAlive() || ACTIVE.get(p.getUUID()) != c) return;
-            if (!line.isEmpty()) say(p, h, line);
+            if (!anchor.isAlive() || ACTIVE.get(p.getUUID()) != c) return;
+            if (!line.isEmpty()) sayAs(p, name, col, line);
             for (int i = 0; i < options.length; i++) {
                 int n = i + 1;
                 MutableComponent opt = Component.literal("   [" + n + "] ").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)

@@ -97,7 +97,7 @@ public class GunItem extends Item {
 
     private void hit(ServerLevel level, ServerPlayer p, LivingEntity e, float dmg) {
         net.minecraft.util.RandomSource r = p.getRandom();
-        if (slayer > 0 && (e.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD) || e instanceof net.minecraft.world.entity.monster.Zombie)) dmg *= 1 + 0.15f * slayer;
+        if (slayer > 0 && (e.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD) || e instanceof com.kiyamet.entity.KZombie)) dmg *= 1 + 0.15f * slayer;
         if (ap > 0 && e.getArmorValue() > 0) dmg *= 1 + 0.1f * ap;
         if (head > 0 && r.nextFloat() < 0.08f * head) {
             dmg *= 2;

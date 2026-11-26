@@ -1,0 +1,22 @@
+name: Named release
+on:
+  workflow_dispatch:
+    inputs:
+      tag: {description: 'version tag (v1.4.0)', required: true}
+      build: {description: 'build-N release to take the jar from', required: true}
+      title: {description: 'release title', required: true}
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir dl
+          gh release download "${{ inputs.build }}" -D dl
+          SHA=$(git rev-list -n 1 "${{ inputs.build }}" 2>/dev/null || gh api repos/${{ github.repository }}/git/ref/tags/${{ inputs.build }} --jq .object.sha)
+          gh release delete "${{ inputs.tag }}" -y --cleanup-tag 2>/dev/null || true
+          gh release create "${{ inputs.tag }}" dl/*.jar --target "$SHA" --title "${{ inputs.title }}" --notes-file "tools/release_notes/${{ inputs.tag }}.md" --latest=false

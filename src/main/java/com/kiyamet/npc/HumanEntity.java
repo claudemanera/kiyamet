@@ -73,7 +73,9 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     private static final EntityDataAccessor<Integer> FACTION = SynchedEntityData.defineId(HumanEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ROLE = SynchedEntityData.defineId(HumanEntity.class, EntityDataSerializers.INT);
 
-    public enum Order { FOLLOW, STAY, GUARD }
+    public enum Order { FOLLOW, STAY, GUARD, GATHER }
+    /** what a GATHER order collects (see Gatherer) */
+    public String gather = "";
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private boolean initialized;
@@ -243,6 +245,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         out.putInt("AwayGroup", awayGroup);
         out.putInt("Gear", entityData.get(GEAR));
         out.putString("Order", order.name());
+        out.putString("Gather", gather);
         out.putString("Community", community);
         out.putString("CommunityType", communityType);
         if (owner != null) out.putString("Owner", owner.toString());
@@ -281,6 +284,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         }
         entityData.set(GEAR, in.getIntOr("Gear", 0));
         try { order = Order.valueOf(in.getStringOr("Order", "FOLLOW")); } catch (IllegalArgumentException ignored) {}
+        gather = in.getStringOr("Gather", "");
         community = in.getStringOr("Community", "");
         communityType = in.getStringOr("CommunityType", "");
         String o = in.getStringOr("Owner", "");
@@ -303,6 +307,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
             @Override public boolean canContinueToUse() { return (!Weapon.ranged(getMainHandItem()) || closeToTarget()) && super.canContinueToUse(); }
         });
         goalSelector.addGoal(4, new FollowOwnerGoal());
+        goalSelector.addGoal(4, new Gatherer(this));
         goalSelector.addGoal(5, new StayHomeGoal());
         goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.7) {
             @Override public boolean canUse() { return order == Order.FOLLOW && owner == null && super.canUse(); }
@@ -409,7 +414,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         private int radius() { return order == Order.STAY ? 1 : order == Order.GUARD ? 10 : 18; }
 
         @Override public boolean canUse() {
-            if (home == null || order == Order.FOLLOW && owner != null) return false;
+            if (home == null || order == Order.GATHER || order == Order.FOLLOW && owner != null) return false;
             return home.distSqr(blockPosition()) > radius() * radius() && (getTarget() == null || order == Order.STAY);
         }
 

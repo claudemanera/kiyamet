@@ -16,7 +16,7 @@ import net.minecraft.world.item.Items;
 /** Companion panel: stats, orders, gear, glow, looks editor, dismiss. */
 public class CompanionMenu extends PanelMenu {
     private static final int INFO = 4, FOLLOW = 19, STAY = 20, GUARD = 21, WEAPON = 23, LOOKS = 24, GLOW = 25,
-            HEAL = 30, BAG = 31, TP = 32, DISMISS = 49, JOB = 28, RENAME = 34, RUN = 39, SQUAD = 41;
+            HEAL = 30, BAG = 31, TP = 32, DISMISS = 49, JOB = 28, RENAME = 34, RUN = 39, SQUAD = 41, GATHER = 37;
     private final HumanEntity h;
     private boolean confirmDismiss;
 
@@ -81,6 +81,9 @@ public class CompanionMenu extends PanelMenu {
                 Ui.text("Click to change (Gunner, Scout, Guardian, Looter)", ChatFormatting.YELLOW)), j != Job.NONE));
         c.setItem(RENAME, Ui.icon(Items.NAME_TAG, Ui.text("Rename", ChatFormatting.AQUA), Ui.text("Type the new name in chat", ChatFormatting.GRAY)));
         c.setItem(RUN, Ui.icon(Items.CHEST_MINECART, Ui.text("Send on a supply run (5 min)", ChatFormatting.GOLD), Ui.text("Comes back with loot in their inventory", ChatFormatting.GRAY)));
+        c.setItem(GATHER, Ui.glint(Ui.icon(Items.IRON_PICKAXE, Ui.text("Gather resources", ChatFormatting.GREEN, ChatFormatting.BOLD),
+                Ui.text(o == HumanEntity.Order.GATHER ? "Now: " + h.gather : "Wood, stone, ores, or 'Develop'", ChatFormatting.GRAY),
+                Ui.text("Develop: tools → stone → iron armor → ores", ChatFormatting.DARK_GRAY)), o == HumanEntity.Order.GATHER));
         c.setItem(SQUAD, Ui.icon(Items.BELL, Ui.text("Group panel", ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), Ui.text("Orders for everyone, group supply runs", ChatFormatting.GRAY)));
         c.setItem(DISMISS, Ui.icon(confirmDismiss ? Items.TNT : Items.RED_DYE, Ui.text(confirmDismiss ? "Click again to confirm" : "Dismiss companion", ChatFormatting.RED),
                 Ui.text("They become a free survivor again", ChatFormatting.GRAY)));
@@ -105,6 +108,7 @@ public class CompanionMenu extends PanelMenu {
             case RENAME -> { Rename.start(player, h); return false; }
             case RUN -> { h.sendAway(5, 1); player.closeContainer(); player.sendSystemMessage(Component.literal(h.getName().getString() + " heads out on a supply run.").withStyle(ChatFormatting.GOLD)); return false; }
             case SQUAD -> { SquadMenu.open(player); return false; }
+            case GATHER -> { GatherMenu.open(player, h); return false; }
             case GLOW -> h.setGlowingTag(!h.hasGlowingTag());
             case HEAL -> {
                 for (String id : new String[]{"kiyamet:medkit", "kiyamet:bandage"}) {

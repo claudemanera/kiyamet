@@ -50,9 +50,9 @@ if p:
         if s.startswith('city_'):
             cmd(p, f'locate structure kiyamet:{s}', 12)
             continue
-        cmd(p, f'forceload add {x-96} {z-96} {x+96} {z+96}', 6)
+        cmd(p, f'forceload add {x-48} {z-48} {x+48} {z+48}', 6)
         cmd(p, f'place structure kiyamet:{s} {x} 0 {z}', 6)
-        cmd(p, f'forceload remove {x-96} {z-96} {x+96} {z+96}', 0.5)
+        cmd(p, f'forceload remove {x-48} {z-48} {x+48} {z+48}', 0.5)
         log.write(f'### placed {s}\n')
     cmd(p, 'fill -24 100 -24 24 100 24 minecraft:stone', 1)
     cmd(p, 'fill -24 101 -24 24 110 24 minecraft:air', 1)

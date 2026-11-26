@@ -41,7 +41,7 @@ jobs:
           cp ../build/libs/kiyamet-*[0-9].jar mods/
           ls -la mods
           echo "eula=true" > eula.txt
-          printf "online-mode=false\nlevel-seed=12345\nview-distance=6\nsimulation-distance=6\nspawn-protection=0\nsync-chunk-writes=false\n" > server.properties
+          printf "online-mode=false\nlevel-seed=12345\nview-distance=6\nsimulation-distance=6\nspawn-protection=0\nsync-chunk-writes=false\nmax-tick-time=-1\n" > server.properties
       - name: Run smoke test
         run: |
           cd srv

@@ -89,6 +89,15 @@
      "weight": 3
     }
    ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:sage_map"
+    }
+   ]
   }
  ]
 }

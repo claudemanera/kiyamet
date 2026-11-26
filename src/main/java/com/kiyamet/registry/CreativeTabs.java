@@ -17,7 +17,7 @@ public final class CreativeTabs {
     enum Tab {
         WEAPONS("Weapons", "ak47"), AMMO("Ammo & Explosives", "rifle_ammo"), GADGETS("Gadgets & Tech", "jetpack"), MEDICAL("Medical & Survival", "medkit"),
         FOOD("Food & Farming", "tomato"), FURNITURE("Furniture", "double_bed"), BLOCKS("Blocks & Defense", "steel_block"), VEHICLES("Vehicles", "car_sedan_kit"),
-        MONEY("Money & Bags", "money_bag"), STONES("Power Stones", "stone_gauntlet"), EGGS("Spawn Eggs", "runner_zombie_spawn_egg"), MISC("TWD Misc", "lost_note");
+        MONEY("Money & Bags", "money_bag"), STONES("Power Stones", "stone_gauntlet"), EGGS("Spawn Eggs", "runner_zombie_spawn_egg"), ELEMENTS("Elements", "flame_sword"), MISC("TWD Misc", "lost_note");
         final String title, icon;
         Tab(String t, String i) { title = t; icon = i; }
     }
@@ -25,6 +25,7 @@ public final class CreativeTabs {
     static Tab of(Item it) {
         String id = BuiltInRegistries.ITEM.getKey(it).getPath();
         if (id.endsWith("_spawn_egg")) return Tab.EGGS;
+        if (it instanceof com.kiyamet.element.ElementWeapon || id.endsWith("_core") && !id.equals("energy_core") && !id.equals("tech_core") && !id.startsWith("robot_core") || id.equals("ancient_rod") || id.equals("sage_map")) return Tab.ELEMENTS;
         if (it instanceof com.kiyamet.item.GunItem || id.equals("gun_tome") || id.equals("energy_sword") || id.equals("laser_rifle")) return Tab.WEAPONS;
         if (id.endsWith("_ammo") || id.equals("shotgun_shell") || id.equals("plasma_cell") || id.startsWith("magazine") || id.endsWith("grenade") || id.equals("molotov")
                 || id.equals("flashbang") || id.endsWith("_bomb")) return Tab.AMMO;

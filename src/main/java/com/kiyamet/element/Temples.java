@@ -113,11 +113,18 @@ public final class Temples {
         CommandRegistrationCallback.EVENT.register((d, ctx, env) -> {
             var temple = Commands.literal("temple");
             var sage = Commands.literal("sage");
+            var build = Commands.literal("buildtemple");
             for (Element e : Element.values()) {
                 temple.then(Commands.literal(e.id).executes(c -> tp(c.getSource().getPlayerOrException(), templePos(c.getSource().getLevel(), e), 30)));
                 sage.then(Commands.literal(e.id).executes(c -> tp(c.getSource().getPlayerOrException(), sagePos(c.getSource().getLevel(), e), 6)));
+                build.then(Commands.literal(e.id).executes(c -> {        // testing: build this temple right here (console or creative)
+                    if (c.getSource().getPlayer() != null && !c.getSource().getPlayer().isCreative()) return 0;
+                    JOBS.add(new TempleBuilder(c.getSource().getLevel(), e, BlockPos.containing(c.getSource().getPosition())).job());
+                    c.getSource().sendSuccess(() -> Component.literal("Building the " + e.title + " Temple..."), true);
+                    return 1;
+                }));
             }
-            d.register(Commands.literal("twd").then(temple).then(sage));
+            d.register(Commands.literal("twd").then(temple).then(sage).then(build));
         });
     }
 

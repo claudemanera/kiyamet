@@ -74,6 +74,12 @@ class Beast:
                         elif kind == 'nose': n = r.randint(-3, 3) - (10 if (x + y) % 2 else 0)
                         elif kind == 'teeth': n = r.randint(-6, 4)
                         elif kind == 'mouth': n = r.randint(-4, 4)
+                        elif kind == 'metal':
+                            n = r.randint(-4, 4) + (22 if (y - y0) == 0 else -16 if (y - y0) == hh - 1 else 0) + (10 if (x - x0) == 0 else -8 if (x - x0) == ww - 1 else 0)
+                            if ww > 3 and hh > 3 and (x - x0, y - y0) in ((1, 1), (ww - 2, 1), (1, hh - 2), (ww - 2, hh - 2)): n += 30
+                        elif kind == 'cloth': n = r.randint(-5, 5) + (-9 if (x + y) % 2 else 5) + (-10 if (x - x0) % 4 == 0 and face in ('front', 'back', 'side') else 0)
+                        elif kind == 'glow': n = r.randint(-6, 30)
+                        elif kind == 'skin': n = r.randint(-4, 4)
                         elif kind == 'hoof': n = r.randint(-4, 4) - (8 if (x - x0) == ww // 2 else 0)
                         col = [max(0, min(255, k + n)) for k in c[:3]]
                         if zombie and kind not in ('eye',): col = rot_px(col, r, x, y, kind)
@@ -359,59 +365,60 @@ def cat():
     b.save(M((214, 140, 70), (244, 226, 200), 'stripe', stripec=((150, 84, 34), '')), anims(gait=26, run=40, jaw=14, tail_sway=18), scale_bounds=2)
 
 
-os.makedirs(f'{A}/geckolib/models/entity', exist_ok=True)
-dog('german_shepherd', (176, 120, 64), (214, 178, 120), saddle=(40, 32, 28)); dog('husky', (150, 156, 166), (246, 246, 250), saddle=(90, 94, 104))
-dog('rottweiler', (34, 28, 26), (150, 90, 44), bulky=1.15, ears_up=False); cat()
-dog('pitbull', (30, 30, 34), (62, 62, 68), bulky=1.15, ears_up=True, legH=6.5, wide_head=1.25)
-dog('grey_wolf', (156, 152, 146), (214, 208, 198), saddle=(96, 92, 88))
-lion(); tiger(); bear('brown_bear', (104, 70, 44), (130, 94, 64)); bear('ice_bear', (236, 240, 246), (214, 222, 234), big=1.12, frost=True)
-crocodile(); boar(); deer(); moose()
+if __name__ == '__main__':
+  os.makedirs(f'{A}/geckolib/models/entity', exist_ok=True)
+  dog('german_shepherd', (176, 120, 64), (214, 178, 120), saddle=(40, 32, 28)); dog('husky', (150, 156, 166), (246, 246, 250), saddle=(90, 94, 104))
+  dog('rottweiler', (34, 28, 26), (150, 90, 44), bulky=1.15, ears_up=False); cat()
+  dog('pitbull', (30, 30, 34), (62, 62, 68), bulky=1.15, ears_up=True, legH=6.5, wide_head=1.25)
+  dog('grey_wolf', (156, 152, 146), (214, 208, 198), saddle=(96, 92, 88))
+  lion(); tiger(); bear('brown_bear', (104, 70, 44), (130, 94, 64)); bear('ice_bear', (236, 240, 246), (214, 222, 234), big=1.12, frost=True)
+  crocodile(); boar(); deer(); moose()
 
-# ---------------------------------------------------------------------- items: meat, pelts, fur equipment, eggs, lang
-def meat(c, raw, fat, bone=True):
-    c.blob(8, 8.5, 5.5, 4.2, raw, rot=-0.5)
-    c.blob(6.5, 7.5, 2.4, 1.6, fat, rot=-0.5)
-    for (x, y) in ((9, 9), (10, 7), (7, 10)): c.px(x, y, dark(raw, 0.8))
-    if bone:
-        for i in range(4): c.px(12 + i // 2, 4 + i, (236, 228, 206)); c.px(13 + i // 2, 4 + i, (210, 200, 176))
-        c.px(14, 3, (246, 240, 224)); c.px(15, 4, (246, 240, 224))
+  # ---------------------------------------------------------------------- items: meat, pelts, fur equipment, eggs, lang
+  def meat(c, raw, fat, bone=True):
+      c.blob(8, 8.5, 5.5, 4.2, raw, rot=-0.5)
+      c.blob(6.5, 7.5, 2.4, 1.6, fat, rot=-0.5)
+      for (x, y) in ((9, 9), (10, 7), (7, 10)): c.px(x, y, dark(raw, 0.8))
+      if bone:
+          for i in range(4): c.px(12 + i // 2, 4 + i, (236, 228, 206)); c.px(13 + i // 2, 4 + i, (210, 200, 176))
+          c.px(14, 3, (246, 240, 224)); c.px(15, 4, (246, 240, 224))
 
-MEATS = {'venison': ((150, 40, 40), (210, 150, 150), 'Venison'), 'bear_meat': ((130, 34, 30), (230, 210, 190), 'Bear Meat'), 'boar_meat': ((190, 70, 70), (240, 220, 210), 'Boar Meat'),
-         'moose_meat': ((120, 30, 32), (220, 190, 180), 'Moose Meat'), 'big_cat_meat': ((170, 60, 50), (236, 200, 180), 'Big Cat Meat'), 'croc_meat': ((220, 170, 160), (246, 230, 220), 'Crocodile Meat')}
-L = json.load(open(A + '/lang/en_us.json'))
-def item(k, t):
-    json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": f"kiyamet:item/{k}"}}, open(f'{A}/models/item/{k}.json', 'w'))
-    json.dump({"model": {"type": "minecraft:model", "model": f"kiyamet:item/{k}"}}, open(f'{A}/items/{k}.json', 'w'))
-    L['item.kiyamet.' + k] = t
-for k, (raw, fat, t) in MEATS.items():
-    c = C(); meat(c, raw, fat, k not in ('croc_meat',)); c.outline(); c.save(f'{A}/textures/item/{k}.png'); item(k, 'Raw ' + t)
-    c = C(); meat(c, mix(raw, (120, 70, 40), 0.65), mix(fat, (200, 150, 90), 0.5), k not in ('croc_meat',))
-    for (x, y) in ((6, 9), (8, 7), (10, 9)): c.px(x, y, (80, 46, 26))
-    c.outline(); c.save(f'{A}/textures/item/cooked_{k}.png'); item('cooked_' + k, ('Grilled ' if k != 'venison' else 'Roast ') + t)
-    json.dump({"type": "minecraft:smelting", "category": "food", "ingredient": f"kiyamet:{k}", "result": {"id": f"kiyamet:cooked_{k}"}, "experience": 0.35, "cookingtime": 200},
-              open(f'{D}/recipe/cooked_{k}.json', 'w'), indent=1)
-    for kind, time in (('smoking', 100), ('campfire_cooking', 600)):
-        json.dump({"type": f"minecraft:{kind}", "category": "food", "ingredient": f"kiyamet:{k}", "result": {"id": f"kiyamet:cooked_{k}"}, "experience": 0.35, "cookingtime": time},
-                  open(f'{D}/recipe/cooked_{k}_{kind}.json', 'w'), indent=1)
-PELTS = {'lion_pelt': ('lion', 'Lion Pelt'), 'tiger_pelt': ('tiger', 'Tiger Pelt'), 'bear_pelt': ('bear', 'Bear Pelt'), 'ice_bear_pelt': ('ice_bear', 'Ice Bear Pelt')}
-BASES = ["leather", "chainmail", "iron", "gold", "diamond", "netherite", "copper", "turtle_scute", "armadillo_scute"]
-for k, (fur, t) in PELTS.items():
-    item(k, t)
-    for base in BASES:
-        lay = lambda: [{"texture": f"minecraft:{base}"}, {"texture": f"kiyamet:fur_{fur}"}]
-        json.dump({"layers": {"humanoid": lay(), "humanoid_leggings": lay()}}, open(f'{A}/equipment/fur_{fur}_{base}.json', 'w'), indent=1)
-from draw_eggs import egg
-EGGC = {'lion': ((204, 158, 88), (120, 74, 34)), 'tiger': ((228, 128, 40), (24, 20, 18)), 'brown_bear': ((104, 70, 44), (60, 40, 26)), 'ice_bear': ((236, 240, 246), (150, 196, 236)),
-        'crocodile': ((74, 94, 52), (196, 192, 140)), 'wild_boar': ((86, 66, 54), (210, 200, 180)), 'deer': ((156, 104, 62), (240, 230, 214)), 'moose': ((72, 52, 36), (170, 140, 100)),
-        'zombie_lion': ((130, 140, 100), (110, 30, 26)), 'zombie_tiger': ((150, 130, 90), (110, 30, 26)), 'zombie_bear': ((90, 92, 70), (110, 30, 26)), 'zombie_deer': ((120, 116, 90), (110, 30, 26)),
-        'german_shepherd': ((176, 120, 64), (40, 32, 28)), 'husky': ((150, 156, 166), (246, 246, 250)), 'rottweiler': ((34, 28, 26), (150, 90, 44)), 'stray_cat': ((214, 140, 70), (150, 84, 34)), 'pitbull': ((30, 30, 34), (200, 200, 206)),
-        'zombie_wolf': ((120, 124, 104), (110, 30, 26)), 'zombie_crocodile': ((84, 96, 70), (110, 30, 26))}
-TITLES = {'lion': 'Lion', 'tiger': 'Tiger', 'brown_bear': 'Brown Bear', 'ice_bear': 'Ice Bear', 'crocodile': 'Crocodile', 'wild_boar': 'Wild Boar', 'deer': 'Deer', 'moose': 'Moose',
-          'zombie_lion': 'Walker Lion', 'zombie_tiger': 'Walker Tiger', 'zombie_bear': 'Walker Bear', 'zombie_deer': 'Walker Deer',
-          'german_shepherd': 'German Shepherd', 'husky': 'Husky', 'rottweiler': 'Rottweiler', 'stray_cat': 'Stray Cat', 'pitbull': 'Black Pitbull', 'zombie_wolf': 'Walker Wolf', 'zombie_crocodile': 'Walker Crocodile'}
-for n, (base, spot) in EGGC.items():
-    egg(n, base, spot, 'zombie' if n.startswith('zombie') else None)
-    item(n + '_spawn_egg', TITLES[n] + ' Spawn Egg')
-    L['entity.kiyamet.' + n] = TITLES[n]
-json.dump(L, open(A + '/lang/en_us.json', 'w'), indent=1, ensure_ascii=False)
-print('animals done')
+  MEATS = {'venison': ((150, 40, 40), (210, 150, 150), 'Venison'), 'bear_meat': ((130, 34, 30), (230, 210, 190), 'Bear Meat'), 'boar_meat': ((190, 70, 70), (240, 220, 210), 'Boar Meat'),
+           'moose_meat': ((120, 30, 32), (220, 190, 180), 'Moose Meat'), 'big_cat_meat': ((170, 60, 50), (236, 200, 180), 'Big Cat Meat'), 'croc_meat': ((220, 170, 160), (246, 230, 220), 'Crocodile Meat')}
+  L = json.load(open(A + '/lang/en_us.json'))
+  def item(k, t):
+      json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": f"kiyamet:item/{k}"}}, open(f'{A}/models/item/{k}.json', 'w'))
+      json.dump({"model": {"type": "minecraft:model", "model": f"kiyamet:item/{k}"}}, open(f'{A}/items/{k}.json', 'w'))
+      L['item.kiyamet.' + k] = t
+  for k, (raw, fat, t) in MEATS.items():
+      c = C(); meat(c, raw, fat, k not in ('croc_meat',)); c.outline(); c.save(f'{A}/textures/item/{k}.png'); item(k, 'Raw ' + t)
+      c = C(); meat(c, mix(raw, (120, 70, 40), 0.65), mix(fat, (200, 150, 90), 0.5), k not in ('croc_meat',))
+      for (x, y) in ((6, 9), (8, 7), (10, 9)): c.px(x, y, (80, 46, 26))
+      c.outline(); c.save(f'{A}/textures/item/cooked_{k}.png'); item('cooked_' + k, ('Grilled ' if k != 'venison' else 'Roast ') + t)
+      json.dump({"type": "minecraft:smelting", "category": "food", "ingredient": f"kiyamet:{k}", "result": {"id": f"kiyamet:cooked_{k}"}, "experience": 0.35, "cookingtime": 200},
+                open(f'{D}/recipe/cooked_{k}.json', 'w'), indent=1)
+      for kind, time in (('smoking', 100), ('campfire_cooking', 600)):
+          json.dump({"type": f"minecraft:{kind}", "category": "food", "ingredient": f"kiyamet:{k}", "result": {"id": f"kiyamet:cooked_{k}"}, "experience": 0.35, "cookingtime": time},
+                    open(f'{D}/recipe/cooked_{k}_{kind}.json', 'w'), indent=1)
+  PELTS = {'lion_pelt': ('lion', 'Lion Pelt'), 'tiger_pelt': ('tiger', 'Tiger Pelt'), 'bear_pelt': ('bear', 'Bear Pelt'), 'ice_bear_pelt': ('ice_bear', 'Ice Bear Pelt')}
+  BASES = ["leather", "chainmail", "iron", "gold", "diamond", "netherite", "copper", "turtle_scute", "armadillo_scute"]
+  for k, (fur, t) in PELTS.items():
+      item(k, t)
+      for base in BASES:
+          lay = lambda: [{"texture": f"minecraft:{base}"}, {"texture": f"kiyamet:fur_{fur}"}]
+          json.dump({"layers": {"humanoid": lay(), "humanoid_leggings": lay()}}, open(f'{A}/equipment/fur_{fur}_{base}.json', 'w'), indent=1)
+  from draw_eggs import egg
+  EGGC = {'lion': ((204, 158, 88), (120, 74, 34)), 'tiger': ((228, 128, 40), (24, 20, 18)), 'brown_bear': ((104, 70, 44), (60, 40, 26)), 'ice_bear': ((236, 240, 246), (150, 196, 236)),
+          'crocodile': ((74, 94, 52), (196, 192, 140)), 'wild_boar': ((86, 66, 54), (210, 200, 180)), 'deer': ((156, 104, 62), (240, 230, 214)), 'moose': ((72, 52, 36), (170, 140, 100)),
+          'zombie_lion': ((130, 140, 100), (110, 30, 26)), 'zombie_tiger': ((150, 130, 90), (110, 30, 26)), 'zombie_bear': ((90, 92, 70), (110, 30, 26)), 'zombie_deer': ((120, 116, 90), (110, 30, 26)),
+          'german_shepherd': ((176, 120, 64), (40, 32, 28)), 'husky': ((150, 156, 166), (246, 246, 250)), 'rottweiler': ((34, 28, 26), (150, 90, 44)), 'stray_cat': ((214, 140, 70), (150, 84, 34)), 'pitbull': ((30, 30, 34), (200, 200, 206)),
+          'zombie_wolf': ((120, 124, 104), (110, 30, 26)), 'zombie_crocodile': ((84, 96, 70), (110, 30, 26))}
+  TITLES = {'lion': 'Lion', 'tiger': 'Tiger', 'brown_bear': 'Brown Bear', 'ice_bear': 'Ice Bear', 'crocodile': 'Crocodile', 'wild_boar': 'Wild Boar', 'deer': 'Deer', 'moose': 'Moose',
+            'zombie_lion': 'Walker Lion', 'zombie_tiger': 'Walker Tiger', 'zombie_bear': 'Walker Bear', 'zombie_deer': 'Walker Deer',
+            'german_shepherd': 'German Shepherd', 'husky': 'Husky', 'rottweiler': 'Rottweiler', 'stray_cat': 'Stray Cat', 'pitbull': 'Black Pitbull', 'zombie_wolf': 'Walker Wolf', 'zombie_crocodile': 'Walker Crocodile'}
+  for n, (base, spot) in EGGC.items():
+      egg(n, base, spot, 'zombie' if n.startswith('zombie') else None)
+      item(n + '_spawn_egg', TITLES[n] + ' Spawn Egg')
+      L['entity.kiyamet.' + n] = TITLES[n]
+  json.dump(L, open(A + '/lang/en_us.json', 'w'), indent=1, ensure_ascii=False)
+  print('animals done')

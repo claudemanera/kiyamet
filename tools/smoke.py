@@ -125,6 +125,16 @@ if p:
     cmd(p, 'summon kiyamet:human 0 101 -14 {Faction:"COMPANION",Work:"FARMER",SettleAt:%dL}' % (lambda v: v - (1 << 64) if v >= 1 << 63 else v)(((-2 & 0x3FFFFFF) << 38) | ((-16 & 0x3FFFFFF) << 12) | (101 & 0xFFF)), 0.5)
     cmd(p, 'summon kiyamet:human 1 101 -14 {Faction:"COMPANION",Partner:1b,PregnantDay:-400L}', 0.5)
     cmd(p, 'summon kiyamet:human 2 101 -14 {Faction:"COMPANION",BornDay:0L}', 0.5)
+    # 2.0: element weapons, cores, a forged weapon, sage + guardian + lord, and one temple built for real
+    for a in ('flame_sword', 'ice_nunchaku', 'metal_claws', 'water_shuriken', 'earth_core', 'ancient_rod', 'sage_map'):
+        cmd(p, 'summon item 3 101 -3 {Item:{id:"kiyamet:%s",count:1}}' % a, 0.2)
+    cmd(p, 'summon kiyamet:flame_sage 6 101 -6', 0.4)
+    cmd(p, 'summon kiyamet:ice_guardian 8 101 -8', 0.4)
+    cmd(p, 'summon kiyamet:shadow_lord 10 101 -10', 0.4)
+    cmd(p, 'forceload add 160 160 260 260', 6)
+    cmd(p, 'execute positioned 210 100 210 run twd buildtemple flame', 8)
+    cmd(p, 'execute if entity @e[type=kiyamet:flame_lord] run say TEMPLE_LORD_OK', 1)
+    cmd(p, 'execute if entity @e[type=kiyamet:flame_guardian] run say TEMPLE_GUARDS_OK', 1)
     # 1.6 more: auto turret, thrown bombs, cars, eggs, cash
     cmd(p, 'summon kiyamet:auto_turret 2 101 -4', 0.5)
     cmd(p, 'summon kiyamet:thrown_bomb 2 104 -2 {Item:{id:"kiyamet:frag_grenade",count:1}}', 0.5)

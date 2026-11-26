@@ -18,16 +18,20 @@ class Car:
         uv = [s.u, s.v]; s.u += uw; s.rowh = max(s.rowh, uh)
         c = {"origin": [round(x, 2) for x in o], "size": [round(x, 2) for x in (w, h, d)], "uv": uv}
         if inflate: c["inflate"] = inflate
-        s.bones[bone]["cubes"].append(c); s.uvs.append((uv, (w, h, d), mat))
+        s.bones[bone]["cubes"].append(c); s.uvs.append((uv, (w, h, d), mat, (uw, uh)))
     def save(s, mats, wheels):
         assert s.v + s.rowh <= s.th, (s.name, s.v + s.rowh)
         geo = {"format_version": "1.12.0", "minecraft:geometry": [{"description": {"identifier": f"geometry.kiyamet.{s.name}", "texture_width": s.tw, "texture_height": s.th,
                "visible_bounds_width": 8, "visible_bounds_height": 5, "visible_bounds_offset": [0, 1.5, 0]}, "bones": [s.bones[n] for n in s.order]}]}
         json.dump(geo, open(f'{A}/geckolib/models/entity/{s.name}.geo.json', 'w'), indent=1)
         im = Image.new('RGBA', (s.tw, s.th), (0, 0, 0, 0)); r = random.Random(s.name)
-        for (u, v), (w, h, d), mat in s.uvs:
+        import math
+        for (u, v), (w, h, d), mat, (uw, uh) in s.uvs:
             base, kind = mats[mat]
-            w, h, d = max(1, round(w)), max(1, round(h)), max(1, round(d))
+            for yy in range(v, min(s.th, v + uh)):          # whole box first: no transparent gaps when sizes are fractional
+                for xx in range(u, min(s.tw, u + uw)):
+                    if kind != 'ladder': im.putpixel((xx, yy), tuple(max(0, min(255, k + r.randint(-3, 3))) for k in base) + (255,))
+            w, h, d = max(1, math.ceil(w)), max(1, math.ceil(h)), max(1, math.ceil(d))
             def fill(x0, y0, ww, hh, face):
                 for y in range(y0, y0 + hh):
                     for x in range(x0, x0 + ww):
@@ -247,3 +251,16 @@ def bike(name, color, accent):
 bike('superbike_vortex', (40, 190, 60), (20, 20, 24))
 bike('superbike_blaze', (210, 30, 30), (240, 240, 240))
 print('cars done')
+
+# ---- mission board: a 2-block-wide notice board on two legs
+c = Car('mission_board', 256, 256)
+bm = {'paint': ((112, 78, 46), 'paint'), 'dark': ((70, 46, 26), 'paint'), 'cork': ((176, 132, 86), 'paint'), 'paper': ((236, 230, 210), 'paint'), 'paper2': ((240, 220, 160), 'paint'),
+      'red': ((200, 40, 40), 'light'), 'roof': ((90, 58, 34), 'paint'), 'black': ((26, 26, 30), 'paint'), 'tire': ((22, 22, 24), 'tire'), 'rim': ((170, 176, 186), 'rim')}
+for x in (-16, 13):
+    c.cube((x, 0, -1.5), (3, 34, 3), 'dark'); c.cube((x - 1, 0, -2.5), (5, 1.5, 5), 'dark')
+c.cube((-15, 12, -0.5), (30, 20, 1.5), 'paint'); c.cube((-14, 13, -1), (28, 18, 0.6), 'cork')
+c.cube((-18, 33, -3), (36, 2, 6), 'roof'); c.cube((-17, 32, -2.5), (34, 1, 5), 'dark')
+for (x, y, w, h, m) in ((-13, 23, 7, 7, 'paper'), (-5, 24, 6, 6, 'paper2'), (2, 22, 8, 8, 'paper'), (-12, 14, 8, 7, 'paper2'), (-3, 15, 6, 7, 'paper'), (5, 14, 8, 6, 'paper2')):
+    c.cube((x, y, -1.2), (w, h, 0.3), m); c.cube((x + w / 2 - 0.5, y + h - 1.2, -1.5), (1, 1, 0.4), 'red')
+c.cube((-15, 11, -1.5), (30, 1, 3), 'dark')
+c.save(bm, [])

@@ -10,11 +10,11 @@ import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.minecraft.world.level.Level;
 
 /**
- * 1.7 calendar: the apocalypse starts on 1 March 2027 and every Minecraft day is one calendar day.
+ * 1.7 calendar: the apocalypse starts on 1 January 2027 and every Minecraft day is one calendar day.
  * Seasons follow the months: Mar-May spring, Jun-Aug summer, Sep-Nov autumn, Dec-Feb winter.
  */
 public final class Calendar {
-    public static final LocalDate START = LocalDate.of(2027, 3, 1);
+    public static final LocalDate START = LocalDate.of(2027, 1, 1);
     /** days added on top of the world clock (/twd date set) */
     public static final AttachmentType<Integer> OFFSET = AttachmentRegistry.create(Kiyamet.id("date_offset"), b -> b.initializer(() -> 0).persistent(Codec.INT));
 

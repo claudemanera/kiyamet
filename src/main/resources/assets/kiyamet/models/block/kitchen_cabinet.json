@@ -1,6 +1,6 @@
 {
  "parent": "minecraft:block/block",
- "ambientocclusion": false,
+ "ambientocclusion": true,
  "textures": {
   "counter": "kiyamet:block/furn_counter",
   "oak": "kiyamet:block/furn_oak",

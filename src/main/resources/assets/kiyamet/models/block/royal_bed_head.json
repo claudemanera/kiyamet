@@ -1,6 +1,6 @@
 {
  "parent": "minecraft:block/block",
- "ambientocclusion": false,
+ "ambientocclusion": true,
  "textures": {
   "blue": "kiyamet:block/furn_blue",
   "dark": "kiyamet:block/furn_dark",

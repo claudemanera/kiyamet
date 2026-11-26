@@ -1,6 +1,6 @@
 {
  "parent": "minecraft:block/block",
- "ambientocclusion": false,
+ "ambientocclusion": true,
  "textures": {
   "brown": "kiyamet:block/furn_brown",
   "cream": "kiyamet:block/furn_cream",

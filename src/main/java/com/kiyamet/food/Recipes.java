@@ -19,7 +19,7 @@ public final class Recipes {
             new Meal("vegetable_stew", "Vegetable Stew", 12, 1.2f, 10, 6, true),
             new Meal("tomato_soup", "Tomato Soup", 10, 1.1f, 10, 5, true),
             new Meal("stuffed_peppers", "Stuffed Peppers", 12, 1.3f, 12, 6, false),
-            new Meal("ratatouille", "Ratatouille", 14, 1.3f, 12, 8, true),
+            new Meal("ratatouille", "Baked Vegetables", 14, 1.3f, 12, 8, true),
             new Meal("cabbage_rolls", "Cabbage Rolls", 12, 1.2f, 14, 6, false),
             new Meal("cornbread", "Cornbread", 10, 1.2f, 20, 4, false),
             new Meal("fruit_salad", "Fruit Salad", 9, 1.0f, 7, 4, true),
@@ -28,9 +28,14 @@ public final class Recipes {
             new Meal("survivor_ration", "Survivor's Ration", 16, 1.5f, 365, 10, false),
             new Meal("hunters_breakfast", "Hunter's Breakfast", 14, 1.3f, 6, 7, false),
             new Meal("fish_and_chips", "Fish and Chips", 12, 1.2f, 5, 5, false),
-            new Meal("mushroom_risotto", "Mushroom Risotto", 12, 1.3f, 6, 6, true),
+            new Meal("mushroom_risotto", "Chicken and Mushroom Rice", 12, 1.3f, 6, 6, true),
             new Meal("honey_glazed_ham", "Honey Glazed Ham", 14, 1.4f, 9, 8, false),
-            new Meal("berry_pancakes", "Berry Pancakes", 10, 1.2f, 6, 5, false));
+            new Meal("berry_pancakes", "Berry Pancakes", 10, 1.2f, 6, 5, false),
+            new Meal("fish_sandwich", "Fish Sandwich", 11, 1.2f, 4, 5, false),
+            new Meal("chicken_soup", "Chicken Soup", 12, 1.3f, 6, 6, true),
+            new Meal("burger", "Burger", 14, 1.3f, 4, 7, false),
+            new Meal("cabbage_salad", "Cabbage Salad", 8, 1.0f, 5, 4, true),
+            new Meal("omelette", "Omelette", 10, 1.2f, 3, 5, false));
 
     public static Meal meal(String id) { for (Meal m : MEALS) if (m.id().equals(id)) return m; return null; }
 

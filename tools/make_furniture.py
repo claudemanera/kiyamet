@@ -9,30 +9,44 @@ L = json.load(open(A + '/lang/en_us.json'))
 
 # ------------------------------------------------------------------ material textures
 def tex(name, base, kind='plain', seed=1):
-    r = random.Random(seed + hash(name) % 1000); im = Image.new('RGBA', (16, 16))
+    r = random.Random(seed + sum(map(ord, name))); im = Image.new('RGBA', (16, 16))
+    def put(x, y, c, v=0): im.putpixel((x, y), tuple(max(0, min(255, int(k) + v)) for k in c[:3]) + (255,))
     for y in range(16):
         for x in range(16):
-            v = r.randint(-7, 7); c = list(base)
-            if kind == 'wood':
-                if y % 4 == 0: v -= 18
-                if (x * 3 + y) % 11 == 0: v -= 10
-            elif kind == 'fabric':
-                if (x + y) % 2 == 0: v -= 6
-            elif kind == 'metal':
-                v = r.randint(-3, 3) + (10 if y < 2 else 0) - (8 if y > 13 else 0)
+            v = r.randint(-5, 5); c = list(base)
+            if kind == 'wood':      # planks: 4 boards, grain streaks, knots, board seams
+                board = y // 4
+                v += (board % 2) * 8 - 4
+                if y % 4 == 3: v -= 26
+                if (x + board * 5) % 16 == 0: v -= 22
+                g = math.sin((x + board * 3) * 0.9 + y * 0.35) * 6; v += int(g)
+                if (x * 7 + y * 13 + board) % 37 == 0: v -= 18
+            elif kind == 'fabric':  # woven cloth with a stitched border
+                v += 5 if (x + y) % 2 == 0 else -4
+                if x in (0, 15) or y in (0, 15): v -= 22
+                if (x in (1, 14) or y in (1, 14)) and (x + y) % 2 == 0: v += 18
+            elif kind == 'metal':   # brushed, bevelled panel
+                v = r.randint(-2, 2) + (x % 3 == 0) * 3
+                if y == 0 or x == 0: v += 24
+                if y == 15 or x == 15: v -= 24
             elif kind == 'glass':
-                if x == y or x == y + 1: v += 40
+                c = [base[0] - 10 + y * 2, base[1] - 10 + y * 2, base[2]]
+                if x == y or x == y + 1 or x == y - 7: v += 45
+                if x in (0, 15) or y in (0, 15): c = [200, 205, 210]
             elif kind == 'screen':
-                v = r.randint(-4, 4); c = [20, 30 + y * 2, 60 + y * 4] if 1 <= x <= 14 and 1 <= y <= 14 else [20, 20, 24]
+                v = r.randint(-3, 3); c = [18 + y, 30 + y * 3, 70 + y * 5] if 1 <= x <= 14 and 1 <= y <= 14 else [16, 16, 20]
+                if 2 <= x <= 5 and 2 <= y <= 3: c = [200, 230, 255]
             elif kind == 'books':
-                cols = [(150, 40, 40), (40, 80, 150), (50, 120, 60), (180, 140, 50), (100, 60, 120), (70, 70, 70)]
-                c = list(cols[(x // 2 + y // 8 * 3) % len(cols)]) if y % 8 != 7 else [90, 60, 32]
-                if y % 8 in (0,): c = [int(k * 0.7) for k in c]
+                cols = [(150, 40, 40), (40, 80, 150), (50, 120, 60), (180, 140, 50), (100, 60, 120), (70, 70, 70), (160, 100, 60)]
+                ci = (x // 2 + (y // 8) * 3) % len(cols); c = list(cols[ci])
+                if y % 8 == 7: c = [90, 60, 32]
+                elif x % 2 == 1: v -= 20
+                elif y % 8 in (2, 5): v += 30
             elif kind == 'burner':
-                d = math.hypot(x - 7.5, y - 7.5); c = [30, 30, 32] if d > 6 else [60, 60, 64] if d > 4 else [40, 40, 44] if d > 2 else [70, 70, 74]
+                d = math.hypot(x - 7.5, y - 7.5); c = [30, 30, 32] if d > 6 else [80, 80, 86] if d > 5 else [40, 40, 44] if d > 2.5 else [90, 40, 30] if d > 1 else [60, 60, 64]
             elif kind == 'water':
-                c = [60, 120 + (x + y) % 3 * 10, 200]
-            im.putpixel((x, y), tuple(max(0, min(255, k + v)) for k in c) + (255,))
+                c = [50, 110 + (x * 3 + y) % 4 * 8, 200]; v = 30 if (x + y * 2) % 9 == 0 else 0
+            put(x, y, c, v)
     im.save(f'{A}/textures/block/furn_{name}.png')
 MATS = {'oak': ((168, 124, 76), 'wood'), 'dark': ((86, 56, 34), 'wood'), 'birch': ((206, 188, 140), 'wood'), 'spruce': ((116, 84, 50), 'wood'),
         'white': ((232, 234, 236), 'metal'), 'black': ((34, 34, 38), 'metal'), 'steel': ((150, 156, 166), 'metal'), 'gold': ((226, 184, 70), 'metal'),
@@ -46,7 +60,7 @@ def box(f, t, m, faces=None):
     return {"from": list(f), "to": list(t), "faces": {d: {"texture": "#" + m} for d in fs}}
 def model(name, els, particle='oak'):
     used = sorted({e2['texture'][1:] for e in els for e2 in e['faces'].values()})
-    w(f'{A}/models/block/{name}.json', {"parent": "minecraft:block/block", "ambientocclusion": False,
+    w(f'{A}/models/block/{name}.json', {"parent": "minecraft:block/block", "ambientocclusion": True,
         "textures": dict({m: f"kiyamet:block/furn_{m}" for m in used}, particle=f"kiyamet:block/furn_{particle}"), "elements": els})
 def legs(x1, z1, x2, z2, h, m, t=2):
     return [box((x1, 0, z1), (x1 + t, h, z1 + t), m), box((x2 - t, 0, z1), (x2, h, z1 + t), m), box((x1, 0, z2 - t), (x1 + t, h, z2), m), box((x2 - t, 0, z2 - t), (x2, h, z2), m)]
@@ -228,7 +242,7 @@ w(f'{A}/items/gold_money_bag.json', {"model": {"type": "minecraft:model", "model
 w(f'{D}/recipe/gold_money_bag.json', {"type": "minecraft:crafting_shaped", "category": "misc", "pattern": ["GGG", "GBG", "GGG"], "key": {"G": "minecraft:gold_ingot", "B": "kiyamet:money_bag"},
     "result": {"id": "kiyamet:gold_money_bag", "count": 1}})
 L.update({'item.kiyamet.gold_money_bag': 'Gold Money Bag', 'item.kiyamet.spoiled_food': 'Spoiled Food', 'effect.kiyamet.well_fed': 'Well Fed', 'entity.kiyamet.seat': 'Seat'})
-TITLES = {'vegetable_stew': 'Vegetable Stew', 'tomato_soup': 'Tomato Soup', 'stuffed_peppers': 'Stuffed Peppers', 'ratatouille': 'Ratatouille', 'cabbage_rolls': 'Cabbage Rolls',
+TITLES = {'vegetable_stew': 'Vegetable Stew', 'tomato_soup': 'Tomato Soup', 'stuffed_peppers': 'Stuffed Peppers', 'ratatouille': 'Baked Vegetables', 'cabbage_rolls': 'Cabbage Rolls',
           'cornbread': 'Cornbread', 'fruit_salad': 'Fruit Salad', 'peach_pie': 'Peach Pie', 'strawberry_jam': 'Strawberry Jam', 'survivor_ration': "Survivor's Ration"}
 for k, v in TITLES.items(): L['item.kiyamet.' + k] = v
 REC = {'vegetable_stew': (["minecraft:bowl", "minecraft:potato", "minecraft:carrot", "kiyamet:onion", "kiyamet:cabbage", "kiyamet:tomato"], 1),

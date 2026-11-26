@@ -1,0 +1,15 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "minecraft:bowl",
+  "minecraft:cooked_chicken",
+  "minecraft:carrot",
+  "kiyamet:onion",
+  "minecraft:potato"
+ ],
+ "result": {
+  "id": "kiyamet:chicken_soup",
+  "count": 1
+ }
+}

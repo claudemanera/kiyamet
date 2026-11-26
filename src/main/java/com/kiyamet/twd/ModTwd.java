@@ -20,7 +20,7 @@ public final class ModTwd {
     public static final EntityType<ShelterCore> SHELTER_CORE = Registry.register(BuiltInRegistries.ENTITY_TYPE, CORE_KEY,
             EntityType.Builder.<ShelterCore>of(ShelterCore::new, MobCategory.MISC).sized(0.9f, 1.0f).clientTrackingRange(10).fireImmune().build(CORE_KEY));
     public static final EntityType<MissionBoard> MISSION_BOARD = Registry.register(BuiltInRegistries.ENTITY_TYPE, BOARD_KEY,
-            EntityType.Builder.<MissionBoard>of(MissionBoard::new, MobCategory.MISC).sized(1.1f, 1.1f).clientTrackingRange(10).fireImmune().build(BOARD_KEY));
+            EntityType.Builder.<MissionBoard>of(MissionBoard::new, MobCategory.MISC).sized(2.0f, 2.2f).clientTrackingRange(10).fireImmune().build(BOARD_KEY));
     public static final Item SHELTER_CORE_ITEM = ModItems.custom("shelter_core", p -> new ShelterCore.CoreItem(p.stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC)));
     public static final Item QUEST_ITEM = ModItems.custom("quest_item", p -> new Item(p.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE)));
     public static final Item LOST_NOTE = ModItems.custom("lost_note", p -> new com.kiyamet.item.LostNoteItem(p.stacksTo(1)));

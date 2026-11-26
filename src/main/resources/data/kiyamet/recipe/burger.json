@@ -1,0 +1,15 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "minecraft:bread",
+  "minecraft:cooked_beef",
+  "kiyamet:tomato",
+  "kiyamet:cabbage",
+  "kiyamet:onion"
+ ],
+ "result": {
+  "id": "kiyamet:burger",
+  "count": 1
+ }
+}

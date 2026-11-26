@@ -600,7 +600,7 @@
  "item.kiyamet.vegetable_stew": "Vegetable Stew",
  "item.kiyamet.tomato_soup": "Tomato Soup",
  "item.kiyamet.stuffed_peppers": "Stuffed Peppers",
- "item.kiyamet.ratatouille": "Ratatouille",
+ "item.kiyamet.ratatouille": "Baked Vegetables",
  "item.kiyamet.cabbage_rolls": "Cabbage Rolls",
  "item.kiyamet.cornbread": "Cornbread",
  "item.kiyamet.fruit_salad": "Fruit Salad",
@@ -687,7 +687,12 @@
  "tooltip.kiyamet.superbike_blaze_kit": "Place it on the ground to get the vehicle|Build kits at the Vehicle Workshop",
  "item.kiyamet.hunters_breakfast": "Hunter's Breakfast",
  "item.kiyamet.fish_and_chips": "Fish and Chips",
- "item.kiyamet.mushroom_risotto": "Mushroom Risotto",
+ "item.kiyamet.mushroom_risotto": "Chicken and Mushroom Rice",
  "item.kiyamet.honey_glazed_ham": "Honey Glazed Ham",
- "item.kiyamet.berry_pancakes": "Berry Pancakes"
+ "item.kiyamet.berry_pancakes": "Berry Pancakes",
+ "item.kiyamet.fish_sandwich": "Fish Sandwich",
+ "item.kiyamet.chicken_soup": "Chicken Soup",
+ "item.kiyamet.burger": "Burger",
+ "item.kiyamet.cabbage_salad": "Cabbage Salad",
+ "item.kiyamet.omelette": "Omelette"
 }

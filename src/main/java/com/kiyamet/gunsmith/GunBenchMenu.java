@@ -23,12 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Gunsmith Bench: repair anything, and customise arrow guns: scope, silencer, light, magazine and paint.
- * Every option shows a preview of your gun with it on.
+ * Gunsmith Bench (1.9, simpler): hold a gun. Top row = tabs (Scope, Muzzle, Light, Magazine, Paint, Repair).
+ * The middle shows the choices for that tab: click one to fit it, click the fitted one again to take it off.
  */
 public class GunBenchMenu extends PanelMenu {
-    private static final int[] ROW = {9, 18, 27, 36};
-    private static final int[] PAINT_SLOTS = {15, 16, 17, 24, 25, 26, 33, 34, 35, 42, 43};
+    private static final int[] TABS = {1, 2, 3, 5, 6, 7};
+    private static final String[] TAB_NAMES = {"Scope", "Muzzle", "Light", "Magazine", "Paint", "Repair"};
+    private static final int[] OPTS = {19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 32, 33, 34};
+    private int tab = 0;
 
     public static void open(ServerPlayer p) {
         p.openMenu(new SimpleMenuProvider((id, inv, pl) -> new GunBenchMenu(id, inv, p), Component.literal("Gunsmith Bench")));
@@ -57,70 +59,73 @@ public class GunBenchMenu extends PanelMenu {
         for (int i = 0; i < c.length; i += 2) Shop.take(player, c[i], Integer.parseInt(c[i + 1]));
     }
 
+    static Item partIcon(String id) {
+        return switch (id) {
+            case "red_dot" -> Items.REDSTONE; case "holo" -> Items.GLASS_PANE; case "acog" -> Items.SPYGLASS; case "sniper" -> Items.ENDER_EYE;
+            case "short" -> Items.IRON_NUGGET; case "long" -> Items.IRON_BARS; case "flashlight" -> Items.LANTERN; case "laser" -> Items.REDSTONE_TORCH;
+            case "extended" -> Ui.item("kiyamet:magazine"); case "drum" -> Ui.item("kiyamet:magazine_drum"); default -> Items.BARRIER;
+        };
+    }
+
     @Override
     protected void draw() {
         ItemStack g = gun();
-        c.setItem(4, g.isEmpty() ? Ui.icon(Items.BARRIER, Ui.text("Hold a gun (or anything to repair)", ChatFormatting.RED)) : g.copy());
-        // repair
-        if (g.isDamageableItem()) {
-            int dmg = g.getDamageValue(), max = g.getMaxDamage();
-            c.setItem(47, Ui.glint(Ui.icon(Items.ANVIL, Ui.text(dmg == 0 ? "Fully repaired" : "Repair " + (100 - dmg * 100 / max) + "% → 100%", ChatFormatting.AQUA, ChatFormatting.BOLD),
-                    Ui.text("Iron ingot: +25% · Metal plate: +50% · Repair kit: full", ChatFormatting.GRAY), Ui.text("Click: use what you have", ChatFormatting.YELLOW)), dmg > 0));
-        } else c.setItem(47, Ui.icon(Items.ANVIL, Ui.text("Nothing to repair", ChatFormatting.DARK_GRAY)));
-        c.setItem(51, Ui.icon(Items.BOOK, Ui.text("Gunsmith Bench", ChatFormatting.GOLD), Ui.text("Hold a gun, then pick parts.", ChatFormatting.GRAY),
-                Ui.text("Parts change how it looks AND shoots.", ChatFormatting.GRAY), Ui.text("Better parts need more Engineering.", ChatFormatting.GRAY),
-                Ui.text("Your Engineering: " + eng(), ChatFormatting.AQUA)));
+        Item[] tabIcons = {Items.SPYGLASS, Items.IRON_NUGGET, Items.LANTERN, Ui.item("kiyamet:magazine"), Items.RED_DYE, Items.ANVIL};
+        for (int i = 0; i < TABS.length; i++)
+            c.setItem(TABS[i], Ui.glint(Ui.icon(tabIcons[i], Ui.text(TAB_NAMES[i], i == tab ? ChatFormatting.GREEN : ChatFormatting.WHITE, ChatFormatting.BOLD),
+                    Ui.text(i == tab ? "▶ open" : "Click to open", ChatFormatting.GRAY)), i == tab));
+        if (g.isEmpty() || !(isGun() || tab == 5 && g.isDamageableItem())) {
+            c.setItem(4, Ui.icon(Items.BARRIER, Ui.text("Hold a gun in your hand", ChatFormatting.RED), Ui.text("(or any tool, for the Repair tab)", ChatFormatting.GRAY)));
+            c.setItem(49, Ui.icon(Items.BARRIER, Ui.text("Close", ChatFormatting.RED)));
+            return;
+        }
+        List<Component> info = new ArrayList<>();
+        if (isGun()) for (GunMods.Slot sl : GunMods.Slot.values()) { String cur = GunMods.get(g, sl); info.add(Ui.text(TAB_NAMES[sl.ordinal()] + ": " + (cur.isEmpty() ? "-" : GunMods.part(cur).title()), cur.isEmpty() ? ChatFormatting.DARK_GRAY : ChatFormatting.AQUA)); }
+        if (isGun()) info.add(Ui.text("Paint: " + GunMods.paintOf(GunMods.paint(g)).title(), ChatFormatting.LIGHT_PURPLE));
+        c.setItem(4, Ui.glint(Ui.lore(g.copy(), info), true));
         c.setItem(49, Ui.icon(Items.BARRIER, Ui.text("Close", ChatFormatting.RED)));
-        if (!isGun()) return;
-        String[] labels = {"Scope", "Muzzle", "Light", "Magazine"};
-        Item[] icons = {Items.SPYGLASS, Items.IRON_NUGGET, Items.TORCH, Items.CHEST};
-        for (GunMods.Slot sl : GunMods.Slot.values()) {
-            int row = ROW[sl.ordinal()];
+        if (tab < 4) {
+            GunMods.Slot sl = GunMods.Slot.values()[tab];
             String cur = GunMods.get(g, sl);
-            c.setItem(row, Ui.icon(icons[sl.ordinal()], Ui.text(labels[sl.ordinal()], ChatFormatting.GOLD, ChatFormatting.BOLD)));
-            ItemStack none = g.copy();
-            GunMods.set(none, sl, "");
-            none.set(DataComponents.CUSTOM_NAME, Ui.text("No " + labels[sl.ordinal()].toLowerCase(), cur.isEmpty() ? ChatFormatting.GREEN : ChatFormatting.WHITE));
-            Ui.lore(none, List.of(Ui.text(cur.isEmpty() ? "✔ Fitted" : "Click: remove (the part is lost)", ChatFormatting.GRAY)));
-            c.setItem(row + 1, Ui.glint(none, cur.isEmpty()));
-            int col = 2;
+            int k = 0;
             for (GunMods.Part part : GunMods.PARTS) {
                 if (part.slot() != sl) continue;
-                ItemStack prev = g.copy();
-                GunMods.set(prev, sl, part.id());
-                boolean on = cur.equals(part.id()), eng = eng() >= part.eng(), pay = canPay(part.cost());
-                prev.set(DataComponents.CUSTOM_NAME, Ui.text(part.title(), on ? ChatFormatting.GREEN : eng && pay ? ChatFormatting.YELLOW : ChatFormatting.WHITE, ChatFormatting.BOLD));
+                boolean on = cur.equals(part.id()), engOk = eng() >= part.eng() || player.isCreative(), pay = canPay(part.cost());
                 List<Component> lore = new ArrayList<>();
                 lore.add(Ui.text(part.effect(), ChatFormatting.AQUA));
-                if (on) lore.add(Ui.text("✔ Fitted", ChatFormatting.GREEN));
+                if (on) lore.add(Ui.text("✔ Fitted · click to take it off", ChatFormatting.GREEN));
                 else {
                     lore.add(Ui.text("Cost: " + costText(part.cost()), pay ? ChatFormatting.GRAY : ChatFormatting.RED));
-                    lore.add(Ui.text("Engineering " + part.eng(), eng ? ChatFormatting.GRAY : ChatFormatting.RED));
-                    lore.add(Ui.text(eng && pay ? "Click to fit" : "Not available yet", eng && pay ? ChatFormatting.YELLOW : ChatFormatting.RED));
+                    lore.add(Ui.text("Needs Engineering " + part.eng(), engOk ? ChatFormatting.GRAY : ChatFormatting.RED));
+                    lore.add(Ui.text(engOk && pay ? "Click to fit" : "Not available yet", engOk && pay ? ChatFormatting.YELLOW : ChatFormatting.RED));
                 }
-                Ui.lore(prev, lore);
-                c.setItem(row + col++, Ui.glint(prev, on));
+                c.setItem(OPTS[k * 2], Ui.glint(Ui.icon(partIcon(part.id()), Ui.text(part.title(), on ? ChatFormatting.GREEN : ChatFormatting.WHITE, ChatFormatting.BOLD), lore.toArray(new Component[0])), on));
+                k++;
             }
-        }
-        // paints
-        c.setItem(6, Ui.icon(Items.BRUSH, Ui.text("Paint", ChatFormatting.GOLD, ChatFormatting.BOLD), Ui.text("Costs one dye (or the item shown)", ChatFormatting.GRAY)));
-        String curPaint = GunMods.paint(g);
-        for (int i = 0; i < GunMods.PAINTS.size() && i < PAINT_SLOTS.length; i++) {
-            GunMods.Paint pt = GunMods.PAINTS.get(i);
-            ItemStack prev = g.copy();
-            GunMods.setPaint(prev, pt.id());
-            boolean on = curPaint.equals(pt.id());
-            prev.set(DataComponents.CUSTOM_NAME, Component.literal(pt.title()).withStyle(st -> st.withItalic(false).withBold(true).withColor(pt.color() == -1 ? 0xFFFFFF : pt.color())));
-            Ui.lore(prev, List.of(Ui.text(on ? "✔ Current paint" : pt.dye().isEmpty() ? "Free" : "Cost: 1× " + new ItemStack(Ui.item(pt.dye())).getHoverName().getString(), on ? ChatFormatting.GREEN : ChatFormatting.GRAY)));
-            c.setItem(PAINT_SLOTS[i], Ui.glint(prev, on));
+        } else if (tab == 4) {
+            String curPaint = GunMods.paint(g);
+            for (int i = 0; i < GunMods.PAINTS.size() && i < OPTS.length; i++) {
+                GunMods.Paint pt = GunMods.PAINTS.get(i);
+                boolean on = curPaint.equals(pt.id());
+                Item icon = pt.dye().isEmpty() ? Items.WATER_BUCKET : Ui.item(pt.dye());
+                ItemStack st = Ui.icon(icon, Component.literal(pt.title()).withStyle(x -> x.withItalic(false).withBold(true).withColor(pt.color() == -1 ? 0xFFFFFF : pt.color())),
+                        Ui.text(on ? "✔ Current paint" : pt.dye().isEmpty() ? "Free" : "Costs 1× " + new ItemStack(Ui.item(pt.dye())).getHoverName().getString(), on ? ChatFormatting.GREEN : ChatFormatting.GRAY));
+                c.setItem(OPTS[i], Ui.glint(st, on));
+            }
+        } else {
+            int dmg = g.getDamageValue(), max = Math.max(1, g.getMaxDamage());
+            c.setItem(22, Ui.glint(Ui.icon(Items.ANVIL, Ui.text(dmg == 0 ? "Fully repaired" : "Repair: " + (100 - dmg * 100 / max) + "% → 100%", ChatFormatting.AQUA, ChatFormatting.BOLD),
+                    Ui.text("Uses a repair kit (full), a metal plate (+50%) or an iron ingot (+25%)", ChatFormatting.GRAY), Ui.text("Click to repair", ChatFormatting.YELLOW)), dmg > 0));
         }
     }
 
     @Override
     protected boolean click(int slot, ClickType type) {
         if (slot == 49) { player.closeContainer(); return false; }
+        for (int i = 0; i < TABS.length; i++) if (slot == TABS[i]) { tab = i; return true; }
         ItemStack g = gun();
-        if (slot == 47 && g.isDamageableItem() && g.getDamageValue() > 0) {
+        if (tab == 5) {
+            if (slot != 22 || !g.isDamageableItem() || g.getDamageValue() == 0) return false;
             int max = g.getMaxDamage();
             if (player.isCreative() || Shop.take(player, "kiyamet:repair_kit", 1)) g.setDamageValue(0);
             else if (Shop.take(player, "kiyamet:metal_plate", 1)) g.setDamageValue(Math.max(0, g.getDamageValue() - max / 2));
@@ -130,32 +135,33 @@ public class GunBenchMenu extends PanelMenu {
             return true;
         }
         if (!isGun()) return false;
-        for (int i = 0; i < GunMods.PAINTS.size() && i < PAINT_SLOTS.length; i++) if (PAINT_SLOTS[i] == slot) {
-            GunMods.Paint pt = GunMods.PAINTS.get(i);
-            if (GunMods.paint(g).equals(pt.id())) return false;
-            if (!pt.dye().isEmpty() && !player.isCreative() && !Shop.take(player, pt.dye(), 1)) { player.displayClientMessage(Component.literal("You need the dye.").withStyle(ChatFormatting.RED), true); return false; }
-            GunMods.setPaint(g, pt.id());
-            player.level().playSound(null, player.blockPosition(), SoundEvents.DYE_USE, SoundSource.PLAYERS, 1f, 1f);
-            return true;
-        }
-        for (GunMods.Slot sl : GunMods.Slot.values()) {
-            int row = ROW[sl.ordinal()];
-            if (slot == row + 1) { if (GunMods.get(g, sl).isEmpty()) return false; GunMods.set(g, sl, ""); return true; }
-            int col = 2;
-            for (GunMods.Part part : GunMods.PARTS) {
-                if (part.slot() != sl) continue;
-                if (slot == row + col++) {
-                    if (GunMods.get(g, sl).equals(part.id())) return false;
-                    if (eng() < part.eng() && !player.isCreative()) { player.displayClientMessage(Component.literal("Needs Engineering " + part.eng()).withStyle(ChatFormatting.RED), true); return false; }
-                    if (!canPay(part.cost())) { player.displayClientMessage(Component.literal("Missing materials: " + costText(part.cost())).withStyle(ChatFormatting.RED), true); return false; }
-                    pay(part.cost());
-                    GunMods.set(g, sl, part.id());
-                    SkillManager.addXp(player, Skill.ENGINEERING, 20 + part.eng() / 4);
-                    player.level().playSound(null, player.blockPosition(), SoundEvents.SMITHING_TABLE_USE, SoundSource.PLAYERS, 1f, 1.1f);
-                    player.displayClientMessage(Component.literal(part.title() + " fitted!").withStyle(ChatFormatting.GREEN, ChatFormatting.BOLD), true);
-                    return true;
-                }
+        if (tab == 4) {
+            for (int i = 0; i < GunMods.PAINTS.size() && i < OPTS.length; i++) if (OPTS[i] == slot) {
+                GunMods.Paint pt = GunMods.PAINTS.get(i);
+                if (GunMods.paint(g).equals(pt.id())) return false;
+                if (!pt.dye().isEmpty() && !player.isCreative() && !Shop.take(player, pt.dye(), 1)) { player.displayClientMessage(Component.literal("You need the dye.").withStyle(ChatFormatting.RED), true); return false; }
+                GunMods.setPaint(g, pt.id());
+                player.level().playSound(null, player.blockPosition(), SoundEvents.DYE_USE, SoundSource.PLAYERS, 1f, 1f);
+                return true;
             }
+            return false;
+        }
+        GunMods.Slot sl = GunMods.Slot.values()[tab];
+        int k = 0;
+        for (GunMods.Part part : GunMods.PARTS) {
+            if (part.slot() != sl) continue;
+            if (slot == OPTS[k * 2]) {
+                if (GunMods.get(g, sl).equals(part.id())) { GunMods.set(g, sl, ""); player.displayClientMessage(Component.literal(part.title() + " taken off.").withStyle(ChatFormatting.GRAY), true); return true; }
+                if (eng() < part.eng() && !player.isCreative()) { player.displayClientMessage(Component.literal("Needs Engineering " + part.eng()).withStyle(ChatFormatting.RED), true); return false; }
+                if (!canPay(part.cost())) { player.displayClientMessage(Component.literal("Missing: " + costText(part.cost())).withStyle(ChatFormatting.RED), true); return false; }
+                pay(part.cost());
+                GunMods.set(g, sl, part.id());
+                SkillManager.addXp(player, Skill.ENGINEERING, 20 + part.eng() / 4);
+                player.level().playSound(null, player.blockPosition(), SoundEvents.SMITHING_TABLE_USE, SoundSource.PLAYERS, 1f, 1.1f);
+                player.displayClientMessage(Component.literal(part.title() + " fitted!").withStyle(ChatFormatting.GREEN, ChatFormatting.BOLD), true);
+                return true;
+            }
+            k++;
         }
         return false;
     }

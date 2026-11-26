@@ -1,0 +1,15 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "minecraft:bowl",
+  "kiyamet:cabbage",
+  "kiyamet:tomato",
+  "kiyamet:cucumber",
+  "kiyamet:onion"
+ ],
+ "result": {
+  "id": "kiyamet:cabbage_salad",
+  "count": 1
+ }
+}

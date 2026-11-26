@@ -1,6 +1,6 @@
 {
  "parent": "minecraft:block/block",
- "ambientocclusion": false,
+ "ambientocclusion": true,
  "textures": {
   "bag12": "kiyamet:block/furn_bag12",
   "gold": "kiyamet:block/furn_gold",

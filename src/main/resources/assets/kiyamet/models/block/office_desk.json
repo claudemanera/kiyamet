@@ -1,6 +1,6 @@
 {
  "parent": "minecraft:block/block",
- "ambientocclusion": false,
+ "ambientocclusion": true,
  "textures": {
   "birch": "kiyamet:block/furn_birch",
   "black": "kiyamet:block/furn_black",

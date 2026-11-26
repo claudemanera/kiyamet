@@ -1,6 +1,6 @@
 {
  "parent": "minecraft:block/block",
- "ambientocclusion": false,
+ "ambientocclusion": true,
  "textures": {
   "steel": "kiyamet:block/furn_steel",
   "water": "kiyamet:block/furn_water",

@@ -2,18 +2,17 @@
  "type": "minecraft:crafting_shaped",
  "category": "misc",
  "pattern": [
-  "ICI",
-  "RTR",
-  "III"
+  "III",
+  "PCP",
+  "PPP"
  ],
  "key": {
   "I": "minecraft:iron_ingot",
-  "C": "minecraft:copper_ingot",
-  "R": "minecraft:redstone",
-  "T": "minecraft:crafting_table"
+  "P": "#minecraft:planks",
+  "C": "minecraft:crafting_table"
  },
  "result": {
-  "id": "kiyamet:lab_table",
+  "id": "kiyamet:main_table",
   "count": 1
  }
 }

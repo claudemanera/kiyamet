@@ -1,0 +1,16 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "minecraft:bowl",
+  "kiyamet:orange",
+  "kiyamet:peach",
+  "kiyamet:strawberry",
+  "kiyamet:strawberry",
+  "minecraft:apple"
+ ],
+ "result": {
+  "id": "kiyamet:fruit_salad",
+  "count": 1
+ }
+}

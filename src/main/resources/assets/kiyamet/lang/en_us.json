@@ -769,5 +769,7 @@
  "item.kiyamet.bear_chili": "Bear Chili",
  "item.kiyamet.jerky": "Jerky",
  "item.kiyamet.meatballs": "Meatballs in Tomato Sauce",
- "block.kiyamet.cooking_table": "Cooking Table"
+ "block.kiyamet.cooking_table": "Cooking Table",
+ "block.kiyamet.main_table": "Main Table",
+ "item.kiyamet.mission_board": "Mission Board"
 }

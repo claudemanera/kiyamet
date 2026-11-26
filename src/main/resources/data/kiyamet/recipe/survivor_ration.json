@@ -1,0 +1,16 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "minecraft:cooked_beef",
+  "kiyamet:cornbread",
+  "minecraft:dried_kelp",
+  "minecraft:dried_kelp",
+  "minecraft:paper",
+  "kiyamet:strawberry_jam"
+ ],
+ "result": {
+  "id": "kiyamet:survivor_ration",
+  "count": 2
+ }
+}

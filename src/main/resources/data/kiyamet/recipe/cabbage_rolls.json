@@ -1,0 +1,14 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "kiyamet:cabbage",
+  "minecraft:cooked_porkchop",
+  "kiyamet:onion",
+  "kiyamet:tomato"
+ ],
+ "result": {
+  "id": "kiyamet:cabbage_rolls",
+  "count": 2
+ }
+}

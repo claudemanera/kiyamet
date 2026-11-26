@@ -71,6 +71,7 @@ public class GunBenchMenu extends PanelMenu {
     protected void draw() {
         ItemStack g = gun();
         Item[] tabIcons = {Items.SPYGLASS, Items.IRON_NUGGET, Items.LANTERN, Ui.item("kiyamet:magazine"), Items.RED_DYE, Items.ANVIL};
+        c.setItem(8, Ui.glint(Ui.icon(Ui.item("kiyamet:ak47"), Ui.text("BUILD GUNS", ChatFormatting.GOLD, ChatFormatting.BOLD), Ui.text("Make any of the " + com.kiyamet.registry.ModItems.WEAPONS.length + " guns and all ammo here", ChatFormatting.GRAY), Ui.text("Click to open", ChatFormatting.YELLOW)), true));
         for (int i = 0; i < TABS.length; i++)
             c.setItem(TABS[i], Ui.glint(Ui.icon(tabIcons[i], Ui.text(TAB_NAMES[i], i == tab ? ChatFormatting.GREEN : ChatFormatting.WHITE, ChatFormatting.BOLD),
                     Ui.text(i == tab ? "▶ open" : "Click to open", ChatFormatting.GRAY)), i == tab));
@@ -122,6 +123,7 @@ public class GunBenchMenu extends PanelMenu {
     @Override
     protected boolean click(int slot, ClickType type) {
         if (slot == 49) { player.closeContainer(); return false; }
+        if (slot == 8) { GunCraftMenu.open(player, 0); return false; }
         for (int i = 0; i < TABS.length; i++) if (slot == TABS[i]) { tab = i; return true; }
         ItemStack g = gun();
         if (tab == 5) {

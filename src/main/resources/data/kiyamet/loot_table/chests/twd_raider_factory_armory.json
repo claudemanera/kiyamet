@@ -92,6 +92,21 @@
               }
             }
           ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:marksman_rifle",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:akm_classic",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:ak74",
+          "weight": 2
         }
       ]
     }

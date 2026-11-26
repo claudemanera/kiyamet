@@ -6,3 +6,4 @@ out/
 .idea/
 client.jar
 src/main/resources/assets/kiyamet/textures/item/*_stone.png
+__pycache__/

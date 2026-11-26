@@ -72,6 +72,21 @@
               }
             }
           ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:bolt_sniper",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:akm_classic",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:service_pistol",
+          "weight": 2
         }
       ]
     }

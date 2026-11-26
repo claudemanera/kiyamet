@@ -72,6 +72,21 @@
               }
             }
           ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:bolt_sniper",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:hunting_rifle",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:tactical_pistol",
+          "weight": 2
         }
       ]
     }

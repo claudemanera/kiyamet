@@ -52,6 +52,21 @@
           "type": "minecraft:item",
           "name": "kiyamet:sonic_lure",
           "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:rpk",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:tactical_pistol",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:ak74",
+          "weight": 2
         }
       ]
     }

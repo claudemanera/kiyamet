@@ -72,6 +72,21 @@
               }
             }
           ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:aks74u",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:compact_pistol",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:revolver",
+          "weight": 2
         }
       ]
     }

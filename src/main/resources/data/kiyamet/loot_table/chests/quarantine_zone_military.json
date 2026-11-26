@@ -72,6 +72,21 @@
           "type": "minecraft:item",
           "name": "kiyamet:night_vision",
           "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:hunting_rifle",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:ak47",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:aks74u",
+          "weight": 2
         }
       ]
     }

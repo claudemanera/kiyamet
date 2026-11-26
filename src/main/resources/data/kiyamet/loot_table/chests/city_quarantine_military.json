@@ -1,69 +1,84 @@
 {
- "type": "minecraft:chest",
- "pools": [
-  {
-   "rolls": {
-    "type": "minecraft:uniform",
-    "min": 3,
-    "max": 6
-   },
-   "entries": [
+  "type": "minecraft:chest",
+  "pools": [
     {
-     "type": "minecraft:item",
-     "name": "kiyamet:arrow_rifle",
-     "weight": 3
-    },
-    {
-     "type": "minecraft:item",
-     "name": "kiyamet:arrow_shotgun",
-     "weight": 2
-    },
-    {
-     "type": "minecraft:item",
-     "name": "minecraft:arrow",
-     "weight": 8,
-     "functions": [
-      {
-       "function": "minecraft:set_count",
-       "count": {
+      "rolls": {
         "type": "minecraft:uniform",
-        "min": 12,
-        "max": 32
-       }
-      }
-     ]
-    },
-    {
-     "type": "minecraft:item",
-     "name": "minecraft:iron_helmet",
-     "weight": 4
-    },
-    {
-     "type": "minecraft:item",
-     "name": "kiyamet:emp_bomb",
-     "weight": 1
-    },
-    {
-     "type": "minecraft:item",
-     "name": "kiyamet:night_vision",
-     "weight": 1
-    },
-    {
-     "type": "minecraft:item",
-     "name": "minecraft:cooked_beef",
-     "weight": 5,
-     "functions": [
-      {
-       "function": "minecraft:set_count",
-       "count": {
-        "type": "minecraft:uniform",
-        "min": 2,
+        "min": 3,
         "max": 6
-       }
-      }
-     ]
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:arrow_rifle",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:arrow_shotgun",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:arrow",
+          "weight": 8,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 12,
+                "max": 32
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_helmet",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:emp_bomb",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:night_vision",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:cooked_beef",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 2,
+                "max": 6
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:ak47",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:marksman_rifle",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:revolver",
+          "weight": 2
+        }
+      ]
     }
-   ]
-  }
- ]
+  ]
 }

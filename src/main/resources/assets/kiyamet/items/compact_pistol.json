@@ -1,0 +1,128 @@
+{
+ "model": {
+  "type": "minecraft:composite",
+  "models": [
+   {
+    "type": "minecraft:model",
+    "model": "kiyamet:item/compact_pistol",
+    "tints": [
+     {
+      "type": "minecraft:custom_model_data",
+      "index": 0,
+      "default": -1
+     }
+    ]
+   },
+   {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "cases": [
+     {
+      "when": "red_dot",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/compact_pistol_red_dot"
+      }
+     },
+     {
+      "when": "holo",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/compact_pistol_holo"
+      }
+     },
+     {
+      "when": "acog",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/compact_pistol_acog"
+      }
+     },
+     {
+      "when": "sniper",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/compact_pistol_sniper"
+      }
+     }
+    ],
+    "fallback": {
+     "type": "minecraft:empty"
+    }
+   },
+   {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "index": 1,
+    "cases": [
+     {
+      "when": "short",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/compact_pistol_short"
+      }
+     },
+     {
+      "when": "long",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/compact_pistol_long"
+      }
+     }
+    ],
+    "fallback": {
+     "type": "minecraft:empty"
+    }
+   },
+   {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "index": 2,
+    "cases": [
+     {
+      "when": "flashlight",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/compact_pistol_flashlight"
+      }
+     },
+     {
+      "when": "laser",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/compact_pistol_laser"
+      }
+     }
+    ],
+    "fallback": {
+     "type": "minecraft:empty"
+    }
+   },
+   {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "index": 3,
+    "cases": [
+     {
+      "when": "extended",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/compact_pistol_extended"
+      }
+     },
+     {
+      "when": "drum",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/compact_pistol_drum"
+      }
+     }
+    ],
+    "fallback": {
+     "type": "minecraft:empty"
+    }
+   }
+  ]
+ }
+}

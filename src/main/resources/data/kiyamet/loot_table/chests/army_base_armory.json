@@ -82,6 +82,21 @@
           "type": "minecraft:item",
           "name": "kiyamet:arrow_launcher",
           "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:service_pistol",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:ak47",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:revolver",
+          "weight": 2
         }
       ]
     }

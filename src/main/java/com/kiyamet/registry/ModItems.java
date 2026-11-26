@@ -27,7 +27,8 @@ public final class ModItems {
             "teleport_gun", "emp_bomb", "laser_rifle", "shield_generator", "time_stopper", "black_hole_bomb", "energy_sword"};
     public static final String[] WEAPONS = {"arrow_pistol", "arrow_rifle", "double_arrow_rifle", "arrow_shotgun", "silenced_arrow_pistol",
             "arrow_repeater", "toxic_arrow_rifle", "frost_arrow_gun", "arrow_sniper", "incendiary_repeater", "tesla_arrow_gun", "arrow_gatling",
-            "harpoon_gun", "arrow_railgun", "arrow_launcher", "void_arrow_launcher", "homing_arrow_gun", "apocalypse_cannon"};
+            "harpoon_gun", "arrow_railgun", "arrow_launcher", "void_arrow_launcher", "homing_arrow_gun", "apocalypse_cannon",
+            "service_pistol", "compact_pistol", "tactical_pistol", "hand_cannon", "revolver", "magnum_revolver", "machine_pistol", "golden_pistol", "flare_pistol", "ak47", "akm_classic", "ak74", "aks74u", "ak_tactical", "rpk", "golden_ak", "ak12", "ak_grenadier", "bolt_sniper", "hunting_rifle", "marksman_rifle", "anti_materiel_rifle", "ghillie_sniper", "silent_sniper", "lever_rifle", "longshot_rifle", "survivor_smg"};
     public static final String[] PARTS = {"circuit", "energy_cell", "vaccine", "bandage", "tech_core", "metal_plate", "fuel_canister",
             "lens", "void_shard", "energy_core", "ruby"};
     public static final String[] SINGLE = {"robot_core_trooper", "robot_core_drone", "robot_core_heavy", "radio", "walker_guts", "medkit", "repair_kit", "stone_gauntlet", "stone_codex_page_1", "stone_codex_page_2",

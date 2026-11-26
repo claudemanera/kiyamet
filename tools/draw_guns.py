@@ -341,6 +341,305 @@ def apocalypse_cannon(g):
     g.rect(14, 20, 16, 23, 'gunmetal')
 
 
+# ---------------------------------------------------------------- 1.5 armoury: pistols
+def pistol_base(g, slide='gunmetal', frame='black', gripm='black', x=7, length=14, barrel=3):
+    g.rect(x, 10, x + length, 13, slide)
+    for xx in range(x + 1, x + 6, 2): g.px(xx, 11, MAT[slide][0])          # rear serrations
+    g.px(x + length - 3, 12, MAT[slide][0])                                 # ejection port
+    g.rect(x + 2, 14, x + length - 2, 15, frame)
+    g.rect(x + length - 5, 14, x + length - 2, 14, MAT and frame)            # dust cover rail
+    g.rect(x + length + 1, 11, x + length + barrel, 12, 'steel')
+    grip(g, x + 1, 15, 7, gripm, 2)
+    guard(g, x + 6, 15)
+    sights(g, x + 1, x + length - 1, 9)
+
+@gun
+def service_pistol(g):
+    pistol_base(g)
+    g.px(9, 18, MAT['black'][3]).px(9, 20, MAT['black'][3])
+
+@gun
+def compact_pistol(g):
+    pistol_base(g, 'steel', 'black', 'rubber', x=9, length=10, barrel=2)
+
+@gun
+def tactical_pistol(g):
+    pistol_base(g, 'tan', 'black', 'tan', x=6, length=15, barrel=3)
+    for xx in range(14, 19, 2): g.px(xx, 15, MAT['black'][3])               # rail notches
+    g.rect(23, 10, 26, 13, 'black'); g.px(26, 11, MAT['black'][3])          # compensator
+
+@gun
+def hand_cannon(g):
+    g.rect(5, 9, 24, 13, 'steel')                                           # big slab slide
+    g.rect(5, 9, 24, 9, 'white')
+    for xx in range(6, 11, 2): g.rect(xx, 10, xx, 12, MAT['steel'][0] and 'gunmetal')
+    g.rect(15, 11, 18, 11, 'gunmetal')
+    g.rect(24, 10, 27, 12, 'gunmetal'); g.px(27, 11, (14, 14, 16))
+    g.rect(7, 14, 21, 15, 'steel')
+    grip(g, 7, 16, 8, 'darkwood', 2)
+    g.px(7, 19, MAT['brass'][2]).px(6, 22, MAT['brass'][2])
+    guard(g, 13, 16)
+    sights(g, 6, 23, 8)
+
+@gun
+def revolver(g):
+    g.rect(14, 10, 27, 11, 'steel')                                         # barrel
+    g.rect(14, 12, 25, 12, 'gunmetal')                                      # ejector rod
+    g.px(26, 9, MAT['black'][1])
+    g.rect(8, 9, 14, 14, 'gunmetal')                                        # frame
+    g.rect(10, 10, 14, 14, 'steel')                                         # cylinder
+    for xx in (11, 13): g.rect(xx, 10, xx, 14, MAT['steel'][0] and 'gunmetal')
+    g.px(7, 9, MAT['black'][1]).px(6, 10, MAT['black'][1])                  # hammer
+    g.poly([(5, 14), (10, 14), (9, 21), (4, 22), (3, 20)], 'wood')
+    g.px(6, 17, MAT['brass'][3])
+    guard(g, 10, 15)
+
+@gun
+def magnum_revolver(g):
+    revolver(g)
+    g.rect(14, 9, 29, 12, 'steel'); g.rect(14, 9, 29, 9, 'black')          # vent rib + full lug
+    for xx in range(16, 29, 3): g.px(xx, 9, MAT['black'][3])
+    g.px(29, 10, (14, 14, 16))
+    g.poly([(5, 14), (10, 14), (9, 21), (4, 22), (3, 20)], 'rubber')
+    for yy in (16, 18, 20): g.px(5, yy, MAT['rubber'][0])
+
+@gun
+def machine_pistol(g):
+    pistol_base(g, 'black', 'black', 'black', x=7, length=13, barrel=2)
+    g.rect(13, 16, 15, 25, 'gunmetal')                                      # long stick mag
+    g.rect(13, 25, 16, 25, 'black'); g.px(14, 22, MAT['steel'][2])
+    g.rect(1, 12, 6, 12, 'steel'); g.rect(1, 12, 1, 15, 'steel')            # folding wire stock
+    g.px(20, 15, GLOW['red'])                                               # select-fire dot
+
+@gun
+def golden_pistol(g):
+    hand_cannon(g)
+    g.rect(5, 9, 24, 13, 'brass'); g.rect(7, 14, 21, 15, 'brass')
+    for xx in range(6, 11, 2): g.rect(xx, 10, xx, 12, 'copper')
+    g.rect(24, 10, 27, 12, 'brass'); g.px(27, 11, (40, 24, 6))
+    for (x, y) in ((14, 11), (17, 11), (20, 11)): g.px(x, y, GLOW['white'])  # engraving glints
+    grip(g, 7, 16, 8, 'black', 2)
+    g.px(7, 19, GLOW['gold']).px(6, 22, GLOW['gold'])
+
+@gun
+def flare_pistol(g):
+    g.rect(9, 10, 18, 14, 'red')
+    g.rect(18, 9, 27, 14, 'red'); g.rect(26, 9, 27, 14, 'black')            # fat barrel
+    g.rect(19, 10, 25, 10, MAT['red'][3] and 'red')
+    g.px(27, 11, GLOW['orange']).px(27, 12, GLOW['gold']).px(28, 11, GLOW['orange']).px(29, 12, (255, 220, 120))
+    grip(g, 10, 15, 7, 'black', 2)
+    guard(g, 14, 15)
+    g.px(8, 10, MAT['black'][1])
+
+# ---------------------------------------------------------------- AK family ("keleş")
+def ak(g, wood='wood', metal='gunmetal', stock='full', mag='curved', barrel_end=29, hand='wood'):
+    if stock == 'full':
+        g.poly([(0, 13), (8, 11), (8, 15), (3, 18), (0, 19)], wood)
+        g.rect(0, 13, 0, 19, 'rubber')
+    elif stock == 'fold':
+        g.line(1, 11, 8, 11, MAT['steel'][1]).line(1, 16, 8, 14, MAT['steel'][1]).line(1, 11, 1, 16, MAT['steel'][1])
+    elif stock == 'poly':
+        g.poly([(0, 12), (8, 11), (8, 15), (4, 16), (0, 18)], 'black')
+        g.rect(2, 13, 5, 14, 'rubber'); g.rect(0, 12, 0, 18, 'rubber')
+    g.rect(8, 10, 17, 14, metal)                                            # receiver
+    g.rect(8, 9, 16, 9, metal)                                              # dust cover
+    g.px(10, 12, MAT[metal][0]).px(15, 12, MAT[metal][3])                   # selector & rivet
+    g.line(9, 11, 13, 11, MAT[metal][0])
+    g.rect(17, 11, 23, 14, hand)                                            # lower handguard
+    g.rect(17, 9, 23, 10, hand)                                             # upper handguard/gas tube
+    g.rect(23, 9, 24, 9, metal)
+    g.rect(23, 11, barrel_end, 12, 'steel')                                 # barrel
+    g.px(barrel_end - 3, 10, MAT['black'][1]).px(barrel_end - 3, 9, MAT['black'][1])   # front sight post
+    g.rect(barrel_end - 1, 11, barrel_end, 12, 'black')                     # slant brake
+    g.px(14, 8, MAT['black'][1])                                            # rear sight
+    if mag == 'curved':
+        g.poly([(13, 15), (17, 15), (20, 22), (16, 23)], 'gunmetal' if metal != 'gunmetal' else 'black')
+        for t in (17, 19, 21): g.px(13 + (t - 15) // 2 + 2, t, MAT['black'][3])
+    elif mag == 'drum':
+        g.rect(13, 15, 16, 16, 'black')
+        g.poly([(11, 17), (18, 17), (19, 20), (18, 23), (11, 23), (10, 20)], 'black')
+        g.rect(13, 19, 16, 21, 'gunmetal'); g.px(14, 20, MAT['steel'][3])
+    grip(g, 9, 15, 5, wood if stock != 'poly' else 'black', 1)
+    guard(g, 11, 15)
+
+@gun
+def ak47(g):
+    ak(g)
+
+@gun
+def akm_classic(g):
+    ak(g, 'darkwood', 'black', hand='darkwood')
+    for xx in (18, 20, 22): g.px(xx, 13, MAT['darkwood'][0])                # finger grooves
+
+@gun
+def ak74(g):
+    ak(g, 'wood', 'gunmetal', stock='poly', hand='red' if False else 'black')
+    g.poly([(13, 15), (17, 15), (20, 22), (16, 23)], 'copper')              # plum polymer mag
+    g.rect(28, 10, 30, 13, 'black'); g.px(29, 10, MAT['black'][3])         # chamber brake
+
+@gun
+def aks74u(g):
+    ak(g, stock='fold', barrel_end=25, hand='wood')
+    g.rect(23, 10, 26, 13, 'black'); g.px(26, 11, (14, 14, 16))            # booster
+    g.rect(17, 9, 21, 10, 'wood')
+
+@gun
+def ak_tactical(g):
+    ak(g, stock='poly', hand='black', metal='black')
+    g.rect(16, 7, 23, 8, 'gunmetal')                                        # top rail
+    for xx in range(16, 24, 2): g.px(xx, 7, MAT['gunmetal'][3])
+    g.poly([(13, 15), (17, 15), (20, 22), (16, 23)], 'tan')
+    g.rect(19, 15, 20, 18, 'black')                                         # vertical grip
+
+@gun
+def rpk(g):
+    ak(g, barrel_end=30, mag='drum')
+    g.rect(23, 11, 30, 12, 'steel')
+    g.line(24, 13, 22, 19, MAT['steel'][1]).line(25, 13, 27, 19, MAT['steel'][1])   # bipod
+    g.poly([(0, 12), (8, 11), (8, 15), (4, 16), (2, 19), (0, 19)], 'wood')         # club-foot stock
+
+@gun
+def golden_ak(g):
+    ak(g, 'darkwood', 'brass', hand='darkwood')
+    g.poly([(13, 15), (17, 15), (20, 22), (16, 23)], 'brass')
+    for (x, y) in ((10, 11), (12, 13), (15, 10), (19, 22)): g.px(x, y, GLOW['white'])
+    g.rect(28, 11, 29, 12, 'brass')
+
+@gun
+def ak12(g):
+    ak(g, stock='poly', hand='black', metal='black')
+    g.rect(8, 8, 23, 8, 'gunmetal')                                         # full-length rail
+    for xx in range(8, 24, 2): g.px(xx, 8, MAT['gunmetal'][3])
+    g.rect(27, 10, 30, 13, 'gunmetal'); g.px(30, 11, (14, 14, 16))
+    g.poly([(13, 15), (17, 15), (20, 22), (16, 23)], 'olive')
+
+@gun
+def ak_grenadier(g):
+    ak(g)
+    g.rect(17, 14, 26, 16, 'gunmetal')                                      # underbarrel launcher
+    g.rect(25, 14, 26, 16, 'black'); g.px(26, 15, (14, 14, 16))
+    g.rect(19, 17, 20, 19, 'black')
+    g.px(24, 15, MAT['red'][2])
+
+# ---------------------------------------------------------------- sniper rifles
+def bolt(g, x, y, mat='steel'):
+    g.px(x, y, MAT[mat][2]).px(x, y + 1, MAT[mat][1]).px(x - 1, y + 2, MAT['black'][1])
+
+def long_scope(g, x0, x1, y, lens='cyan'):
+    g.rect(x0 + 2, y, x1 - 2, y + 2, 'black')
+    g.rect(x0, y - 1, x0 + 2, y + 3, 'black'); g.rect(x1 - 2, y - 1, x1, y + 3, 'black')
+    g.rect((x0 + x1) // 2, y - 2, (x0 + x1) // 2 + 1, y - 1, 'gunmetal')
+    g.px(x1, y + 1, GLOW[lens]).px(x1, y, (170, 240, 255)).px(x0, y + 1, (70, 130, 170))
+    g.rect(x0 + 3, y + 3, x0 + 4, y + 4, 'gunmetal'); g.rect(x1 - 4, y + 3, x1 - 3, y + 4, 'gunmetal')
+
+@gun
+def bolt_sniper(g):
+    g.poly([(0, 13), (10, 13), (12, 16), (6, 17), (2, 18), (0, 20)], 'darkwood')
+    g.rect(0, 13, 0, 20, 'rubber')
+    g.rect(10, 12, 18, 15, 'darkwood')
+    g.rect(10, 11, 16, 12, 'steel')
+    bolt(g, 13, 13)
+    g.rect(18, 12, 31, 13, 'steel')
+    long_scope(g, 7, 20, 7)
+    grip(g, 9, 16, 4, 'darkwood', 1)
+    guard(g, 12, 16)
+
+@gun
+def hunting_rifle(g):
+    g.poly([(0, 14), (9, 13), (11, 16), (5, 17), (0, 20)], 'wood')
+    g.rect(9, 12, 22, 15, 'wood')
+    g.rect(10, 11, 17, 12, 'gunmetal')
+    bolt(g, 14, 13, 'gunmetal')
+    g.rect(22, 12, 30, 13, 'gunmetal')
+    g.px(29, 11, MAT['brass'][2])
+    long_scope(g, 9, 19, 8, 'gold')
+    for xx in (19, 21): g.px(xx, 14, MAT['wood'][0])
+    g.px(3, 16, MAT['tan'][2]).px(26, 14, MAT['tan'][2])                    # sling swivels
+    grip(g, 9, 16, 3, 'wood', 1)
+
+@gun
+def marksman_rifle(g):
+    g.poly([(0, 12), (8, 11), (8, 16), (4, 16), (0, 19)], 'black')
+    g.rect(2, 12, 6, 13, 'rubber')
+    g.rect(8, 10, 18, 14, 'tan')
+    g.rect(18, 10, 25, 14, 'tan')
+    for xx in range(19, 25, 2): g.px(xx, 12, MAT['tan'][0])
+    g.rect(25, 11, 30, 12, 'black'); g.rect(29, 10, 31, 13, 'black')
+    g.rect(8, 8, 24, 8, 'black')
+    long_scope(g, 9, 19, 4)
+    g.poly([(12, 15), (15, 15), (16, 20), (13, 20)], 'black')
+    grip(g, 9, 15, 5, 'black', 1)
+
+@gun
+def anti_materiel_rifle(g):
+    g.poly([(0, 11), (7, 11), (7, 17), (3, 17), (0, 20)], 'black')
+    g.rect(0, 11, 0, 20, 'rubber'); g.rect(2, 13, 5, 14, 'gunmetal')
+    g.rect(7, 10, 19, 15, 'gunmetal')
+    g.rect(7, 9, 19, 9, 'black')
+    g.rect(19, 11, 28, 13, 'steel')
+    g.rect(27, 9, 31, 15, 'black')                                          # huge brake
+    for yy in (10, 12, 14): g.px(29, yy, (14, 14, 16))
+    long_scope(g, 6, 19, 4, 'red')
+    g.rect(12, 16, 16, 21, 'black'); g.px(14, 19, MAT['black'][3])         # box mag
+    g.line(22, 14, 19, 22, MAT['steel'][1]).line(23, 14, 26, 22, MAT['steel'][1])
+    grip(g, 8, 16, 5, 'black', 1)
+
+@gun
+def ghillie_sniper(g):
+    bolt_sniper(g)
+    leaf = [MAT['olive'][1], MAT['olive'][2], (70, 96, 40), (96, 84, 46)]
+    for i, (x, y) in enumerate(((2, 12), (4, 12), (6, 11), (9, 11), (12, 10), (15, 10), (18, 11), (21, 11), (24, 11), (3, 19), (7, 17), (1, 15), (11, 16), (26, 14), (22, 14))):
+        g.px(x, y, leaf[i % 4]); g.px(x + 1, y + (i % 2), leaf[(i + 1) % 4])
+
+@gun
+def silent_sniper(g):
+    g.poly([(0, 12), (8, 11), (8, 16), (4, 16), (0, 19)], 'navy')
+    g.rect(8, 10, 17, 15, 'navy')
+    bolt(g, 12, 12)
+    g.rect(17, 11, 21, 13, 'steel')
+    g.rect(21, 10, 31, 14, 'black')                                         # integral suppressor
+    for xx in range(22, 31, 2): g.px(xx, 10, MAT['black'][3])
+    long_scope(g, 7, 18, 5, 'ice')
+    grip(g, 9, 16, 5, 'navy', 1)
+    g.rect(12, 16, 14, 19, 'black')
+
+@gun
+def lever_rifle(g):
+    g.poly([(0, 14), (8, 12), (9, 16), (4, 17), (0, 20)], 'wood')
+    g.rect(8, 11, 14, 15, 'brass')                                          # brass receiver
+    g.rect(14, 11, 30, 12, 'gunmetal')
+    g.rect(14, 13, 27, 14, 'gunmetal')                                      # tube mag
+    g.rect(15, 13, 22, 15, 'wood')
+    g.px(29, 10, MAT['brass'][2]).px(12, 10, MAT['black'][1])
+    g.line(9, 16, 9, 19, MAT['gunmetal'][1]).line(9, 19, 13, 19, MAT['gunmetal'][1]).line(13, 16, 13, 19, MAT['gunmetal'][1])   # lever loop
+    g.px(11, 17, MAT['steel'][2])
+
+@gun
+def longshot_rifle(g):
+    g.poly([(0, 12), (9, 12), (9, 17), (4, 17), (0, 20)], 'white')
+    g.rect(3, 11, 7, 12, 'white')
+    g.rect(9, 11, 18, 16, 'white')
+    g.glowline(10, 14, 17, 'cyan')
+    g.rect(18, 12, 31, 13, 'steel')
+    for xx in range(20, 30, 3): g.rect(xx, 11, xx, 14, 'navy')              # cooling rings
+    long_scope(g, 7, 22, 6, 'cyan')
+    grip(g, 10, 17, 5, 'navy', 1)
+    g.rect(14, 17, 16, 20, 'navy'); g.px(15, 18, GLOW['cyan'])
+
+# ---------------------------------------------------------------- extras
+@gun
+def survivor_smg(g):
+    g.line(1, 12, 6, 12, MAT['steel'][1]).line(1, 12, 1, 16, MAT['steel'][1]).line(1, 16, 6, 15, MAT['steel'][1])
+    g.rect(6, 10, 19, 14, 'gunmetal')
+    g.rect(19, 10, 25, 13, 'black')
+    for xx in range(20, 25, 2): g.px(xx, 10, MAT['black'][3])
+    g.rect(25, 11, 27, 12, 'steel')
+    g.rect(13, 15, 15, 23, 'black'); g.px(14, 21, MAT['black'][3])
+    g.rect(6, 15, 9, 15, 'tan')                                             # duct tape repair
+    grip(g, 8, 15, 6, 'rubber', 1)
+    guard(g, 10, 15)
+
+
 if __name__ == '__main__':
     for name, f in D.items():
         g = G(); f(g); g.render().save(f'{OUT}/{name}.png')

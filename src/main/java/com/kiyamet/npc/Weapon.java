@@ -27,8 +27,8 @@ public final class Weapon {
 
     public static ItemStack random(RandomSource r, Faction f, Role role, int level) {
         String[] melee = {"minecraft:wooden_sword", "minecraft:stone_axe", "minecraft:iron_axe", "minecraft:iron_sword", "minecraft:stone_sword"};
-        String[] guns = {"kiyamet:arrow_pistol", "kiyamet:silenced_arrow_pistol", "kiyamet:arrow_rifle", "kiyamet:arrow_shotgun", "kiyamet:arrow_repeater"};
-        String[] bigGuns = {"kiyamet:arrow_sniper", "kiyamet:arrow_gatling", "kiyamet:double_arrow_rifle", "kiyamet:incendiary_repeater"};
+        String[] guns = {"kiyamet:arrow_pistol", "kiyamet:silenced_arrow_pistol", "kiyamet:arrow_rifle", "kiyamet:arrow_shotgun", "kiyamet:arrow_repeater", "kiyamet:service_pistol", "kiyamet:revolver", "kiyamet:ak47", "kiyamet:hunting_rifle", "kiyamet:survivor_smg", "kiyamet:aks74u"};
+        String[] bigGuns = {"kiyamet:arrow_sniper", "kiyamet:arrow_gatling", "kiyamet:double_arrow_rifle", "kiyamet:incendiary_repeater", "kiyamet:rpk", "kiyamet:bolt_sniper", "kiyamet:ak12", "kiyamet:marksman_rifle", "kiyamet:ak_tactical"};
         if (f == Faction.WHISPERER) return new ItemStack(Ui.item(r.nextBoolean() ? "minecraft:stone_sword" : "minecraft:iron_axe"));
         if (role == Role.COMMANDER) return new ItemStack(Ui.item(bigGuns[r.nextInt(bigGuns.length)]));
         float gunChance = f == Faction.RAIDER ? 0.6f : role == Role.GUARD ? 0.55f : 0.2f;

@@ -77,6 +77,21 @@
           "type": "minecraft:item",
           "name": "kiyamet:silenced_arrow_pistol",
           "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:compact_pistol",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:service_pistol",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "kiyamet:lever_rifle",
+          "weight": 2
         }
       ]
     }

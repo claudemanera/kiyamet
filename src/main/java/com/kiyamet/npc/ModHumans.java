@@ -43,6 +43,8 @@ public final class ModHumans {
 
         ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
             if (source.getEntity() instanceof HumanEntity killer && entity.level() instanceof ServerLevel sl) killer.onKill(sl, entity);
+            if (entity instanceof HumanEntity dead && dead.faction() == Faction.RAIDER && entity.level() instanceof ServerLevel sl4 && sl4.random.nextFloat() < 0.1f)
+                dead.spawnAtLocation(sl4, new net.minecraft.world.item.ItemStack(com.kiyamet.twd.ModTwd.LOST_NOTE));
             // everyone is infected: 80% of dead players rise again as a walker
             if (entity instanceof ServerPlayer p && p.level().random.nextFloat() < 0.8f) {
                 KZombie z = ModEntities.ZOMBIES.get(p.level().random.nextBoolean() ? ZombieKind.RUNNER : ZombieKind.FARMER).create(p.level(), EntitySpawnReason.CONVERSION);

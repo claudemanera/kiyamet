@@ -65,9 +65,24 @@ public final class BaseRaids {
 
     public static boolean bloodMoon() { return bloodMoon; }
 
+    /** Refused tribute: they come tonight. */
+    public static void scheduleTonight(ServerPlayer p) {
+        if (ACTIVE.containsKey(p.getUUID())) return;
+        PENDING.put(p.getUUID(), (long) p.level().getServer().getTickCount() + 600);
+    }
+
+    /** Paid tribute: the raid clock starts over with a few days of grace. */
+    public static void paid(ServerPlayer p) {
+        PENDING.remove(p.getUUID());
+        p.setAttached(LAST_RAID, day(p) + 3);
+    }
+
+    public static boolean busy(ServerPlayer p) { return PENDING.containsKey(p.getUUID()) || ACTIVE.containsKey(p.getUUID()); }
+
     public static void init() {
         EntitySleepEvents.START_SLEEPING.register((e, pos) -> {
             if (!(e instanceof ServerPlayer p) || p.level().dimension() != Level.OVERWORLD) return;
+            if (!p.level().getEntitiesOfClass(com.kiyamet.twd.ShelterCore.class, p.getBoundingBox().inflate(512), c -> p.getUUID().equals(c.owner())).isEmpty()) return;
             BlockPos old = p.getAttached(BASE);
             p.setAttached(BASE, pos.immutable());
             if (old == null || old.distSqr(pos) > 48 * 48)

@@ -150,6 +150,7 @@ public class KZombie extends Zombie implements GeoEntity {
     public void die(DamageSource source) {
         if (level() instanceof ServerLevel sl && random.nextFloat() < 0.35f)
             spawnAtLocation(sl, new net.minecraft.world.item.ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(com.kiyamet.Kiyamet.id("walker_guts"))));
+        if (level() instanceof ServerLevel sl3 && random.nextFloat() < 0.03f) spawnAtLocation(sl3, new net.minecraft.world.item.ItemStack(com.kiyamet.twd.ModTwd.LOST_NOTE));
         if (kind == ZombieKind.EXPLODER && level() instanceof ServerLevel server)
             server.explode(this, getX(), getY(), getZ(), 2.5f, Level.ExplosionInteraction.MOB);
         super.die(source);
@@ -162,6 +163,7 @@ public class KZombie extends Zombie implements GeoEntity {
         BlockPos below = blockPosition().below();
         if (!level.getBlockState(below).isSolid() || !level.getFluidState(blockPosition()).isEmpty()) return false;
         if (level instanceof ServerLevel sl && com.kiyamet.world.ModStructures.inSanctuary(sl, blockPosition())) return false;
+        if (level instanceof ServerLevel sl2 && com.kiyamet.twd.ShelterCore.protects(sl2, blockPosition())) return false;
         int power = level instanceof ServerLevel s ? Difficulty.nearestPower(s, blockPosition()) : 0;
         if (power < kind.minPower) return false;
         boolean day = level instanceof ServerLevel s && s.isBrightOutside();

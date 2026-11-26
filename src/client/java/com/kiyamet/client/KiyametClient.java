@@ -16,6 +16,8 @@ public class KiyametClient implements ClientModInitializer {
         ModEntities.ZOMBIES.forEach((kind, type) -> EntityRendererRegistry.register(type, ctx -> new KZombieRenderer<>(ctx, kind)));
         com.kiyamet.boss.ModBosses.TYPES.forEach((kind, type) -> EntityRendererRegistry.register(type, ctx -> new BossRenderer<>(ctx, kind)));
         com.kiyamet.vehicle.ModVehicles.TYPES.forEach((k, t) -> EntityRendererRegistry.register(t, ctx -> new SimpleGeoRenderer<>(ctx, k.id, 1.0f)));
+        EntityRendererRegistry.register(com.kiyamet.twd.ModTwd.SHELTER_CORE, ctx -> new SimpleGeoRenderer<>(ctx, "shelter_core", 1.0f));
+        EntityRendererRegistry.register(com.kiyamet.twd.ModTwd.MISSION_BOARD, ctx -> new SimpleGeoRenderer<>(ctx, "mission_board", 1.0f));
         EntityRendererRegistry.register(com.kiyamet.ally.ModAllies.TURRET, ctx -> new SimpleGeoRenderer<>(ctx, "scout_drone", 1.0f));
         ModKeys.init();
         net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback.EVENT.register((type, renderer, helper, ctx) -> {

@@ -62,6 +62,7 @@ public final class LabRecipes {
         r("kiyamet:shield_generator", 1, 700, "kiyamet:tech_core", 1, "kiyamet:energy_cell", 3, "minecraft:shield", 1);
         r("kiyamet:time_stopper", 1, 800, "kiyamet:energy_core", 1, "minecraft:clock", 1, "kiyamet:circuit", 4);
         r("kiyamet:black_hole_bomb", 1, 900, "kiyamet:void_shard", 2, "kiyamet:energy_core", 1);
+        r("kiyamet:shelter_core", 1, 120, "kiyamet:tech_core", 1, "kiyamet:energy_cell", 2, "kiyamet:circuit", 4, "minecraft:iron_block", 2);
         r("kiyamet:atv_keys", 1, 30, "minecraft:iron_ingot", 12, "kiyamet:metal_plate", 4, "kiyamet:circuit", 1, "kiyamet:fuel_canister", 1);
         r("kiyamet:car_sedan_keys", 1, 40, "minecraft:iron_ingot", 16, "kiyamet:metal_plate", 6, "kiyamet:circuit", 2, "minecraft:glass_pane", 6);
         r("kiyamet:motorcycle_keys", 1, 60, "minecraft:iron_ingot", 10, "kiyamet:metal_plate", 4, "kiyamet:circuit", 2, "minecraft:leather", 4);

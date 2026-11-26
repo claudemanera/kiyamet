@@ -209,5 +209,9 @@
  "item.kiyamet.car_armored_suv_keys": "Armored SUV Keys",
  "item.kiyamet.atv_keys": "ATV Keys",
  "item.kiyamet.motorcycle_keys": "Motorcycle Keys",
- "item.kiyamet.armored_truck_keys": "Armored Truck Keys"
+ "item.kiyamet.armored_truck_keys": "Armored Truck Keys",
+ "item.kiyamet.shelter_core": "Shelter Core",
+ "item.kiyamet.lost_note": "Lost Note",
+ "entity.kiyamet.shelter_core": "Shelter Core",
+ "entity.kiyamet.mission_board": "Mission Board"
 }

@@ -461,7 +461,7 @@
  "tooltip.kiyamet.expedition_pack": "Backpack: 66 slots|Sneak + right-click: wear it · U: open|Upgrade by crafting it with the next material|Sneak + right-click a block: put it down (2 fit in a block)",
  "tooltip.kiyamet.apocalypse_pack": "Backpack: 80 slots|Sneak + right-click: wear it · U: open|Upgrade by crafting it with the next material|Sneak + right-click a block: put it down (2 fit in a block)",
  "tooltip.kiyamet.lab_table": "Laboratory: craft guns, gadgets, parts and ammo|Recipes open with Engineering",
- "tooltip.kiyamet.mission_board": "Daily jobs and the story missions",
+ "tooltip.kiyamet.mission_board": "Place your own mission board: 3 new jobs every day",
  "tooltip.kiyamet.shelter_core": "Claims your base: raids and safety",
  "tooltip.kiyamet.generator": "Powers turrets, fences and lights|Stack up to 65 · needs fuel",
  "tooltip.kiyamet.reinforced_planks": "Walkers need longer to break it",
@@ -771,5 +771,17 @@
  "item.kiyamet.meatballs": "Meatballs in Tomato Sauce",
  "block.kiyamet.cooking_table": "Cooking Table",
  "block.kiyamet.main_table": "Main Table",
- "item.kiyamet.mission_board": "Mission Board"
+ "item.kiyamet.mission_board": "Mission Board",
+ "block.kiyamet.solar_panel": "Solar Panel",
+ "block.kiyamet.wind_turbine": "Wind Turbine",
+ "block.kiyamet.settlement_bell": "Settlement Bell",
+ "item.kiyamet.electric_drill": "Electric Drill",
+ "item.kiyamet.chainsaw": "Chainsaw",
+ "tooltip.kiyamet.solar_panel": "Powers everything within 8 blocks|while the sun is up and it sees the sky|No fuel needed",
+ "tooltip.kiyamet.wind_turbine": "Powers everything within 8 blocks|day and night (needs open sky or height)",
+ "tooltip.kiyamet.electric_drill": "Mines 3x3 · sneak to mine one block|Charges while you stand in power",
+ "tooltip.kiyamet.chainsaw": "Fells a whole tree at once · sneak for one log|Charges while you stand in power",
+ "tooltip.kiyamet.settlement_bell": "Found your own settlement|Companion panel → Settle here · chests within 12 blocks are the stockpile|Settlers eat 1 food each morning and need beds",
+ "tooltip.kiyamet.main_table": "Builds every TWD station: furniture, cooking, guns,|lab, vehicles, power, the settlement bell and mission boards",
+ "tooltip.kiyamet.cooking_table": "All 30 meals are cooked here|Shift-click a dish to cook many"
 }

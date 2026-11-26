@@ -41,8 +41,11 @@ public final class Tooltips {
                 lines.add(at++, Component.literal("Ammo: " + t.label).withStyle(t.color));
                 String eff = switch (s.effect()) { case 1 -> "Poisons"; case 2 -> "Freezes"; case 3 -> "Burns"; case 4 -> "Heavy: slows you while firing"; default -> null; };
                 if (eff != null) lines.add(at++, Component.literal(eff).withStyle(ChatFormatting.DARK_AQUA));
+                lines.add(at++, Component.literal("Clip " + com.kiyamet.gunsmith.GunHandling.clip(stack) + "/" + com.kiyamet.gunsmith.GunHandling.clipSize(stack) + " · R reloads / clears jams"
+                        + (com.kiyamet.gunsmith.GunHandling.jammed(stack) ? " · JAMMED" : "")).withStyle(com.kiyamet.gunsmith.GunHandling.jammed(stack) ? ChatFormatting.RED : ChatFormatting.YELLOW));
                 return;
             }
+            if (path.equals("electric_drill") || path.equals("chainsaw")) lines.add(at++, Component.literal("Battery " + com.kiyamet.power.Renewables.charge(stack) + "/" + com.kiyamet.power.Renewables.MAX_CHARGE).withStyle(ChatFormatting.AQUA));
             String key = "tooltip.kiyamet." + path;
             com.kiyamet.food.Recipes.Meal meal = com.kiyamet.food.Recipes.meal(path);
             if (meal != null) lines.add(at++, Component.literal("Hearty meal: fills " + meal.food() + " hunger + Well Fed " + meal.fedMinutes() + " min").withStyle(ChatFormatting.GOLD));

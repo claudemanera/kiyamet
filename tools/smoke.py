@@ -103,6 +103,18 @@ if p:
     for a in ('orange', 'peach', 'strawberry', 'cabbage_seeds', 'wolf_pelt', 'polar_pelt', 'orange_sapling'):
         cmd(p, 'summon item 4 101 4 {Item:{id:"kiyamet:%s",count:1}}' % a, 0.3)
     cmd(p, 'summon item 4 101 4 {Item:{id:"minecraft:iron_chestplate",count:1,components:{"minecraft:equippable":{slot:"chest",asset_id:"kiyamet:fur_wolf_iron"},"minecraft:custom_data":{Fur:"WOLF",FurBase:"minecraft:iron"}}}}', 1)
+    # 1.7: furniture, bags, fridge, new cars, meals
+    fx = -12
+    for f in ('double_bed', 'royal_bed', 'wardrobe', 'fridge', 'kitchen_cabinet', 'kitchen_sink', 'stove', 'dining_table', 'wooden_chair', 'armchair', 'sofa', 'coffee_table',
+              'bookcase', 'office_desk', 'floor_lamp', 'television', 'bathtub', 'toilet', 'gun_rack', 'nightstand', 'furniture_table'):
+        cmd(p, 'setblock %d 101 -12 kiyamet:%s' % (fx, f), 0.2); fx += 2
+    cmd(p, 'setblock 14 101 -12 kiyamet:placed_bag[lower=3,upper=11]', 0.3)
+    cmd(p, 'item replace block -6 101 -12 container.0 with kiyamet:tomato 4', 0.3)
+    for v in ('sports_gt', 'sports_rs', 'sports_turbo', 'taxi', 'muscle_car', 'jeep', 'van', 'school_bus', 'fire_truck', 'superbike_vortex', 'superbike_blaze'):
+        cmd(p, 'summon kiyamet:%s %d 101 18' % (v, -30 + 6 * ('sports_gt', 'sports_rs', 'sports_turbo', 'taxi', 'muscle_car', 'jeep', 'van', 'school_bus', 'fire_truck', 'superbike_vortex', 'superbike_blaze').index(v)), 0.4)
+    for a in ('ratatouille', 'survivor_ration', 'gold_money_bag', 'spoiled_food'):
+        cmd(p, 'summon item 3 101 -3 {Item:{id:"kiyamet:%s",count:1}}' % a, 0.2)
+    cmd(p, 'twd date', 0.3)
     # 1.6 more: auto turret, thrown bombs, cars, eggs, cash
     cmd(p, 'summon kiyamet:auto_turret 2 101 -4', 0.5)
     cmd(p, 'summon kiyamet:thrown_bomb 2 104 -2 {Item:{id:"kiyamet:frag_grenade",count:1}}', 0.5)

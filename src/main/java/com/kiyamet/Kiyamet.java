@@ -38,6 +38,10 @@ public class Kiyamet implements ModInitializer {
         com.kiyamet.power.Renewables.init();
         com.kiyamet.settle.Settlement.init();
         com.kiyamet.settle.Family.init();
+        com.kiyamet.element.ElementItems.init();
+        com.kiyamet.element.ElementMobs.init();
+        com.kiyamet.element.ElementPowers.init();
+        com.kiyamet.element.Temples.init();
         com.kiyamet.food.Spoilage.init();
         com.kiyamet.furniture.Furniture.init();
         com.kiyamet.water.Thirst.init();

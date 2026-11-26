@@ -20,7 +20,22 @@ public enum BossKind {
     THE_GENERAL    ("the_general",     "The General",     900, 18, 18, 0.25, 2.0f, 1.19f, 2.31f, BossEvent.BossBarColor.RED,    false, new Ability[]{SUMMON_SOLDIERS, ARROW_BARRAGE, CHARGE}, "metal_plate:12,tech_core:3,ruby:14"),
     DEEP_HORROR    ("deep_horror",     "The Deep Horror", 1100, 20, 12, 0.24, 2.5f, 0.9f, 2.38f, BossEvent.BossBarColor.BLUE,   false, new Ability[]{PULL, SLAM, TOXIC_BURST}, "void_shard:3,energy_core:2,ruby:16"),
     ASSEMBLY_MOTHER("assembly_mother", "Assembly Mother", 1000, 16, 18, 0.22, 2.0f, 1.12f, 2.06f, BossEvent.BossBarColor.YELLOW, false, new Ability[]{SUMMON_ROBOTS, BEAM, SHOCKWAVE}, "circuit:12,tech_core:4,energy_core:2"),
-    FROST_GIANT    ("frost_giant",     "Frost Giant",     1000, 22, 14, 0.24, 2.0f, 1.38f, 2.5f, BossEvent.BossBarColor.WHITE,  false, new Ability[]{FREEZE, SLAM, LEAP_SLAM}, "ruby:16,metal_plate:8,energy_core:1");
+    FROST_GIANT    ("frost_giant",     "Frost Giant",     1000, 22, 14, 0.24, 2.0f, 1.38f, 2.5f, BossEvent.BossBarColor.WHITE,  false, new Ability[]{FREEZE, SLAM, LEAP_SLAM}, "ruby:16,metal_plate:8,energy_core:1"),
+    // 2.0: the fourteen element lords, each waiting at the bottom of its temple
+    FLAME_LORD("flame_lord", "Flame Lord", 900, 22, 12, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.RED, true, new Ability[]{FIRE_RING, FIREBALL, CHARGE}, "ancient_rod:1,ruby:12,energy_core:2"),
+    LIGHTNING_LORD("lightning_lord", "Lightning Lord", 900, 20, 12, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.YELLOW, false, new Ability[]{LIGHTNING, LEVITATE, BEAM}, "ancient_rod:1,ruby:12,energy_core:2"),
+    EARTH_LORD("earth_lord", "Earth Lord", 1100, 24, 20, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.GREEN, false, new Ability[]{SLAM, SHOCKWAVE, LEAP_SLAM}, "ancient_rod:1,ruby:12,energy_core:2"),
+    SHADOW_LORD("shadow_lord", "Shadow Lord", 850, 24, 10, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.PURPLE, false, new Ability[]{SHADOW_CLOAK, TELEPORT_BEHIND, DARKNESS}, "ancient_rod:1,ruby:12,energy_core:2"),
+    SMOKE_LORD("smoke_lord", "Smoke Lord", 850, 20, 10, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.WHITE, false, new Ability[]{TOXIC_BURST, DARKNESS, CURSE}, "ancient_rod:1,ruby:12,energy_core:2"),
+    SPIRIT_LORD("spirit_lord", "Spirit Lord", 900, 20, 12, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.BLUE, false, new Ability[]{SOUL_DRAIN, LEVITATE, SUMMON_GUARDS}, "ancient_rod:1,ruby:12,energy_core:2"),
+    ELECTRIC_LORD("electric_lord", "Electric Lord", 950, 22, 14, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.BLUE, false, new Ability[]{BEAM, LIGHTNING, SHOCKWAVE}, "ancient_rod:1,ruby:12,energy_core:2"),
+    THUNDER_LORD("thunder_lord", "Thunder Lord", 1000, 26, 16, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.BLUE, false, new Ability[]{CHARGE, LIGHTNING, TIME_SLOW}, "ancient_rod:1,ruby:12,energy_core:2"),
+    ICE_LORD("ice_lord", "Ice Lord", 1000, 22, 16, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.WHITE, false, new Ability[]{FREEZE, TIME_SLOW, SLAM}, "ancient_rod:1,ruby:12,energy_core:2"),
+    FIRE_LORD("fire_lord", "Fire Lord", 950, 24, 14, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.RED, true, new Ability[]{FIREBALL, FIRE_RING, SLAM}, "ancient_rod:1,ruby:12,energy_core:2"),
+    WATER_LORD("water_lord", "Water Lord", 950, 20, 12, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.BLUE, false, new Ability[]{PULL, SPIT, REGEN}, "ancient_rod:1,ruby:12,energy_core:2"),
+    AIR_LORD("air_lord", "Air Lord", 850, 20, 10, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.WHITE, false, new Ability[]{LEVITATE, TELEPORT_BEHIND, ARROW_BARRAGE}, "ancient_rod:1,ruby:12,energy_core:2"),
+    WIND_LORD("wind_lord", "Wind Lord", 900, 22, 12, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.GREEN, false, new Ability[]{PULL, SHOCKWAVE, CHARGE}, "ancient_rod:1,ruby:12,energy_core:2"),
+    METAL_LORD("metal_lord", "Metal Lord", 1200, 24, 24, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.WHITE, false, new Ability[]{SLAM, REGEN, SHOCKWAVE}, "ancient_rod:1,ruby:12,energy_core:2");
 
     public final String id, title, drops;
     public final double health, damage, armor, speed;

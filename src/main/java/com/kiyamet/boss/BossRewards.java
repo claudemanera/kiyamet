@@ -30,7 +30,7 @@ public final class BossRewards {
                 next.add(boss.kind.id);
                 p.setAttached(KILLED, List.copyOf(next));
                 for (Skill s : COMBAT) SkillManager.addXp(p, s, boss.kind.firstKillXp() / (double) COMBAT.length);
-                p.sendSystemMessage(Component.literal("BOSS DEFEATED: " + boss.kind.title + " (first kill! " + next.size() + "/15)")
+                p.sendSystemMessage(Component.literal("BOSS DEFEATED: " + boss.kind.title + " (first kill! " + next.size() + "/" + BossKind.values().length + ")")
                         .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
             } else {
                 for (Skill s : COMBAT) SkillManager.addXp(p, s, 150);

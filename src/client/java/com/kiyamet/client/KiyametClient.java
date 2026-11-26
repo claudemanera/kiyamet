@@ -23,6 +23,8 @@ public class KiyametClient implements ClientModInitializer {
         EntityRendererRegistry.register(com.kiyamet.item.BombProjectile.TYPE, net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
         EntityRendererRegistry.register(com.kiyamet.furniture.Furniture.SEAT, net.minecraft.client.renderer.entity.NoopRenderer::new);
         com.kiyamet.wild.ModWild.TYPES.forEach((k, t) -> EntityRendererRegistry.register(t, ctx -> new SimpleGeoRenderer<>(ctx, k.id, 1.0f)));
+        com.kiyamet.element.ElementMobs.GUARDIANS.forEach((e, t) -> EntityRendererRegistry.register(t, ctx -> new SimpleGeoRenderer<>(ctx, e.guardian(), 1.0f)));
+        com.kiyamet.element.ElementMobs.SAGES.forEach((e, t) -> EntityRendererRegistry.register(t, ctx -> new SimpleGeoRenderer<>(ctx, e.sage(), 1.0f)));
         ModKeys.init();
         Tooltips.init();
         ThirstHud.init();

@@ -64,7 +64,7 @@ public class WildAnimal extends TamableAnimal implements GeoEntity {
         goalSelector.addGoal(0, new FloatGoal(this));
         goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
         if (k == null) return;
-        if (k.predator || k == WildKind.WILD_BOAR || k == WildKind.MOOSE) goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.25, true));
+        if (k.predator || k == WildKind.WILD_BOAR || k == WildKind.MOOSE || k.dog()) goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.25, true));
         if (k == WildKind.DEER) { goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Player.class, 14f, 1.3, 1.6)); goalSelector.addGoal(3, new PanicGoal(this, 1.7)); }
         goalSelector.addGoal(4, new FollowOwnerGoal(this, 1.2, 10f, 3f));
         goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.8));
@@ -73,7 +73,11 @@ public class WildAnimal extends TamableAnimal implements GeoEntity {
         targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new HurtByTargetGoal(this));
-        if (k.zombie) targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        if (k.dog()) targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, net.minecraft.world.entity.Mob.class, 5, true, false,
+                (e, l) -> isTame() && e instanceof net.minecraft.world.entity.monster.Enemy && !(e instanceof net.minecraft.world.entity.monster.Creeper)));
+        if (k == WildKind.CAT) goalSelector.addGoal(3, new AvoidEntityGoal<>(this, net.minecraft.world.entity.Mob.class, 8f, 1.2, 1.5, e -> e instanceof net.minecraft.world.entity.monster.Enemy));
+        if (k.zombie) { targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, false));
+            targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, com.kiyamet.npc.HumanEntity.class, false)); }
         if (k.predator && !k.zombie) targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, WildAnimal.class, 10, true, false,
                 (e, l) -> e instanceof WildAnimal w && (w.kind == WildKind.DEER || w.kind == WildKind.WILD_BOAR) && !isTame()));
     }
@@ -90,6 +94,7 @@ public class WildAnimal extends TamableAnimal implements GeoEntity {
         super.tick();
         if (!(level() instanceof ServerLevel sl) || kind == null) return;
         if (kind == WildKind.ICE_BEAR && tickCount % 20 == 0) sl.sendParticles(ParticleTypes.SNOWFLAKE, getX(), getY() + 1, getZ(), 2, 0.4, 0.4, 0.4, 0.01);
+        if (kind.pet() && isTame()) petTick(sl);
         if (!kind.predator || kind.zombie || isTame() || getTarget() != null || tickCount % 10 != 0) return;
         // stalking: the longer you hang around, the closer it gets to charging
         Player p = sl.getNearestPlayer(this, 18);
@@ -102,6 +107,29 @@ public class WildAnimal extends TamableAnimal implements GeoEntity {
         if (stalk == 6 && p instanceof ServerPlayer sp) { playSound(SoundEvents.POLAR_BEAR_WARNING, 1f, kind == WildKind.LION || kind == WildKind.TIGER ? 0.6f : 0.9f);
             sp.displayClientMessage(Component.literal("The " + kind.title.toLowerCase() + " is watching you...").withStyle(ChatFormatting.GOLD), true); }
         if (stalk > 14 + random.nextInt(8)) { setTarget(p); stalk = 0; playSound(SoundEvents.RAVAGER_ROAR, 1.2f, 1.4f); }
+    }
+
+    /** dogs smell walkers and bark (marks them), huskies keep you warm, cats bring you little gifts at dawn */
+    void petTick(ServerLevel sl) {
+        if (!(getOwner() instanceof ServerPlayer owner) || owner.level() != sl) return;
+        if (kind.dog() && tickCount % 100 == 0) {
+            var foes = sl.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, getBoundingBox().inflate(kind == WildKind.SHEPHERD ? 28 : 20), e -> e instanceof net.minecraft.world.entity.monster.Enemy && e.isAlive());
+            if (!foes.isEmpty()) {
+                playSound(SoundEvents.WOLF_SOUNDS.get(net.minecraft.world.entity.animal.wolf.WolfSoundVariants.SoundSet.CLASSIC).growlSound().value(), 1.4f, 1f);
+                for (var f : foes) f.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.GLOWING, 110, 0, false, false));
+                if (tickCount % 600 == 0) owner.displayClientMessage(Component.literal((hasCustomName() ? getCustomName().getString() : kind.title) + " smells " + foes.size() + " walker" + (foes.size() > 1 ? "s" : "") + " nearby!").withStyle(ChatFormatting.GOLD), true);
+            }
+        }
+        if (kind == WildKind.CAT && sl.getDayTime() % 24000 == 0 && distanceTo(owner) < 20) {
+            net.minecraft.world.item.Item[] gifts = {net.minecraft.world.item.Items.STRING, net.minecraft.world.item.Items.FEATHER, net.minecraft.world.item.Items.RABBIT_HIDE, net.minecraft.world.item.Items.IRON_NUGGET, net.minecraft.world.item.Items.COD, net.minecraft.world.item.Items.PHANTOM_MEMBRANE};
+            spawnAtLocation(sl, new ItemStack(gifts[random.nextInt(gifts.length)]));
+            owner.displayClientMessage(Component.literal("Your cat brought you a gift.").withStyle(ChatFormatting.LIGHT_PURPLE), true);
+        }
+    }
+
+    /** a tamed husky lying next to you is like a small campfire */
+    public static float petWarmth(Player p) {
+        return p.level().getEntitiesOfClass(WildAnimal.class, p.getBoundingBox().inflate(4), w -> w.kind == WildKind.HUSKY && w.isTame() && w.isOwnedBy(p)).isEmpty() ? 0 : 4f;
     }
 
     @Override
@@ -120,11 +148,21 @@ public class WildAnimal extends TamableAnimal implements GeoEntity {
         ItemStack s = player.getItemInHand(hand);
         if (kind == null) return super.mobInteract(player, hand);
         if (isTame() && isOwnedBy(player)) {
-            if (s.is(ModItems.get("venison")) || s.is(ModItems.get("cooked_venison"))) { if (!level().isClientSide()) { heal(10); s.consume(1, player); } return InteractionResult.SUCCESS; }
+            if (s.is(ModItems.get("venison")) || s.is(ModItems.get("cooked_venison")) || (kind.dog() && isMeat(s)) || (kind == WildKind.CAT && s.is(net.minecraft.world.item.Items.COD))) { if (!level().isClientSide()) { heal(10); s.consume(1, player); } return InteractionResult.SUCCESS; }
             if (!level().isClientSide()) { setOrderedToSit(!isOrderedToSit()); setInSittingPose(isOrderedToSit()); getNavigation().stop(); setTarget(null); }
             return InteractionResult.SUCCESS;
         }
-        if (kind.tameable && !isTame() && s.is(ModItems.get("venison"))) {
+        if (kind.pet() && !isTame() && (kind.dog() ? (s.is(net.minecraft.world.item.Items.BONE) || s.has(net.minecraft.core.component.DataComponents.FOOD) && s.getItem() != net.minecraft.world.item.Items.ROTTEN_FLESH && isMeat(s))
+                : (s.is(net.minecraft.world.item.Items.COD) || s.is(net.minecraft.world.item.Items.SALMON) || s.is(net.minecraft.world.item.Items.COOKED_COD)))) {
+            if (!(player instanceof ServerPlayer sp)) return InteractionResult.SUCCESS;
+            s.consume(1, player);
+            if (random.nextInt(3) == 0) {
+                tame(sp); setOrderedToSit(false); level().broadcastEntityEvent(this, (byte) 7);
+                sp.sendSystemMessage(Component.literal("The " + kind.title.toLowerCase() + " is your pet now! Right-click to make it sit or follow. Use a name tag to name it.").withStyle(ChatFormatting.GREEN));
+            } else level().broadcastEntityEvent(this, (byte) 6);
+            return InteractionResult.CONSUME;
+        }
+        if (kind.tameable && !kind.pet() && !isTame() && s.is(ModItems.get("venison"))) {
             if (!(player instanceof ServerPlayer sp)) return InteractionResult.SUCCESS;
             s.consume(1, player);
             trust++; stalk = 0;
@@ -153,6 +191,11 @@ public class WildAnimal extends TamableAnimal implements GeoEntity {
         if (kind.zombie) spawnAtLocation(level, new ItemStack(net.minecraft.world.item.Items.ROTTEN_FLESH, 1 + random.nextInt(3)));
         if (!kind.pelt.isEmpty() && random.nextFloat() < (kind.zombie ? 0.25f : 0.8f)) spawnAtLocation(level, new ItemStack(ModItems.get(kind.pelt)));
         if (kind == WildKind.DEER || kind == WildKind.MOOSE || kind == WildKind.WILD_BOAR) spawnAtLocation(level, new ItemStack(net.minecraft.world.item.Items.LEATHER, 1 + random.nextInt(2)));
+    }
+
+    static boolean isMeat(ItemStack s) {
+        String n = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(s.getItem()).getPath();
+        return n.contains("beef") || n.contains("pork") || n.contains("chicken") || n.contains("mutton") || n.contains("rabbit") || n.contains("meat") || n.contains("venison");
     }
 
     @Override public boolean isFood(ItemStack s) { return false; }

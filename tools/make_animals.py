@@ -56,7 +56,7 @@ class Beast:
                                 if ly > 0.78 and kind != 'mane' and mat != 'leg': c = list(mix(base, belly, 0.6))
                         if kind == 'stripe' and face != 'bottom':
                             k = (x - x0) + int(2.2 * math.sin((y - y0) * 0.9 + x0)) if face != 'top' else (y - y0) + int(1.6 * math.sin(x * 0.8))
-                            if k % 5 in (0,) or (k % 9 == 4 and r.random() < 0.7): c = [26, 20, 18]; n = r.randint(-3, 3)
+                            if k % 5 in (0,) or (k % 9 == 4 and r.random() < 0.7): c = list(mats.get('stripec', ((26, 20, 18), ''))[0]); n = r.randint(-3, 3)
                         elif kind == 'spots' and face in ('side', 'top') and r.random() < 0.06: c = list(light(base, 0.65))
                         elif kind == 'mane': n += r.randint(-16, 16); c = list(mix(base, (60, 30, 12), 0.25 * ((x * 7 + y * 3) % 4) / 3))
                         elif kind == 'scale':
@@ -100,7 +100,7 @@ class Beast:
                "texture_height": s.th, "visible_bounds_width": scale_bounds, "visible_bounds_height": scale_bounds, "visible_bounds_offset": [0, 1.5, 0]},
                "bones": [s.bones[n] for n in s.order]}]}
         for ident, zombie in ((s.name, False), (ZNAME.get(s.name), True)):
-            if not ident: continue
+            if not ident or (not zombie and s.name in ONLY_ZOMBIE): continue
             json.dump(geo(ident), open(f'{A}/geckolib/models/entity/{ident}.geo.json', 'w'), indent=1)
             s.paint(mats, zombie).save(f'{A}/textures/entity/{ident}.png')
             json.dump({"format_version": "1.8.0", "animations": anims if not zombie else zanims(anims)},
@@ -116,7 +116,8 @@ def rot_px(c, r, x, y, kind):
     return [max(0, min(255, int(k))) for k in c]
 
 
-ZNAME = {'lion': 'zombie_lion', 'tiger': 'zombie_tiger', 'brown_bear': 'zombie_bear', 'deer': 'zombie_deer'}
+ZNAME = {'lion': 'zombie_lion', 'tiger': 'zombie_tiger', 'brown_bear': 'zombie_bear', 'deer': 'zombie_deer', 'crocodile': 'zombie_crocodile', 'grey_wolf': 'zombie_wolf'}
+ONLY_ZOMBIE = {'grey_wolf'}
 
 
 def zanims(anims):
@@ -332,7 +333,29 @@ def moose():
     b.save(M((72, 52, 36), (110, 92, 72), shag=((50, 36, 26), 'mane')), anims(gait=20, run=34, jaw=14, tail_sway=4), scale_bounds=6)
 
 
+def dog(name, base, belly, saddle=None, ears_up=True, bulky=1.0, legH=8, wide_head=1.0):
+    k = bulky
+    b, (hw, hh, hd, hy, hz, sd, y0, z0) = quad(name, L=15 * k, W=6.5 * k, H=6.5 * k, legH=legH, legT=2.2 * k, head=(6 * k * wide_head, 5.5, 5), snout=(3.4 * k * wide_head, 3, 3.6 if wide_head == 1 else 2.8), neck=(4, 0.5), neck_len=4,
+                                               tail=(9, 1.5, -30 if name == 'husky' else 35), ears=(1.6, 2.6 if ears_up else 1.4, 0.8), tw=128, th=128)
+    if saddle: b.cube('body', (-3.4 * k, y0 + 6.5 * k - 0.3, z0 + 3), (6.8 * k, 0.8, 9 * k), 'saddle')                       # dark back
+    if wide_head > 1:                                                                                                      # pitbull: big jaw muscles, broad chest
+        b.cube('head', (-hw / 2 - 0.6, hy - hh / 2, hz - hd + 0.5), (hw + 1.2, 3, 3.5), 'fur')
+        b.cube('body', (-W2 / 2, y0 - 0.5, z0 - 0.5), (W2, 5.5, 4), 'fur') if (W2 := 6.5 * k + 1.5) else None
+    m = M(base, belly, saddle=(saddle or base, 'fur'), collar=((180, 40, 40), 'teeth'), tag=((230, 200, 80), 'teeth'))
+    b.save(m, anims(gait=30, run=46, jaw=26, tail_sway=26), scale_bounds=3)
+
+
+def cat():
+    b, (hw, hh, hd, hy, hz, sd, y0, z0) = quad('stray_cat', L=10, W=4.5, H=4.5, legH=5, legT=1.5, head=(4.6, 4, 3.6), snout=(2.2, 1.6, 1.2), neck=(3, 0.6), tail=(10, 1, -40),
+                                               ears=(1.3, 1.6, 0.6), tw=64, th=128)
+    b.save(M((214, 140, 70), (244, 226, 200), 'stripe', stripec=((150, 84, 34), '')), anims(gait=26, run=40, jaw=14, tail_sway=18), scale_bounds=2)
+
+
 os.makedirs(f'{A}/geckolib/models/entity', exist_ok=True)
+dog('german_shepherd', (176, 120, 64), (214, 178, 120), saddle=(40, 32, 28)); dog('husky', (150, 156, 166), (246, 246, 250), saddle=(90, 94, 104))
+dog('rottweiler', (34, 28, 26), (150, 90, 44), bulky=1.15, ears_up=False); cat()
+dog('pitbull', (30, 30, 34), (62, 62, 68), bulky=1.15, ears_up=True, legH=6.5, wide_head=1.25)
+dog('grey_wolf', (156, 152, 146), (214, 208, 198), saddle=(96, 92, 88))
 lion(); tiger(); bear('brown_bear', (104, 70, 44), (130, 94, 64)); bear('ice_bear', (236, 240, 246), (214, 222, 234), big=1.12, frost=True)
 crocodile(); boar(); deer(); moose()
 
@@ -372,9 +395,12 @@ for k, (fur, t) in PELTS.items():
 from draw_eggs import egg
 EGGC = {'lion': ((204, 158, 88), (120, 74, 34)), 'tiger': ((228, 128, 40), (24, 20, 18)), 'brown_bear': ((104, 70, 44), (60, 40, 26)), 'ice_bear': ((236, 240, 246), (150, 196, 236)),
         'crocodile': ((74, 94, 52), (196, 192, 140)), 'wild_boar': ((86, 66, 54), (210, 200, 180)), 'deer': ((156, 104, 62), (240, 230, 214)), 'moose': ((72, 52, 36), (170, 140, 100)),
-        'zombie_lion': ((130, 140, 100), (110, 30, 26)), 'zombie_tiger': ((150, 130, 90), (110, 30, 26)), 'zombie_bear': ((90, 92, 70), (110, 30, 26)), 'zombie_deer': ((120, 116, 90), (110, 30, 26))}
+        'zombie_lion': ((130, 140, 100), (110, 30, 26)), 'zombie_tiger': ((150, 130, 90), (110, 30, 26)), 'zombie_bear': ((90, 92, 70), (110, 30, 26)), 'zombie_deer': ((120, 116, 90), (110, 30, 26)),
+        'german_shepherd': ((176, 120, 64), (40, 32, 28)), 'husky': ((150, 156, 166), (246, 246, 250)), 'rottweiler': ((34, 28, 26), (150, 90, 44)), 'stray_cat': ((214, 140, 70), (150, 84, 34)), 'pitbull': ((30, 30, 34), (200, 200, 206)),
+        'zombie_wolf': ((120, 124, 104), (110, 30, 26)), 'zombie_crocodile': ((84, 96, 70), (110, 30, 26))}
 TITLES = {'lion': 'Lion', 'tiger': 'Tiger', 'brown_bear': 'Brown Bear', 'ice_bear': 'Ice Bear', 'crocodile': 'Crocodile', 'wild_boar': 'Wild Boar', 'deer': 'Deer', 'moose': 'Moose',
-          'zombie_lion': 'Walker Lion', 'zombie_tiger': 'Walker Tiger', 'zombie_bear': 'Walker Bear', 'zombie_deer': 'Walker Deer'}
+          'zombie_lion': 'Walker Lion', 'zombie_tiger': 'Walker Tiger', 'zombie_bear': 'Walker Bear', 'zombie_deer': 'Walker Deer',
+          'german_shepherd': 'German Shepherd', 'husky': 'Husky', 'rottweiler': 'Rottweiler', 'stray_cat': 'Stray Cat', 'pitbull': 'Black Pitbull', 'zombie_wolf': 'Walker Wolf', 'zombie_crocodile': 'Walker Crocodile'}
 for n, (base, spot) in EGGC.items():
     egg(n, base, spot, 'zombie' if n.startswith('zombie') else None)
     item(n + '_spawn_egg', TITLES[n] + ' Spawn Egg')

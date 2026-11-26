@@ -251,7 +251,7 @@ public final class Seasons {
             if (a.is(Items.LEATHER_HELMET) || a.is(Items.LEATHER_CHESTPLATE) || a.is(Items.LEATHER_LEGGINGS) || a.is(Items.LEATHER_BOOTS)) leather++;
             else if (!a.isEmpty()) metal++;
         }
-        float fur = com.kiyamet.farm.Fur.warmth(p);
+        float fur = com.kiyamet.farm.Fur.warmth(p) + com.kiyamet.wild.WildAnimal.petWarmth(p);
         if (t < 15) t += leather * 3.5f + metal * 1f + fur;
         else if (t > 24) t += leather * 1.5f + metal * 1.2f + com.kiyamet.farm.Fur.pieces(p) * 2.5f;   // fur in summer = sweating
         else t += fur * 0.3f;

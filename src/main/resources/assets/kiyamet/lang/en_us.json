@@ -744,5 +744,19 @@
  "item.kiyamet.zombie_bear_spawn_egg": "Walker Bear Spawn Egg",
  "entity.kiyamet.zombie_bear": "Walker Bear",
  "item.kiyamet.zombie_deer_spawn_egg": "Walker Deer Spawn Egg",
- "entity.kiyamet.zombie_deer": "Walker Deer"
+ "entity.kiyamet.zombie_deer": "Walker Deer",
+ "item.kiyamet.german_shepherd_spawn_egg": "German Shepherd Spawn Egg",
+ "entity.kiyamet.german_shepherd": "German Shepherd",
+ "item.kiyamet.husky_spawn_egg": "Husky Spawn Egg",
+ "entity.kiyamet.husky": "Husky",
+ "item.kiyamet.rottweiler_spawn_egg": "Rottweiler Spawn Egg",
+ "entity.kiyamet.rottweiler": "Rottweiler",
+ "item.kiyamet.stray_cat_spawn_egg": "Stray Cat Spawn Egg",
+ "entity.kiyamet.stray_cat": "Stray Cat",
+ "item.kiyamet.pitbull_spawn_egg": "Black Pitbull Spawn Egg",
+ "entity.kiyamet.pitbull": "Black Pitbull",
+ "item.kiyamet.zombie_wolf_spawn_egg": "Walker Wolf Spawn Egg",
+ "entity.kiyamet.zombie_wolf": "Walker Wolf",
+ "item.kiyamet.zombie_crocodile_spawn_egg": "Walker Crocodile Spawn Egg",
+ "entity.kiyamet.zombie_crocodile": "Walker Crocodile"
 }

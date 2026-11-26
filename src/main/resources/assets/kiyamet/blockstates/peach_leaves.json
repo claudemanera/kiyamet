@@ -1,0 +1,13 @@
+{
+ "variants": {
+  "fruit=0": {
+   "model": "kiyamet:block/peach_leaves_0"
+  },
+  "fruit=1": {
+   "model": "kiyamet:block/peach_leaves_1"
+  },
+  "fruit=2": {
+   "model": "kiyamet:block/peach_leaves_2"
+  }
+ }
+}

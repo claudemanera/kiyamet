@@ -1,0 +1,11 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "kiyamet:corn"
+ ],
+ "result": {
+  "id": "kiyamet:corn_seeds",
+  "count": 2
+ }
+}

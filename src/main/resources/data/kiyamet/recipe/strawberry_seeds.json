@@ -1,0 +1,11 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "kiyamet:strawberry"
+ ],
+ "result": {
+  "id": "kiyamet:strawberry_seeds",
+  "count": 2
+ }
+}

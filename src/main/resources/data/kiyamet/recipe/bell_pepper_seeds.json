@@ -1,0 +1,11 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "kiyamet:bell_pepper"
+ ],
+ "result": {
+  "id": "kiyamet:bell_pepper_seeds",
+  "count": 2
+ }
+}

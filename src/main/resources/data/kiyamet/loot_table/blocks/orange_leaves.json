@@ -1,0 +1,75 @@
+{
+ "type": "minecraft:block",
+ "pools": [
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:alternatives",
+     "children": [
+      {
+       "type": "minecraft:item",
+       "name": "kiyamet:orange_leaves",
+       "conditions": [
+        {
+         "condition": "minecraft:any_of",
+         "terms": [
+          {
+           "condition": "minecraft:match_tool",
+           "predicate": {
+            "items": "minecraft:shears"
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "minecraft:item",
+       "name": "kiyamet:orange_sapling",
+       "conditions": [
+        {
+         "condition": "minecraft:random_chance",
+         "chance": 0.08
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "conditions": [
+    {
+     "condition": "minecraft:block_state_property",
+     "block": "kiyamet:orange_leaves",
+     "properties": {
+      "fruit": "2"
+     }
+    }
+   ],
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:orange"
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "conditions": [
+    {
+     "condition": "minecraft:random_chance",
+     "chance": 0.05
+    }
+   ],
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:stick"
+    }
+   ]
+  }
+ ]
+}

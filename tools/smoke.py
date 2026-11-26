@@ -94,6 +94,15 @@ if p:
     # 1.5: gunsmith bench and a fully kitted gun
     cmd(p, 'setblock 2 101 2 kiyamet:gun_bench', 1)
     cmd(p, 'summon item 1 101 1 {Item:{id:"kiyamet:arrow_rifle",count:1,components:{"minecraft:custom_model_data":{strings:["acog","long","laser","drum"],colors:[9282650]},"minecraft:custom_data":{ModSCOPE:"acog",Paint:"olive"}}}}', 1)
+    # 1.6 farming: fruit trees, crops, fur-lined armor
+    cmd(p, 'setblock 6 100 6 minecraft:grass_block', 0.3); cmd(p, 'setblock 6 100 10 minecraft:grass_block', 0.3)
+    cmd(p, 'place feature kiyamet:orange_tree 6 101 6', 1); cmd(p, 'place feature kiyamet:peach_tree 6 101 10', 1)
+    cmd(p, 'setblock 9 100 6 minecraft:farmland', 0.3); cmd(p, 'setblock 9 101 6 kiyamet:tomato_crop[age=7]', 0.3)
+    cmd(p, 'setblock 9 100 8 minecraft:farmland', 0.3); cmd(p, 'setblock 9 101 8 kiyamet:corn_crop[age=3]', 0.3)
+    cmd(p, 'setblock 11 101 6 kiyamet:orange_leaves[fruit=2]', 0.3)
+    for a in ('orange', 'peach', 'strawberry', 'cabbage_seeds', 'wolf_pelt', 'polar_pelt', 'orange_sapling'):
+        cmd(p, 'summon item 4 101 4 {Item:{id:"kiyamet:%s",count:1}}' % a, 0.3)
+    cmd(p, 'summon item 4 101 4 {Item:{id:"minecraft:iron_chestplate",count:1,components:{"minecraft:equippable":{slot:"chest",asset_id:"kiyamet:fur_wolf_iron"},"minecraft:custom_data":{Fur:"WOLF",FurBase:"minecraft:iron"}}}}', 1)
     # 1.5 bullets: ammo, a loaded drum magazine, the giant shotgun
     for a in ('pistol_ammo', 'rifle_ammo', 'shotgun_shell', 'sniper_ammo', 'rocket_ammo', 'plasma_cell', 'behemoth_shotgun', 'ak_shotgun', 'ak47', 'bolt_sniper'):
         cmd(p, 'summon item 3 101 3 {Item:{id:"kiyamet:%s",count:1}}' % a, 0.3)

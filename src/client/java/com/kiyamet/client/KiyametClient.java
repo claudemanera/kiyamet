@@ -13,6 +13,7 @@ public class KiyametClient implements ClientModInitializer {
         BlockRenderLayerMap.putBlocks(ChunkSectionLayer.CUTOUT, ModBlocks.STEEL_GRATE, ModBlocks.STEEL_GATE, ModBlocks.BARBED_WIRE,
                 ModBlocks.RAZOR_WIRE, ModBlocks.ELECTRIC_FENCE, ModBlocks.SPIKE_TRAP);
         BlockRenderLayerMap.putBlock(ModBlocks.ENERGY_WALL, ChunkSectionLayer.TRANSLUCENT);
+        com.kiyamet.farm.ModFarm.CUTOUT.forEach(b -> BlockRenderLayerMap.putBlock(b, ChunkSectionLayer.CUTOUT));
         ModEntities.ZOMBIES.forEach((kind, type) -> EntityRendererRegistry.register(type, ctx -> new KZombieRenderer<>(ctx, kind)));
         com.kiyamet.boss.ModBosses.TYPES.forEach((kind, type) -> EntityRendererRegistry.register(type, ctx -> new BossRenderer<>(ctx, kind)));
         com.kiyamet.vehicle.ModVehicles.TYPES.forEach((k, t) -> EntityRendererRegistry.register(t, ctx -> new SimpleGeoRenderer<>(ctx, k.id, 1.0f)));

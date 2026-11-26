@@ -1,0 +1,6 @@
+{
+ "parent": "minecraft:block/leaves",
+ "textures": {
+  "all": "kiyamet:block/peach_leaves_1"
+ }
+}

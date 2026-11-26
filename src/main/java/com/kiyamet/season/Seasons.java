@@ -238,8 +238,10 @@ public final class Seasons {
             if (a.is(Items.LEATHER_HELMET) || a.is(Items.LEATHER_CHESTPLATE) || a.is(Items.LEATHER_LEGGINGS) || a.is(Items.LEATHER_BOOTS)) leather++;
             else if (!a.isEmpty()) metal++;
         }
-        if (t < 15) t += leather * 3.5f + metal * 1f;
-        else if (t > 24) t += leather * 1.5f + metal * 1.2f;
+        float fur = com.kiyamet.farm.Fur.warmth(p);
+        if (t < 15) t += leather * 3.5f + metal * 1f + fur;
+        else if (t > 24) t += leather * 1.5f + metal * 1.2f + com.kiyamet.farm.Fur.pieces(p) * 2.5f;   // fur in summer = sweating
+        else t += fur * 0.3f;
         if (p.getVehicle() instanceof com.kiyamet.vehicle.VehicleEntity v && v.kind != com.kiyamet.vehicle.VehicleKind.ATV && v.kind != com.kiyamet.vehicle.VehicleKind.MOTORCYCLE)
             t = t + (20 - t) * 0.4f;                           // cars have heaters and shade
         return t;

@@ -29,8 +29,19 @@ public class WorkshopMenu extends PanelMenu {
             new Build(VehicleKind.POLICE, 300, new Object[]{"minecraft:iron_ingot", 20, "kiyamet:metal_plate", 6, "kiyamet:fuel_canister", 5, "kiyamet:circuit", 4, "minecraft:redstone", 8}),
             new Build(VehicleKind.AMBULANCE, 340, new Object[]{"minecraft:iron_ingot", 20, "kiyamet:metal_plate", 6, "kiyamet:fuel_canister", 5, "kiyamet:circuit", 4, "kiyamet:medkit", 4}),
             new Build(VehicleKind.ARMORED_SUV, 500, new Object[]{"kiyamet:metal_plate", 16, "kiyamet:steel_block", 6, "kiyamet:fuel_canister", 6, "kiyamet:circuit", 5, "kiyamet:tech_core", 2}),
+            new Build(VehicleKind.TAXI, 180, new Object[]{"minecraft:iron_ingot", 20, "kiyamet:metal_plate", 4, "kiyamet:fuel_canister", 4, "kiyamet:circuit", 3, "minecraft:yellow_dye", 4}),
+            new Build(VehicleKind.JEEP, 240, new Object[]{"minecraft:iron_ingot", 22, "kiyamet:metal_plate", 6, "kiyamet:fuel_canister", 5, "kiyamet:circuit", 3, "minecraft:black_wool", 6}),
+            new Build(VehicleKind.VAN, 260, new Object[]{"minecraft:iron_ingot", 26, "kiyamet:metal_plate", 6, "kiyamet:fuel_canister", 5, "kiyamet:circuit", 3, "minecraft:chest", 2}),
+            new Build(VehicleKind.MUSCLE_CAR, 320, new Object[]{"minecraft:iron_ingot", 24, "kiyamet:metal_plate", 8, "kiyamet:fuel_canister", 6, "kiyamet:circuit", 4, "minecraft:black_dye", 4}),
+            new Build(VehicleKind.SCHOOL_BUS, 360, new Object[]{"minecraft:iron_ingot", 40, "kiyamet:metal_plate", 10, "kiyamet:fuel_canister", 8, "kiyamet:circuit", 4, "minecraft:glass", 12}),
+            new Build(VehicleKind.SPORTS_TURBO, 400, new Object[]{"minecraft:iron_ingot", 24, "kiyamet:metal_plate", 8, "kiyamet:fuel_canister", 6, "kiyamet:circuit", 6, "kiyamet:tech_core", 1}),
+            new Build(VehicleKind.SUPERBIKE_VORTEX, 420, new Object[]{"minecraft:iron_ingot", 14, "kiyamet:metal_plate", 4, "kiyamet:fuel_canister", 4, "kiyamet:circuit", 4, "kiyamet:tech_core", 1}),
+            new Build(VehicleKind.SPORTS_GT, 440, new Object[]{"minecraft:iron_ingot", 24, "kiyamet:metal_plate", 8, "kiyamet:fuel_canister", 6, "kiyamet:circuit", 6, "kiyamet:tech_core", 2}),
+            new Build(VehicleKind.FIRE_TRUCK, 460, new Object[]{"minecraft:iron_ingot", 40, "kiyamet:metal_plate", 14, "kiyamet:fuel_canister", 8, "kiyamet:circuit", 5, "minecraft:water_bucket", 2}),
+            new Build(VehicleKind.SPORTS_RS, 520, new Object[]{"minecraft:iron_ingot", 26, "kiyamet:metal_plate", 10, "kiyamet:fuel_canister", 6, "kiyamet:circuit", 8, "kiyamet:tech_core", 2}),
+            new Build(VehicleKind.SUPERBIKE_BLAZE, 560, new Object[]{"minecraft:iron_ingot", 16, "kiyamet:metal_plate", 6, "kiyamet:fuel_canister", 4, "kiyamet:circuit", 6, "kiyamet:tech_core", 2}),
             new Build(VehicleKind.ARMORED_TRUCK, 750, new Object[]{"kiyamet:metal_plate", 24, "kiyamet:steel_block", 8, "kiyamet:fuel_canister", 8, "kiyamet:circuit", 6, "kiyamet:tech_core", 4, "kiyamet:energy_core", 2}));
-    static final int[] SLOTS = {19, 21, 23, 25, 28, 30, 32, 34};
+    static final int[] SLOTS = {10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 32, 33, 34};
 
     public static void open(ServerPlayer p) {
         p.openMenu(new SimpleMenuProvider((id, inv, pl) -> new WorkshopMenu(id, inv, p), Component.literal("Vehicle Workshop")));

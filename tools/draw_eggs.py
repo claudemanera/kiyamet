@@ -139,7 +139,26 @@ def car(name, body, roof='sedan', extra=None):
     c.outline(0.3); c.save(f'{T}/item/{name}_kit.png')
 
 car('car_sedan', (60, 110, 170)); car('car_pickup', (170, 60, 40), 'pickup'); car('car_police', (30, 30, 36), 'police'); car('car_ambulance', (236, 236, 236), 'van')
-car('car_armored_suv', (50, 56, 50), 'suv'); car('atv', (200, 140, 30), 'atv'); car('motorcycle', (160, 30, 30), 'moto'); car('armored_truck', (80, 88, 64), 'truck')
+car('car_armored_suv', (50, 56, 50), 'suv');
+def sport(name, body, stripe=None):
+    c = C(); b = body; d = dark(b, 0.7); l = light(b, 0.3); G = (150, 200, 230); K = (26, 26, 30); W = (90, 90, 96)
+    for x in range(1, 16):
+        for y in range(9, 12): c.px(x, y, l if y == 9 else d if y == 11 else b)
+    for x in range(5, 11): c.px(x, 8, b)
+    for x in range(6, 10): c.px(x, 7, G)
+    c.px(5, 7, b); c.px(10, 7, b); c.px(13, 7, K); c.px(14, 7, K); c.px(15, 7, K); c.px(14, 8, K)
+    if stripe:
+        for x in range(1, 16): c.px(x, 10, stripe)
+    c.px(1, 10, (255, 240, 160)); c.px(15, 10, (220, 40, 40))
+    for cx in (4, 12):
+        for (a, bb) in ((-1, 0), (0, 0), (1, 0), (-1, 1), (0, 1), (1, 1), (0, -1), (0, 2), (-1, -1), (1, -1), (-1, 2), (1, 2)): c.px(cx + a, 12 + bb, K)
+        c.px(cx, 13, W)
+    c.outline(0.3); c.save(f'{T}/item/{name}_kit.png')
+sport('sports_gt', (196, 22, 26)); sport('sports_rs', (240, 196, 20)); sport('sports_turbo', (30, 80, 190), (240, 240, 244))
+car('taxi', (242, 196, 30), 'police'); car('muscle_car', (28, 28, 32)); car('jeep', (86, 98, 56), 'pickup'); car('van', (236, 236, 236), 'suv')
+car('school_bus', (244, 186, 20), 'truck'); car('fire_truck', (196, 24, 24), 'truck')
+car('superbike_vortex', (40, 190, 60), 'moto'); car('superbike_blaze', (210, 30, 30), 'moto')
+ car('atv', (200, 140, 30), 'atv'); car('motorcycle', (160, 30, 30), 'moto'); car('armored_truck', (80, 88, 64), 'truck')
 
 # ------------------------------------------------------------- vehicle workshop block
 r = random.Random(3)

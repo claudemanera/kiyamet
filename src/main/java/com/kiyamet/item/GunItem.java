@@ -92,10 +92,36 @@ public class GunItem extends Item {
     }
 
     // enchantment levels of the shot being fired (set in use())
-    private int fire, frost, vamp, boom;
+    private int fire, frost, vamp, boom, head, slayer, ap, toxic, shock, stop, rico, mark, bleed;
+    private boolean ricocheting;
 
     private void hit(ServerLevel level, ServerPlayer p, LivingEntity e, float dmg) {
+        net.minecraft.util.RandomSource r = p.getRandom();
+        if (slayer > 0 && (e.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD) || e instanceof net.minecraft.world.entity.monster.Zombie)) dmg *= 1 + 0.15f * slayer;
+        if (ap > 0 && e.getArmorValue() > 0) dmg *= 1 + 0.1f * ap;
+        if (head > 0 && r.nextFloat() < 0.08f * head) {
+            dmg *= 2;
+            level.sendParticles(ParticleTypes.CRIT, e.getX(), e.getEyeY(), e.getZ(), 12, 0.2, 0.2, 0.2, 0.2);
+            p.displayClientMessage(net.minecraft.network.chat.Component.literal("HEADSHOT!").withStyle(net.minecraft.ChatFormatting.RED, net.minecraft.ChatFormatting.BOLD), true);
+        }
         e.hurtServer(level, level.damageSources().arrow(null, p), dmg);
+        if (toxic > 0) e.addEffect(new MobEffectInstance(MobEffects.POISON, 60 + 30 * toxic, toxic - 1));
+        if (bleed > 0) e.addEffect(new MobEffectInstance(MobEffects.WITHER, 40 + 20 * bleed, bleed > 2 ? 1 : 0));
+        if (mark > 0) e.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100 * mark, 0));
+        if (stop > 0) { Vec3 k = e.position().subtract(p.position()).normalize().scale(0.35 * stop); e.push(k.x, 0.1 + 0.05 * stop, k.z); e.hurtMarked = true; }
+        if (shock > 0) {
+            int n = 0;
+            for (LivingEntity o : level.getEntitiesOfClass(LivingEntity.class, e.getBoundingBox().inflate(5), o -> o != p && o != e && o.isAlive() && o instanceof net.minecraft.world.entity.monster.Enemy)) {
+                if (n++ >= shock) break;
+                o.hurtServer(level, level.damageSources().lightningBolt(), 2 + shock);
+                trail(level, e.position().add(0, 1, 0), o.position().add(0, 1, 0), ParticleTypes.ELECTRIC_SPARK);
+            }
+        }
+        if (rico > 0 && !ricocheting && r.nextFloat() < 0.12f * rico) {
+            for (LivingEntity o : level.getEntitiesOfClass(LivingEntity.class, e.getBoundingBox().inflate(8), o -> o != p && o != e && o.isAlive() && o instanceof net.minecraft.world.entity.monster.Enemy)) {
+                ricocheting = true; trail(level, e.position().add(0, 1, 0), o.position().add(0, 1, 0), ParticleTypes.CRIT); hit(level, p, o, dmg * 0.7f); ricocheting = false; break;
+            }
+        }
         if (fire > 0) e.igniteForSeconds(3 * fire);
         if (frost > 0) { e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 40 + 30 * frost, frost - 1)); e.setTicksFrozen(Math.min(300, e.getTicksFrozen() + 50 * frost)); }
         if (vamp > 0) p.heal(dmg * 0.06f * vamp);
@@ -126,7 +152,7 @@ public class GunItem extends Item {
         int arrows = stats.mode == Mode.SHOTGUN ? 1 : stats.mode == Mode.BURST3 ? 3 : stats.mode == Mode.DOUBLE ? 2 : 1;
         int archery = SkillManager.get(p).level(Skill.ARCHERY);
         int saver = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "ammo_saver");
-        int cost = p.getRandom().nextFloat() < Math.min(0.4f, archery / 2500f) + saver * 0.15f ? 0 : arrows;   // Firearms and Ammo Saver save rounds
+        int cost = p.getRandom().nextFloat() < Math.min(0.4f, archery / 2500f) + saver * 0.12f ? 0 : arrows;   // Firearms and Ammo Saver save rounds
         String gunId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
         com.kiyamet.ammo.Ammo.Type ammo = com.kiyamet.ammo.Ammo.typeFor(gunId);
         if (cost > 0 && !com.kiyamet.ammo.Ammo.take(p, ammo, cost)) {
@@ -144,11 +170,21 @@ public class GunItem extends Item {
         float modCd = (scope.equals("sniper") ? 1.15f : 1f) * (mag.equals("extended") ? 0.8f : mag.equals("drum") ? 0.65f : 1f);
         double aim = (scope.equals("holo") ? 0.25 : 0) + (light.equals("laser") ? 0.35 : 0);
         int modNoise = muzzle.equals("long") ? -99 : muzzle.equals("short") ? -2 : mag.equals("drum") ? 1 : 0;
+        int silent = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "silent_rounds");
         float dmg = modDmg * stats.damage * (1f + SkillManager.get(p).level(Skill.ARCHERY) / 2000f) * (1f + 0.12f * com.kiyamet.enchant.Enchants.gunLevel(level, stack, "high_caliber"));
         fire = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "incendiary_rounds");
         frost = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "frost_rounds");
         vamp = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "vampiric_rounds");
         boom = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "explosive_tips");
+        head = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "headhunter");
+        slayer = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "walker_slayer");
+        ap = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "armor_piercing");
+        toxic = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "toxic_rounds");
+        shock = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "shock_rounds");
+        stop = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "stopping_power");
+        rico = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "ricochet");
+        mark = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "marked_target");
+        bleed = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "bleeding_rounds");
         Vec3 eye = p.getEyePosition().add(0, -0.1, 0);
         double range = modRange * (stats.mode == Mode.PIERCE ? 96 : 48) * (1 + 0.15 * com.kiyamet.enchant.Enchants.gunLevel(level, stack, "long_barrel"));
         switch (stats.mode) {
@@ -221,7 +257,7 @@ public class GunItem extends Item {
         else level.playSound(null, p.blockPosition(), SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.PLAYERS, 1.0f,
                 ammo == com.kiyamet.ammo.Ammo.Type.SNIPER ? 0.55f : ammo == com.kiyamet.ammo.Ammo.Type.PISTOL ? 1.25f : 0.9f);
         if (!quiet) level.sendParticles(ParticleTypes.SMOKE, eye.x + p.getLookAngle().x, eye.y + p.getLookAngle().y, eye.z + p.getLookAngle().z, 3, 0.05, 0.05, 0.05, 0.01);
-        int noise = Math.max(0, stats.noise + modNoise);
+        int noise = Math.max(0, Math.round((stats.noise + modNoise) * Math.max(0.1f, 1 - 0.3f * silent)));
         if (noise > 0) NoiseSystem.make(level, p.blockPosition(), noise, 6);
         p.getCooldowns().addCooldown(stack, Math.max(2, Math.round(modCd * stats.cooldown * (1 - 0.1f * com.kiyamet.enchant.Enchants.gunLevel(level, stack, "rapid_fire")))));
         p.displayClientMessage(com.kiyamet.ammo.Ammo.hud(p, stack, ammo), true);

@@ -84,7 +84,7 @@ public class ForgeMenu extends PanelMenu {
         c.setItem(4, stack.isEmpty() ? Ui.icon(Items.BARRIER, Ui.text("Hold the item you want to enchant", ChatFormatting.RED)) : stack.copy());
         c.setItem(0, Ui.icon(Items.EXPERIENCE_BOTTLE, Ui.text("Your XP levels: " + player.experienceLevel, ChatFormatting.GREEN),
                 Ui.text("Lapis: " + Shop.count(player, "minecraft:lapis_lazuli"), ChatFormatting.BLUE),
-                Ui.text("Enchanting " + d.level(Skill.ENCHANTING) + " · Archery " + d.level(Skill.ARCHERY), ChatFormatting.GRAY)));
+                Ui.text("Enchanting " + d.level(Skill.ENCHANTING) + " · Firearms " + d.level(Skill.ARCHERY), ChatFormatting.GRAY)));
         c.setItem(8, Ui.icon(Items.BOOK, Ui.text("How it works", ChatFormatting.GOLD),
                 Ui.text("Each click raises one enchantment by one level.", ChatFormatting.GRAY),
                 Ui.text("Higher levels unlock along the Enchanting road.", ChatFormatting.GRAY),

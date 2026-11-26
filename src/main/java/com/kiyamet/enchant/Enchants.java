@@ -31,14 +31,24 @@ public final class Enchants {
 
     /** The gun enchantments (data/kiyamet/enchantment/*.json): id, title, max level, what it does. */
     public static final String[][] GUN = {
-            {"rapid_fire", "Rapid Fire", "5", "-10% cooldown per level"},
-            {"high_caliber", "High Caliber", "5", "+12% damage per level"},
-            {"long_barrel", "Long Barrel", "4", "+15% range per level"},
-            {"ammo_saver", "Ammo Saver", "3", "15% chance per level to keep the arrow"},
-            {"incendiary_rounds", "Incendiary Rounds", "3", "sets targets on fire, 3 s per level"},
-            {"frost_rounds", "Frost Rounds", "3", "slows and freezes targets"},
-            {"vampiric_rounds", "Vampiric Rounds", "3", "heals you 6% of damage per level"},
-            {"explosive_tips", "Explosive Tips", "2", "small blast on hit (no block damage)"}};
+            {"rapid_fire", "Rapid Fire", "7", "-10% cooldown per level"},
+            {"high_caliber", "High Caliber", "8", "+12% damage per level"},
+            {"long_barrel", "Long Barrel", "6", "+15% range per level"},
+            {"ammo_saver", "Ammo Saver", "5", "12% chance per level to keep the round"},
+            {"incendiary_rounds", "Incendiary Rounds", "5", "sets targets on fire, 3 s per level"},
+            {"frost_rounds", "Frost Rounds", "5", "slows and freezes targets"},
+            {"vampiric_rounds", "Vampiric Rounds", "5", "heals you 6% of damage per level"},
+            {"explosive_tips", "Explosive Tips", "3", "small blast on hit (no block damage)"},
+            {"headhunter", "Headhunter", "5", "8% chance per level for a double-damage headshot"},
+            {"walker_slayer", "Walker Slayer", "6", "+15% damage to walkers and the undead per level"},
+            {"armor_piercing", "Armor Piercing", "5", "+10% damage per level to armored targets"},
+            {"toxic_rounds", "Toxic Rounds", "4", "poisons targets"},
+            {"shock_rounds", "Shock Rounds", "4", "sparks jump to 1 nearby enemy per level"},
+            {"stopping_power", "Stopping Power", "4", "knocks targets back"},
+            {"ricochet", "Ricochet", "3", "12% chance per level to also hit a second enemy"},
+            {"silent_rounds", "Silent Rounds", "3", "-30% shot noise per level"},
+            {"marked_target", "Marked Target", "2", "hit targets glow for 5 s per level"},
+            {"bleeding_rounds", "Bleeding Rounds", "4", "targets bleed: wither damage over time"}};
 
     public record Unlock(String id, int level, int at, boolean gun) {}
 

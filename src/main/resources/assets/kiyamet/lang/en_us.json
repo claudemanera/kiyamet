@@ -266,5 +266,15 @@
  "item.kiyamet.sawed_off": "Sawed-Off Shotgun",
  "item.kiyamet.auto_shotgun": "Auto Shotgun",
  "item.kiyamet.ak_shotgun": "AK Shotgun",
- "item.kiyamet.behemoth_shotgun": "Behemoth Shotgun"
+ "item.kiyamet.behemoth_shotgun": "Behemoth Shotgun",
+ "enchantment.kiyamet.headhunter": "Headhunter",
+ "enchantment.kiyamet.walker_slayer": "Walker Slayer",
+ "enchantment.kiyamet.armor_piercing": "Armor Piercing",
+ "enchantment.kiyamet.toxic_rounds": "Toxic Rounds",
+ "enchantment.kiyamet.shock_rounds": "Shock Rounds",
+ "enchantment.kiyamet.stopping_power": "Stopping Power",
+ "enchantment.kiyamet.ricochet": "Ricochet",
+ "enchantment.kiyamet.silent_rounds": "Silent Rounds",
+ "enchantment.kiyamet.marked_target": "Marked Target",
+ "enchantment.kiyamet.bleeding_rounds": "Bleeding Rounds"
 }

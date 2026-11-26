@@ -50,7 +50,7 @@ public final class ModVehicles {
                 .add(Attributes.MOVEMENT_SPEED, k.speed)
                 .add(Attributes.ARMOR, k.armor)
                 .add(Attributes.ARMOR_TOUGHNESS, k.armored ? 8 : 0)
-                .add(Attributes.STEP_HEIGHT, k == VehicleKind.MOTORCYCLE ? 1.0 : 1.1)
+                .add(Attributes.STEP_HEIGHT, k == VehicleKind.MOTORCYCLE ? 1.0 : k.scale > 2 ? 1.6 : 1.25)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0)
                 .add(Attributes.FOLLOW_RANGE, 96)
                 .add(Attributes.SAFE_FALL_DISTANCE, 6)));

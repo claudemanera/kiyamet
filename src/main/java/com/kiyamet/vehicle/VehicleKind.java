@@ -26,10 +26,15 @@ public enum VehicleKind {
     public final int trunk, fuel, armor, lab;
     public final boolean armored;
     public final float[][] seats;
+    public final float scale;
 
     VehicleKind(String id, String title, double health, double speed, float turn, float width, float height, int trunk, int fuel, int armor, float ram, boolean armored, int lab, float[][] seats) {
-        this.id = id; this.title = title; this.health = health; this.speed = speed; this.turn = turn; this.width = width; this.height = height;
-        this.trunk = trunk; this.fuel = fuel; this.armor = armor; this.ram = ram; this.armored = armored; this.lab = lab; this.seats = seats;
+        // 1.6: vehicles are much bigger (model, hitbox and seats all scale together)
+        this.scale = switch (id) { case "armored_truck" -> 2.2f; case "car_armored_suv", "car_ambulance" -> 1.9f; case "atv", "motorcycle" -> 1.35f; default -> 1.75f; };
+        this.id = id; this.title = title; this.health = health; this.speed = speed; this.turn = turn; this.width = width * scale; this.height = height * scale;
+        this.trunk = trunk; this.fuel = fuel; this.armor = armor; this.ram = ram * (0.5f + scale / 2); this.armored = armored; this.lab = lab;
+        for (float[] st : seats) { st[0] *= scale; st[1] *= scale; st[2] *= scale; }
+        this.seats = seats;
     }
 
     public String kitId() { return id + "_keys"; }

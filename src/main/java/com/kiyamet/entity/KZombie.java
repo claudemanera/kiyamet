@@ -46,6 +46,8 @@ public class KZombie extends Zombie implements GeoEntity {
     /** Prisoner state (see Captives) and who this walker used to be. */
     public final com.kiyamet.npc.Captives.Data captives = new com.kiyamet.npc.Captives.Data();
     public String formerName;
+    /** A walker that only exists in a broken mind (Mind): vanishes when hit or at this game time. */
+    public long hallucination;
     public java.util.UUID formerOwner;
     private int screamCooldown, leapCooldown, noiseCheck;
 
@@ -95,6 +97,7 @@ public class KZombie extends Zombie implements GeoEntity {
     @Override
     public boolean doHurtTarget(ServerLevel level, Entity target) {
         if (captives.captive) return false;
+        if (hallucination > 0) { poof(level); return false; }
         boolean hit = super.doHurtTarget(level, target);
         if (hit) triggerAnim("attack", "attack");
         if (hit && target instanceof LivingEntity living) {
@@ -113,6 +116,9 @@ public class KZombie extends Zombie implements GeoEntity {
     public void tick() {
         super.tick();
         if (!(level() instanceof ServerLevel server)) return;
+        if (hallucination > 0 && server.getGameTime() > hallucination) { poof(server); return; }
+        if (tickCount % 40 == 0 && com.kiyamet.season.Seasons.season(server) == com.kiyamet.season.Seasons.Season.WINTER && server.canSeeSky(blockPosition().above()))
+            addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 60, 0, true, false));   // the cold slows the dead
         com.kiyamet.npc.Captives.tick(server, this, captives);
         if (captives.captive) return;
         com.kiyamet.defense.DefenseRules.tickZombie(server, this);
@@ -154,6 +160,7 @@ public class KZombie extends Zombie implements GeoEntity {
 
     @Override
     public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
+        if (hallucination > 0) { poof(level); return false; }
         return super.hurtServer(level, source, amount * com.kiyamet.twd.Headshot.multiplier(level, this, source));
     }
 
@@ -165,6 +172,11 @@ public class KZombie extends Zombie implements GeoEntity {
         if (kind == ZombieKind.EXPLODER && level() instanceof ServerLevel server)
             server.explode(this, getX(), getY(), getZ(), 2.5f, Level.ExplosionInteraction.MOB);
         super.die(source);
+    }
+
+    void poof(ServerLevel level) {
+        level.sendParticles(net.minecraft.core.particles.ParticleTypes.LARGE_SMOKE, getX(), getY() + 1, getZ(), 12, 0.3, 0.6, 0.3, 0.01);
+        discard();
     }
 
     @Override

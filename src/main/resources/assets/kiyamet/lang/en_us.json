@@ -223,5 +223,6 @@
  "enchantment.kiyamet.frost_rounds": "Frost Rounds",
  "enchantment.kiyamet.vampiric_rounds": "Vampiric Rounds",
  "enchantment.kiyamet.explosive_tips": "Explosive Tips",
- "item.kiyamet.gun_tome": "Gunsmith Tome"
+ "item.kiyamet.gun_tome": "Gunsmith Tome",
+ "block.kiyamet.gun_bench": "Gunsmith Bench"
 }

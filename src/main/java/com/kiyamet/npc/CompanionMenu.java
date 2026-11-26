@@ -59,6 +59,11 @@ public class CompanionMenu extends PanelMenu {
                 Ui.text("Click: swap with the item in your main hand", ChatFormatting.YELLOW),
                 Ui.text("Weapon power scales with their level", ChatFormatting.GRAY)));
         c.setItem(WEAPON, w);
+        c.setItem(22, Ui.icon(h.morale >= 70 ? Items.GOLDEN_APPLE : h.morale >= 45 ? Items.APPLE : h.morale >= 25 ? Items.ROTTEN_FLESH : Items.WITHER_ROSE,
+                Ui.text("Morale: " + Math.round(h.morale) + "/100 (" + Mind.moraleLabel(h.morale) + ")", h.morale >= 70 ? ChatFormatting.GREEN : h.morale >= 45 ? ChatFormatting.YELLOW : h.morale >= 25 ? ChatFormatting.GOLD : ChatFormatting.RED, ChatFormatting.BOLD),
+                Ui.bar(h.morale / 100.0, 20),
+                Ui.text("High: +15% damage, faster · Low: weaker, may leave", ChatFormatting.GRAY),
+                Ui.text("Raise it: food from your hand, a fire, your shelter, rest, music", ChatFormatting.GRAY)));
         c.setItem(LOOKS, Ui.icon(Items.ARMOR_STAND, Ui.text("Change appearance", ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD),
                 Ui.text("Skin, hair, face, details, outfit", ChatFormatting.GRAY)));
         boolean glow = h.hasGlowingTag();

@@ -143,6 +143,8 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
     /** A raider envoy who came to demand tribute: peaceful until refused. */
     public boolean envoy;
     public final Captives.Data captives = new Captives.Data();
+    /** Companion morale 0-100 (see Mind). */
+    public float morale = 70;
     public String community() { return community; }
     public String communityType() { return communityType; }
     @Nullable public UUID owner() { return owner; }
@@ -229,6 +231,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         out.putBoolean("Raiding", raiding);
         out.putBoolean("Envoy", envoy);
         Captives.save(out, captives);
+        out.putFloat("Morale", morale);
         out.putString("Faction", faction().name());
         out.putString("Role", role().name());
         out.putInt("Xp", xp);
@@ -258,6 +261,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         raiding = in.getBooleanOr("Raiding", false);
         envoy = in.getBooleanOr("Envoy", false);
         Captives.load(in, captives);
+        morale = in.getFloatOr("Morale", 70f);
         try { entityData.set(FACTION, Faction.valueOf(in.getStringOr("Faction", "SURVIVOR")).ordinal()); } catch (IllegalArgumentException ignored) {}
         try { entityData.set(ROLE, Role.valueOf(in.getStringOr("Role", "MEMBER")).ordinal()); } catch (IllegalArgumentException ignored) {}
         xp = in.getIntOr("Xp", 0);
@@ -440,6 +444,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (owner != null && job == Job.GUARDIAN && tickCount % 40 == 0) guard(sl);
         if (owner != null && job == Job.LOOTER && tickCount % 6000 == 3000) scavenge();
         Captives.tick(sl, this, captives);
+        if (faction() == Faction.COMPANION && tickCount % 20 == 3 && ownerPlayer() instanceof ServerPlayer mo && mo.level() == sl && !isAway()) Mind.companion(sl, this, mo);
         if (raiding && !captives.captive) com.kiyamet.defense.DefenseRules.tickRaider(sl, this);
         if (faction() == Faction.COMPANION && tickCount % 20 == 7 && random.nextInt(450) == 0 && ownerPlayer() instanceof ServerPlayer op
                 && op.level() == sl && distanceTo(op) < 24 && !Talk.busy(op) && !isAway()) Dialogues.chatter(op, this);
@@ -697,6 +702,13 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (!(player instanceof ServerPlayer sp) || !(level() instanceof ServerLevel)) return InteractionResult.SUCCESS;
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
         if (captives.captive && !held.is(Items.LEAD)) { Captives.talk(sp, this); return InteractionResult.SUCCESS; }
+        if (faction() == Faction.COMPANION && isOwnedBy(sp) && held.has(net.minecraft.core.component.DataComponents.FOOD) && !sp.isShiftKeyDown()) {
+            held.shrink(1);
+            heal(4);
+            morale = Math.min(100, morale + 15);
+            Talk.say(sp, this, Talk.pick(random, "Thanks. I needed that.", "Real food... you're the best.", "*eats* Okay. I can keep going.", "You didn't have to share. Thank you."));
+            return InteractionResult.SUCCESS;
+        }
         if (getTarget() == player) return InteractionResult.FAIL;
         if (envoy) { WorldEvents.envoyTalk(sp, this); return InteractionResult.SUCCESS; }
         if (com.kiyamet.twd.Story.interact(sp, this)) return InteractionResult.SUCCESS;

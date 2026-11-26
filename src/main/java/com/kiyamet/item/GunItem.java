@@ -109,21 +109,30 @@ public class GunItem extends Item {
         int saver = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "ammo_saver");
         int cost = p.getRandom().nextFloat() < Math.min(0.4f, archery / 2500f) + saver * 0.15f ? 0 : arrows;   // Archery and Ammo Saver keep arrows
         if (cost > 0 && !useArrow(p, cost)) { level.playSound(null, p.blockPosition(), SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, 0.8f, 1.4f); return InteractionResult.FAIL; }
-        float dmg = stats.damage * (1f + SkillManager.get(p).level(Skill.ARCHERY) / 2000f) * (1f + 0.12f * com.kiyamet.enchant.Enchants.gunLevel(level, stack, "high_caliber"));
+        // 1.5 attachments
+        String scope = com.kiyamet.gunsmith.GunMods.get(stack, com.kiyamet.gunsmith.GunMods.Slot.SCOPE), muzzle = com.kiyamet.gunsmith.GunMods.get(stack, com.kiyamet.gunsmith.GunMods.Slot.MUZZLE);
+        String light = com.kiyamet.gunsmith.GunMods.get(stack, com.kiyamet.gunsmith.GunMods.Slot.LIGHT), mag = com.kiyamet.gunsmith.GunMods.get(stack, com.kiyamet.gunsmith.GunMods.Slot.MAG);
+        float modDmg = switch (scope) { case "red_dot" -> 1.10f; case "holo" -> 1.12f; case "acog" -> 1.10f; case "sniper" -> 1.20f; default -> 1f; }
+                * (muzzle.equals("short") ? 0.97f : muzzle.equals("long") ? 0.94f : 1f) * (light.equals("laser") ? 1.05f : 1f);
+        double modRange = (scope.equals("acog") ? 1.25 : scope.equals("sniper") ? 1.6 : 1) * (muzzle.equals("long") ? 1.1 : 1);
+        float modCd = (scope.equals("sniper") ? 1.15f : 1f) * (mag.equals("extended") ? 0.8f : mag.equals("drum") ? 0.65f : 1f);
+        double aim = (scope.equals("holo") ? 0.25 : 0) + (light.equals("laser") ? 0.35 : 0);
+        int modNoise = muzzle.equals("long") ? -99 : muzzle.equals("short") ? -2 : mag.equals("drum") ? 1 : 0;
+        float dmg = modDmg * stats.damage * (1f + SkillManager.get(p).level(Skill.ARCHERY) / 2000f) * (1f + 0.12f * com.kiyamet.enchant.Enchants.gunLevel(level, stack, "high_caliber"));
         fire = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "incendiary_rounds");
         frost = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "frost_rounds");
         vamp = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "vampiric_rounds");
         boom = com.kiyamet.enchant.Enchants.gunLevel(level, stack, "explosive_tips");
         Vec3 eye = p.getEyePosition().add(0, -0.1, 0);
-        double range = (stats.mode == Mode.PIERCE ? 96 : 48) * (1 + 0.15 * com.kiyamet.enchant.Enchants.gunLevel(level, stack, "long_barrel"));
+        double range = modRange * (stats.mode == Mode.PIERCE ? 96 : 48) * (1 + 0.15 * com.kiyamet.enchant.Enchants.gunLevel(level, stack, "long_barrel"));
         switch (stats.mode) {
             case SINGLE, HOMING -> {
-                List<LivingEntity> es = Raycast.entities(p, range, stats.mode == Mode.HOMING ? 2.5 : 0.3);
+                List<LivingEntity> es = Raycast.entities(p, range, (stats.mode == Mode.HOMING ? 2.5 : 0.3) + aim);
                 if (!es.isEmpty()) hit(level, p, es.get(0), dmg);
                 trail(level, eye, Raycast.impact(p, range), ParticleTypes.CRIT);
             }
             case DOUBLE, BURST3 -> {
-                List<LivingEntity> es = Raycast.entities(p, range, 0.3);
+                List<LivingEntity> es = Raycast.entities(p, range, 0.3 + aim);
                 if (!es.isEmpty()) for (int i = 0; i < arrows; i++) hit(level, p, es.get(0), dmg);
                 trail(level, eye, Raycast.impact(p, range), stats.effect == 3 ? ParticleTypes.FLAME : ParticleTypes.CRIT);
             }
@@ -180,9 +189,10 @@ public class GunItem extends Item {
         }
         if (stats.effect == 4) p.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 10, 1, true, false));
         level.playSound(null, p.blockPosition(), stats.noise == 0 ? SoundEvents.CROSSBOW_SHOOT : SoundEvents.CROSSBOW_SHOOT, SoundSource.PLAYERS,
-                stats.noise == 0 ? 0.2f : 1.0f, stats.mode == Mode.CANNON ? 0.5f : 1.3f);
-        if (stats.noise > 0) NoiseSystem.make(level, p.blockPosition(), stats.noise, 6);
-        p.getCooldowns().addCooldown(stack, Math.max(2, Math.round(stats.cooldown * (1 - 0.1f * com.kiyamet.enchant.Enchants.gunLevel(level, stack, "rapid_fire")))));
+                stats.noise == 0 || modNoise < 0 ? 0.2f : 1.0f, stats.mode == Mode.CANNON ? 0.5f : 1.3f);
+        int noise = Math.max(0, stats.noise + modNoise);
+        if (noise > 0) NoiseSystem.make(level, p.blockPosition(), noise, 6);
+        p.getCooldowns().addCooldown(stack, Math.max(2, Math.round(modCd * stats.cooldown * (1 - 0.1f * com.kiyamet.enchant.Enchants.gunLevel(level, stack, "rapid_fire")))));
         return InteractionResult.CONSUME;
     }
 }

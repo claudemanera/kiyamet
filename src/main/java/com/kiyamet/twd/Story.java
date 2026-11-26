@@ -134,9 +134,7 @@ public final class Story {
         save(p, s);
         TRACKED.put(p.getUUID(), new HashSet<>());
         KILLS.put(p.getUUID(), 0);
-        title(p, Component.literal("CHAPTER " + ch + ": " + c.title().toUpperCase()).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD),
-                Component.literal(c.tagline()).withStyle(ChatFormatting.GRAY));
-        level.playSound(null, p.blockPosition(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS, 0.5f, 0.6f);
+        Cinema.chapter(p, ch, c.title(), c.tagline(), defend ? null : t);
         if (defend) siegeWave(p, level, b, 0);
     }
 
@@ -341,7 +339,7 @@ public final class Story {
                     boolean cmd = tn.startsWith("!");
                     target = human(p, level, t, c.guards() == 'M' ? Faction.WHISPERER : Faction.RAIDER, cmd ? Role.COMMANDER : Role.LEADER, cmd ? 300 : Math.min(290, lv(p, chn) + 20), name(c));
                 }
-                if (target != null) s[8] = target.getUUID().toString();
+                if (target != null) { s[8] = target.getUUID().toString(); Cinema.boss(p, target, name(c)); }
                 if (c.target().contains("&truck")) {
                     List<HumanEntity> crew = new ArrayList<>();
                     for (int i = 0; i < 5; i++) { HumanEntity h = human(p, level, t, Faction.RAIDER, Role.MEMBER, lv(p, chn), null); if (h != null) crew.add(h); }
@@ -408,8 +406,7 @@ public final class Story {
         save(p, new String[]{String.valueOf(chn + 1), "0"});
         TRACKED.remove(p.getUUID());
         int reward = reward(chn);
-        title(p, Component.literal("MISSION PASSED").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), Component.literal("+" + reward + " rubies").withStyle(ChatFormatting.GREEN));
-        level.playSound(null, p.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1f, 0.8f);
+        Cinema.passed(p, reward, chn == CHAPTERS.length);
         Shop.give(p, new ItemStack(ModItems.get("ruby"), reward));
         SkillManager.addXp(p, Skill.SURVIVAL, 150 + chn * 40);
         SkillManager.addXp(p, Skill.SWORDS, 100 + chn * 30);
@@ -432,7 +429,7 @@ public final class Story {
             Entity e = ((ServerLevel) p.level()).getEntity(u);
             if (e instanceof HumanEntity h && h.faction() == Faction.RAIDER && !h.hasCustomName()) h.discard();
         }
-        title(p, Component.literal("MISSION FAILED").withStyle(ChatFormatting.RED, ChatFormatting.BOLD), Component.literal(why + " - try again from a mission board").withStyle(ChatFormatting.GRAY));
+        Cinema.failed(p, why + " - try again from a mission board");
     }
 
     // ------------------------------------------------------------------ quest items

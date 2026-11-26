@@ -1,6 +1,128 @@
 {
-  "model": {
+ "model": {
+  "type": "minecraft:composite",
+  "models": [
+   {
     "type": "minecraft:model",
-    "model": "kiyamet:item/arrow_railgun"
-  }
+    "model": "kiyamet:item/arrow_railgun",
+    "tints": [
+     {
+      "type": "minecraft:custom_model_data",
+      "index": 0,
+      "default": -1
+     }
+    ]
+   },
+   {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "cases": [
+     {
+      "when": "red_dot",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/arrow_railgun_red_dot"
+      }
+     },
+     {
+      "when": "holo",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/arrow_railgun_holo"
+      }
+     },
+     {
+      "when": "acog",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/arrow_railgun_acog"
+      }
+     },
+     {
+      "when": "sniper",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/arrow_railgun_sniper"
+      }
+     }
+    ],
+    "fallback": {
+     "type": "minecraft:empty"
+    }
+   },
+   {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "index": 1,
+    "cases": [
+     {
+      "when": "short",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/arrow_railgun_short"
+      }
+     },
+     {
+      "when": "long",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/arrow_railgun_long"
+      }
+     }
+    ],
+    "fallback": {
+     "type": "minecraft:empty"
+    }
+   },
+   {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "index": 2,
+    "cases": [
+     {
+      "when": "flashlight",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/arrow_railgun_flashlight"
+      }
+     },
+     {
+      "when": "laser",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/arrow_railgun_laser"
+      }
+     }
+    ],
+    "fallback": {
+     "type": "minecraft:empty"
+    }
+   },
+   {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "index": 3,
+    "cases": [
+     {
+      "when": "extended",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/arrow_railgun_extended"
+      }
+     },
+     {
+      "when": "drum",
+      "model": {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/att/arrow_railgun_drum"
+      }
+     }
+    ],
+    "fallback": {
+     "type": "minecraft:empty"
+    }
+   }
+  ]
+ }
 }

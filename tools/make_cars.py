@@ -1,3 +1,4 @@
+# NOTE (2.1): the vehicles made here are superseded by make_vehicles2.py - run that one after this file (this one still makes the mission board).
 """TWD 1.7 vehicles: detailed GeckoLib models + painted box-UV textures + animations for 9 cars and 2 superbikes."""
 import json, os, random
 from PIL import Image

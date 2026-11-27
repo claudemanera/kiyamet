@@ -61,60 +61,16 @@ def box(f, t, m, faces=None):
 def model(name, els, particle='oak'):
     used = sorted({e2['texture'][1:] for e in els for e2 in e['faces'].values()})
     w(f'{A}/models/block/{name}.json', {"parent": "minecraft:block/block", "ambientocclusion": True,
-        "textures": dict({m: f"kiyamet:block/furn_{m}" for m in used}, particle=f"kiyamet:block/furn_{particle}"), "elements": els})
+        "textures": dict({m: (f"kiyamet:block/{m}" if m.startswith('f2_') else f"kiyamet:block/furn_{m}") for m in used},
+                         particle=(f"kiyamet:block/{particle}" if particle.startswith('f2_') else f"kiyamet:block/furn_{particle}")), "elements": els})
 def legs(x1, z1, x2, z2, h, m, t=2):
     return [box((x1, 0, z1), (x1 + t, h, z1 + t), m), box((x2 - t, 0, z1), (x2, h, z1 + t), m), box((x1, 0, z2 - t), (x1 + t, h, z2), m), box((x2 - t, 0, z2 - t), (x2, h, z2), m)]
 
-M = {}
-# beds: head (north end) and foot; wide (double): x -8..24
-def bed(name, blanket, frame, post=None):
-    head = [box((-8, 0, 0), (24, 18, 2), frame), box((-8, 3, 2), (24, 7, 16), frame), box((-7, 7, 2), (23, 10, 16), 'sheet'),
-            box((-6, 10, 3), (7, 12, 8), 'sheet'), box((9, 10, 3), (22, 12, 8), 'sheet'), box((-7, 10, 9), (23, 11, 16), blanket)] + legs(-8, 0, 24, 16, 3, frame)
-    foot = [box((-8, 3, 0), (24, 7, 14), frame), box((-7, 7, 0), (23, 10, 14), 'sheet'), box((-7, 10, 0), (23, 11, 14), blanket), box((-7.5, 5, 0), (23.5, 10.5, 13), blanket),
-            box((-8, 0, 14), (24, 11, 16), frame)] + legs(-8, 0, 24, 16, 3, frame)
-    if post:
-        for x in (-8, 22):
-            head.append(box((x, 0, 0), (x + 2, 28, 2), post)); foot.append(box((x, 0, 14), (x + 2, 16, 16), post))
-        head.append(box((-8, 16, 0), (24, 18, 2), post))
-    model(name + '_head', head, frame); model(name + '_foot', foot, frame)
-bed('double_bed', 'red', 'oak'); bed('royal_bed', 'blue', 'dark', 'gold')
-M['wardrobe'] = [box((0, 0, 2), (16, 30, 16), 'dark'), box((0.5, 1, 1), (7.8, 29, 2), 'oak'), box((8.2, 1, 1), (15.5, 29, 2), 'oak'),
-                 box((6.5, 13, 0.4), (7.3, 17, 1), 'gold'), box((8.7, 13, 0.4), (9.5, 17, 1), 'gold'), box((-0.5, 30, 1.5), (16.5, 31.5, 16.5), 'dark'), box((0, 0, 1.5), (16, 1, 2), 'dark')]
-M['fridge'] = [box((1, 0, 1.5), (15, 30, 15), 'white'), box((1.2, 19.2, 1), (14.8, 29.8, 1.5), 'white'), box((1.2, 0.5, 1), (14.8, 18.8, 1.5), 'white'),
-               box((12.5, 21, 0.3), (13.5, 28, 1), 'steel'), box((12.5, 9, 0.3), (13.5, 17, 1), 'steel'), box((1, 18.8, 1.2), (15, 19.2, 1.5), 'black'), box((2, 26, 0.8), (6, 28, 1), 'glass')]
-M['kitchen_cabinet'] = [box((0, 0, 2), (16, 14, 16), 'spruce'), box((0.5, 1, 1), (7.8, 13, 2), 'oak'), box((8.2, 1, 1), (15.5, 13, 2), 'oak'),
-                        box((6.6, 9, 0.5), (7.2, 12, 1), 'steel'), box((8.8, 9, 0.5), (9.4, 12, 1), 'steel'), box((0, 14, 0), (16, 16, 16), 'counter')]
-M['kitchen_sink'] = [box((0, 0, 2), (16, 14, 16), 'spruce'), box((0.5, 1, 1), (15.5, 13, 2), 'oak'), box((0, 14, 0), (16, 16, 3), 'counter'), box((0, 14, 13), (16, 16, 16), 'counter'),
-                     box((0, 14, 3), (2, 16, 13), 'counter'), box((14, 14, 3), (16, 16, 13), 'counter'), box((2, 11, 3), (14, 12, 13), 'steel'), box((2, 12, 3), (14, 14, 3.5), 'steel'),
-                     box((7, 16, 13), (9, 22, 15), 'steel'), box((7, 20, 9), (9, 22, 13), 'steel'), box((3, 12, 5), (13, 12.5, 11), 'water')]
-M['stove'] = [box((0, 0, 1), (16, 14, 16), 'black'), box((1, 2, 0.5), (15, 11, 1), 'glass'), box((2, 12, 0), (14, 13, 1), 'steel'), box((0, 14, 1), (16, 15, 16), 'steel'),
-              box((2, 15, 3), (7, 15.3, 8), 'burner', ['up']), box((9, 15, 3), (14, 15.3, 8), 'burner', ['up']), box((2, 15, 9), (7, 15.3, 14), 'burner', ['up']), box((9, 15, 9), (14, 15.3, 14), 'burner', ['up']),
-              box((0, 15, 14), (16, 20, 16), 'black')]
-M['dining_table'] = [box((-0.5, 13, -0.5), (16.5, 15, 16.5), 'oak')] + legs(1, 1, 15, 15, 13, 'dark', 2) + [box((3, 4, 1.5), (13, 5, 2.5), 'dark'), box((3, 4, 13.5), (13, 5, 14.5), 'dark')]
-M['wooden_chair'] = [box((3, 7, 3), (13, 8.5, 13), 'oak')] + legs(3, 3, 13, 13, 7, 'dark', 1.5) + [box((3, 8.5, 11.5), (13, 18, 13), 'oak'), box((3, 8.5, 11.5), (4.5, 20, 13), 'dark'), box((11.5, 8.5, 11.5), (13, 20, 13), 'dark')]
-M['armchair'] = [box((1, 2, 1), (15, 7, 15), 'brown'), box((1, 0, 1), (15, 2, 15), 'dark'), box((1, 7, 11), (15, 18, 15), 'brown'), box((1, 7, 1), (3.5, 11, 11), 'brown'), box((12.5, 7, 1), (15, 11, 11), 'brown'),
-                 box((3.5, 7, 1.5), (12.5, 8.5, 11), 'cream')]
-M['sofa'] = [box((0, 2, 1), (16, 7, 15), 'gray'), box((0, 0, 1), (16, 2, 15), 'dark'), box((0, 7, 11), (16, 17, 15), 'gray'), box((0.5, 7, 1.5), (8, 8.5, 11), 'gray'), box((8, 7, 1.5), (15.5, 8.5, 11), 'gray'),
-             box((1, 8.5, 9.5), (7, 13, 11), 'cream'), box((9, 8.5, 9.5), (15, 13, 11), 'red')]
-M['coffee_table'] = [box((1, 5, 3), (15, 7, 13), 'dark'), box((3, 6.9, 5), (13, 7.2, 11), 'glass', ['up'])] + legs(1.5, 3.5, 14.5, 12.5, 5, 'dark', 1.5) + [box((2, 1.5, 4), (14, 2.5, 12), 'dark')]
-M['bookcase'] = [box((0, 0, 4), (16, 16, 16), 'oak'), box((1, 1, 3.9), (15, 7, 4), 'books', ['north']), box((1, 9, 3.9), (15, 15, 4), 'books', ['north']), box((0, 7.5, 3), (16, 8.5, 4), 'oak'),
-                 box((0, 0, 3), (1, 16, 4), 'oak'), box((15, 0, 3), (16, 16, 4), 'oak'), box((0, 15, 3), (16, 16, 4), 'oak')]
-M['office_desk'] = [box((0, 12, 2), (16, 13.5, 16), 'birch'), box((10, 0, 2), (16, 12, 16), 'birch'), box((10.5, 7, 1.6), (15.5, 11, 2), 'oak'), box((10.5, 2, 1.6), (15.5, 6, 2), 'oak'),
-                    box((12, 9, 1.2), (14, 9.6, 1.6), 'steel'), box((12, 4, 1.2), (14, 4.6, 1.6), 'steel'), box((0.5, 0, 2.5), (2, 12, 15.5), 'birch'),
-                    box((2, 13.5, 7), (8, 13.8, 11), 'black'), box((2, 13.5, 11), (8, 17.5, 11.5), 'screen')]
-M['floor_lamp'] = [box((5, 0, 5), (11, 1, 11), 'black'), box((7.5, 1, 7.5), (8.5, 22, 8.5), 'steel'), box((4, 22, 4), (12, 29, 12), 'lamp'), box((6, 21, 6), (10, 22, 10), 'gold')]
-M['television'] = [box((4, 0, 6), (12, 1, 11), 'black'), box((7, 1, 8), (9, 4, 9), 'black'), box((0, 4, 7.5), (16, 14, 9), 'black'), box((0.8, 4.8, 7.4), (15.2, 13.2, 7.5), 'screen', ['north']),
-                   box((7.5, 4.2, 7.4), (8.5, 4.6, 7.5), 'red', ['north'])]
-M['bathtub'] = [box((0, 1, 2), (16, 9, 3.5), 'white'), box((0, 1, 12.5), (16, 9, 14), 'white'), box((0, 1, 2), (1.5, 9, 14), 'white'), box((14.5, 1, 2), (16, 9, 14), 'white'),
-                box((1.5, 1, 3.5), (14.5, 2, 12.5), 'white'), box((1.5, 2, 3.5), (14.5, 6, 12.5), 'water', ['up'])] + legs(0.5, 2.5, 15.5, 13.5, 1, 'gold', 1.5) + [box((13, 9, 7), (14, 12, 8), 'steel')]
-M['toilet'] = [box((4, 0, 3), (12, 7, 11), 'white'), box((3.5, 7, 2), (12.5, 8, 11), 'white'), box((5, 7.9, 3.5), (11, 8.1, 9.5), 'water', ['up']), box((3, 7, 11), (13, 15, 14), 'white'),
-               box((2.8, 14.5, 10.8), (13.2, 15.5, 14.2), 'white'), box((11, 13, 10.6), (12.5, 13.6, 11), 'steel')]
-M['gun_rack'] = [box((0, 0, 14), (16, 16, 16), 'dark'), box((1, 3, 12), (3, 4, 14), 'steel'), box((13, 3, 12), (15, 4, 14), 'steel'), box((1, 10, 12), (3, 11, 14), 'steel'), box((13, 10, 12), (15, 11, 14), 'steel'),
-                 box((-1, 4, 12.5), (17, 5.5, 13.5), 'black'), box((10, 2, 12.5), (14, 4, 13.5), 'oak'), box((-1, 11, 12.5), (17, 12.5, 13.5), 'black'), box((1, 9, 12.5), (5, 11, 13.5), 'oak')]
-M['nightstand'] = [box((2, 0, 2), (14, 11, 14), 'oak'), box((2.5, 6, 1.5), (13.5, 10, 2), 'dark'), box((2.5, 1, 1.5), (13.5, 5, 2), 'dark'), box((7, 7.5, 1), (9, 8.5, 1.5), 'gold'),
-                   box((7, 2.5, 1), (9, 3.5, 1.5), 'gold'), box((5, 11, 5), (8, 12, 8), 'black'), box((6, 12, 6), (7, 15, 7), 'steel'), box((4.5, 15, 4.5), (8.5, 18, 8.5), 'lamp')]
-PART = {'double_bed': 'red', 'royal_bed': 'blue'}
-for n, els in M.items(): model(n, els, 'white' if n in ('fridge', 'bathtub', 'toilet') else 'oak' if n != 'stove' else 'black')
+# ------------------------------------------------------------------ 2.1: rebuilt furniture (see furn_designs.py)
+import furn_designs
+furn_designs.make_textures()
+M = furn_designs.build(box, model, w)
+for n, els in M.items(): model(n, els, 'f2_white' if n in ('fridge', 'bathtub', 'toilet', 'stove') else 'f2_oak')
 
 ROT = {'north': 0, 'east': 90, 'south': 180, 'west': 270}
 NAMES = {}
@@ -149,23 +105,8 @@ w(f'{D}/loot_table/blocks/furniture_table.json', {"type": "minecraft:block", "po
     "key": {"S": "minecraft:shears", "P": "#minecraft:planks", "C": "minecraft:crafting_table"}, "result": {"id": "kiyamet:furniture_table", "count": 1}})
 L['block.kiyamet.furniture_table'] = 'Furniture Table'
 
-# ------------------------------------------------------------------ placed bags (2 per block)
-BAG = ['', (138, 106, 68), (78, 138, 58), (46, 100, 176), (224, 122, 30), (106, 116, 52), (232, 232, 228), (42, 42, 46), (90, 98, 52), (122, 58, 176), (176, 30, 42), (150, 110, 60), (230, 190, 60)]
-ACC = ['', (90, 64, 40), (46, 90, 34), (28, 62, 114), (142, 74, 16), (62, 68, 32), (192, 40, 40), (20, 20, 26), (58, 62, 32), (74, 30, 114), (232, 192, 64), (60, 150, 60), (90, 60, 20)]
-for i in range(1, 13):
-    tex(f'bag{i}', BAG[i], 'fabric', i)
-    im = Image.open(f'{A}/textures/block/furn_bag{i}.png')
-    for x in range(16): im.putpixel((x, 0), ACC[i] + (255,)); im.putpixel((x, 15), ACC[i] + (255,))
-    for y in range(16): im.putpixel((7, y), ACC[i] + (255,)); im.putpixel((8, y), ACC[i] + (255,))
-    im.save(f'{A}/textures/block/furn_bag{i}.png')
-    for half, y0 in (('lower', 0), ('upper', 8)):
-        if i <= 10:   # backpack
-            els = [box((3, y0, 4), (13, y0 + 7, 12), f'bag{i}'), box((4, y0 + 1, 2.5), (12, y0 + 5, 4), f'bag{i}'), box((5, y0 + 7, 7), (11, y0 + 8, 9), 'black'),
-                   box((4, y0 + 2, 12), (5, y0 + 7, 13), 'black'), box((11, y0 + 2, 12), (12, y0 + 7, 13), 'black'), box((7, y0 + 3, 2.2), (9, y0 + 4, 2.5), 'steel')]
-        else:          # money bag
-            els = [box((3, y0, 3), (13, y0 + 6, 13), f'bag{i}'), box((4, y0 + 6, 4), (12, y0 + 7, 12), f'bag{i}'), box((6, y0 + 7, 6), (10, y0 + 8, 10), 'gold' if i == 12 else 'brown'),
-                   box((6.5, y0 + 2, 2.8), (9.5, y0 + 5, 3), 'gold' if i == 12 else 'black', ['north'])]
-        model(f'bag{i}_{half}', els, f'bag{i}')
+# ------------------------------------------------------------------ placed bags (2 per block) - 2.1: real backpacks and money sacks
+furn_designs.bags(box, model)
 mp = []
 for i in range(1, 13):
     for f, r in ROT.items():

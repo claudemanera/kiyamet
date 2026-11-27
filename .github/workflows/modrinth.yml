@@ -1,0 +1,42 @@
+name: Publish to Modrinth
+# Uploads a GitHub release jar as a new Modrinth version.
+# Needs: repository secret MODRINTH_TOKEN (Modrinth personal access token with "Create versions"),
+#        repository variable MODRINTH_PROJECT (the project's slug or id).
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag, e.g. v2.2.2"
+        required: true
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download the release jar
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: gh release download "${{ inputs.tag }}" --pattern "*.jar" --dir out
+      - name: Upload to Modrinth
+        env:
+          TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          PROJECT: ${{ vars.MODRINTH_PROJECT }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -e
+          JAR=$(ls out/*.jar | head -1)
+          VER=${TAG#v}
+          pid() { curl -sf "https://api.modrinth.com/v2/project/$1" | python3 -c "import json,sys; print(json.load(sys.stdin)['id'])"; }
+          PROJECT_ID=$(pid "$PROJECT"); FABRIC=$(pid fabric-api); GECKO=$(pid geckolib)
+          NOTES=tools/release_notes/$TAG.md
+          python3 - "$PROJECT_ID" "$VER" "$NOTES" "$FABRIC" "$GECKO" > data.json <<'PY'
+          import json, sys, os
+          pid, ver, notes, fab, geo = sys.argv[1:6]
+          print(json.dumps({"name": "The Walking Dead " + ver, "version_number": ver,
+              "changelog": open(notes).read() if os.path.exists(notes) else "TWD " + ver,
+              "dependencies": [{"project_id": fab, "dependency_type": "required"}, {"project_id": geo, "dependency_type": "required"}],
+              "game_versions": ["1.21.11"], "version_type": "release", "loaders": ["fabric"], "featured": True,
+              "project_id": pid, "file_parts": ["file"], "primary_file": "file"}))
+          PY
+          curl -sS --fail-with-body -X POST "https://api.modrinth.com/v2/version" \
+            -H "Authorization: $TOKEN" -H "User-Agent: claudemanera/kiyamet (github actions)" \
+            -F "data=<data.json;type=application/json" -F "file=@$JAR;type=application/java-archive"

@@ -85,7 +85,7 @@ public final class TwdHelp {
                 "   Sunağı koy, tapınağını etrafına kendin inşa et. Yoldaşlarını getir, eğil + sağ tıkla sunağa:",
                 "   tapınağın koruyucuları olurlar, ölmezler. Yakında yoldaş yokken eğil + sağ tık: hepsini serbest bırakır.");
         t("end", "End yapıları (2.2)", ChatFormatting.LIGHT_PURPLE,
-                "Dış End adalarında (merkezden 1150+ blok) 5 büyük yapı tekrar tekrar çıkar, hepsi havada süzülür:",
+                "Dış End adalarında (merkezden 1150+ blok) 5 büyük yapı tekrar tekrar çıkar, adaların çok üstünde (Y 140-200) süzülür:",
                 "Boşluk Kalesi - 4 kuleli kale, kalede Boşluk Tiranı. Ejder Taşı ondan düşer.",
                 "Gök Kulesi - 96 blok kule, içinde döner merdiven, 4 gök platformu. Tepede Gök Habercisi.",
                 "Düşmüş Gök Gemisi - ortadan kırılmış dev gemi. Kaptan kamarasında Ölü Kaptan.",

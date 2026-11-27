@@ -54,7 +54,7 @@ public final class EndStructures {
         if (r.nextFloat() < 0.12f) return null;
         int x = cx * CELL + 100 + r.nextInt(CELL - 200), z = cz * CELL + 100 + r.nextInt(CELL - 200);
         if ((long) x * x + (long) z * z < 1150L * 1150L) return null;                       // the outer islands only
-        int y = 92 + r.nextInt(28);
+        int y = 140 + r.nextInt(30);                                                       // high above the End islands
         Type t = Type.values()[Math.floorMod(cx + 2 * cz + (int) (seed & 0xff), 5)];
         return new Site(cx, cz, new BlockPos(x, y, z), t);
     }

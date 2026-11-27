@@ -332,12 +332,12 @@ public final class EndDesigns {
         // the great telescope, aimed at the sky through the slot
         s.cyl(0, 1, 0, 3, 4, CUTC, false);
         double ang = Math.toRadians(38);
-        for (double t = 0; t <= 24; t += 0.5) {
+        for (double t = 0; t <= 34; t += 0.5) {
             double cx = Math.cos(ang) * t, cy = 6 + Math.sin(ang) * t;
-            double rad = t > 21 ? 3.0 : 2.2;
+            double rad = t > 30 ? 3.0 : t > 14 ? 2.6 : 2.2;
             for (int dy = -3; dy <= 3; dy++) for (int dz = -3; dz <= 3; dz++) {
                 if (dy * dy + dz * dz > rad * rad) continue;
-                s.set((int) Math.round(cx - Math.sin(ang) * dy * 0.3), (int) Math.round(cy + dy), dz, t > 23 ? LBG : t > 21 ? CUTC : COP);
+                s.set((int) Math.round(cx - Math.sin(ang) * dy * 0.3), (int) Math.round(cy + dy), dz, t > 33 ? LBG : t > 30 ? CUTC : (int) (t * 2) % 9 == 0 ? CUTC : COP);
             }
         }
         s.chest(-6, 1, -6, VAULT); s.chest(6, 1, -6, RUIN);

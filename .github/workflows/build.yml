@@ -23,7 +23,6 @@ jobs:
           VURL=$(curl -s https://piston-meta.mojang.com/mc/game/version_manifest_v2.json | jq -r '.versions[] | select(.id=="1.21.11") | .url')
           CURL=$(curl -s "$VURL" | jq -r '.downloads.client.url')
           curl -sL -o client.jar "$CURL"
-          python3 tools/recolor_stones.py client.jar
           python3 tools/make_flat_preset.py client.jar
           rm client.jar
       - uses: gradle/actions/setup-gradle@v4

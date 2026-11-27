@@ -38,7 +38,8 @@ public final class TwdHelp {
                 "Sıcaklık: kış ve kar fırtınası üşütür. Kürk + ateş + husky yanında olması ısıtır.",
                 "Yemek bozulur: üstünde son kullanma tarihi var. Buzdolabı bozulmayı çok yavaşlatır.",
                 "Tarih ve mevsim: /twd date. Her gün sohbette mevsim olayı yazar (kar fırtınası, sıcak hava...).",
-                "Yemek: Pişirme Masasında 30 tarif. İyi Doymuş etkisi verir.");
+                "Yemek: Pişirme Masasında 30 tarif. İyi Doymuş etkisi verir.",
+                "Tabak (2 kil + kemik tozu = 2 tabak): masaya koy, yemekle sağ tık = yemek tabağa. Boş el: geri al, eğil + boş el: tabaktan ye.");
         t("silahlar", "Silahlar", ChatFormatting.RED,
                 "R: şarjörü doldur / tutukluğu aç. Boş şarjörle tetiğe basarsan kendi kendine doldurur.",
                 "Her atış silahı aşındırır, aşındıkça tutukluk yapar. Silah Masasında tamir et.",
@@ -56,7 +57,8 @@ public final class TwdHelp {
                 "Moral düşerse yoldaş gidebilir; çok nadiren ihanet edip bir eşyanı çalabilir. Onları doyur, koru.",
                 "Yerleşim Çanı koy → yoldaş panelinde 'Settle here'. Çana tıkla: meslek seç (çiftçi, demirci, doktor, muhafız, aşçı).",
                 "Çanın 12 blok yakınındaki sandıklar depodur. Herkes her sabah 1 yemek yer ve yatak ister.",
-                "Aile: morali 60+ kadın yoldaşa paneldeki çiçekten teklif et. Geceleri yakınında uyu. 9 ay sonra çocuk. /twd family");
+                "Aile: morali 60+ kadın yoldaşa paneldeki çiçekten teklif et. Geceleri yakınında uyu. 9 ay sonra çocuk. /twd family",
+                "Bebek ilk ay beyaz bir örtüye sarılı, çantanın yanında seninle gelir (çanta yoksa sırtında). Büyüyünce kendi yürür.");
         t("elektrik", "Elektrik", ChatFormatting.BLUE,
                 "Jeneratör (yakıtlı), Güneş Paneli (gündüz, gökyüzünü görmeli), Rüzgar Türbini (gece gündüz).",
                 "8 blok içindeki taretler, elektrikli çitler, ışıklar çalışır.",
@@ -104,7 +106,8 @@ public final class TwdHelp {
                 "R: silah doldur / eldiven taşı gücü   V: sonraki taş   B: walker bağırsağı sür (kamuflaj)",
                 "N: gece görüşü   J: gölge adımı   U: giyilen çantayı aç   Y: otopilot (Xaero işaretine sür)",
                 "Element silahı: sağ tık güç aç/kapat. Çanta: eğilip yere sağ tık = yere koy.",
-                "Yaratılış Baltası: numpad 1-9, 0, /, *, -, + = 14 güç (Kontroller'den değiştir).");
+                "Yaratılış Baltası: numpad 1-9, 0, /, *, -, + = 14 güç (Kontroller'den değiştir).",
+                "E: sırtında çanta varsa çanta ve envanterin birlikte açılır. Eğil + E: normal envanter (zırh, üretim).");
     }
 
     static MutableComponent link(String id, Topic tp) {

@@ -79,6 +79,10 @@ public final class ModBlocks {
             BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(6f, 3600000f).lightLevel(s -> 15).sound(SoundType.AMETHYST).noOcclusion()
                     .pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK));
 
+    // 2.2: plates - put food on them like an item frame on the table
+    public static final Block PLATE = reg("plate", com.kiyamet.food.PlateBlock::new,
+            BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(0.4f).sound(SoundType.DECORATED_POT).noOcclusion());
+
     private static Block reg(String name, Function<BlockBehaviour.Properties, Block> factory, BlockBehaviour.Properties props) {
         ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Kiyamet.id(name));
         Block block = Registry.register(BuiltInRegistries.BLOCK, key, factory.apply(props.setId(key)));

@@ -480,6 +480,7 @@ public class HumanEntity extends PathfinderMob implements GeoEntity {
         if (awayUntil > 0) { tickAway(sl); return; }
         if (owner != null && (tickCount + getId()) % 1200 == 0) com.kiyamet.settle.Settlement.work(sl, this);
         if (bornDay >= 0 && tickCount % 40 == 0) com.kiyamet.settle.Family.grow(sl, this);
+        if (bornDay >= 0 && getTags().contains(com.kiyamet.settle.Family.CARRY_TAG)) com.kiyamet.settle.Family.follow(sl, this);
         if (owner != null && tickCount % 60 == 0) Radio.report(this);
         if (owner != null && job == Job.SCOUT && tickCount % 100 == 0) scout(sl);
         if (owner != null && job == Job.GUARDIAN && tickCount % 40 == 0) guard(sl);

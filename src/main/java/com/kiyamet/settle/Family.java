@@ -66,6 +66,10 @@ public final class Family {
                 }
         });
         ServerTickEvents.END_SERVER_TICK.register(server -> {
+            if (server.getTickCount() % 100 == 0)
+                for (ServerPlayer p : server.getPlayerList().getPlayers())
+                    if (p.getAttachedOrElse(CARRIED, 0) > 0 && p.level().getEntitiesOfClass(HumanEntity.class, p.getBoundingBox().inflate(4), o -> o.getTags().contains(CARRY_TAG) && o.isOwnedBy(p)).isEmpty())
+                        p.setAttached(CARRIED, 0);
             if (server.getTickCount() % 200 != 0) return;
             for (ServerLevel l : server.getAllLevels())
                 for (HumanEntity h : l.getEntities(net.minecraft.world.level.entity.EntityTypeTest.forClass(HumanEntity.class), o -> o.pregnantDay >= 0))
@@ -112,6 +116,41 @@ public final class Family {
         grow(l, baby);
     }
 
+    /** 2.2: babies ride with their parent, wrapped in white, beside the backpack. Synced so every client can draw the bundle. */
+    public static final net.fabricmc.fabric.api.attachment.v1.AttachmentType<Integer> CARRIED = net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry.create(
+            com.kiyamet.Kiyamet.id("carried_baby"), b -> b.initializer(() -> 0).persistent(com.mojang.serialization.Codec.INT)
+                    .syncWith(net.minecraft.network.codec.ByteBufCodecs.VAR_INT, net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate.all()));
+    public static final String CARRY_TAG = "carried_baby";
+
+    static void carry(HumanEntity h, ServerPlayer o) {
+        if (!h.getTags().contains(CARRY_TAG)) {
+            h.addTag(CARRY_TAG);
+            o.sendSystemMessage(Component.literal("★ " + h.getName().getString() + " is wrapped up and rides with you, beside your backpack.").withStyle(ChatFormatting.AQUA));
+        }
+        h.setInvisible(true); h.setInvulnerable(true); h.setNoAi(true); h.setNoGravity(true); h.setSilent(true);
+        h.getNavigation().stop();
+        if (o.getAttachedOrElse(CARRIED, 0) == 0) o.setAttached(CARRIED, 1);
+    }
+
+    static void release(ServerLevel l, HumanEntity h, String why) {
+        if (!h.getTags().contains(CARRY_TAG)) return;
+        h.removeTag(CARRY_TAG);
+        h.setInvisible(false); h.setInvulnerable(false); h.setNoAi(false); h.setNoGravity(false); h.setSilent(false);
+        if (h.ownerPlayer() instanceof ServerPlayer o) {
+            o.setAttached(CARRIED, 0);
+            if (why != null) o.sendSystemMessage(Component.literal("★ " + h.getName().getString() + " " + why).withStyle(ChatFormatting.AQUA));
+        }
+    }
+
+    /** every tick while carried: stay right with the parent */
+    public static void follow(ServerLevel l, HumanEntity h) {
+        ServerPlayer o = h.ownerPlayer();
+        if (o == null || o.level() != l || !o.isAlive()) { release(l, h, null); return; }
+        h.snapTo(o.getX(), o.getY(), o.getZ(), o.getYRot(), 0);
+        h.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+        h.fallDistance = 0;
+    }
+
     /** called every 2 seconds for children */
     public static void grow(ServerLevel l, HumanEntity h) {
         Stage s = stage(l, h);
@@ -128,6 +167,8 @@ public final class Family {
             if (!h.getMainHandItem().isEmpty()) h.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
             if (s == Stage.BABY && h.order() != HumanEntity.Order.STAY) h.setOrder(HumanEntity.Order.STAY);
         }
+        if (s == Stage.BABY && h.ownerPlayer() instanceof ServerPlayer o && o.level() == l && o.isAlive()) carry(h, o);
+        else if (s != Stage.BABY) release(l, h, "has grown - time to walk on their own!");
     }
 
     private Family() {}

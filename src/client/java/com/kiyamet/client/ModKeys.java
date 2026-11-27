@@ -31,6 +31,14 @@ public final class ModKeys {
             while (mc.options.keyAttack.consumeClick()) any = true;
             if (any) ClientPlayNetworking.send(new KeyAction(KeyAction.GAUNTLET_MENU));
         });
+        // 2.2: wearing a backpack, E opens the backpack together with your inventory (sneak + E: the normal inventory)
+        ClientTickEvents.START_CLIENT_TICK.register(mc -> {
+            if (mc.player == null || mc.screen != null || mc.player.isShiftKeyDown()) return;
+            if (mc.player.getAttachedOrElse(com.kiyamet.backpack.Backpacks.WORN_TIER, -1) < 0) return;
+            boolean any = false;
+            while (mc.options.keyInventory.consumeClick()) any = true;
+            if (any) ClientPlayNetworking.send(new KeyAction(KeyAction.BACKPACK));
+        });
         AUTOPILOT = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.kiyamet.autopilot", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Y, CATEGORY));
         ClientTickEvents.END_CLIENT_TICK.register(mc -> {
             if (mc.player == null) return;

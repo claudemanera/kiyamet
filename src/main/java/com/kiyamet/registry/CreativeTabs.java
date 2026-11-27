@@ -35,7 +35,7 @@ public final class CreativeTabs {
         if (id.equals("medkit") || id.equals("bandage") || id.equals("vaccine") || id.equals("healing_syringe") || id.endsWith("_pelt") || id.equals("sheepskin")
                 || id.equals("walker_guts") || id.equals("repair_kit")) return Tab.MEDICAL;
         if (it.components().has(net.minecraft.core.component.DataComponents.FOOD) || id.endsWith("_seeds") || id.endsWith("_sapling") || id.endsWith("_leaves")
-                || id.endsWith("_log") || id.equals("spoiled_food")) return Tab.FOOD;
+                || id.endsWith("_log") || id.equals("spoiled_food") || id.equals("plate")) return Tab.FOOD;
         if (it instanceof BlockItem bi && (com.kiyamet.furniture.Furniture.isFurniture(bi.getBlock()) || bi.getBlock() == com.kiyamet.food.CookingTable.BLOCK || bi.getBlock() == com.kiyamet.twd.MainTable.BLOCK)) return Tab.FURNITURE;
         if (it instanceof BlockItem) return Tab.BLOCKS;
         if (it instanceof com.kiyamet.item.GadgetItem || id.startsWith("robot_core") || id.equals("radio") || id.equals("circuit") || id.equals("energy_cell")

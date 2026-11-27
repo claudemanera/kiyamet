@@ -140,6 +140,8 @@ if p:
         cmd(p, 'summon item 3 101 -3 {Item:{id:"kiyamet:%s",count:1}}' % a, 0.2)
     cmd(p, 'setblock 5 101 5 kiyamet:creation_table', 0.3)
     cmd(p, 'setblock 7 101 5 kiyamet:creation_altar', 0.3)
+    cmd(p, 'setblock 9 101 5 kiyamet:plate', 0.3)
+    cmd(p, 'summon kiyamet:human 3 101 -14 {Faction:"COMPANION",BornDay:-1L}', 0.5)
     cmd(p, 'summon kiyamet:zombie_enderman 6 101 8', 0.4)
     for i, bs in enumerate(('void_tyrant', 'sky_herald', 'dead_captain', 'hive_matriarch', 'star_warden')):
         cmd(p, 'summon kiyamet:%s %d 101 12' % (bs, -8 + 4 * i), 0.4)

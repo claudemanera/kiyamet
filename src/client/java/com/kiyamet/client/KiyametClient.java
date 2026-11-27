@@ -13,6 +13,8 @@ public class KiyametClient implements ClientModInitializer {
         BlockRenderLayerMap.putBlocks(ChunkSectionLayer.CUTOUT, ModBlocks.STEEL_GRATE, ModBlocks.STEEL_GATE, ModBlocks.BARBED_WIRE,
                 ModBlocks.RAZOR_WIRE, ModBlocks.ELECTRIC_FENCE, ModBlocks.SPIKE_TRAP);
         BlockRenderLayerMap.putBlock(ModBlocks.ENERGY_WALL, ChunkSectionLayer.TRANSLUCENT);
+        BlockRenderLayerMap.putBlocks(ChunkSectionLayer.TRANSLUCENT, ModBlocks.WISDOM_GLASS);
+        BlockRenderLayerMap.putBlocks(ChunkSectionLayer.CUTOUT, ModBlocks.CREATION_TABLE, ModBlocks.CREATION_ALTAR);
         com.kiyamet.farm.ModFarm.CUTOUT.forEach(b -> BlockRenderLayerMap.putBlock(b, ChunkSectionLayer.CUTOUT));
         ModEntities.ZOMBIES.forEach((kind, type) -> EntityRendererRegistry.register(type, ctx -> new KZombieRenderer<>(ctx, kind)));
         com.kiyamet.boss.ModBosses.TYPES.forEach((kind, type) -> EntityRendererRegistry.register(type, ctx -> new BossRenderer<>(ctx, kind)));
@@ -24,6 +26,7 @@ public class KiyametClient implements ClientModInitializer {
         EntityRendererRegistry.register(com.kiyamet.furniture.Furniture.SEAT, net.minecraft.client.renderer.entity.NoopRenderer::new);
         com.kiyamet.wild.ModWild.TYPES.forEach((k, t) -> EntityRendererRegistry.register(t, ctx -> new SimpleGeoRenderer<>(ctx, k.id, 1.0f)));
         com.kiyamet.element.ElementMobs.GUARDIANS.forEach((e, t) -> EntityRendererRegistry.register(t, ctx -> new SimpleGeoRenderer<>(ctx, e.guardian(), 1.0f)));
+        EntityRendererRegistry.register(com.kiyamet.end.EndMobs.ZOMBIE_ENDERMAN, ctx -> new SimpleGeoRenderer<>(ctx, "zombie_enderman", 1.0f));
         com.kiyamet.element.ElementMobs.SAGES.forEach((e, t) -> EntityRendererRegistry.register(t, ctx -> new SimpleGeoRenderer<>(ctx, e.sage(), 1.0f)));
         ModKeys.init();
         Tooltips.init();

@@ -21,7 +21,7 @@ public final class ModItems {
     public static final List<Item> ALL = new ArrayList<>();
 
     public static final String[] STONES = {"fire_stone", "frost_stone", "storm_stone", "nature_stone", "blood_stone",
-            "shadow_stone", "soul_stone", "time_stone", "void_stone", "earth_stone"};
+            "shadow_stone", "soul_stone", "time_stone", "void_stone", "earth_stone", "star_stone", "dragon_stone"};
     public static final String[] GADGETS = {"flashlight", "sonic_lure", "grappling_gun", "night_vision", "vein_miner", "jetpack",
             "healing_syringe", "auto_turret", "flamethrower", "gravity_glove", "structure_scanner", "drone_controller", "clone_device",
             "teleport_gun", "emp_bomb", "laser_rifle", "shield_generator", "time_stopper", "black_hole_bomb", "energy_sword"};

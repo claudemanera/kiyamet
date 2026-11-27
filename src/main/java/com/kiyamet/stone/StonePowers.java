@@ -62,6 +62,8 @@ public final class StonePowers {
         if (s.contains(StoneKind.SOUL) && p.tickCount % 200 < 20) p.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 400, 1, true, false));
         if (s.contains(StoneKind.VOID)) p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 80, 0, true, false));
         if (s.contains(StoneKind.BLOOD)) p.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 80, 0, true, false));
+        if (s.contains(StoneKind.STAR)) { p.addEffect(new MobEffectInstance(MobEffects.LUCK, 80, 1, true, false)); p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 80, 0, true, false)); }
+        if (s.contains(StoneKind.DRAGON)) { p.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 80, 1, true, false)); p.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 80, 0, true, false)); }
         AttributeInstance kb = p.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
         if (kb != null) {
             kb.removeModifier(EARTH_KB);
@@ -75,6 +77,8 @@ public final class StonePowers {
         if (s.contains(StoneKind.FROST)) { target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 100, 2)); target.setTicksFrozen(Math.min(300, target.getTicksFrozen() + 60)); }
         if (s.contains(StoneKind.BLOOD)) p.heal(damage * 0.25f);
         if (s.contains(StoneKind.FIRE)) target.igniteForSeconds(4);
+        if (s.contains(StoneKind.STAR) && p.level() instanceof ServerLevel sl0) { target.hurtServer(sl0, sl0.damageSources().magic(), 2f); sl0.sendParticles(ParticleTypes.END_ROD, target.getX(), target.getY() + 1, target.getZ(), 6, 0.3, 0.5, 0.3, 0.05); }
+        if (s.contains(StoneKind.DRAGON) && p.getRandom().nextFloat() < 0.2f) target.addEffect(new MobEffectInstance(MobEffects.WITHER, 60, 1));
         if (s.contains(StoneKind.STORM) && p.getRandom().nextFloat() < 0.12f && p.level() instanceof ServerLevel sl) {
             LightningBolt b = EntityType.LIGHTNING_BOLT.create(sl, EntitySpawnReason.TRIGGERED);
             if (b != null) { b.setPos(target.getX(), target.getY(), target.getZ()); b.setCause(p); sl.addFreshEntity(b); }
@@ -105,6 +109,26 @@ public final class StonePowers {
         ServerLevel level = p.level();
         float power = 2f + SkillManager.get(p).totalPower() / 2500f;
         switch (k) {
+            case STAR -> {   // starfall: shooting stars crash on every enemy around
+                List<LivingEntity> es = enemies(level, p, 20);
+                for (LivingEntity e : es) {
+                    hurt(level, p, e, 12 * power);
+                    e.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 30, 1)); e.addEffect(new MobEffectInstance(MobEffects.GLOWING, 300, 0));
+                    level.sendParticles(ParticleTypes.END_ROD, e.getX(), e.getY() + 6, e.getZ(), 40, 0.2, 3, 0.2, 0.02);
+                    level.sendParticles(ParticleTypes.FLASH, e.getX(), e.getY() + 1, e.getZ(), 1, 0, 0, 0, 0);
+                }
+                level.playSound(null, p.blockPosition(), SoundEvents.FIREWORK_ROCKET_LARGE_BLAST, SoundSource.PLAYERS, 1.5f, 0.7f);
+                burst(level, p, ParticleTypes.END_ROD, 300, 10);
+            }
+            case DRAGON -> {  // dragon's breath: a lingering cloud of dragon fire where you look, and a dragon fireball
+                Vec3 dir = p.getViewVector(1f);
+                net.minecraft.world.entity.projectile.hurtingprojectile.DragonFireball f = new net.minecraft.world.entity.projectile.hurtingprojectile.DragonFireball(level, p, dir.normalize());
+                f.setPos(p.getX() + dir.x * 1.5, p.getEyeY() + dir.y * 1.5, p.getZ() + dir.z * 1.5);
+                level.addFreshEntity(f);
+                for (LivingEntity e : enemies(level, p, 8)) { hurt(level, p, e, 10 * power); e.knockback(1.5, p.getX() - e.getX(), p.getZ() - e.getZ()); }
+                level.playSound(null, p.blockPosition(), SoundEvents.ENDER_DRAGON_GROWL, SoundSource.PLAYERS, 1f, 1.2f);
+                burst(level, p, ParticleTypes.REVERSE_PORTAL, 300, 4);
+            }
             case FIRE -> {   // inferno: big fire ring, burning for 12 s, fire resistance + strength for you
                 for (LivingEntity e : enemies(level, p, 12)) { e.igniteForSeconds(12); hurt(level, p, e, 9 * power); e.knockback(0.8, p.getX() - e.getX(), p.getZ() - e.getZ()); }
                 p.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 400, 1)); burst(level, p, ParticleTypes.FLAME, 400, 8); burst(level, p, ParticleTypes.LAVA, 60, 5);

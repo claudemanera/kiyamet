@@ -62,6 +62,23 @@ public final class ModBlocks {
             BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(5f, 10f).sound(SoundType.METAL).requiresCorrectToolForDrops()
                     .lightLevel(s -> s.getValue(com.kiyamet.defense.GeneratorBlock.LIT) && s.getValue(com.kiyamet.defense.GeneratorBlock.ON) ? 9 : 0));
 
+    // 2.2: the Temple of Wisdom in the End - white, glowing, and nothing can break it
+    public static final Block WISDOM_STONE = reg("wisdom_stone", Block::new,
+            BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(-1f, 3600000f).lightLevel(s -> 5).sound(SoundType.CALCITE).noLootTable()
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK));
+    public static final Block WISDOM_GLASS = reg("wisdom_glass", net.minecraft.world.level.block.TransparentBlock::new,
+            BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).strength(-1f, 3600000f).lightLevel(s -> 9).noLootTable().noOcclusion()
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK));
+    public static final Block WISDOM_LIGHT = reg("wisdom_light", Block::new,
+            BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(-1f, 3600000f).lightLevel(s -> 15).sound(SoundType.AMETHYST).noLootTable()
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK));
+    public static final Block CREATION_TABLE = reg("creation_table", com.kiyamet.creation.CreationTableBlock::new,
+            BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(-1f, 3600000f).lightLevel(s -> 15).sound(SoundType.AMETHYST).noLootTable().noOcclusion()
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK));
+    public static final Block CREATION_ALTAR = reg("creation_altar", com.kiyamet.creation.CreationAltarBlock::new,
+            BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(6f, 3600000f).lightLevel(s -> 15).sound(SoundType.AMETHYST).noOcclusion()
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK));
+
     private static Block reg(String name, Function<BlockBehaviour.Properties, Block> factory, BlockBehaviour.Properties props) {
         ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Kiyamet.id(name));
         Block block = Registry.register(BuiltInRegistries.BLOCK, key, factory.apply(props.setId(key)));

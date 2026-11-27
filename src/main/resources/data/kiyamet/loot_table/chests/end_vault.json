@@ -1,0 +1,209 @@
+{
+ "type": "minecraft:chest",
+ "pools": [
+  {
+   "rolls": {
+    "type": "minecraft:uniform",
+    "min": 5,
+    "max": 9
+   },
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:diamond",
+     "weight": 10,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 2,
+        "max": 6
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:netherite_scrap",
+     "weight": 4,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 2
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:enchanted_golden_apple",
+     "weight": 2
+    },
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:ruby",
+     "weight": 12,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 6,
+        "max": 16
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:void_shard",
+     "weight": 8,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 2,
+        "max": 5
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:energy_core",
+     "weight": 6,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 2
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:shulker_shell",
+     "weight": 6,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 3
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:ender_pearl",
+     "weight": 8,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 2,
+        "max": 6
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:totem_of_undying",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:experience_bottle",
+     "weight": 8,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 4,
+        "max": 10
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:elytra",
+     "weight": 1
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:air",
+     "weight": 70
+    },
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:fire_stone",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:frost_stone",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:storm_stone",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:nature_stone",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:blood_stone",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:shadow_stone",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:soul_stone",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:time_stone",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:void_stone",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "kiyamet:earth_stone",
+     "weight": 3
+    }
+   ]
+  }
+ ]
+}

@@ -108,6 +108,10 @@ public class Sage extends PathfinderMob implements GeoEntity {
 
     ServerPlayer ownerPlayer() { return owner == null || !(level() instanceof ServerLevel sl) ? null : sl.getServer().getPlayerList().getPlayer(owner); }
     public boolean isCompanion() { return owner != null; }
+    public boolean isOwnedBy(Player p) { return owner != null && owner.equals(p.getUUID()); }
+    /** 2.2: a companion sage made guardian of its owner's Temple of Creation stands watch there */
+    public void guardTemple(net.minecraft.core.BlockPos at) { stay = true; getNavigation().stop(); snapTo(at.getX() + 0.5, at.getY(), at.getZ() + 0.5, getYRot(), 0); }
+    public void release() { stay = false; }
 
     @Override
     protected void registerGoals() {

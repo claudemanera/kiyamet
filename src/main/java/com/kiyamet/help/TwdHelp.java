@@ -70,16 +70,41 @@ public final class TwdHelp {
                 "Silahta sol tık saldırı, sağ tık güç aç/kapat (bekleme yok). 14 element, 14 güç.",
                 "Bilgeler ölümsüz. Toplam yetenek gücün 3000 olunca yardım ettiğin bilge yoldaşın olur;",
                 "  eğil + sağ tıkla ona element silahı ver, onunla savaşır.");
+        t("yaratilis", "Yaratılış (2.2)", ChatFormatting.WHITE,
+                "Yaratılış en büyük element. 14 elementin bütün güçleri onda.",
+                "1) 12 taşı topla: eski 10 taş + End'den 2 yeni taş (Yıldız Taşı: Rasathanenin Bekçisi, Ejder Taşı: Boşluk Tiranı).",
+                "2) End'e git. Ejderin adasının güneyinde Bilgelik Tapınağı var (X 0, Z 150): beyaz, küçük, kırılmaz.",
+                "   Beyaz köprüyü takip et. Ortadaki Yaratılış Masası alınamaz, sadece orada çalışır.",
+                "3) Masada: 12 taş (eldivenden çıkar, envanterde dursun) = Yaratılış Elementi.",
+                "   14 element silahı = Yaratılış Çubuğu.",
+                "4) Yaratılış Elementi elde, çubuk envanterde, örse sağ tık: YARATILIŞ BALTASI (çift taraflı savaş baltası).",
+                "Balta: her gücün kendi tuşu var (Ayarlar > Kontroller > The Walking Dead, varsayılan numpad 1-9, 0, / * - +).",
+                "  Sağ tık: seçili gücü aç/kapat · eğil + sağ tık: sonraki güç. Aynı anda birçok güç açık olabilir;",
+                "  zaman güçleri (buz, gök gürültüsü, rüzgar) ve uçuş güçleri (ruh, hava) birbirinin yerine geçer.",
+                "5) 20 yeteneğin hepsi 999 olunca Yaratılış'ın Bilgesi olursun. Sana Yaratılış Sunağı verilir.",
+                "   Sunağı koy, tapınağını etrafına kendin inşa et. Yoldaşlarını getir, eğil + sağ tıkla sunağa:",
+                "   tapınağın koruyucuları olurlar, ölmezler. Yakında yoldaş yokken eğil + sağ tık: hepsini serbest bırakır.");
+        t("end", "End yapıları (2.2)", ChatFormatting.LIGHT_PURPLE,
+                "Dış End adalarında (merkezden 1150+ blok) 5 büyük yapı tekrar tekrar çıkar, hepsi havada süzülür:",
+                "Boşluk Kalesi - 4 kuleli kale, kalede Boşluk Tiranı. Ejder Taşı ondan düşer.",
+                "Gök Kulesi - 96 blok kule, içinde döner merdiven, 4 gök platformu. Tepede Gök Habercisi.",
+                "Düşmüş Gök Gemisi - ortadan kırılmış dev gemi. Kaptan kamarasında Ölü Kaptan.",
+                "Ender Kovanı - içi oyuk dev küre, yumurtalar ve raflar. Dipte Kovan Anası.",
+                "Yıldız Düşüşü Rasathanesi - dev halka ve kubbe, teleskop. Kubbede Yıldız Bekçisi. Yıldız Taşı ondan düşer.",
+                "Zombi Endermanlar: bakmasan da saldırır, arkana ışınlanır, ısırığı enfekte eder. Su onları da yakar.",
+                "Sandıklarda nadiren eski taşlar da çıkar.");
         t("komutlar", "Komutlar", ChatFormatting.WHITE,
                 "/twd help - bu rehber   /skills - yetenekler   /twd date - tarih ve mevsim",
                 "/twd family - ailen   /twd gunname <isim> - silahına isim   /twd drive - otopilot",
                 "/twd mind - akıl/moral   /twd raidinfo - baskın bilgisi   /twd season - mevsim",
-                "Yaratıcı mod: /twd temple <element>, /twd sage <element>, /twd buildtemple <element>, /twd date set yyyy-aa-gg");
+                "Yaratıcı mod: /twd temple <element>, /twd sage <element>, /twd buildtemple <element>, /twd date set yyyy-aa-gg",
+                "Yaratıcı mod (2.2): /twd endfind <yapı>, /twd endbuild <yapı>, /twd buildwisdom, /twd ascend");
         t("tuslar", "Tuşlar", ChatFormatting.GRAY,
                 "K: yetenekler   P: süper güçler   H: yoldaşlar takip/bekle   G: grup paneli",
                 "R: silah doldur / eldiven taşı gücü   V: sonraki taş   B: walker bağırsağı sür (kamuflaj)",
                 "N: gece görüşü   J: gölge adımı   U: giyilen çantayı aç   Y: otopilot (Xaero işaretine sür)",
-                "Element silahı: sağ tık güç aç/kapat. Çanta: eğilip yere sağ tık = yere koy.");
+                "Element silahı: sağ tık güç aç/kapat. Çanta: eğilip yere sağ tık = yere koy.",
+                "Yaratılış Baltası: numpad 1-9, 0, /, *, -, + = 14 güç (Kontroller'den değiştir).");
     }
 
     static MutableComponent link(String id, Topic tp) {

@@ -42,6 +42,10 @@ public class Kiyamet implements ModInitializer {
         com.kiyamet.element.ElementMobs.init();
         com.kiyamet.element.ElementPowers.init();
         com.kiyamet.element.Temples.init();
+        com.kiyamet.creation.CreationItems.init();
+        com.kiyamet.creation.CreationSage.init();
+        com.kiyamet.end.EndMobs.init();
+        com.kiyamet.end.EndStructures.init();
         com.kiyamet.help.TwdHelp.init();
         com.kiyamet.food.Spoilage.init();
         com.kiyamet.furniture.Furniture.init();

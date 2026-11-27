@@ -35,7 +35,13 @@ public enum BossKind {
     WATER_LORD("water_lord", "Water Lord", 950, 20, 12, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.BLUE, false, new Ability[]{PULL, SPIT, REGEN}, "ancient_rod:1,ruby:12,energy_core:2"),
     AIR_LORD("air_lord", "Air Lord", 850, 20, 10, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.WHITE, false, new Ability[]{LEVITATE, TELEPORT_BEHIND, ARROW_BARRAGE}, "ancient_rod:1,ruby:12,energy_core:2"),
     WIND_LORD("wind_lord", "Wind Lord", 900, 22, 12, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.GREEN, false, new Ability[]{PULL, SHOCKWAVE, CHARGE}, "ancient_rod:1,ruby:12,energy_core:2"),
-    METAL_LORD("metal_lord", "Metal Lord", 1200, 24, 24, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.WHITE, false, new Ability[]{SLAM, REGEN, SHOCKWAVE}, "ancient_rod:1,ruby:12,energy_core:2");
+    METAL_LORD("metal_lord", "Metal Lord", 1200, 24, 24, 0.27, 2.0f, 1.0f, 2.3f, BossEvent.BossBarColor.WHITE, false, new Ability[]{SLAM, REGEN, SHOCKWAVE}, "ancient_rod:1,ruby:12,energy_core:2"),
+    // 2.2: the five masters of the End structures
+    VOID_TYRANT("void_tyrant", "The Void Tyrant", 1500, 26, 16, 0.3, 2.0f, 0.9f, 3.0f, BossEvent.BossBarColor.PURPLE, false, new Ability[]{TELEPORT_BEHIND, DARKNESS, SHOCKWAVE}, "dragon_stone:1,void_shard:6,ruby:20,energy_core:2"),
+    SKY_HERALD("sky_herald", "The Sky Herald", 1300, 22, 12, 0.3, 2.0f, 0.9f, 2.5f, BossEvent.BossBarColor.WHITE, false, new Ability[]{LEVITATE, LIGHTNING, ARROW_BARRAGE}, "void_shard:5,ruby:18,energy_core:2"),
+    DEAD_CAPTAIN("dead_captain", "The Dead Captain", 1400, 24, 14, 0.28, 2.0f, 1.0f, 2.4f, BossEvent.BossBarColor.RED, false, new Ability[]{CHARGE, SUMMON_GUARDS, BLEED}, "void_shard:5,ruby:24,energy_core:2"),
+    HIVE_MATRIARCH("hive_matriarch", "The Hive Matriarch", 1600, 22, 14, 0.26, 2.0f, 1.2f, 2.8f, BossEvent.BossBarColor.PINK, false, new Ability[]{SUMMON_CRAWLERS, TOXIC_BURST, TELEPORT_BEHIND}, "void_shard:6,ruby:20,energy_core:3"),
+    STAR_WARDEN("star_warden", "The Star Warden", 1700, 26, 20, 0.27, 2.0f, 1.0f, 2.6f, BossEvent.BossBarColor.BLUE, false, new Ability[]{BEAM, LEVITATE, SHOCKWAVE}, "star_stone:1,void_shard:6,ruby:20,energy_core:3");
 
     public final String id, title, drops;
     public final double health, damage, armor, speed;

@@ -37,14 +37,17 @@ import net.minecraft.world.phys.Vec3;
 
 /** What each element does while its power is on - and how it is switched off cleanly. */
 public final class ElementPowers {
-    static final Map<UUID, Element> ON = new HashMap<>();
+    static final Map<UUID, java.util.EnumSet<Element>> ON = new HashMap<>();
+    static final java.util.EnumSet<Element> CLOCK = java.util.EnumSet.of(Element.ICE, Element.THUNDER, Element.WIND), FLIGHT = java.util.EnumSet.of(Element.SPIRIT, Element.AIR);
+
+    public static boolean on(ServerPlayer p, Element e) { var s = ON.get(p.getUUID()); return s != null && s.contains(e); }
     /** whoever froze / sped / slowed time last owns the clock */
     static UUID clockOwner;
 
     public static void init() {
         // metal: no damage at all
-        ServerLivingEntityEvents.ALLOW_DAMAGE.register((e, src, amount) -> !(e instanceof ServerPlayer p && ON.get(p.getUUID()) == Element.METAL));
-        ServerPlayConnectionEvents.DISCONNECT.register((h, server) -> { Element e = ON.remove(h.player.getUUID()); if (e != null) stop(h.player, e); });
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register((e, src, amount) -> !(e instanceof ServerPlayer p && on(p, Element.METAL)));
+        ServerPlayConnectionEvents.DISCONNECT.register((h, server) -> { var set = ON.remove(h.player.getUUID()); if (set != null) for (Element e : java.util.EnumSet.copyOf(set)) stop(h.player, e); });
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             // safety: a power whose holder vanished gives the clock back
             if (clockOwner != null && server.getPlayerList().getPlayer(clockOwner) == null) resetClock(server);
@@ -76,8 +79,10 @@ public final class ElementPowers {
     }
 
     public static void start(ServerPlayer p, Element e) {
-        Element old = ON.put(p.getUUID(), e);
-        if (old != null && old != e) stop(p, old);
+        var set = ON.computeIfAbsent(p.getUUID(), k -> java.util.EnumSet.noneOf(Element.class));
+        // powers that fight over the same thing (the clock, the flight) replace each other
+        for (Element o : java.util.EnumSet.copyOf(set)) if (o != e && (CLOCK.contains(o) && CLOCK.contains(e) || FLIGHT.contains(o) && FLIGHT.contains(e))) stop(p, o);
+        set.add(e);
         ServerLevel l = p.level();
         MinecraftServer s = l.getServer();
         l.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1f, 1.6f);
@@ -93,7 +98,8 @@ public final class ElementPowers {
     }
 
     public static void stop(ServerPlayer p, Element e) {
-        ON.remove(p.getUUID());
+        var set = ON.get(p.getUUID());
+        if (set != null) { set.remove(e); if (set.isEmpty()) ON.remove(p.getUUID()); }
         ServerLevel l = p.level();
         switch (e) {
             case SPIRIT, AIR -> {
@@ -121,7 +127,7 @@ public final class ElementPowers {
     public static void tick(ServerPlayer p, Element e, ItemStack weapon) {
         ServerLevel l = p.level();
         int t = p.tickCount;
-        if (!ON.containsKey(p.getUUID())) ON.put(p.getUUID(), e);
+        ON.computeIfAbsent(p.getUUID(), k -> java.util.EnumSet.noneOf(Element.class)).add(e);
         if (t % 100 == 0) com.kiyamet.skill.SkillManager.addXp(p, switch (e) {            // using a power trains the body
             case SPIRIT, AIR -> com.kiyamet.skill.Skill.ACROBATICS; case SHADOW, SMOKE -> com.kiyamet.skill.Skill.STEALTH; case WATER -> com.kiyamet.skill.Skill.SWIMMING;
             case THUNDER, WIND -> com.kiyamet.skill.Skill.ATHLETICS; case METAL -> com.kiyamet.skill.Skill.DEFENSE; case EARTH -> com.kiyamet.skill.Skill.MINING;

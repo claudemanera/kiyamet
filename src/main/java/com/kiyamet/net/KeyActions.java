@@ -41,6 +41,12 @@ public final class KeyActions {
 
     static void handle(ServerPlayer p, int action) {
         if (!p.isAlive()) return;
+        if (action >= KeyAction.CREATION && action < KeyAction.CREATION + com.kiyamet.element.Element.values().length) {
+            ItemStack axe = p.getMainHandItem();
+            if (!(axe.getItem() instanceof com.kiyamet.creation.CreationAxe)) { msg(p, "Hold the Creation Axe to call its powers.", ChatFormatting.GRAY); return; }
+            com.kiyamet.creation.CreationAxe.toggle(p, axe, com.kiyamet.element.Element.values()[action - KeyAction.CREATION]);
+            return;
+        }
         switch (action) {
             case KeyAction.SKILLS -> SkillsMenu.open(p);
             case KeyAction.GAUNTLET_MENU -> { if (p.getMainHandItem().getItem() instanceof GauntletItem) com.kiyamet.stone.GauntletMenu.open(p); }

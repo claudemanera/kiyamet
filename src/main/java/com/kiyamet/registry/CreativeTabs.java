@@ -25,7 +25,7 @@ public final class CreativeTabs {
     static Tab of(Item it) {
         String id = BuiltInRegistries.ITEM.getKey(it).getPath();
         if (id.endsWith("_spawn_egg")) return Tab.EGGS;
-        if (it instanceof com.kiyamet.element.ElementWeapon || id.endsWith("_core") && !id.equals("energy_core") && !id.equals("tech_core") && !id.startsWith("robot_core") || id.equals("ancient_rod") || id.equals("sage_map")) return Tab.ELEMENTS;
+        if (it instanceof com.kiyamet.element.ElementWeapon || id.endsWith("_core") && !id.equals("energy_core") && !id.equals("tech_core") && !id.startsWith("robot_core") || id.equals("ancient_rod") || id.equals("sage_map") || id.startsWith("creation_") || id.startsWith("wisdom_")) return Tab.ELEMENTS;
         if (it instanceof com.kiyamet.item.GunItem || id.equals("gun_tome") || id.equals("energy_sword") || id.equals("laser_rifle")) return Tab.WEAPONS;
         if (id.endsWith("_ammo") || id.equals("shotgun_shell") || id.equals("plasma_cell") || id.startsWith("magazine") || id.endsWith("grenade") || id.equals("molotov")
                 || id.equals("flashbang") || id.endsWith("_bomb")) return Tab.AMMO;

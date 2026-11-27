@@ -1,0 +1,10 @@
+{
+ "type": "minecraft:smelting",
+ "category": "food",
+ "ingredient": "kiyamet:croc_meat",
+ "result": {
+  "id": "kiyamet:cooked_croc_meat"
+ },
+ "experience": 0.35,
+ "cookingtime": 200
+}

@@ -1,0 +1,9 @@
+Compiled from "FollowOwnerGoal.java"
+public class net.minecraft.world.entity.ai.goal.FollowOwnerGoal extends net.minecraft.world.entity.ai.goal.Goal {
+  public net.minecraft.world.entity.ai.goal.FollowOwnerGoal(net.minecraft.world.entity.TamableAnimal, double, float, float);
+  public boolean canUse();
+  public boolean canContinueToUse();
+  public void start();
+  public void stop();
+  public void tick();
+}

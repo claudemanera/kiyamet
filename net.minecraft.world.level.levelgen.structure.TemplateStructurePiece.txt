@@ -1,0 +1,11 @@
+Compiled from "TemplateStructurePiece.java"
+public abstract class net.minecraft.world.level.levelgen.structure.TemplateStructurePiece extends net.minecraft.world.level.levelgen.structure.StructurePiece {
+  public net.minecraft.world.level.levelgen.structure.TemplateStructurePiece(net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType, int, net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager, net.minecraft.resources.Identifier, java.lang.String, net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings, net.minecraft.core.BlockPos);
+  public net.minecraft.world.level.levelgen.structure.TemplateStructurePiece(net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType, net.minecraft.nbt.CompoundTag, net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager, java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings>);
+  public void postProcess(net.minecraft.world.level.WorldGenLevel, net.minecraft.world.level.StructureManager, net.minecraft.world.level.chunk.ChunkGenerator, net.minecraft.util.RandomSource, net.minecraft.world.level.levelgen.structure.BoundingBox, net.minecraft.world.level.ChunkPos, net.minecraft.core.BlockPos);
+  public void move(int, int, int);
+  public net.minecraft.world.level.block.Rotation getRotation();
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate template();
+  public net.minecraft.core.BlockPos templatePosition();
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings placeSettings();
+}

@@ -1,0 +1,10 @@
+Compiled from "MeleeAttackGoal.java"
+public class net.minecraft.world.entity.ai.goal.MeleeAttackGoal extends net.minecraft.world.entity.ai.goal.Goal {
+  public net.minecraft.world.entity.ai.goal.MeleeAttackGoal(net.minecraft.world.entity.PathfinderMob, double, boolean);
+  public boolean canUse();
+  public boolean canContinueToUse();
+  public void start();
+  public void stop();
+  public boolean requiresUpdateEveryTick();
+  public void tick();
+}

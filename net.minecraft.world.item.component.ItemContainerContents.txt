@@ -1,0 +1,16 @@
+Compiled from "ItemContainerContents.java"
+public final class net.minecraft.world.item.component.ItemContainerContents implements net.minecraft.world.item.component.TooltipProvider {
+  public static final net.minecraft.world.item.component.ItemContainerContents EMPTY;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.item.component.ItemContainerContents> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, net.minecraft.world.item.component.ItemContainerContents> STREAM_CODEC;
+  public static net.minecraft.world.item.component.ItemContainerContents fromItems(java.util.List<net.minecraft.world.item.ItemStack>);
+  public void copyInto(net.minecraft.core.NonNullList<net.minecraft.world.item.ItemStack>);
+  public net.minecraft.world.item.ItemStack copyOne();
+  public java.util.stream.Stream<net.minecraft.world.item.ItemStack> stream();
+  public java.util.stream.Stream<net.minecraft.world.item.ItemStack> nonEmptyStream();
+  public java.lang.Iterable<net.minecraft.world.item.ItemStack> nonEmptyItems();
+  public java.lang.Iterable<net.minecraft.world.item.ItemStack> nonEmptyItemsCopy();
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public void addToTooltip(net.minecraft.world.item.Item$TooltipContext, java.util.function.Consumer<net.minecraft.network.chat.Component>, net.minecraft.world.item.TooltipFlag, net.minecraft.core.component.DataComponentGetter);
+}

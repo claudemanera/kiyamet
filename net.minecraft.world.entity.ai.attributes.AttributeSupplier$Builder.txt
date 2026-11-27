@@ -1,0 +1,7 @@
+Compiled from "AttributeSupplier.java"
+public class net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder {
+  public net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder();
+  public net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder add(net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>);
+  public net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder add(net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>, double);
+  public net.minecraft.world.entity.ai.attributes.AttributeSupplier build();
+}

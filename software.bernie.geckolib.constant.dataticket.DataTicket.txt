@@ -1,0 +1,11 @@
+Compiled from "DataTicket.java"
+public class software.bernie.geckolib.constant.dataticket.DataTicket<D> {
+  public static <D> software.bernie.geckolib.constant.dataticket.DataTicket<D> create(java.lang.String, java.lang.Class<? extends D>);
+  public static <D> software.bernie.geckolib.constant.dataticket.DataTicket<D> create(java.lang.String, java.lang.Class<? super D>, com.google.common.reflect.TypeToken<D>);
+  public java.lang.String id();
+  public java.lang.Class<? extends D> objectType();
+  public java.lang.reflect.Type dataType();
+  public int hashCode();
+  public boolean equals(java.lang.Object);
+  public java.lang.String toString();
+}

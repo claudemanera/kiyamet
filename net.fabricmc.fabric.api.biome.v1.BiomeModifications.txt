@@ -1,0 +1,7 @@
+Compiled from "BiomeModifications.java"
+public final class net.fabricmc.fabric.api.biome.v1.BiomeModifications {
+  public static void addFeature(java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext>, net.minecraft.class_2893$class_2895, net.minecraft.class_5321<net.minecraft.class_6796>);
+  public static void addCarver(java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext>, net.minecraft.class_5321<net.minecraft.class_2922<?>>);
+  public static void addSpawn(java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext>, net.minecraft.class_1311, net.minecraft.class_1299<?>, int, int, int);
+  public static net.fabricmc.fabric.api.biome.v1.BiomeModification create(net.minecraft.class_2960);
+}

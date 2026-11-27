@@ -1,0 +1,20 @@
+Compiled from "AnimationTest.java"
+public final class software.bernie.geckolib.animation.state.AnimationTest<T extends software.bernie.geckolib.animatable.GeoAnimatable> extends java.lang.Record {
+  public software.bernie.geckolib.animation.state.AnimationTest(T, software.bernie.geckolib.renderer.base.GeoRenderState, software.bernie.geckolib.animatable.manager.AnimatableManager<T>, software.bernie.geckolib.animation.AnimationController<T>);
+  public boolean isMoving();
+  public void setAnimation(software.bernie.geckolib.animation.RawAnimation);
+  public software.bernie.geckolib.animation.object.PlayState setAndContinue(software.bernie.geckolib.animation.RawAnimation);
+  public boolean isCurrentAnimation(software.bernie.geckolib.animation.RawAnimation);
+  public boolean isCurrentAnimationStage(java.lang.String);
+  public void setControllerSpeed(float);
+  public boolean hasData(software.bernie.geckolib.constant.dataticket.DataTicket<?>);
+  public <D> D getData(software.bernie.geckolib.constant.dataticket.DataTicket<D>);
+  public <D> D getDataOrDefault(software.bernie.geckolib.constant.dataticket.DataTicket<D>, D);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public T animatable();
+  public software.bernie.geckolib.renderer.base.GeoRenderState renderState();
+  public software.bernie.geckolib.animatable.manager.AnimatableManager<T> manager();
+  public software.bernie.geckolib.animation.AnimationController<T> controller();
+}

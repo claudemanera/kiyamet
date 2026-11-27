@@ -1,0 +1,40 @@
+Compiled from "Item.java"
+public class net.minecraft.world.item.Item$Properties {
+  public net.minecraft.world.item.Item$Properties();
+  public net.minecraft.world.item.Item$Properties food(net.minecraft.world.food.FoodProperties);
+  public net.minecraft.world.item.Item$Properties food(net.minecraft.world.food.FoodProperties, net.minecraft.world.item.component.Consumable);
+  public net.minecraft.world.item.Item$Properties usingConvertsTo(net.minecraft.world.item.Item);
+  public net.minecraft.world.item.Item$Properties useCooldown(float);
+  public net.minecraft.world.item.Item$Properties stacksTo(int);
+  public net.minecraft.world.item.Item$Properties durability(int);
+  public net.minecraft.world.item.Item$Properties craftRemainder(net.minecraft.world.item.Item);
+  public net.minecraft.world.item.Item$Properties rarity(net.minecraft.world.item.Rarity);
+  public net.minecraft.world.item.Item$Properties fireResistant();
+  public net.minecraft.world.item.Item$Properties jukeboxPlayable(net.minecraft.resources.ResourceKey<net.minecraft.world.item.JukeboxSong>);
+  public net.minecraft.world.item.Item$Properties enchantable(int);
+  public net.minecraft.world.item.Item$Properties repairable(net.minecraft.world.item.Item);
+  public net.minecraft.world.item.Item$Properties repairable(net.minecraft.tags.TagKey<net.minecraft.world.item.Item>);
+  public net.minecraft.world.item.Item$Properties equippable(net.minecraft.world.entity.EquipmentSlot);
+  public net.minecraft.world.item.Item$Properties equippableUnswappable(net.minecraft.world.entity.EquipmentSlot);
+  public net.minecraft.world.item.Item$Properties tool(net.minecraft.world.item.ToolMaterial, net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block>, float, float, float);
+  public net.minecraft.world.item.Item$Properties pickaxe(net.minecraft.world.item.ToolMaterial, float, float);
+  public net.minecraft.world.item.Item$Properties axe(net.minecraft.world.item.ToolMaterial, float, float);
+  public net.minecraft.world.item.Item$Properties hoe(net.minecraft.world.item.ToolMaterial, float, float);
+  public net.minecraft.world.item.Item$Properties shovel(net.minecraft.world.item.ToolMaterial, float, float);
+  public net.minecraft.world.item.Item$Properties sword(net.minecraft.world.item.ToolMaterial, float, float);
+  public net.minecraft.world.item.Item$Properties spear(net.minecraft.world.item.ToolMaterial, float, float, float, float, float, float, float, float, float);
+  public net.minecraft.world.item.Item$Properties spawnEgg(net.minecraft.world.entity.EntityType<?>);
+  public net.minecraft.world.item.Item$Properties humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterial, net.minecraft.world.item.equipment.ArmorType);
+  public net.minecraft.world.item.Item$Properties wolfArmor(net.minecraft.world.item.equipment.ArmorMaterial);
+  public net.minecraft.world.item.Item$Properties horseArmor(net.minecraft.world.item.equipment.ArmorMaterial);
+  public net.minecraft.world.item.Item$Properties nautilusArmor(net.minecraft.world.item.equipment.ArmorMaterial);
+  public net.minecraft.world.item.Item$Properties trimMaterial(net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.trim.TrimMaterial>);
+  public net.minecraft.world.item.Item$Properties requiredFeatures(net.minecraft.world.flag.FeatureFlag...);
+  public net.minecraft.world.item.Item$Properties setId(net.minecraft.resources.ResourceKey<net.minecraft.world.item.Item>);
+  public net.minecraft.world.item.Item$Properties overrideDescription(java.lang.String);
+  public net.minecraft.world.item.Item$Properties useBlockDescriptionPrefix();
+  public net.minecraft.world.item.Item$Properties useItemDescriptionPrefix();
+  public net.minecraft.resources.Identifier effectiveModel();
+  public <T> net.minecraft.world.item.Item$Properties component(net.minecraft.core.component.DataComponentType<T>, T);
+  public net.minecraft.world.item.Item$Properties attributes(net.minecraft.world.item.component.ItemAttributeModifiers);
+}

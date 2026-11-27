@@ -1,0 +1,20 @@
+{
+ "layers": {
+  "humanoid": [
+   {
+    "texture": "minecraft:iron"
+   },
+   {
+    "texture": "kiyamet:fur_fox"
+   }
+  ],
+  "humanoid_leggings": [
+   {
+    "texture": "minecraft:iron"
+   },
+   {
+    "texture": "kiyamet:fur_fox"
+   }
+  ]
+ }
+}

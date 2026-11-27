@@ -1,0 +1,13 @@
+Compiled from "Structure.java"
+public final class net.minecraft.world.level.levelgen.structure.Structure$StructureSettings extends java.lang.Record {
+  public static final com.mojang.serialization.MapCodec<net.minecraft.world.level.levelgen.structure.Structure$StructureSettings> CODEC;
+  public net.minecraft.world.level.levelgen.structure.Structure$StructureSettings(net.minecraft.core.HolderSet<net.minecraft.world.level.biome.Biome>);
+  public net.minecraft.world.level.levelgen.structure.Structure$StructureSettings(net.minecraft.core.HolderSet<net.minecraft.world.level.biome.Biome>, java.util.Map<net.minecraft.world.entity.MobCategory, net.minecraft.world.level.levelgen.structure.StructureSpawnOverride>, net.minecraft.world.level.levelgen.GenerationStep$Decoration, net.minecraft.world.level.levelgen.structure.TerrainAdjustment);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.core.HolderSet<net.minecraft.world.level.biome.Biome> biomes();
+  public java.util.Map<net.minecraft.world.entity.MobCategory, net.minecraft.world.level.levelgen.structure.StructureSpawnOverride> spawnOverrides();
+  public net.minecraft.world.level.levelgen.GenerationStep$Decoration step();
+  public net.minecraft.world.level.levelgen.structure.TerrainAdjustment terrainAdaptation();
+}

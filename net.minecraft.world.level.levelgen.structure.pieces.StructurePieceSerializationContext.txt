@@ -1,0 +1,11 @@
+Compiled from "StructurePieceSerializationContext.java"
+public final class net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext extends java.lang.Record {
+  public net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext(net.minecraft.server.packs.resources.ResourceManager, net.minecraft.core.RegistryAccess, net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager);
+  public static net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext fromLevel(net.minecraft.server.level.ServerLevel);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.server.packs.resources.ResourceManager resourceManager();
+  public net.minecraft.core.RegistryAccess registryAccess();
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager structureTemplateManager();
+}

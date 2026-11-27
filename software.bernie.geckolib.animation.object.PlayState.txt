@@ -1,0 +1,8 @@
+Compiled from "PlayState.java"
+public final class software.bernie.geckolib.animation.object.PlayState extends java.lang.Enum<software.bernie.geckolib.animation.object.PlayState> {
+  public static final software.bernie.geckolib.animation.object.PlayState CONTINUE;
+  public static final software.bernie.geckolib.animation.object.PlayState PAUSE;
+  public static final software.bernie.geckolib.animation.object.PlayState STOP;
+  public static software.bernie.geckolib.animation.object.PlayState[] values();
+  public static software.bernie.geckolib.animation.object.PlayState valueOf(java.lang.String);
+}

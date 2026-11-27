@@ -1,0 +1,84 @@
+{
+  "markers": [
+    {
+      "pos": [
+        12,
+        13,
+        8
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        13,
+        13,
+        7
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        34,
+        16,
+        8
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        12,
+        13,
+        30
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        13,
+        13,
+        29
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        34,
+        16,
+        30
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        23,
+        13,
+        19
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        24,
+        13,
+        18
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        18,
+        1,
+        40
+      ],
+      "type": "guard"
+    },
+    {
+      "pos": [
+        25,
+        1,
+        40
+      ],
+      "type": "guard"
+    }
+  ]
+}

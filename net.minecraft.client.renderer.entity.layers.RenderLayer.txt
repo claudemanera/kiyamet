@@ -1,0 +1,6 @@
+Compiled from "RenderLayer.java"
+public abstract class net.minecraft.client.renderer.entity.layers.RenderLayer<S extends net.minecraft.client.renderer.entity.state.EntityRenderState, M extends net.minecraft.client.model.EntityModel<? super S>> {
+  public net.minecraft.client.renderer.entity.layers.RenderLayer(net.minecraft.client.renderer.entity.RenderLayerParent<S, M>);
+  public M getParentModel();
+  public abstract void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, float, float);
+}

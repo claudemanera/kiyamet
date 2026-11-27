@@ -1,0 +1,20 @@
+{
+ "layers": {
+  "humanoid": [
+   {
+    "texture": "minecraft:chainmail"
+   },
+   {
+    "texture": "kiyamet:fur_sheep"
+   }
+  ],
+  "humanoid_leggings": [
+   {
+    "texture": "minecraft:chainmail"
+   },
+   {
+    "texture": "kiyamet:fur_sheep"
+   }
+  ]
+ }
+}

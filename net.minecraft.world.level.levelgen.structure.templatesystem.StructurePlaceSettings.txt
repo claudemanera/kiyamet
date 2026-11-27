@@ -1,0 +1,28 @@
+Compiled from "StructurePlaceSettings.java"
+public class net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings {
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings();
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings copy();
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings setMirror(net.minecraft.world.level.block.Mirror);
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings setRotation(net.minecraft.world.level.block.Rotation);
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings setRotationPivot(net.minecraft.core.BlockPos);
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings setIgnoreEntities(boolean);
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings setBoundingBox(net.minecraft.world.level.levelgen.structure.BoundingBox);
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings setRandom(net.minecraft.util.RandomSource);
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings setLiquidSettings(net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings);
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings setKnownShape(boolean);
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings clearProcessors();
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings addProcessor(net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor);
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings popProcessor(net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor);
+  public net.minecraft.world.level.block.Mirror getMirror();
+  public net.minecraft.world.level.block.Rotation getRotation();
+  public net.minecraft.core.BlockPos getRotationPivot();
+  public net.minecraft.util.RandomSource getRandom(net.minecraft.core.BlockPos);
+  public boolean isIgnoreEntities();
+  public net.minecraft.world.level.levelgen.structure.BoundingBox getBoundingBox();
+  public boolean getKnownShape();
+  public java.util.List<net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor> getProcessors();
+  public boolean shouldApplyWaterlogging();
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate$Palette getRandomPalette(java.util.List<net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate$Palette>, net.minecraft.core.BlockPos);
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings setFinalizeEntities(boolean);
+  public boolean shouldFinalizeEntities();
+}

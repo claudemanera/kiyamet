@@ -1,0 +1,8 @@
+Compiled from "AnimatableInstanceCache.java"
+public abstract class software.bernie.geckolib.animatable.instance.AnimatableInstanceCache {
+  public software.bernie.geckolib.animatable.instance.AnimatableInstanceCache(software.bernie.geckolib.animatable.GeoAnimatable);
+  public abstract <T extends software.bernie.geckolib.animatable.GeoAnimatable> software.bernie.geckolib.animatable.manager.AnimatableManager<T> getManagerForId(long);
+  public <D> void addDataPoint(long, software.bernie.geckolib.constant.dataticket.DataTicket<D>, D);
+  public <D> D getDataPoint(long, software.bernie.geckolib.constant.dataticket.DataTicket<D>);
+  public java.lang.Object getRenderProvider();
+}

@@ -1,0 +1,8 @@
+Compiled from "SpawnPlacements.java"
+public class net.minecraft.world.entity.SpawnPlacements {
+  public net.minecraft.world.entity.SpawnPlacements();
+  public static net.minecraft.world.entity.SpawnPlacementType getPlacementType(net.minecraft.world.entity.EntityType<?>);
+  public static boolean isSpawnPositionOk(net.minecraft.world.entity.EntityType<?>, net.minecraft.world.level.LevelReader, net.minecraft.core.BlockPos);
+  public static net.minecraft.world.level.levelgen.Heightmap$Types getHeightmapType(net.minecraft.world.entity.EntityType<?>);
+  public static <T extends net.minecraft.world.entity.Entity> boolean checkSpawnRules(net.minecraft.world.entity.EntityType<T>, net.minecraft.world.level.ServerLevelAccessor, net.minecraft.world.entity.EntitySpawnReason, net.minecraft.core.BlockPos, net.minecraft.util.RandomSource);
+}

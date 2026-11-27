@@ -1,0 +1,11 @@
+Compiled from "AnimatableManager.java"
+public final class software.bernie.geckolib.animatable.manager.AnimatableManager$ControllerRegistrar extends java.lang.Record {
+  public software.bernie.geckolib.animatable.manager.AnimatableManager$ControllerRegistrar(java.util.List<software.bernie.geckolib.animation.AnimationController<? extends software.bernie.geckolib.animatable.GeoAnimatable>>);
+  public software.bernie.geckolib.animatable.manager.AnimatableManager$ControllerRegistrar add(software.bernie.geckolib.animation.AnimationController<?>...);
+  public software.bernie.geckolib.animatable.manager.AnimatableManager$ControllerRegistrar add(software.bernie.geckolib.animation.AnimationController<?>);
+  public software.bernie.geckolib.animatable.manager.AnimatableManager$ControllerRegistrar remove(java.lang.String);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public java.util.List<software.bernie.geckolib.animation.AnimationController<? extends software.bernie.geckolib.animatable.GeoAnimatable>> controllers();
+}

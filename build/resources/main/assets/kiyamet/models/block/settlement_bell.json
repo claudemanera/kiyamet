@@ -1,0 +1,204 @@
+{
+ "parent": "minecraft:block/block",
+ "ambientocclusion": true,
+ "textures": {
+  "dark": "kiyamet:block/furn_dark",
+  "gold": "kiyamet:block/furn_gold",
+  "oak": "kiyamet:block/furn_oak",
+  "particle": "kiyamet:block/furn_gold"
+ },
+ "elements": [
+  {
+   "from": [
+    4,
+    0,
+    4
+   ],
+   "to": [
+    12,
+    1,
+    12
+   ],
+   "faces": {
+    "north": {
+     "texture": "#dark"
+    },
+    "south": {
+     "texture": "#dark"
+    },
+    "east": {
+     "texture": "#dark"
+    },
+    "west": {
+     "texture": "#dark"
+    },
+    "up": {
+     "texture": "#dark"
+    },
+    "down": {
+     "texture": "#dark"
+    }
+   }
+  },
+  {
+   "from": [
+    7,
+    1,
+    7
+   ],
+   "to": [
+    9,
+    14,
+    9
+   ],
+   "faces": {
+    "north": {
+     "texture": "#oak"
+    },
+    "south": {
+     "texture": "#oak"
+    },
+    "east": {
+     "texture": "#oak"
+    },
+    "west": {
+     "texture": "#oak"
+    },
+    "up": {
+     "texture": "#oak"
+    },
+    "down": {
+     "texture": "#oak"
+    }
+   }
+  },
+  {
+   "from": [
+    5,
+    12,
+    5
+   ],
+   "to": [
+    11,
+    13,
+    11
+   ],
+   "faces": {
+    "north": {
+     "texture": "#oak"
+    },
+    "south": {
+     "texture": "#oak"
+    },
+    "east": {
+     "texture": "#oak"
+    },
+    "west": {
+     "texture": "#oak"
+    },
+    "up": {
+     "texture": "#oak"
+    },
+    "down": {
+     "texture": "#oak"
+    }
+   }
+  },
+  {
+   "from": [
+    5.5,
+    6,
+    5.5
+   ],
+   "to": [
+    10.5,
+    11,
+    10.5
+   ],
+   "faces": {
+    "north": {
+     "texture": "#gold"
+    },
+    "south": {
+     "texture": "#gold"
+    },
+    "east": {
+     "texture": "#gold"
+    },
+    "west": {
+     "texture": "#gold"
+    },
+    "up": {
+     "texture": "#gold"
+    },
+    "down": {
+     "texture": "#gold"
+    }
+   }
+  },
+  {
+   "from": [
+    5,
+    6,
+    5
+   ],
+   "to": [
+    11,
+    7,
+    11
+   ],
+   "faces": {
+    "north": {
+     "texture": "#gold"
+    },
+    "south": {
+     "texture": "#gold"
+    },
+    "east": {
+     "texture": "#gold"
+    },
+    "west": {
+     "texture": "#gold"
+    },
+    "up": {
+     "texture": "#gold"
+    },
+    "down": {
+     "texture": "#gold"
+    }
+   }
+  },
+  {
+   "from": [
+    7.5,
+    5.5,
+    7.5
+   ],
+   "to": [
+    8.5,
+    6.5,
+    8.5
+   ],
+   "faces": {
+    "north": {
+     "texture": "#dark"
+    },
+    "south": {
+     "texture": "#dark"
+    },
+    "east": {
+     "texture": "#dark"
+    },
+    "west": {
+     "texture": "#dark"
+    },
+    "up": {
+     "texture": "#dark"
+    },
+    "down": {
+     "texture": "#dark"
+    }
+   }
+  }
+ ]
+}

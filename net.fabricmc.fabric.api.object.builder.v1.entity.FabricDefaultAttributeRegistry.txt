@@ -1,0 +1,5 @@
+Compiled from "FabricDefaultAttributeRegistry.java"
+public final class net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry {
+  public static void register(net.minecraft.class_1299<? extends net.minecraft.class_1309>, net.minecraft.class_5132$class_5133);
+  public static void register(net.minecraft.class_1299<? extends net.minecraft.class_1309>, net.minecraft.class_5132);
+}

@@ -1,0 +1,4 @@
+Compiled from "LivingEntityFeatureRendererRegistrationCallback.java"
+public interface net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback$RegistrationHelper {
+  public abstract <T extends net.minecraft.class_10017> void register(net.minecraft.class_3887<T, ? extends net.minecraft.class_583<T>>);
+}

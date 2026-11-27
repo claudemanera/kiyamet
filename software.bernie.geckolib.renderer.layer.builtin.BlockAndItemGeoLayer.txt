@@ -1,0 +1,6 @@
+Compiled from "BlockAndItemGeoLayer.java"
+public abstract class software.bernie.geckolib.renderer.layer.builtin.BlockAndItemGeoLayer<T extends software.bernie.geckolib.animatable.GeoAnimatable, O, R extends software.bernie.geckolib.renderer.base.GeoRenderState> extends software.bernie.geckolib.renderer.layer.GeoRenderLayer<T, O, R> {
+  public software.bernie.geckolib.renderer.layer.builtin.BlockAndItemGeoLayer(software.bernie.geckolib.renderer.base.GeoRenderer<T, O, R>);
+  public abstract void addRenderData(T, O, R, float);
+  public void addPerBoneRender(software.bernie.geckolib.renderer.base.RenderPassInfo<R>, java.util.function.BiConsumer<software.bernie.geckolib.cache.model.GeoBone, software.bernie.geckolib.renderer.base.PerBoneRender<R>>);
+}

@@ -1,0 +1,16 @@
+{
+  "values": [
+    "minecraft:jungle",
+    "minecraft:forest",
+    "minecraft:dark_forest",
+    "minecraft:old_growth_birch_forest",
+    {
+      "id": "#c:is_jungle",
+      "required": false
+    },
+    {
+      "id": "#c:is_forest",
+      "required": false
+    }
+  ]
+}

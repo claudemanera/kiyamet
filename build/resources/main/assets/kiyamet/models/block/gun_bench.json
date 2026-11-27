@@ -1,0 +1,1 @@
+{"parent": "minecraft:block/cube_bottom_top", "textures": {"top": "kiyamet:block/gun_bench_top", "bottom": "minecraft:block/oak_planks", "side": "kiyamet:block/gun_bench_side"}}

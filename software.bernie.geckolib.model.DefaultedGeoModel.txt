@@ -1,0 +1,13 @@
+Compiled from "DefaultedGeoModel.java"
+public abstract class software.bernie.geckolib.model.DefaultedGeoModel<T extends software.bernie.geckolib.animatable.GeoAnimatable> extends software.bernie.geckolib.model.GeoModel<T> {
+  public software.bernie.geckolib.model.DefaultedGeoModel(net.minecraft.class_2960);
+  public software.bernie.geckolib.model.DefaultedGeoModel<T> withAltModel(net.minecraft.class_2960);
+  public software.bernie.geckolib.model.DefaultedGeoModel<T> withAltAnimations(net.minecraft.class_2960);
+  public software.bernie.geckolib.model.DefaultedGeoModel<T> withAltTexture(net.minecraft.class_2960);
+  public net.minecraft.class_2960 buildFormattedModelPath(net.minecraft.class_2960);
+  public net.minecraft.class_2960 buildFormattedAnimationPath(net.minecraft.class_2960);
+  public net.minecraft.class_2960 buildFormattedTexturePath(net.minecraft.class_2960);
+  public net.minecraft.class_2960 getModelResource(software.bernie.geckolib.renderer.base.GeoRenderState);
+  public net.minecraft.class_2960 getTextureResource(software.bernie.geckolib.renderer.base.GeoRenderState);
+  public net.minecraft.class_2960 getAnimationResource(T);
+}

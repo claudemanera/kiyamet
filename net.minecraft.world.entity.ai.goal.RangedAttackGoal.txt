@@ -1,0 +1,10 @@
+Compiled from "RangedAttackGoal.java"
+public class net.minecraft.world.entity.ai.goal.RangedAttackGoal extends net.minecraft.world.entity.ai.goal.Goal {
+  public net.minecraft.world.entity.ai.goal.RangedAttackGoal(net.minecraft.world.entity.monster.RangedAttackMob, double, int, float);
+  public net.minecraft.world.entity.ai.goal.RangedAttackGoal(net.minecraft.world.entity.monster.RangedAttackMob, double, int, int, float);
+  public boolean canUse();
+  public boolean canContinueToUse();
+  public void stop();
+  public boolean requiresUpdateEveryTick();
+  public void tick();
+}

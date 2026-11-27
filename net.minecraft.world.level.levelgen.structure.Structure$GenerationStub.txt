@@ -1,0 +1,11 @@
+Compiled from "Structure.java"
+public final class net.minecraft.world.level.levelgen.structure.Structure$GenerationStub extends java.lang.Record {
+  public net.minecraft.world.level.levelgen.structure.Structure$GenerationStub(net.minecraft.core.BlockPos, java.util.function.Consumer<net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder>);
+  public net.minecraft.world.level.levelgen.structure.Structure$GenerationStub(net.minecraft.core.BlockPos, com.mojang.datafixers.util.Either<java.util.function.Consumer<net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder>, net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder>);
+  public net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder getPiecesBuilder();
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.core.BlockPos position();
+  public com.mojang.datafixers.util.Either<java.util.function.Consumer<net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder>, net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder> generator();
+}

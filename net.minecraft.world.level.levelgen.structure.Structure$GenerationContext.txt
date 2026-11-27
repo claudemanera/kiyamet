@@ -1,0 +1,18 @@
+Compiled from "Structure.java"
+public final class net.minecraft.world.level.levelgen.structure.Structure$GenerationContext extends java.lang.Record {
+  public net.minecraft.world.level.levelgen.structure.Structure$GenerationContext(net.minecraft.core.RegistryAccess, net.minecraft.world.level.chunk.ChunkGenerator, net.minecraft.world.level.biome.BiomeSource, net.minecraft.world.level.levelgen.RandomState, net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager, long, net.minecraft.world.level.ChunkPos, net.minecraft.world.level.LevelHeightAccessor, java.util.function.Predicate<net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>>);
+  public net.minecraft.world.level.levelgen.structure.Structure$GenerationContext(net.minecraft.core.RegistryAccess, net.minecraft.world.level.chunk.ChunkGenerator, net.minecraft.world.level.biome.BiomeSource, net.minecraft.world.level.levelgen.RandomState, net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager, net.minecraft.world.level.levelgen.WorldgenRandom, long, net.minecraft.world.level.ChunkPos, net.minecraft.world.level.LevelHeightAccessor, java.util.function.Predicate<net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>>);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.core.RegistryAccess registryAccess();
+  public net.minecraft.world.level.chunk.ChunkGenerator chunkGenerator();
+  public net.minecraft.world.level.biome.BiomeSource biomeSource();
+  public net.minecraft.world.level.levelgen.RandomState randomState();
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager structureTemplateManager();
+  public net.minecraft.world.level.levelgen.WorldgenRandom random();
+  public long seed();
+  public net.minecraft.world.level.ChunkPos chunkPos();
+  public net.minecraft.world.level.LevelHeightAccessor heightAccessor();
+  public java.util.function.Predicate<net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>> validBiome();
+}

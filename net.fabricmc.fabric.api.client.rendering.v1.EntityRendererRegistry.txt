@@ -1,0 +1,4 @@
+Compiled from "EntityRendererRegistry.java"
+public final class net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry {
+  public static <E extends net.minecraft.class_1297> void register(net.minecraft.class_1299<? extends E>, net.minecraft.class_5617<E>);
+}

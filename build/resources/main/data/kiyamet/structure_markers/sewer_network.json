@@ -1,0 +1,92 @@
+{
+  "markers": [
+    {
+      "pos": [
+        40,
+        2,
+        31
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        7,
+        2,
+        22
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        10,
+        2,
+        26
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        12,
+        2,
+        21
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        6,
+        2,
+        27
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        12,
+        2,
+        8
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        30,
+        2,
+        8
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        22,
+        2,
+        14
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        22,
+        2,
+        31
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        12,
+        2,
+        36
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        34,
+        2,
+        36
+      ],
+      "type": "zombie"
+    }
+  ]
+}

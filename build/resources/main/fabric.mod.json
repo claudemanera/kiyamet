@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "kiyamet",
+  "version": "2.2.2",
+  "name": "The Walking Dead",
+  "description": "Zombie apocalypse: 20 skills to level 999, power stones, 70 structures, giant cities, bosses and base defense.",
+  "authors": [
+    "Kiyamet"
+  ],
+  "license": "All-Rights-Reserved",
+  "icon": "assets/kiyamet/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.kiyamet.Kiyamet"
+    ],
+    "client": [
+      "com.kiyamet.client.KiyametClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*",
+    "geckolib": ">=5.4"
+  },
+  "recommends": {
+    "xaerominimap": "*",
+    "xaeroworldmap": "*"
+  }
+}

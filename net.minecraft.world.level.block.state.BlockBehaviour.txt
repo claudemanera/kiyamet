@@ -1,0 +1,12 @@
+Compiled from "BlockBehaviour.java"
+public abstract class net.minecraft.world.level.block.state.BlockBehaviour implements net.minecraft.world.flag.FeatureElement {
+  public net.minecraft.world.level.block.state.BlockBehaviour(net.minecraft.world.level.block.state.BlockBehaviour$Properties);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties properties();
+  public static <B extends net.minecraft.world.level.block.Block> com.mojang.serialization.MapCodec<B> simpleCodec(java.util.function.Function<net.minecraft.world.level.block.state.BlockBehaviour$Properties, B>);
+  public net.minecraft.world.flag.FeatureFlagSet requiredFeatures();
+  public final java.util.Optional<net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable>> getLootTable();
+  public final java.lang.String getDescriptionId();
+  public abstract net.minecraft.world.item.Item asItem();
+  public net.minecraft.world.level.material.MapColor defaultMapColor();
+  public float defaultDestroyTime();
+}

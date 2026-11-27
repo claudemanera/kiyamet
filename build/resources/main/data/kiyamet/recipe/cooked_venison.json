@@ -1,0 +1,10 @@
+{
+ "type": "minecraft:smelting",
+ "category": "food",
+ "ingredient": "kiyamet:venison",
+ "result": {
+  "id": "kiyamet:cooked_venison"
+ },
+ "experience": 0.35,
+ "cookingtime": 200
+}

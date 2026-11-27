@@ -1,0 +1,13 @@
+Compiled from "StructureTemplateManager.java"
+public class net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager {
+  public static final java.lang.String STRUCTURE_RESOURCE_DIRECTORY_NAME = "structure";
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager(net.minecraft.server.packs.resources.ResourceManager, net.minecraft.world.level.storage.LevelStorageSource$LevelStorageAccess, com.mojang.datafixers.DataFixer, net.minecraft.core.HolderGetter<net.minecraft.world.level.block.Block>);
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate getOrCreate(net.minecraft.resources.Identifier);
+  public java.util.Optional<net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate> get(net.minecraft.resources.Identifier);
+  public java.util.stream.Stream<net.minecraft.resources.Identifier> listTemplates();
+  public void onResourceManagerReload(net.minecraft.server.packs.resources.ResourceManager);
+  public net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate readStructure(net.minecraft.nbt.CompoundTag);
+  public boolean save(net.minecraft.resources.Identifier);
+  public java.nio.file.Path createAndValidatePathToGeneratedStructure(net.minecraft.resources.Identifier, java.lang.String);
+  public void remove(net.minecraft.resources.Identifier);
+}

@@ -1,0 +1,11 @@
+Compiled from "GeoModel.java"
+public abstract class software.bernie.geckolib.model.GeoModel<T extends software.bernie.geckolib.animatable.GeoAnimatable> {
+  public software.bernie.geckolib.model.GeoModel();
+  public abstract net.minecraft.class_2960 getModelResource(software.bernie.geckolib.renderer.base.GeoRenderState);
+  public abstract net.minecraft.class_2960 getTextureResource(software.bernie.geckolib.renderer.base.GeoRenderState);
+  public abstract net.minecraft.class_2960 getAnimationResource(T);
+  public net.minecraft.class_2960[] getAnimationResourceFallbacks(T);
+  public void addAdditionalStateData(T, java.lang.Object, software.bernie.geckolib.renderer.base.GeoRenderState);
+  public software.bernie.geckolib.cache.model.BakedGeoModel getBakedModel(net.minecraft.class_2960);
+  public software.bernie.geckolib.cache.animation.Animation getBakedAnimation(T, java.lang.String) throws java.lang.RuntimeException;
+}

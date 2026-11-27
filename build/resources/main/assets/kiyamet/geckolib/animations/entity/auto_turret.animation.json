@@ -1,0 +1,90 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "misc.idle": {
+   "loop": true,
+   "animation_length": 6.0,
+   "bones": {
+    "head": {
+     "rotation": {
+      "0.0": [
+       0,
+       0,
+       0
+      ],
+      "1.5": [
+       0,
+       35,
+       0
+      ],
+      "3.0": [
+       0,
+       0,
+       0
+      ],
+      "4.5": [
+       0,
+       -35,
+       0
+      ],
+      "6.0": [
+       0,
+       0,
+       0
+      ]
+     }
+    }
+   }
+  },
+  "move.walk": {
+   "loop": true,
+   "animation_length": 0.3,
+   "bones": {
+    "barrels": {
+     "position": {
+      "0.0": [
+       0,
+       0,
+       0
+      ],
+      "0.08": [
+       0,
+       0,
+       -1.5
+      ],
+      "0.3": [
+       0,
+       0,
+       0
+      ]
+     }
+    }
+   }
+  },
+  "attack.swing": {
+   "loop": false,
+   "animation_length": 0.3,
+   "bones": {
+    "barrels": {
+     "position": {
+      "0.0": [
+       0,
+       0,
+       0
+      ],
+      "0.08": [
+       0,
+       0,
+       -1.5
+      ],
+      "0.3": [
+       0,
+       0,
+       0
+      ]
+     }
+    }
+   }
+  }
+ }
+}

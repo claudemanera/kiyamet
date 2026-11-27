@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "kiyamet:volcano_station",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 80,
+    "separation": 32,
+    "salt": 70063
+  }
+}

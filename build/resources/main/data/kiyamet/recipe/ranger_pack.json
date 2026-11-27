@@ -1,0 +1,9 @@
+{
+ "type": "minecraft:crafting_transmute",
+ "category": "equipment",
+ "input": "kiyamet:survivor_pack",
+ "material": "kiyamet:metal_plate",
+ "result": {
+  "id": "kiyamet:ranger_pack"
+ }
+}

@@ -1,0 +1,31 @@
+Compiled from "AbstractArrow.java"
+public abstract class net.minecraft.world.entity.projectile.arrow.AbstractArrow extends net.minecraft.world.entity.projectile.Projectile {
+  public net.minecraft.world.entity.projectile.arrow.AbstractArrow$Pickup pickup;
+  public int shakeTime;
+  public void setSoundEvent(net.minecraft.sounds.SoundEvent);
+  public boolean shouldRenderAtSqrDistance(double);
+  public void shoot(double, double, double, float, float);
+  public void lerpMotion(net.minecraft.world.phys.Vec3);
+  public void onSyncedDataUpdated(net.minecraft.network.syncher.EntityDataAccessor<?>);
+  public void tick();
+  public boolean isPushedByFluid();
+  public void move(net.minecraft.world.entity.MoverType, net.minecraft.world.phys.Vec3);
+  public void onItemBreak(net.minecraft.world.item.Item);
+  public void onAboveBubbleColumn(boolean, net.minecraft.core.BlockPos);
+  public void onInsideBubbleColumn(boolean);
+  public void push(double, double, double);
+  public net.minecraft.world.item.ItemStack getWeaponItem();
+  public void setOwner(net.minecraft.world.entity.Entity);
+  public void playerTouch(net.minecraft.world.entity.player.Player);
+  public net.minecraft.world.item.ItemStack getPickupItemStackOrigin();
+  public void setBaseDamage(double);
+  public boolean isAttackable();
+  public void setCritArrow(boolean);
+  public boolean isCritArrow();
+  public byte getPierceLevel();
+  public void setBaseDamageFromMob(float);
+  public void setNoPhysics(boolean);
+  public boolean isNoPhysics();
+  public boolean isPickable();
+  public net.minecraft.world.entity.SlotAccess getSlot(int);
+}

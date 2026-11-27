@@ -1,0 +1,10 @@
+Compiled from "GeckoLibUtil.java"
+public final class software.bernie.geckolib.util.GeckoLibUtil {
+  public static software.bernie.geckolib.animatable.instance.AnimatableInstanceCache createInstanceCache(software.bernie.geckolib.animatable.GeoAnimatable);
+  public static software.bernie.geckolib.animatable.instance.AnimatableInstanceCache createInstanceCache(software.bernie.geckolib.animatable.GeoAnimatable, boolean);
+  public static synchronized software.bernie.geckolib.animation.object.LoopType addCustomLoopType(java.lang.String, software.bernie.geckolib.animation.object.LoopType);
+  public static synchronized software.bernie.geckolib.animation.object.EasingType addCustomEasingType(java.lang.String, software.bernie.geckolib.animation.object.EasingType);
+  public static synchronized void addCustomBakedModelFactory(java.lang.String, software.bernie.geckolib.loading.object.BakedModelFactory);
+  public static synchronized <D> software.bernie.geckolib.constant.dataticket.SerializableDataTicket<D> addDataTicket(software.bernie.geckolib.constant.dataticket.SerializableDataTicket<D>);
+  public static boolean areComponentsMatchingIgnoringGeckoLibId(net.minecraft.class_9335, net.minecraft.class_9335);
+}

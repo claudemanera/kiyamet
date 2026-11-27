@@ -1,0 +1,12 @@
+Compiled from "GeoRenderState.java"
+public interface software.bernie.geckolib.renderer.base.GeoRenderState {
+  public default <D> void addGeckolibData(software.bernie.geckolib.constant.dataticket.DataTicket<D>, D);
+  public default boolean hasGeckolibData(software.bernie.geckolib.constant.dataticket.DataTicket<?>);
+  public default <D> D getGeckolibData(software.bernie.geckolib.constant.dataticket.DataTicket<D>);
+  public default <D> D getOrDefaultGeckolibData(software.bernie.geckolib.constant.dataticket.DataTicket<D>, D);
+  public default <D> D getOrDefaultGeckolibData(software.bernie.geckolib.constant.dataticket.DataTicket<D>, java.util.function.Supplier<D>);
+  public default int getPackedLight();
+  public default float getPartialTick();
+  public default double getAnimatableAge();
+  public abstract java.util.Map<software.bernie.geckolib.constant.dataticket.DataTicket<?>, java.lang.Object> getDataMap();
+}

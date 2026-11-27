@@ -1,0 +1,6 @@
+Compiled from "AttachmentSyncPredicate.java"
+public interface net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate extends java.util.function.BiPredicate<net.fabricmc.fabric.api.attachment.v1.AttachmentTarget, net.minecraft.class_3222> {
+  public static net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate all();
+  public static net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate targetOnly();
+  public static net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate allButTarget();
+}

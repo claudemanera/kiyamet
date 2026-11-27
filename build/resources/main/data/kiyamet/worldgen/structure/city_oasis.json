@@ -1,0 +1,10 @@
+{
+ "type": "kiyamet:tiled_city",
+ "layout": "kiyamet:oasis",
+ "biomes": "#kiyamet:has_structure/city_oasis",
+ "step": "surface_structures",
+ "terrain_adaptation": "beard_box",
+ "spawn_overrides": {},
+ "cols": 3,
+ "rows": 3
+}

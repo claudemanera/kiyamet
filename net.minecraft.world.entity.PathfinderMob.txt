@@ -1,0 +1,10 @@
+Compiled from "PathfinderMob.java"
+public abstract class net.minecraft.world.entity.PathfinderMob extends net.minecraft.world.entity.Mob {
+  public float getWalkTargetValue(net.minecraft.core.BlockPos);
+  public float getWalkTargetValue(net.minecraft.core.BlockPos, net.minecraft.world.level.LevelReader);
+  public boolean checkSpawnRules(net.minecraft.world.level.LevelAccessor, net.minecraft.world.entity.EntitySpawnReason);
+  public boolean isPathFinding();
+  public boolean isPanicking();
+  public void closeRangeLeashBehaviour(net.minecraft.world.entity.Entity);
+  public void whenLeashedTo(net.minecraft.world.entity.Entity);
+}

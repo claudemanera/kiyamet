@@ -1,0 +1,13 @@
+Compiled from "StructurePiecesBuilder.java"
+public class net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder implements net.minecraft.world.level.levelgen.structure.StructurePieceAccessor {
+  public net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder();
+  public void addPiece(net.minecraft.world.level.levelgen.structure.StructurePiece);
+  public net.minecraft.world.level.levelgen.structure.StructurePiece findCollisionPiece(net.minecraft.world.level.levelgen.structure.BoundingBox);
+  public void offsetPiecesVertically(int);
+  public int moveBelowSeaLevel(int, int, net.minecraft.util.RandomSource, int);
+  public void moveInsideHeights(net.minecraft.util.RandomSource, int, int);
+  public net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer build();
+  public void clear();
+  public boolean isEmpty();
+  public net.minecraft.world.level.levelgen.structure.BoundingBox getBoundingBox();
+}

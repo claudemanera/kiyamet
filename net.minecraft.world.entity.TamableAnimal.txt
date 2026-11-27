@@ -1,0 +1,24 @@
+Compiled from "TamableAnimal.java"
+public abstract class net.minecraft.world.entity.TamableAnimal extends net.minecraft.world.entity.animal.Animal implements net.minecraft.world.entity.OwnableEntity {
+  public static final int TELEPORT_WHEN_DISTANCE_IS_SQ = 144;
+  public boolean canBeLeashed();
+  public void handleEntityEvent(byte);
+  public boolean isTame();
+  public void setTame(boolean, boolean);
+  public boolean isInSittingPose();
+  public void setInSittingPose(boolean);
+  public net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.LivingEntity> getOwnerReference();
+  public void setOwner(net.minecraft.world.entity.LivingEntity);
+  public void setOwnerReference(net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.LivingEntity>);
+  public void tame(net.minecraft.world.entity.player.Player);
+  public boolean canAttack(net.minecraft.world.entity.LivingEntity);
+  public boolean isOwnedBy(net.minecraft.world.entity.LivingEntity);
+  public boolean wantsToAttack(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity);
+  public net.minecraft.world.scores.PlayerTeam getTeam();
+  public void die(net.minecraft.world.damagesource.DamageSource);
+  public boolean isOrderedToSit();
+  public void setOrderedToSit(boolean);
+  public void tryToTeleportToOwner();
+  public boolean shouldTryTeleportToOwner();
+  public final boolean unableToMoveToOwner();
+}

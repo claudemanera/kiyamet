@@ -1,0 +1,264 @@
+{
+ "model": {
+  "type": "minecraft:range_dispatch",
+  "property": "minecraft:cooldown",
+  "scale": 1.0,
+  "entries": [
+   {
+    "threshold": 0.6,
+    "model": {
+     "type": "minecraft:composite",
+     "models": [
+      {
+       "type": "minecraft:model",
+       "model": "kiyamet:item/flare_pistol_recoil",
+       "tints": [
+        {
+         "type": "minecraft:custom_model_data",
+         "index": 0,
+         "default": -1
+        }
+       ]
+      },
+      {
+       "type": "minecraft:select",
+       "property": "minecraft:custom_model_data",
+       "index": 0,
+       "cases": [
+        {
+         "when": "red_dot",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/flare_pistol_red_dot_recoil"
+         }
+        },
+        {
+         "when": "holo",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/flare_pistol_holo_recoil"
+         }
+        },
+        {
+         "when": "acog",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/flare_pistol_acog_recoil"
+         }
+        },
+        {
+         "when": "sniper",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/flare_pistol_sniper_recoil"
+         }
+        }
+       ],
+       "fallback": {
+        "type": "minecraft:empty"
+       }
+      },
+      {
+       "type": "minecraft:select",
+       "property": "minecraft:custom_model_data",
+       "index": 1,
+       "cases": [
+        {
+         "when": "short",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/flare_pistol_short_recoil"
+         }
+        },
+        {
+         "when": "long",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/flare_pistol_long_recoil"
+         }
+        }
+       ],
+       "fallback": {
+        "type": "minecraft:empty"
+       }
+      },
+      {
+       "type": "minecraft:select",
+       "property": "minecraft:custom_model_data",
+       "index": 2,
+       "cases": [
+        {
+         "when": "flashlight",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/flare_pistol_flashlight_recoil"
+         }
+        },
+        {
+         "when": "laser",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/flare_pistol_laser_recoil"
+         }
+        }
+       ],
+       "fallback": {
+        "type": "minecraft:empty"
+       }
+      },
+      {
+       "type": "minecraft:select",
+       "property": "minecraft:custom_model_data",
+       "index": 3,
+       "cases": [
+        {
+         "when": "extended",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/flare_pistol_extended_recoil"
+         }
+        },
+        {
+         "when": "drum",
+         "model": {
+          "type": "minecraft:model",
+          "model": "kiyamet:item/att/flare_pistol_drum_recoil"
+         }
+        }
+       ],
+       "fallback": {
+        "type": "minecraft:empty"
+       }
+      }
+     ]
+    }
+   }
+  ],
+  "fallback": {
+   "type": "minecraft:composite",
+   "models": [
+    {
+     "type": "minecraft:model",
+     "model": "kiyamet:item/flare_pistol",
+     "tints": [
+      {
+       "type": "minecraft:custom_model_data",
+       "index": 0,
+       "default": -1
+      }
+     ]
+    },
+    {
+     "type": "minecraft:select",
+     "property": "minecraft:custom_model_data",
+     "index": 0,
+     "cases": [
+      {
+       "when": "red_dot",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/flare_pistol_red_dot"
+       }
+      },
+      {
+       "when": "holo",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/flare_pistol_holo"
+       }
+      },
+      {
+       "when": "acog",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/flare_pistol_acog"
+       }
+      },
+      {
+       "when": "sniper",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/flare_pistol_sniper"
+       }
+      }
+     ],
+     "fallback": {
+      "type": "minecraft:empty"
+     }
+    },
+    {
+     "type": "minecraft:select",
+     "property": "minecraft:custom_model_data",
+     "index": 1,
+     "cases": [
+      {
+       "when": "short",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/flare_pistol_short"
+       }
+      },
+      {
+       "when": "long",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/flare_pistol_long"
+       }
+      }
+     ],
+     "fallback": {
+      "type": "minecraft:empty"
+     }
+    },
+    {
+     "type": "minecraft:select",
+     "property": "minecraft:custom_model_data",
+     "index": 2,
+     "cases": [
+      {
+       "when": "flashlight",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/flare_pistol_flashlight"
+       }
+      },
+      {
+       "when": "laser",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/flare_pistol_laser"
+       }
+      }
+     ],
+     "fallback": {
+      "type": "minecraft:empty"
+     }
+    },
+    {
+     "type": "minecraft:select",
+     "property": "minecraft:custom_model_data",
+     "index": 3,
+     "cases": [
+      {
+       "when": "extended",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/flare_pistol_extended"
+       }
+      },
+      {
+       "when": "drum",
+       "model": {
+        "type": "minecraft:model",
+        "model": "kiyamet:item/att/flare_pistol_drum"
+       }
+      }
+     ],
+     "fallback": {
+      "type": "minecraft:empty"
+     }
+    }
+   ]
+  }
+ }
+}

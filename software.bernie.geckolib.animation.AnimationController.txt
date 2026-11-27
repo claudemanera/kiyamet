@@ -1,0 +1,37 @@
+Compiled from "AnimationController.java"
+public class software.bernie.geckolib.animation.AnimationController<T extends software.bernie.geckolib.animatable.GeoAnimatable> {
+  public software.bernie.geckolib.animation.AnimationController(software.bernie.geckolib.animation.AnimationController$AnimationStateHandler<T>);
+  public software.bernie.geckolib.animation.AnimationController(java.lang.String, software.bernie.geckolib.animation.AnimationController$AnimationStateHandler<T>);
+  public software.bernie.geckolib.animation.AnimationController(java.lang.String, int, software.bernie.geckolib.animation.AnimationController$AnimationStateHandler<T>);
+  public java.lang.String getName();
+  public software.bernie.geckolib.animation.object.PlayState getPlayState();
+  public int getTransitionTicks();
+  public double getAnimationSpeed();
+  public software.bernie.geckolib.animation.state.AnimationTimeline getTimeline();
+  public double getCurrentTimelineTime();
+  public double getCurrentAnimationTime();
+  public software.bernie.geckolib.animation.state.AnimationPoint getCurrentAnimationPoint();
+  public software.bernie.geckolib.animation.RawAnimation getCurrentRawAnimation();
+  public boolean isPlayingTriggeredAnimation();
+  public boolean hasAnimationFinished();
+  public boolean isAnimatingBones();
+  public boolean isTransitioning();
+  public software.bernie.geckolib.animation.AnimationController<T> setSoundKeyframeHandler(software.bernie.geckolib.animation.AnimationController$KeyframeEventHandler<T, software.bernie.geckolib.cache.animation.keyframeevent.SoundKeyframeData>);
+  public software.bernie.geckolib.animation.AnimationController<T> setParticleKeyframeHandler(software.bernie.geckolib.animation.AnimationController$KeyframeEventHandler<T, software.bernie.geckolib.cache.animation.keyframeevent.ParticleKeyframeData>);
+  public software.bernie.geckolib.animation.AnimationController<T> setCustomInstructionKeyframeHandler(software.bernie.geckolib.animation.AnimationController$KeyframeEventHandler<T, software.bernie.geckolib.cache.animation.keyframeevent.CustomInstructionKeyframeData>);
+  public software.bernie.geckolib.animation.AnimationController<T> setAnimationSpeed(double);
+  public software.bernie.geckolib.animation.AnimationController<T> setTransitionTicks(int);
+  public software.bernie.geckolib.animation.AnimationController<T> setOverrideEasingType(software.bernie.geckolib.animation.object.EasingType);
+  public software.bernie.geckolib.animation.AnimationController<T> additiveAnimations();
+  public software.bernie.geckolib.animation.AnimationController<T> receiveTriggeredAnimations();
+  public software.bernie.geckolib.animation.AnimationController<T> triggerableAnim(java.lang.String, software.bernie.geckolib.animation.RawAnimation);
+  public void setAnimation(software.bernie.geckolib.animation.RawAnimation);
+  public boolean triggerAnimation(java.lang.String);
+  public void setAnimationTime(double);
+  public void setTimelineTime(double);
+  public boolean stopTriggeredAnimation();
+  public void reset();
+  public software.bernie.geckolib.animation.state.ControllerState extractControllerState(T, software.bernie.geckolib.renderer.base.GeoRenderState, software.bernie.geckolib.animatable.manager.AnimatableManager<T>, software.bernie.geckolib.loading.math.MolangQueries$Actor<T>, software.bernie.geckolib.model.GeoModel<T>);
+  public java.util.Set<software.bernie.geckolib.loading.math.value.Variable> getUsedVariables();
+  public boolean isTriggeredAnimation(java.lang.String);
+}

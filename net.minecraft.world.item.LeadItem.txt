@@ -1,0 +1,6 @@
+Compiled from "LeadItem.java"
+public class net.minecraft.world.item.LeadItem extends net.minecraft.world.item.Item {
+  public net.minecraft.world.item.LeadItem(net.minecraft.world.item.Item$Properties);
+  public net.minecraft.world.InteractionResult useOn(net.minecraft.world.item.context.UseOnContext);
+  public static net.minecraft.world.InteractionResult bindPlayerMobs(net.minecraft.world.entity.player.Player, net.minecraft.world.level.Level, net.minecraft.core.BlockPos);
+}

@@ -1,0 +1,46 @@
+Compiled from "Leashable.java"
+public interface net.minecraft.world.entity.Leashable {
+  public static final java.lang.String LEASH_TAG = "leash";
+  public static final double LEASH_TOO_FAR_DIST = 12.0d;
+  public static final double LEASH_ELASTIC_DIST = 6.0d;
+  public static final double MAXIMUM_ALLOWED_LEASHED_DIST = 16.0d;
+  public static final net.minecraft.world.phys.Vec3 AXIS_SPECIFIC_ELASTICITY;
+  public static final float SPRING_DAMPENING = 0.7f;
+  public static final double TORSIONAL_ELASTICITY = 10.0d;
+  public static final double STIFFNESS = 0.11d;
+  public static final java.util.List<net.minecraft.world.phys.Vec3> ENTITY_ATTACHMENT_POINT;
+  public static final java.util.List<net.minecraft.world.phys.Vec3> LEASHER_ATTACHMENT_POINT;
+  public static final java.util.List<net.minecraft.world.phys.Vec3> SHARED_QUAD_ATTACHMENT_POINTS;
+  public abstract net.minecraft.world.entity.Leashable$LeashData getLeashData();
+  public abstract void setLeashData(net.minecraft.world.entity.Leashable$LeashData);
+  public default boolean isLeashed();
+  public default boolean mayBeLeashed();
+  public default boolean canHaveALeashAttachedTo(net.minecraft.world.entity.Entity);
+  public default double leashDistanceTo(net.minecraft.world.entity.Entity);
+  public default boolean canBeLeashed();
+  public default void setDelayedLeashHolderId(int);
+  public default void readLeashData(net.minecraft.world.level.storage.ValueInput);
+  public default void writeLeashData(net.minecraft.world.level.storage.ValueOutput, net.minecraft.world.entity.Leashable$LeashData);
+  public default void dropLeash();
+  public default void removeLeash();
+  public default void onLeashRemoved();
+  public static <E extends net.minecraft.world.entity.Entity & net.minecraft.world.entity.Leashable> void tickLeash(net.minecraft.server.level.ServerLevel, E);
+  public default void onElasticLeashPull();
+  public default double leashSnapDistance();
+  public default double leashElasticDistance();
+  public static <E extends net.minecraft.world.entity.Entity & net.minecraft.world.entity.Leashable> float angularFriction(E);
+  public default void whenLeashedTo(net.minecraft.world.entity.Entity);
+  public default void leashTooFarBehaviour();
+  public default void closeRangeLeashBehaviour(net.minecraft.world.entity.Entity);
+  public default boolean checkElasticInteractions(net.minecraft.world.entity.Entity, net.minecraft.world.entity.Leashable$LeashData);
+  public default boolean supportQuadLeash();
+  public default net.minecraft.world.phys.Vec3[] getQuadLeashOffsets();
+  public static net.minecraft.world.phys.Vec3[] createQuadLeashOffsets(net.minecraft.world.entity.Entity, double, double, double, double);
+  public default net.minecraft.world.phys.Vec3 getLeashOffset(float);
+  public default net.minecraft.world.phys.Vec3 getLeashOffset();
+  public default void setLeashedTo(net.minecraft.world.entity.Entity, boolean);
+  public default net.minecraft.world.entity.Entity getLeashHolder();
+  public static java.util.List<net.minecraft.world.entity.Leashable> leashableLeashedTo(net.minecraft.world.entity.Entity);
+  public static java.util.List<net.minecraft.world.entity.Leashable> leashableInArea(net.minecraft.world.entity.Entity, java.util.function.Predicate<net.minecraft.world.entity.Leashable>);
+  public static java.util.List<net.minecraft.world.entity.Leashable> leashableInArea(net.minecraft.world.level.Level, net.minecraft.world.phys.Vec3, java.util.function.Predicate<net.minecraft.world.entity.Leashable>);
+}

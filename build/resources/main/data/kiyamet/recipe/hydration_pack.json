@@ -1,0 +1,19 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "misc",
+ "pattern": [
+  "LSL",
+  "LWL",
+  "LCL"
+ ],
+ "key": {
+  "L": "minecraft:leather",
+  "S": "minecraft:string",
+  "W": "kiyamet:steel_thermos",
+  "C": "kiyamet:circuit"
+ },
+ "result": {
+  "id": "kiyamet:hydration_pack",
+  "count": 1
+ }
+}

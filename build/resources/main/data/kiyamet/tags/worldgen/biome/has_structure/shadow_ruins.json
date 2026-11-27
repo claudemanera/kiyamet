@@ -1,0 +1,10 @@
+{
+  "values": [
+    "minecraft:dark_forest",
+    {
+      "id": "#c:is_forest",
+      "required": false
+    },
+    "minecraft:old_growth_spruce_taiga"
+  ]
+}

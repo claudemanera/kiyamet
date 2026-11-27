@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "kiyamet:twd_masked_camp",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 80,
+    "separation": 35,
+    "salt": 91008
+  }
+}

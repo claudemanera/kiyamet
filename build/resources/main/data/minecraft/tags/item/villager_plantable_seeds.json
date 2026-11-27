@@ -1,0 +1,13 @@
+{
+ "replace": false,
+ "values": [
+  "kiyamet:tomato_seeds",
+  "kiyamet:corn_seeds",
+  "kiyamet:cucumber_seeds",
+  "kiyamet:eggplant_seeds",
+  "kiyamet:bell_pepper_seeds",
+  "kiyamet:onion_seeds",
+  "kiyamet:cabbage_seeds",
+  "kiyamet:strawberry_seeds"
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "type": "minecraft:campfire_cooking",
+ "category": "food",
+ "ingredient": "kiyamet:bear_meat",
+ "result": {
+  "id": "kiyamet:cooked_bear_meat"
+ },
+ "experience": 0.35,
+ "cookingtime": 600
+}

@@ -1,0 +1,26 @@
+Compiled from "RenderPassInfo.java"
+public class software.bernie.geckolib.renderer.base.RenderPassInfo<R extends software.bernie.geckolib.renderer.base.GeoRenderState> {
+  public software.bernie.geckolib.renderer.base.GeoRenderer<?, ?, R> renderer();
+  public R renderState();
+  public net.minecraft.class_4587 poseStack();
+  public software.bernie.geckolib.cache.model.BakedGeoModel model();
+  public net.minecraft.class_12075 cameraState();
+  public int packedLight();
+  public int packedOverlay();
+  public int renderColor();
+  public boolean willRender();
+  public <D> D getGeckolibData(software.bernie.geckolib.constant.dataticket.DataTicket<D>);
+  public <D> D getOrDefaultGeckolibData(software.bernie.geckolib.constant.dataticket.DataTicket<D>, D);
+  public net.minecraft.class_4587$class_4665 getPreRenderMatrixPose();
+  public org.joml.Matrix4f getPreRenderMatrixState();
+  public net.minecraft.class_4587$class_4665 getModelRenderMatrixPose();
+  public org.joml.Matrix4f getModelRenderMatrixState();
+  public void addPerBoneRender(software.bernie.geckolib.cache.model.GeoBone, software.bernie.geckolib.renderer.base.PerBoneRender<R>);
+  public void addBoneUpdater(software.bernie.geckolib.renderer.base.RenderPassInfo$BoneUpdater<R>);
+  public void addBonePositionListener(java.lang.String, software.bernie.geckolib.renderer.base.RenderPassInfo$BonePositionListener);
+  public void addBonePositionListener(software.bernie.geckolib.cache.model.GeoBone, software.bernie.geckolib.renderer.base.RenderPassInfo$BonePositionListener);
+  public void renderPosed(java.lang.Runnable);
+  public static <R extends software.bernie.geckolib.renderer.base.GeoRenderState> software.bernie.geckolib.renderer.base.RenderPassInfo<R> create(software.bernie.geckolib.renderer.base.GeoRenderer<?, ?, R>, R, net.minecraft.class_4587, net.minecraft.class_12075, boolean);
+  public java.util.Map<software.bernie.geckolib.cache.model.GeoBone, java.util.List<software.bernie.geckolib.renderer.base.PerBoneRender<R>>> getBoneRenderTasks();
+  public void captureModelRenderPose();
+}

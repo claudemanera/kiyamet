@@ -1,0 +1,8 @@
+Compiled from "InventoryCarrier.java"
+public interface net.minecraft.world.entity.npc.InventoryCarrier {
+  public static final java.lang.String TAG_INVENTORY = "Inventory";
+  public abstract net.minecraft.world.SimpleContainer getInventory();
+  public static void pickUpItem(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.Mob, net.minecraft.world.entity.npc.InventoryCarrier, net.minecraft.world.entity.item.ItemEntity);
+  public default void readInventoryFromTag(net.minecraft.world.level.storage.ValueInput);
+  public default void writeInventoryToTag(net.minecraft.world.level.storage.ValueOutput);
+}

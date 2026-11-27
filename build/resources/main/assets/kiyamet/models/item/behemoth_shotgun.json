@@ -1,0 +1,6 @@
+{
+  "parent": "kiyamet:item/giant_handheld",
+  "textures": {
+    "layer0": "kiyamet:item/behemoth_shotgun"
+  }
+}

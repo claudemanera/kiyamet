@@ -1,0 +1,18 @@
+Compiled from "Heightmap.java"
+public final class net.minecraft.world.level.levelgen.Heightmap$Types extends java.lang.Enum<net.minecraft.world.level.levelgen.Heightmap$Types> implements net.minecraft.util.StringRepresentable {
+  public static final net.minecraft.world.level.levelgen.Heightmap$Types WORLD_SURFACE_WG;
+  public static final net.minecraft.world.level.levelgen.Heightmap$Types WORLD_SURFACE;
+  public static final net.minecraft.world.level.levelgen.Heightmap$Types OCEAN_FLOOR_WG;
+  public static final net.minecraft.world.level.levelgen.Heightmap$Types OCEAN_FLOOR;
+  public static final net.minecraft.world.level.levelgen.Heightmap$Types MOTION_BLOCKING;
+  public static final net.minecraft.world.level.levelgen.Heightmap$Types MOTION_BLOCKING_NO_LEAVES;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.level.levelgen.Heightmap$Types> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, net.minecraft.world.level.levelgen.Heightmap$Types> STREAM_CODEC;
+  public static net.minecraft.world.level.levelgen.Heightmap$Types[] values();
+  public static net.minecraft.world.level.levelgen.Heightmap$Types valueOf(java.lang.String);
+  public java.lang.String getSerializationKey();
+  public boolean sendToClient();
+  public boolean keepAfterWorldgen();
+  public java.util.function.Predicate<net.minecraft.world.level.block.state.BlockState> isOpaque();
+  public java.lang.String getSerializedName();
+}

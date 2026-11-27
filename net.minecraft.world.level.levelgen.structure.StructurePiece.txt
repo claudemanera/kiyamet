@@ -1,0 +1,21 @@
+Compiled from "StructurePiece.java"
+public abstract class net.minecraft.world.level.levelgen.structure.StructurePiece {
+  public net.minecraft.world.level.levelgen.structure.StructurePiece(net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType, net.minecraft.nbt.CompoundTag);
+  public final net.minecraft.nbt.CompoundTag createTag(net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext);
+  public void addChildren(net.minecraft.world.level.levelgen.structure.StructurePiece, net.minecraft.world.level.levelgen.structure.StructurePieceAccessor, net.minecraft.util.RandomSource);
+  public abstract void postProcess(net.minecraft.world.level.WorldGenLevel, net.minecraft.world.level.StructureManager, net.minecraft.world.level.chunk.ChunkGenerator, net.minecraft.util.RandomSource, net.minecraft.world.level.levelgen.structure.BoundingBox, net.minecraft.world.level.ChunkPos, net.minecraft.core.BlockPos);
+  public net.minecraft.world.level.levelgen.structure.BoundingBox getBoundingBox();
+  public int getGenDepth();
+  public void setGenDepth(int);
+  public boolean isCloseToChunk(net.minecraft.world.level.ChunkPos, int);
+  public net.minecraft.core.BlockPos getLocatorPosition();
+  public static net.minecraft.world.level.block.state.BlockState reorient(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+  public void move(int, int, int);
+  public static net.minecraft.world.level.levelgen.structure.BoundingBox createBoundingBox(java.util.stream.Stream<net.minecraft.world.level.levelgen.structure.StructurePiece>);
+  public static net.minecraft.world.level.levelgen.structure.StructurePiece findCollisionPiece(java.util.List<net.minecraft.world.level.levelgen.structure.StructurePiece>, net.minecraft.world.level.levelgen.structure.BoundingBox);
+  public net.minecraft.core.Direction getOrientation();
+  public void setOrientation(net.minecraft.core.Direction);
+  public net.minecraft.world.level.block.Rotation getRotation();
+  public net.minecraft.world.level.block.Mirror getMirror();
+  public net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType getType();
+}

@@ -1,0 +1,13 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "minecraft:leather",
+  "minecraft:white_wool",
+  "minecraft:white_wool"
+ ],
+ "result": {
+  "id": "kiyamet:sheepskin",
+  "count": 1
+ }
+}

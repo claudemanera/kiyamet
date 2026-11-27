@@ -1,0 +1,29 @@
+Compiled from "Zombie.java"
+public class net.minecraft.world.entity.monster.zombie.Zombie extends net.minecraft.world.entity.monster.Monster {
+  public static final float ZOMBIE_LEADER_CHANCE = 0.05f;
+  public static final int REINFORCEMENT_ATTEMPTS = 50;
+  public static final int REINFORCEMENT_RANGE_MAX = 40;
+  public static final int REINFORCEMENT_RANGE_MIN = 7;
+  public net.minecraft.world.entity.monster.zombie.Zombie(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.monster.zombie.Zombie>, net.minecraft.world.level.Level);
+  public net.minecraft.world.entity.monster.zombie.Zombie(net.minecraft.world.level.Level);
+  public static net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder createAttributes();
+  public boolean isUnderWaterConverting();
+  public boolean canBreakDoors();
+  public void setCanBreakDoors(boolean);
+  public boolean isBaby();
+  public void setBaby(boolean);
+  public void onSyncedDataUpdated(net.minecraft.network.syncher.EntityDataAccessor<?>);
+  public void tick();
+  public boolean convertVillagerToZombieVillager(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.npc.villager.Villager);
+  public boolean hurtServer(net.minecraft.server.level.ServerLevel, net.minecraft.world.damagesource.DamageSource, float);
+  public boolean doHurtTarget(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.Entity);
+  public net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.monster.zombie.Zombie> getType();
+  public boolean killedEntity(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, net.minecraft.world.damagesource.DamageSource);
+  public net.minecraft.world.entity.EntityDimensions getDefaultDimensions(net.minecraft.world.entity.Pose);
+  public boolean canHoldItem(net.minecraft.world.item.ItemStack);
+  public boolean wantsToPickUp(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack);
+  public net.minecraft.world.entity.SpawnGroupData finalizeSpawn(net.minecraft.world.level.ServerLevelAccessor, net.minecraft.world.DifficultyInstance, net.minecraft.world.entity.EntitySpawnReason, net.minecraft.world.entity.SpawnGroupData);
+  public void setInWaterTime(int);
+  public void setConversionTime(int);
+  public static boolean getSpawnAsBabyOdds(net.minecraft.util.RandomSource);
+}

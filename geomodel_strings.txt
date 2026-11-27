@@ -1,0 +1,203 @@
+== software.bernie.geckolib.model.DefaultedGeoModel
+       2: invokevirtual #51                 // Method subtype:()Ljava/lang/String;
+       5: invokedynamic #63,  0             // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      10: invokevirtual #69                 // Method net/minecraft/class_2960.method_45138:(Ljava/lang/String;)Lnet/minecraft/class_2960;
+       2: invokevirtual #51                 // Method subtype:()Ljava/lang/String;
+       5: invokedynamic #63,  0             // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      10: invokevirtual #69                 // Method net/minecraft/class_2960.method_45138:(Ljava/lang/String;)Lnet/minecraft/class_2960;
+       2: invokevirtual #51                 // Method subtype:()Ljava/lang/String;
+       6: invokevirtual #72                 // Method net/minecraft/class_2960.method_12832:()Ljava/lang/String;
+       9: invokedynamic #77,  0             // InvokeDynamic #1:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      14: invokevirtual #80                 // Method net/minecraft/class_2960.method_45136:(Ljava/lang/String;)Lnet/minecraft/class_2960;
+  protected abstract java.lang.String subtype();
+== software.bernie.geckolib.model.DefaultedEntityGeoModel
+  protected final java.lang.String headBone;
+       3: invokespecial #15                 // Method "<init>":(Lnet/minecraft/class_2960;Ljava/lang/String;)V
+  public software.bernie.geckolib.model.DefaultedEntityGeoModel(net.minecraft.class_2960, java.lang.String);
+       7: putfield      #23                 // Field headBone:Ljava/lang/String;
+  protected java.lang.String subtype();
+       0: ldc           #27                 // String entity
+== software.bernie.geckolib.cache.GeckoLibResources
+       1: invokevirtual #130                // Method net/minecraft/class_2960.method_12832:()Ljava/lang/String;
+      25: invokevirtual #154                // Method java/lang/String.substring:(I)Ljava/lang/String;
+      54: invokevirtual #162                // Method java/lang/String.substring:(II)Ljava/lang/String;
+      63: invokevirtual #165                // Method java/lang/String.length:()I
+      67: invokevirtual #130                // Method net/minecraft/class_2960.method_12832:()Ljava/lang/String;
+      70: invokevirtual #165                // Method java/lang/String.length:()I
+      82: invokevirtual #169                // Method net/minecraft/class_2960.method_45136:(Ljava/lang/String;)Lnet/minecraft/class_2960;
+       5: invokevirtual #130                // Method net/minecraft/class_2960.method_12832:()Ljava/lang/String;
+      18: invokestatic  #203                // Method bakeJsonResources:(Ljava/util/concurrent/Executor;Lnet/minecraft/class_3300;Ljava/lang/String;Ljava/util/function/BiFunction;Ljava/util/function/Function;)Ljava/util/concurrent/CompletableFuture;
+       5: invokevirtual #130                // Method net/minecraft/class_2960.method_12832:()Ljava/lang/String;
+      18: invokestatic  #203                // Method bakeJsonResources:(Ljava/util/concurrent/Executor;Lnet/minecraft/class_3300;Ljava/lang/String;Ljava/util/function/BiFunction;Ljava/util/function/Function;)Ljava/util/concurrent/CompletableFuture;
+  private static <BAKED> java.util.concurrent.CompletableFuture<java.util.Map<net.minecraft.class_2960, BAKED>> bakeJsonResources(java.util.concurrent.Executor, net.minecraft.class_3300, java.lang.String, java.util.function.BiFunction<net.minecraft.class_2960, com.google.gson.JsonObject, BAKED>, java.util.function.Function<java.lang.Throwable, BAKED>);
+       3: ldc           #228                // String json
+      10: invokestatic  #239                // Method loadResources:(Ljava/util/concurrent/Executor;Lnet/minecraft/class_3300;Ljava/lang/String;Ljava/lang/String;Ljava/util/function/BiFunction;)Ljava/util/concurrent/CompletableFuture;
+  private static <UNBAKED> java.util.concurrent.CompletableFuture<java.util.List<it.unimi.dsi.fastutil.Pair<net.minecraft.class_2960, UNBAKED>>> loadResources(java.util.concurrent.Executor, net.minecraft.class_3300, java.lang.String, java.lang.String, java.util.function.BiFunction<net.minecraft.class_2960, net.minecraft.class_3298, UNBAKED>);
+       1: invokedynamic #268,  0            // InvokeDynamic #8:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      12: invokedynamic #281,  0            // InvokeDynamic #9:get:(Lnet/minecraft/class_3300;Ljava/lang/String;Ljava/lang/String;)Ljava/util/function/Supplier;
+       1: invokevirtual #130                // Method net/minecraft/class_2960.method_12832:()Ljava/lang/String;
+       4: ldc_w         #299                // String .animation.json
+       7: invokevirtual #303                // Method java/lang/String.endsWith:(Ljava/lang/String;)Z
+      18: invokestatic  #309                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+      21: invokedynamic #312,  0            // InvokeDynamic #11:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      26: invokespecial #315                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+      34: ldc_w         #319                // class software/bernie/geckolib/loading/json/raw/Model
+      45: invokevirtual #328                // Method software/bernie/geckolib/loading/json/raw/Model.formatVersion:()Ljava/lang/String;
+      48: invokestatic  #334                // Method software/bernie/geckolib/loading/json/ModelFormatVersion.match:(Ljava/lang/String;)Lsoftware/bernie/geckolib/loading/json/ModelFormatVersion;
+      59: ldc_w         #342                // String {}: Unknown geo model format version: \'{}\'. This may not work correctly
+      64: invokevirtual #328                // Method software/bernie/geckolib/loading/json/raw/Model.formatVersion:()Ljava/lang/String;
+      67: invokeinterface #348,  4          // InterfaceMethod org/apache/logging/log4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+      85: ldc_w         #353                // String {}: Unsupported geo model format version: \'{}\'. {}
+      90: invokevirtual #328                // Method software/bernie/geckolib/loading/json/raw/Model.formatVersion:()Ljava/lang/String;
+      94: invokevirtual #356                // Method software/bernie/geckolib/loading/json/ModelFormatVersion.getErrorMessage:()Ljava/lang/String;
+      97: invokeinterface #360,  5          // InterfaceMethod org/apache/logging/log4j/Logger.error:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V
+     103: invokevirtual #363                // Method net/minecraft/class_2960.method_12836:()Ljava/lang/String;
+     106: invokestatic  #369                // InterfaceMethod software/bernie/geckolib/loading/object/BakedModelFactory.getForNamespace:(Ljava/lang/String;)Lsoftware/bernie/geckolib/loading/object/BakedModelFactory;
+       1: invokevirtual #130                // Method net/minecraft/class_2960.method_12832:()Ljava/lang/String;
+       4: ldc_w         #390                // String .geo.json
+       7: invokevirtual #303                // Method java/lang/String.endsWith:(Ljava/lang/String;)Z
+      18: invokestatic  #309                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+      21: invokedynamic #393,  0            // InvokeDynamic #12:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      26: invokespecial #315                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+      34: ldc_w         #394                // String animations
+      37: invokestatic  #400                // Method net/minecraft/class_3518.method_15296:(Lcom/google/gson/JsonObject;Ljava/lang/String;)Lcom/google/gson/JsonObject;
+      40: ldc_w         #402                // class software/bernie/geckolib/loading/object/BakedAnimations
+      53: invokestatic  #309                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+      56: invokedynamic #405,  0            // InvokeDynamic #13:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      61: invokevirtual #409                // Method software/bernie/geckolib/object/CompoundException.withMessage:(Ljava/lang/String;)Lsoftware/bernie/geckolib/object/CompoundException;
+      67: ldc_w         #411                // String Error building animations from JSON
+      71: invokestatic  #415                // Method software/bernie/geckolib/GeckoLibConstants.exception:(Lnet/minecraft/class_2960;Ljava/lang/String;Ljava/lang/Throwable;)Ljava/lang/RuntimeException;
+      44: ldc_w         #447                // String Error reading JSON file
+      48: invokestatic  #415                // Method software/bernie/geckolib/GeckoLibConstants.exception:(Lnet/minecraft/class_2960;Ljava/lang/String;Ljava/lang/Throwable;)Ljava/lang/RuntimeException;
+  private static java.util.Map lambda$loadResources$11(net.minecraft.class_3300, java.lang.String, java.lang.String);
+       3: invokedynamic #582,  0            // InvokeDynamic #19:test:(Ljava/lang/String;)Ljava/util/function/Predicate;
+       8: invokeinterface #588,  3          // InterfaceMethod net/minecraft/class_3300.method_14488:(Ljava/lang/String;Ljava/util/function/Predicate;)Ljava/util/Map;
+  private static boolean lambda$loadResources$10(java.lang.String, net.minecraft.class_2960);
+       1: invokevirtual #130                // Method net/minecraft/class_2960.method_12832:()Ljava/lang/String;
+       5: invokevirtual #303                // Method java/lang/String.endsWith:(Ljava/lang/String;)Z
+       0: ldc_w         #717                // String geckolib_resources
+       3: invokestatic  #719                // Method software/bernie/geckolib/GeckoLibConstants.id:(Ljava/lang/String;)Lnet/minecraft/class_2960;
+       9: ldc_w         #723                // String geckolib/animations
+      12: invokestatic  #719                // Method software/bernie/geckolib/GeckoLibConstants.id:(Ljava/lang/String;)Lnet/minecraft/class_2960;
+      18: ldc_w         #725                // String geckolib/models
+      21: invokestatic  #719                // Method software/bernie/geckolib/GeckoLibConstants.id:(Ljava/lang/String;)Lnet/minecraft/class_2960;
+      27: ldc_w         #727                // String ((\\.geo)|((\\.animation)s?))?(\\.json)$
+      30: invokestatic  #731                // Method java/util/regex/Pattern.compile:(Ljava/lang/String;)Ljava/util/regex/Pattern;
+      36: ldc_w         #733                // String ^(geckolib/)((animations/)|(models/))?
+      39: invokestatic  #731                // Method java/util/regex/Pattern.compile:(Ljava/lang/String;)Ljava/util/regex/Pattern;
+      58: ldc_w         #748                // class software/bernie/geckolib/loading/json/raw/Bone
+      67: ldc_w         #758                // class software/bernie/geckolib/loading/json/raw/Cube
+      76: ldc_w         #761                // class software/bernie/geckolib/loading/json/raw/FaceUV
+      85: ldc_w         #764                // class software/bernie/geckolib/loading/json/raw/LocatorClass
+      94: ldc_w         #767                // class software/bernie/geckolib/loading/json/raw/LocatorValue
+     103: ldc_w         #770                // class software/bernie/geckolib/loading/json/raw/MinecraftGeometry
+     112: ldc_w         #319                // class software/bernie/geckolib/loading/json/raw/Model
+     121: ldc_w         #774                // class software/bernie/geckolib/loading/definition/geometry/GeometryDescription
+     130: ldc_w         #779                // class software/bernie/geckolib/loading/json/raw/PolyMesh
+     139: ldc_w         #782                // class software/bernie/geckolib/loading/json/raw/PolysUnion
+     148: ldc_w         #785                // class software/bernie/geckolib/loading/json/raw/TextureMesh
+     157: ldc_w         #788                // class software/bernie/geckolib/loading/json/raw/UVFaces
+     166: ldc_w         #791                // class software/bernie/geckolib/loading/json/raw/UVUnion
+     175: ldc           #15                 // class software/bernie/geckolib/cache/animation/Animation$KeyframeMarkers
+     183: ldc_w         #402                // class software/bernie/geckolib/loading/object/BakedAnimations
+== software.bernie.geckolib.constant.DefaultAnimations
+       4: ldc           #60                 // String Actions
+      11: invokespecial #80                 // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;Lsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+       4: ldc           #87                 // String Generic
+      12: invokespecial #80                 // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;Lsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+       4: ldc           #100                // String Living
+      11: invokespecial #80                 // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;Lsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+       4: ldc           #109                // String Death
+      11: invokespecial #80                 // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;Lsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+       4: ldc           #117                // String Idle
+      11: invokespecial #80                 // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;Lsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+       4: ldc           #128                // String Spawn
+      12: invokespecial #80                 // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;Lsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+       4: ldc           #140                // String Walk
+      11: invokespecial #80                 // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;Lsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+       4: ldc           #151                // String Attack
+      12: invokespecial #80                 // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;Lsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+       4: ldc           #162                // String Walk/Idle
+      11: invokespecial #80                 // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;Lsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+       4: ldc           #170                // String Swim
+      11: invokespecial #80                 // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;Lsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+       4: ldc           #178                // String Swim/Idle
+      11: invokespecial #80                 // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;Lsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+       4: ldc           #186                // String Fly
+      11: invokespecial #80                 // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;Lsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+       4: ldc           #194                // String Fly/Idle
+      11: invokespecial #80                 // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;Lsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+       4: ldc           #205                // String Walk/Fly/Idle
+      13: invokespecial #216                // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;ILsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+       4: ldc           #221                // String Walk/Run/Idle
+      11: invokespecial #80                 // Method software/bernie/geckolib/animation/AnimationController."<init>":(Ljava/lang/String;Lsoftware/bernie/geckolib/animation/AnimationController$AnimationStateHandler;)V
+  public static <R extends software.bernie.geckolib.renderer.base.GeoRenderState> void hardcodedHeadRotation(software.bernie.geckolib.renderer.base.RenderPassInfo<R>, software.bernie.geckolib.renderer.base.BoneSnapshots, java.lang.String);
+       2: invokeinterface #238,  2          // InterfaceMethod software/bernie/geckolib/renderer/base/BoneSnapshots.get:(Ljava/lang/String;)Ljava/util/Optional;
+      39: ldc_w         #288                // float 0.017453292f
+      50: ldc_w         #288                // float 0.017453292f
+       3: ldc_w         #406                // String item.use
+       6: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+      15: ldc_w         #414                // String misc.idle
+      18: invokevirtual #417                // Method software/bernie/geckolib/animation/RawAnimation.thenLoop:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+      27: ldc_w         #419                // String misc.idle.flying
+      30: invokevirtual #417                // Method software/bernie/geckolib/animation/RawAnimation.thenLoop:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+      39: ldc_w         #421                // String misc.living
+      42: invokevirtual #417                // Method software/bernie/geckolib/animation/RawAnimation.thenLoop:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+      51: ldc_w         #423                // String misc.spawn
+      54: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+      63: ldc_w         #425                // String misc.die
+      66: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+      75: ldc_w         #427                // String misc.interact
+      78: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+      87: ldc_w         #431                // String misc.deploy
+      90: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+      99: ldc_w         #435                // String misc.rest
+     102: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     111: ldc_w         #439                // String misc.sit
+     114: invokevirtual #442                // Method software/bernie/geckolib/animation/RawAnimation.thenPlayAndHold:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     123: ldc_w         #446                // String move.walk
+     126: invokevirtual #417                // Method software/bernie/geckolib/animation/RawAnimation.thenLoop:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     135: ldc_w         #448                // String move.swim
+     138: invokevirtual #417                // Method software/bernie/geckolib/animation/RawAnimation.thenLoop:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     147: ldc_w         #450                // String move.run
+     150: invokevirtual #417                // Method software/bernie/geckolib/animation/RawAnimation.thenLoop:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     159: ldc_w         #452                // String move.drive
+     162: invokevirtual #417                // Method software/bernie/geckolib/animation/RawAnimation.thenLoop:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     171: ldc_w         #456                // String move.fly
+     174: invokevirtual #417                // Method software/bernie/geckolib/animation/RawAnimation.thenLoop:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     183: ldc_w         #458                // String move.crawl
+     186: invokevirtual #417                // Method software/bernie/geckolib/animation/RawAnimation.thenLoop:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     195: ldc_w         #462                // String move.jump
+     198: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     207: ldc_w         #466                // String move.sneak
+     210: invokevirtual #417                // Method software/bernie/geckolib/animation/RawAnimation.thenLoop:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     219: ldc_w         #470                // String move.dive
+     222: invokevirtual #442                // Method software/bernie/geckolib/animation/RawAnimation.thenPlayAndHold:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     231: ldc_w         #474                // String attack.cast
+     234: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     243: ldc_w         #478                // String attack.swing
+     246: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     255: ldc_w         #482                // String attack.throw
+     258: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     267: ldc_w         #486                // String attack.punch
+     270: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     279: ldc_w         #490                // String attack.bite
+     282: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     291: ldc_w         #494                // String attack.slam
+     294: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     303: ldc_w         #498                // String attack.stomp
+     306: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     315: ldc_w         #502                // String attack.strike
+     318: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     327: ldc_w         #506                // String attack.flying_attack
+     330: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     339: ldc_w         #510                // String attack.shoot
+     342: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     351: ldc_w         #514                // String attack.block
+     354: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     363: ldc_w         #518                // String attack.charge
+     366: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     375: ldc_w         #522                // String attack.charge_end
+     378: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;
+     387: ldc_w         #526                // String attack.powerup
+     390: invokevirtual #410                // Method software/bernie/geckolib/animation/RawAnimation.thenPlay:(Ljava/lang/String;)Lsoftware/bernie/geckolib/animation/RawAnimation;

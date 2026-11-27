@@ -1,0 +1,17 @@
+Compiled from "RawAnimation.java"
+public final class software.bernie.geckolib.animation.RawAnimation {
+  public static final net.minecraft.class_9139<io.netty.buffer.ByteBuf, software.bernie.geckolib.animation.RawAnimation> STREAM_CODEC;
+  public static software.bernie.geckolib.animation.RawAnimation begin();
+  public software.bernie.geckolib.animation.RawAnimation thenPlay(java.lang.String);
+  public software.bernie.geckolib.animation.RawAnimation thenLoop(java.lang.String);
+  public software.bernie.geckolib.animation.RawAnimation thenWait(int);
+  public software.bernie.geckolib.animation.RawAnimation thenPlayAndHold(java.lang.String);
+  public software.bernie.geckolib.animation.RawAnimation thenPlayXTimes(java.lang.String, int);
+  public software.bernie.geckolib.animation.RawAnimation then(java.lang.String, software.bernie.geckolib.animation.object.LoopType);
+  public java.util.List<software.bernie.geckolib.animation.RawAnimation$Stage> getAnimationStages();
+  public static software.bernie.geckolib.animation.RawAnimation copyOf(software.bernie.geckolib.animation.RawAnimation);
+  public int getStageCount();
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public java.lang.String toString();
+}

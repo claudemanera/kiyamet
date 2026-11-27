@@ -1,0 +1,6 @@
+{
+ "parent": "minecraft:block/cross",
+ "textures": {
+  "cross": "kiyamet:block/orange_sapling"
+ }
+}

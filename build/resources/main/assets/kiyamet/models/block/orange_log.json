@@ -1,0 +1,7 @@
+{
+ "parent": "minecraft:block/cube_column",
+ "textures": {
+  "end": "kiyamet:block/orange_log_top",
+  "side": "kiyamet:block/orange_log"
+ }
+}

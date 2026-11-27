@@ -1,0 +1,36 @@
+Compiled from "GeoEntityRenderer.java"
+public class software.bernie.geckolib.renderer.GeoEntityRenderer<T extends net.minecraft.class_1297 & software.bernie.geckolib.animatable.GeoAnimatable, R extends net.minecraft.class_10017 & software.bernie.geckolib.renderer.base.GeoRenderState> extends net.minecraft.class_897<T, R> implements software.bernie.geckolib.renderer.base.GeoRenderer<T, java.lang.Void, R> {
+  public software.bernie.geckolib.renderer.GeoEntityRenderer(net.minecraft.class_5617$class_5618, net.minecraft.class_1299<? extends T>);
+  public software.bernie.geckolib.renderer.GeoEntityRenderer(net.minecraft.class_5617$class_5618, software.bernie.geckolib.model.GeoModel<T>);
+  public double getNameRenderCutoffDistance(T);
+  public software.bernie.geckolib.model.GeoModel<T> getGeoModel();
+  public java.util.List<software.bernie.geckolib.renderer.layer.GeoRenderLayer<T, java.lang.Void, R>> getRenderLayers();
+  public software.bernie.geckolib.renderer.GeoEntityRenderer<T, R> withRenderLayer(java.util.function.Function<? super software.bernie.geckolib.renderer.GeoEntityRenderer<T, R>, software.bernie.geckolib.renderer.layer.GeoRenderLayer<T, java.lang.Void, R>>);
+  public software.bernie.geckolib.renderer.GeoEntityRenderer<T, R> withRenderLayer(software.bernie.geckolib.renderer.layer.GeoRenderLayer<T, java.lang.Void, R>);
+  public software.bernie.geckolib.renderer.GeoEntityRenderer<T, R> withScale(float);
+  public software.bernie.geckolib.renderer.GeoEntityRenderer<T, R> withScale(float, float);
+  public long getInstanceId(T, java.lang.Void);
+  public int getRenderColor(T, java.lang.Void, float);
+  public int getPackedOverlay(T, java.lang.Void, float, float);
+  public boolean method_3921(T, double);
+  public net.minecraft.class_1921 getRenderType(R, net.minecraft.class_2960);
+  public void captureDefaultRenderState(T, java.lang.Void, R, float);
+  public void scaleModelForRender(software.bernie.geckolib.renderer.base.RenderPassInfo<R>, float, float);
+  public void adjustRenderPose(software.bernie.geckolib.renderer.base.RenderPassInfo<R>);
+  public void method_3936(R, net.minecraft.class_4587, net.minecraft.class_11659, net.minecraft.class_12075);
+  public void postRenderPass(software.bernie.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.class_11659);
+  public R createRenderState(T, java.lang.Void);
+  public final R method_62425(T, float);
+  public void method_62354(T, R, float);
+  public void fireCompileRenderLayersEvent();
+  public void fireCompileRenderStateEvent(T, java.lang.Void, R, float);
+  public boolean firePreRenderEvent(software.bernie.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.class_11659);
+  public final R method_55269();
+  public net.minecraft.class_1921 getRenderType(software.bernie.geckolib.renderer.base.GeoRenderState, net.minecraft.class_2960);
+  public int getPackedOverlay(software.bernie.geckolib.animatable.GeoAnimatable, java.lang.Object, float, float);
+  public int getRenderColor(software.bernie.geckolib.animatable.GeoAnimatable, java.lang.Object, float);
+  public void fireCompileRenderStateEvent(software.bernie.geckolib.animatable.GeoAnimatable, java.lang.Object, software.bernie.geckolib.renderer.base.GeoRenderState, float);
+  public software.bernie.geckolib.renderer.base.GeoRenderState createRenderState(software.bernie.geckolib.animatable.GeoAnimatable, java.lang.Object);
+  public void captureDefaultRenderState(software.bernie.geckolib.animatable.GeoAnimatable, java.lang.Object, software.bernie.geckolib.renderer.base.GeoRenderState, float);
+  public long getInstanceId(software.bernie.geckolib.animatable.GeoAnimatable, java.lang.Object);
+}

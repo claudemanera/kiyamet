@@ -1,0 +1,7 @@
+Compiled from "GeoEntity.java"
+public interface software.bernie.geckolib.animatable.GeoEntity extends software.bernie.geckolib.animatable.GeoAnimatable {
+  public default <D> D getAnimData(software.bernie.geckolib.constant.dataticket.SerializableDataTicket<D>);
+  public default <D> void setAnimData(software.bernie.geckolib.constant.dataticket.SerializableDataTicket<D>, D);
+  public default void triggerAnim(java.lang.String, java.lang.String);
+  public default void stopTriggeredAnim(java.lang.String, java.lang.String);
+}

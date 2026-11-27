@@ -1,0 +1,7 @@
+Compiled from "ItemInHandGeoLayer.java"
+public class software.bernie.geckolib.renderer.layer.builtin.ItemInHandGeoLayer<T extends net.minecraft.class_1309 & software.bernie.geckolib.animatable.GeoAnimatable, O, R extends software.bernie.geckolib.renderer.base.GeoRenderState> extends software.bernie.geckolib.renderer.layer.builtin.BlockAndItemGeoLayer<T, O, R> {
+  public software.bernie.geckolib.renderer.layer.builtin.ItemInHandGeoLayer(software.bernie.geckolib.renderer.base.GeoRenderer<T, O, R>);
+  public software.bernie.geckolib.renderer.layer.builtin.ItemInHandGeoLayer(software.bernie.geckolib.renderer.base.GeoRenderer<T, O, R>, java.lang.String, java.lang.String);
+  public void addRenderData(T, O, R, float);
+  public void addRenderData(software.bernie.geckolib.animatable.GeoAnimatable, java.lang.Object, software.bernie.geckolib.renderer.base.GeoRenderState, float);
+}

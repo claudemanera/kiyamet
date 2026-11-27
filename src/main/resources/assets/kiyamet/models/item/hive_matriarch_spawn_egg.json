@@ -1,0 +1,6 @@
+{
+ "parent": "minecraft:item/generated",
+ "textures": {
+  "layer0": "kiyamet:item/hive_matriarch_spawn_egg"
+ }
+}

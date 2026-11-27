@@ -1,0 +1,140 @@
+{
+ "parent": "minecraft:block/block",
+ "textures": {
+  "top": "kiyamet:block/creation_table_top",
+  "side": "kiyamet:block/creation_table_side",
+  "stone": "kiyamet:block/wisdom_stone",
+  "light": "kiyamet:block/wisdom_light",
+  "particle": "kiyamet:block/wisdom_stone"
+ },
+ "elements": [
+  {
+   "from": [
+    1,
+    0,
+    1
+   ],
+   "to": [
+    15,
+    3,
+    15
+   ],
+   "faces": {
+    "north": {
+     "texture": "#stone"
+    },
+    "south": {
+     "texture": "#stone"
+    },
+    "east": {
+     "texture": "#stone"
+    },
+    "west": {
+     "texture": "#stone"
+    },
+    "up": {
+     "texture": "#stone"
+    },
+    "down": {
+     "texture": "#stone"
+    }
+   }
+  },
+  {
+   "from": [
+    4,
+    3,
+    4
+   ],
+   "to": [
+    12,
+    10,
+    12
+   ],
+   "faces": {
+    "north": {
+     "texture": "#side"
+    },
+    "south": {
+     "texture": "#side"
+    },
+    "east": {
+     "texture": "#side"
+    },
+    "west": {
+     "texture": "#side"
+    },
+    "up": {
+     "texture": "#stone"
+    },
+    "down": {
+     "texture": "#stone"
+    }
+   }
+  },
+  {
+   "from": [
+    0,
+    10,
+    0
+   ],
+   "to": [
+    16,
+    14,
+    16
+   ],
+   "faces": {
+    "north": {
+     "texture": "#side"
+    },
+    "south": {
+     "texture": "#side"
+    },
+    "east": {
+     "texture": "#side"
+    },
+    "west": {
+     "texture": "#side"
+    },
+    "up": {
+     "texture": "#top"
+    },
+    "down": {
+     "texture": "#stone"
+    }
+   }
+  },
+  {
+   "from": [
+    6.5,
+    14,
+    6.5
+   ],
+   "to": [
+    9.5,
+    15,
+    9.5
+   ],
+   "faces": {
+    "north": {
+     "texture": "#light"
+    },
+    "south": {
+     "texture": "#light"
+    },
+    "east": {
+     "texture": "#light"
+    },
+    "west": {
+     "texture": "#light"
+    },
+    "up": {
+     "texture": "#light"
+    },
+    "down": {
+     "texture": "#light"
+    }
+   }
+  }
+ ]
+}

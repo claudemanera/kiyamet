@@ -89,7 +89,7 @@ public class CreationTableMenu extends ChestMenu {
         l.playSound(null, player.blockPosition(), SoundEvents.END_PORTAL_SPAWN, SoundSource.PLAYERS, 0.8f, 1.5f);
         l.playSound(null, player.blockPosition(), SoundEvents.BEACON_POWER_SELECT, SoundSource.PLAYERS, 1f, 1.2f);
         l.sendParticles(ParticleTypes.END_ROD, player.getX(), player.getY() + 1.5, player.getZ(), 120, 1.2, 1.2, 1.2, 0.2);
-        l.sendParticles(ParticleTypes.FLASH, player.getX(), player.getY() + 1.5, player.getZ(), 2, 0, 0, 0, 0);
+        l.sendParticles(net.minecraft.core.particles.ColorParticleOption.create(ParticleTypes.FLASH, 0xFFFFFFFF), player.getX(), player.getY() + 1.5, player.getZ(), 2, 0, 0, 0, 0);
         l.getServer().getPlayerList().broadcastSystemMessage(Component.literal("✦ " + player.getName().getString() + " has made the " + what + "!").withStyle(ChatFormatting.WHITE, ChatFormatting.BOLD), false);
         com.kiyamet.skill.SkillManager.addXp(player, com.kiyamet.skill.Skill.ENCHANTING, 8000);
     }

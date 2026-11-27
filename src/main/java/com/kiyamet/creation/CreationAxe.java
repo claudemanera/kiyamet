@@ -119,7 +119,7 @@ public class CreationAxe extends Item {
         super.hurtEnemy(s, target, attacker);
         int m = mask(s);
         if (target.level() instanceof ServerLevel l) {
-            l.sendParticles(ParticleTypes.FLASH, target.getX(), target.getY() + 1, target.getZ(), 1, 0, 0, 0, 0);
+            l.sendParticles(net.minecraft.core.particles.ColorParticleOption.create(ParticleTypes.FLASH, 0xFFFFFFFF), target.getX(), target.getY() + 1, target.getZ(), 1, 0, 0, 0, 0);
             l.sendParticles(ParticleTypes.END_ROD, target.getX(), target.getY() + 1, target.getZ(), 12, 0.3, 0.5, 0.3, 0.15);
             target.hurtServer(l, l.damageSources().magic(), 6f);                          // creation itself cuts
         }

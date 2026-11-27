@@ -70,7 +70,7 @@ public final class CreationSage {
         l.playSound(null, p.blockPosition(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS, 1f, 1f);
         l.playSound(null, p.blockPosition(), SoundEvents.END_PORTAL_SPAWN, SoundSource.PLAYERS, 1f, 1.3f);
         l.sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 1, p.getZ(), 400, 2, 3, 2, 0.15);
-        l.sendParticles(ParticleTypes.FLASH, p.getX(), p.getY() + 1, p.getZ(), 4, 0, 0, 0, 0);
+        l.sendParticles(net.minecraft.core.particles.ColorParticleOption.create(ParticleTypes.FLASH, 0xFFFFFFFF), p.getX(), p.getY() + 1, p.getZ(), 4, 0, 0, 0, 0);
         for (String s : STORY) p.sendSystemMessage(Component.literal("✦ " + s).withStyle(ChatFormatting.WHITE));
         ItemStack altar = new ItemStack(ModBlocks.CREATION_ALTAR.asItem());
         if (!p.getInventory().add(altar)) p.drop(altar, false);

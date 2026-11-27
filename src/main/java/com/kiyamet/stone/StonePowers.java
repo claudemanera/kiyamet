@@ -115,7 +115,7 @@ public final class StonePowers {
                     hurt(level, p, e, 12 * power);
                     e.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 30, 1)); e.addEffect(new MobEffectInstance(MobEffects.GLOWING, 300, 0));
                     level.sendParticles(ParticleTypes.END_ROD, e.getX(), e.getY() + 6, e.getZ(), 40, 0.2, 3, 0.2, 0.02);
-                    level.sendParticles(ParticleTypes.FLASH, e.getX(), e.getY() + 1, e.getZ(), 1, 0, 0, 0, 0);
+                    level.sendParticles(net.minecraft.core.particles.ColorParticleOption.create(ParticleTypes.FLASH, 0xFFFFFFFF), e.getX(), e.getY() + 1, e.getZ(), 1, 0, 0, 0, 0);
                 }
                 level.playSound(null, p.blockPosition(), SoundEvents.FIREWORK_ROCKET_LARGE_BLAST, SoundSource.PLAYERS, 1.5f, 0.7f);
                 burst(level, p, ParticleTypes.END_ROD, 300, 10);

@@ -51,7 +51,7 @@ public final class CreationItems {
             l.playSound(null, pos, SoundEvents.TOTEM_USE, SoundSource.BLOCKS, 1f, 1.4f);
             l.sendParticles(new DustParticleOptions(0xFFFFFF, 2.5f), pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 200, 0.8, 1.2, 0.8, 0.1);
             l.sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 120, 0.4, 2, 0.4, 0.2);
-            l.sendParticles(ParticleTypes.FLASH, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 3, 0, 0, 0, 0);
+            l.sendParticles(net.minecraft.core.particles.ColorParticleOption.create(ParticleTypes.FLASH, 0xFFFFFFFF), pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 3, 0, 0, 0, 0);
             p.connection.send(new ClientboundSetTitleTextPacket(Component.literal("CREATION").withStyle(ChatFormatting.WHITE, ChatFormatting.BOLD)));
             p.connection.send(new ClientboundSetSubtitleTextPacket(Component.literal("All fourteen powers answer to you now").withStyle(ChatFormatting.GRAY)));
             com.kiyamet.skill.SkillManager.addXp(p, com.kiyamet.skill.Skill.ENCHANTING, 20000);

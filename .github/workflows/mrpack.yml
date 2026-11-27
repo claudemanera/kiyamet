@@ -1,5 +1,5 @@
 name: Build Modrinth profile (.mrpack)
-# Makes "TWD MOD": a Modrinth App profile with Fabric 1.21.11, Fabric API, GeckoLib, Sodium, Lithium and the TWD jar,
+# Makes "The Walking Dead": a Modrinth App profile with Fabric 1.21.11, Fabric API, GeckoLib, Sodium, Lithium and the TWD jar,
 # and attaches it to the release.
 on:
   workflow_dispatch:
@@ -34,9 +34,9 @@ jobs:
               print(slug, vs[0]["version_number"])
           loader = get("https://meta.fabricmc.net/v2/versions/loader/1.21.11")[0]["loader"]["version"]
           print("fabric-loader", loader)
-          json.dump({"formatVersion": 1, "game": "minecraft", "versionId": tag.lstrip("v"), "name": "TWD MOD",
+          json.dump({"formatVersion": 1, "game": "minecraft", "versionId": tag.lstrip("v"), "name": "The Walking Dead",
                      "summary": "The Walking Dead - zombie apocalypse survival", "files": files,
                      "dependencies": {"minecraft": "1.21.11", "fabric-loader": loader}}, open("pack/modrinth.index.json", "w"), indent=1)
           PY
-          cd pack && zip -qr "../TWD-MOD-${TAG#v}.mrpack" . && cd ..
-          gh release upload "$TAG" "TWD-MOD-${TAG#v}.mrpack" --clobber
+          cd pack && zip -qr "../The-Walking-Dead-${TAG#v}.mrpack" . && cd ..
+          gh release upload "$TAG" "The-Walking-Dead-${TAG#v}.mrpack" --clobber

@@ -102,6 +102,7 @@ public final class Family {
         baby.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
         l.addFreshEntity(baby);
         if (owner != null) {
+            com.kiyamet.skill.SkillManager.addXp(owner, com.kiyamet.skill.Skill.SURVIVAL, 1500);
             baby.setOwner(owner);
             baby.setOrder(HumanEntity.Order.STAY);
             owner.sendSystemMessage(Component.literal("★ " + mother.getName().getString() + " gave birth! Say hello to " + baby.getName().getString() + ".").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));

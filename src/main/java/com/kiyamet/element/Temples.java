@@ -102,6 +102,7 @@ public final class Temples {
                     if (!built(ow, "temple:" + e.id) && horiz(p.blockPosition(), tp) < 140 * 140) { markBuilt(ow, "temple:" + e.id); JOBS.add(new TempleBuilder(ow, e, tp).job()); }
                     if (built(ow, "temple:" + e.id) && horiz(p.blockPosition(), tp) < 30 * 30 && !p.getTags().contains("temple_" + e.id)) {
                         p.addTag("temple_" + e.id);
+                        com.kiyamet.skill.SkillManager.addXp(p, com.kiyamet.skill.Skill.EXPLORATION, 2500);
                         p.connection.send(new ClientboundSetTitleTextPacket(Component.literal("TEMPLE OF " + e.title.toUpperCase()).withStyle(e.fmt, ChatFormatting.BOLD)));
                         p.connection.send(new ClientboundSetSubtitleTextPacket(Component.literal("Its lord waits at the very bottom").withStyle(ChatFormatting.GRAY)));
                         ow.playSound(null, p.blockPosition(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.HOSTILE, 0.6f, 0.7f);

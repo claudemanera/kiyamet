@@ -57,6 +57,7 @@ public final class Thirst {
         if (p.isSprinting()) d *= 1.8f;
         if (p.level().getBiome(p.blockPosition()).value().getBaseTemperature() > 1.5f) d *= 1.3f;
         if (p.level().dimension() == net.minecraft.world.level.Level.NETHER) d *= 2.5f;
+        d *= 1f - Math.min(0.5f, com.kiyamet.skill.SkillManager.get(p).level(com.kiyamet.skill.Skill.SURVIVAL) / 2000f);   // survivors need less
         return d;
     }
 
@@ -68,7 +69,7 @@ public final class Thirst {
                 // drinking anything that finishes this tick
                 if (p.isUsingItem() && p.getUseItemRemainingTicks() == 1) {
                     float v = drinkValue(p.getUseItem());
-                    if (v > 0) add(p, v);
+                    if (v > 0) { add(p, v); com.kiyamet.skill.SkillManager.addXp(p, com.kiyamet.skill.Skill.SURVIVAL, 2); }
                 }
                 if (t % 20 != 0) continue;
                 if (t % 600 == 0) CanteenItem.seasonTick(p);

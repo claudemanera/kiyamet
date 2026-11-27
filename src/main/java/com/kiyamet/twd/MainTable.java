@@ -134,6 +134,7 @@ public class MainTable extends Block {
                 if (!has(player, s)) return false;
                 if (!player.isCreative()) for (int j = 0; j < s.cost().length; j += 2) Shop.take(player, (String) s.cost()[j], (Integer) s.cost()[j + 1]);
                 Shop.give(player, new ItemStack(Ui.item(s.id())));
+                com.kiyamet.skill.SkillManager.addXp(player, com.kiyamet.skill.Skill.BUILDING, 60);
                 player.level().playSound(null, player.blockPosition(), SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.8f, 1f);
                 return true;
             }

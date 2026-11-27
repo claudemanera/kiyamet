@@ -156,6 +156,7 @@ public class Sage extends PathfinderMob implements GeoEntity {
         // --- first meeting: name, greeting, the rod
         if (!given.contains(who)) {
             given.add(who);
+            com.kiyamet.skill.SkillManager.addXp(p, com.kiyamet.skill.Skill.EXPLORATION, 600);
             say(p, "I am " + SageLore.name(element) + ". " + SageLore.greeting(element));
             say(p, "Take this Ancient Rod. Carry it, fight with it. Fell " + ROD_KILLS + " walkers with it, and bring me what I ask - then I will show you the way to the " + element.title + " Temple.");
             ItemStack r = rod(element);
@@ -190,6 +191,7 @@ public class Sage extends PathfinderMob implements GeoEntity {
         }
         if (!p.isCreative()) for (int i = 0; i < w.length; i += 2) Shop.take(p, w[i], Integer.parseInt(w[i + 1]));
         helped.add(who);
+        com.kiyamet.skill.SkillManager.addXp(p, com.kiyamet.skill.Skill.EXPLORATION, 2000);
         l.playSound(null, blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.NEUTRAL, 1f, 0.8f);
         l.sendParticles(new DustParticleOptions(element.color, 1.8f), getX(), getY() + 1.6, getZ(), 50, 0.6, 0.8, 0.6, 0.05);
         say(p, "You kept your word. Here is the true map of the " + element.title + " Temple. Keep the rod - at the bottom of the temple lies the core. Join them on an anvil.");

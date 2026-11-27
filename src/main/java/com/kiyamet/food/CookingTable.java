@@ -122,6 +122,7 @@ public class CookingTable extends Block {
                     times++;
                 } while (type == ClickType.QUICK_MOVE && times < 16);
                 if (times == 0) return false;
+                com.kiyamet.skill.SkillManager.addXp(player, com.kiyamet.skill.Skill.SURVIVAL, 10 * times);
                 player.level().playSound(null, pos, SoundEvents.CAMPFIRE_CRACKLE, SoundSource.BLOCKS, 1f, 1f);
                 player.level().playSound(null, pos, SoundEvents.GENERIC_EAT.value(), SoundSource.BLOCKS, 0.4f, 1.4f);
                 player.level().sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, pos.getX() + 0.3, pos.getY() + 1.2, pos.getZ() + 0.3, 3, 0.05, 0.1, 0.05, 0.01);

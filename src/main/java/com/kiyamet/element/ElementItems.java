@@ -62,6 +62,7 @@ public final class ElementItems {
             l.playSound(null, pos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 0.6f, 1.6f);
             l.sendParticles(new DustParticleOptions(e.color, 2f), pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 80, 0.6, 0.6, 0.6, 0.1);
             l.sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 30, 0.3, 1, 0.3, 0.1);
+com.kiyamet.skill.SkillManager.addXp(p, com.kiyamet.skill.Skill.ENCHANTING, 4000);
             l.getServer().getPlayerList().broadcastSystemMessage(Component.literal("⚔ " + p.getName().getString() + " forged the " + e.weaponTitle + "!").withStyle(e.fmt, ChatFormatting.BOLD), false);
             return InteractionResult.SUCCESS;
         });

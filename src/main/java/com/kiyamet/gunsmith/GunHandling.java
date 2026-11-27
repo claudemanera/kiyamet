@@ -57,7 +57,8 @@ public final class GunHandling {
         CompoundTag t = tag(gun);
         t.putInt("Clip", Math.max(0, clip(gun) - rounds));
         float w = wear(gun);
-        if (p.getRandom().nextFloat() < 0.004f + w * w * 0.12f) {
+        float eng = Math.min(0.6f, com.kiyamet.skill.SkillManager.get(p).level(com.kiyamet.skill.Skill.ENGINEERING) / 1500f);
+        if (p.getRandom().nextFloat() < (0.004f + w * w * 0.12f) * (1f - eng)) {
             t.putBoolean("Jammed", true);
             put(gun, t);
             p.level().playSound(null, p.blockPosition(), SoundEvents.CROSSBOW_LOADING_START.value(), SoundSource.PLAYERS, 1f, 0.5f);
@@ -65,7 +66,7 @@ public final class GunHandling {
             return false;
         }
         put(gun, t);
-        if (gun.isDamageableItem() && !p.isCreative()) gun.setDamageValue(Math.min(gun.getMaxDamage() - 1, gun.getDamageValue() + 1));
+        if (gun.isDamageableItem() && !p.isCreative() && p.getRandom().nextFloat() >= eng * 0.8f) gun.setDamageValue(Math.min(gun.getMaxDamage() - 1, gun.getDamageValue() + 1));
         return true;
     }
 
@@ -78,6 +79,7 @@ public final class GunHandling {
             p.getCooldowns().addCooldown(gun, 25);
             p.level().playSound(null, p.blockPosition(), SoundEvents.CROSSBOW_LOADING_END.value(), SoundSource.PLAYERS, 1f, 1.3f);
             p.displayClientMessage(Component.literal("Jam cleared.").withStyle(ChatFormatting.GREEN), true);
+            com.kiyamet.skill.SkillManager.addXp(p, com.kiyamet.skill.Skill.ENGINEERING, 6);
             return;
         }
         int size = clipSize(gun), have = clip(gun);

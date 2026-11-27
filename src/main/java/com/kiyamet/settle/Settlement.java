@@ -143,6 +143,7 @@ public final class Settlement {
 
     static void made(HumanEntity h, String what, int n) {
         if (h.ownerPlayer() == null || n <= 0) return;
+        if (h.ownerPlayer() instanceof ServerPlayer o) com.kiyamet.skill.SkillManager.addXp(o, switch (h.work) { case "FARMER" -> com.kiyamet.skill.Skill.FARMING; case "SMITH" -> com.kiyamet.skill.Skill.ENGINEERING; case "DOCTOR" -> com.kiyamet.skill.Skill.MEDICINE; case "COOK" -> com.kiyamet.skill.Skill.SURVIVAL; default -> com.kiyamet.skill.Skill.DEFENSE; }, 2 * n);
         MADE.computeIfAbsent(h.ownerPlayer().getUUID(), k -> new LinkedHashMap<>()).merge(what, n, Integer::sum);
     }
 

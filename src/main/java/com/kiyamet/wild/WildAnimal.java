@@ -104,6 +104,7 @@ public class WildAnimal extends TamableAnimal implements GeoEntity {
         else getNavigation().stop();
         stalk += sl.isDarkOutside() ? 2 : 1;
         if (p.isCrouching()) stalk--;
+        if (p instanceof ServerPlayer sp0 && random.nextInt(1000) < com.kiyamet.skill.SkillManager.get(sp0).level(com.kiyamet.skill.Skill.STEALTH)) stalk--;   // skilled sneakers go unnoticed longer
         if (stalk == 6 && p instanceof ServerPlayer sp) { playSound(SoundEvents.POLAR_BEAR_WARNING, 1f, kind == WildKind.LION || kind == WildKind.TIGER ? 0.6f : 0.9f);
             sp.displayClientMessage(Component.literal("The " + kind.title.toLowerCase() + " is watching you...").withStyle(ChatFormatting.GOLD), true); }
         if (stalk > 14 + random.nextInt(8)) { setTarget(p); stalk = 0; playSound(SoundEvents.RAVAGER_ROAR, 1.2f, 1.4f); }
@@ -158,6 +159,7 @@ public class WildAnimal extends TamableAnimal implements GeoEntity {
             s.consume(1, player);
             if (random.nextInt(3) == 0) {
                 tame(sp); setOrderedToSit(false); level().broadcastEntityEvent(this, (byte) 7);
+                com.kiyamet.skill.SkillManager.addXp(sp, com.kiyamet.skill.Skill.HUNTING, 80);
                 sp.sendSystemMessage(Component.literal("The " + kind.title.toLowerCase() + " is your pet now! Right-click to make it sit or follow. Use a name tag to name it.").withStyle(ChatFormatting.GREEN));
             } else level().broadcastEntityEvent(this, (byte) 6);
             return InteractionResult.CONSUME;
@@ -168,7 +170,8 @@ public class WildAnimal extends TamableAnimal implements GeoEntity {
             trust++; stalk = 0;
             ((ServerLevel) level()).sendParticles(ParticleTypes.HEART, getX(), getY() + 1.2, getZ(), 1, 0.3, 0.3, 0.3, 0);
             if (trust >= 20) {
-                if (random.nextFloat() < 0.65f) {
+                if (random.nextFloat() < Math.min(0.95f, 0.65f + com.kiyamet.skill.SkillManager.get(sp).level(com.kiyamet.skill.Skill.HUNTING) / 3000f)) {
+                    com.kiyamet.skill.SkillManager.addXp(sp, com.kiyamet.skill.Skill.HUNTING, 400);
                     tame(sp); setOrderedToSit(false);
                     level().broadcastEntityEvent(this, (byte) 7);
                     sp.sendSystemMessage(Component.literal("The " + kind.title.toLowerCase() + " trusts you now. It's yours.").withStyle(ChatFormatting.GREEN, ChatFormatting.BOLD));

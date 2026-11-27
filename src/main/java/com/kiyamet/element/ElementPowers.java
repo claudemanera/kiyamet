@@ -122,6 +122,10 @@ public final class ElementPowers {
         ServerLevel l = p.level();
         int t = p.tickCount;
         if (!ON.containsKey(p.getUUID())) ON.put(p.getUUID(), e);
+        if (t % 100 == 0) com.kiyamet.skill.SkillManager.addXp(p, switch (e) {            // using a power trains the body
+            case SPIRIT, AIR -> com.kiyamet.skill.Skill.ACROBATICS; case SHADOW, SMOKE -> com.kiyamet.skill.Skill.STEALTH; case WATER -> com.kiyamet.skill.Skill.SWIMMING;
+            case THUNDER, WIND -> com.kiyamet.skill.Skill.ATHLETICS; case METAL -> com.kiyamet.skill.Skill.DEFENSE; case EARTH -> com.kiyamet.skill.Skill.MINING;
+            default -> com.kiyamet.skill.Skill.ENCHANTING; }, 15);
         if (t % 4 == 0) l.sendParticles(new DustParticleOptions(e.color, 1.1f), p.getX(), p.getY() + 0.9, p.getZ(), 3, 0.45, 0.7, 0.45, 0.01);
         switch (e) {
             case FLAME -> {                    // a cone of flame in front of you

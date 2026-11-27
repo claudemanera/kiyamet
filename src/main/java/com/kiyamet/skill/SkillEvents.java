@@ -43,7 +43,9 @@ public final class SkillEvents {
             double base = Math.max(4, entity.getMaxHealth() * 1.5);
             Entity direct = source.getDirectEntity();
             if ((direct != null && direct.getType().is(EntityTypeTags.ARROWS)) || p.getMainHandItem().getItem() instanceof com.kiyamet.item.GunItem) SkillManager.addXp(p, Skill.ARCHERY, base);
-            else if (p.getMainHandItem().is(ItemTags.SWORDS)) SkillManager.addXp(p, Skill.SWORDS, base);
+            else if (p.getMainHandItem().is(ItemTags.SWORDS) || p.getMainHandItem().getItem() instanceof com.kiyamet.element.ElementWeapon || p.getMainHandItem().is(com.kiyamet.element.ElementItems.ROD)) SkillManager.addXp(p, Skill.SWORDS, base);
+            if (entity instanceof com.kiyamet.element.TempleGuardian) { SkillManager.addXp(p, Skill.DEFENSE, 80); SkillManager.addXp(p, Skill.EXPLORATION, 60); }
+            if (entity instanceof com.kiyamet.wild.WildAnimal w && w.kind != null && (w.kind.predator || w.kind.zombie)) SkillManager.addXp(p, Skill.HUNTING, w.kind.zombie ? 120 : 60);
             else if (p.getMainHandItem().is(ItemTags.AXES)) SkillManager.addXp(p, Skill.HEAVY_WEAPONS, base);
             SkillManager.addXp(p, Skill.HUNTING, base * 0.6);
             if (p.isShiftKeyDown()) SkillManager.addXp(p, Skill.STEALTH, base * 0.5);

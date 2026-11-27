@@ -145,7 +145,7 @@ model('furniture_table', [box((0, 12, 0), (16, 16, 16), 'table_top', ['up']), bo
 w(f'{A}/blockstates/furniture_table.json', {"variants": {"": {"model": "kiyamet:block/furniture_table"}}})
 w(f'{A}/items/furniture_table.json', {"model": {"type": "minecraft:model", "model": "kiyamet:block/furniture_table"}})
 w(f'{D}/loot_table/blocks/furniture_table.json', {"type": "minecraft:block", "pools": [{"rolls": 1, "entries": [{"type": "minecraft:item", "name": "kiyamet:furniture_table"}]}]})
-w(f'{D}/recipe/furniture_table.json', {"type": "minecraft:crafting_shaped", "category": "misc", "pattern": ["SPS", "PCP", "PPP"],
+(lambda *a: None)(f'{D}/recipe/furniture_table.json', {"type": "minecraft:crafting_shaped", "category": "misc", "pattern": ["SPS", "PCP", "PPP"],
     "key": {"S": "minecraft:shears", "P": "#minecraft:planks", "C": "minecraft:crafting_table"}, "result": {"id": "kiyamet:furniture_table", "count": 1}})
 L['block.kiyamet.furniture_table'] = 'Furniture Table'
 
@@ -255,7 +255,7 @@ REC = {'vegetable_stew': (["minecraft:bowl", "minecraft:potato", "minecraft:carr
        'peach_pie': (["kiyamet:peach", "kiyamet:peach", "kiyamet:peach", "minecraft:wheat", "minecraft:sugar", "minecraft:egg"], 1),
        'strawberry_jam': (["minecraft:glass_bottle", "kiyamet:strawberry", "kiyamet:strawberry", "kiyamet:strawberry", "kiyamet:strawberry", "minecraft:sugar"], 2),
        'survivor_ration': (["minecraft:cooked_beef", "kiyamet:cornbread", "minecraft:dried_kelp", "minecraft:dried_kelp", "minecraft:paper", "kiyamet:strawberry_jam"], 2)}
-for k, (ings, n) in REC.items():
+for k, (ings, n) in ([] if True else REC.items()):        # 1.9: meals are cooked at the Cooking Table
     w(f'{D}/recipe/{k}.json', {"type": "minecraft:crafting_shapeless", "category": "misc", "ingredients": ings, "result": {"id": f"kiyamet:{k}", "count": n}})
 json.dump(L, open(A + '/lang/en_us.json', 'w'), indent=1, ensure_ascii=False)
 print('furniture', len(NAMES), 'meals', len(TITLES))

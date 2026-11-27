@@ -1,0 +1,16 @@
+{
+  "values": [
+    "minecraft:plains",
+    "minecraft:sunflower_plains",
+    "minecraft:meadow",
+    {
+      "id": "#c:is_plains",
+      "required": false
+    },
+    "minecraft:beach",
+    {
+      "id": "#c:is_beach",
+      "required": false
+    }
+  ]
+}

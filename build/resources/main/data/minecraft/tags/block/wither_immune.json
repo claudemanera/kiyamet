@@ -1,0 +1,10 @@
+{
+ "replace": false,
+ "values": [
+  "kiyamet:wisdom_stone",
+  "kiyamet:wisdom_glass",
+  "kiyamet:wisdom_light",
+  "kiyamet:creation_table",
+  "kiyamet:creation_altar"
+ ]
+}

@@ -1,0 +1,8 @@
+{
+ "parent": "minecraft:block/cube_bottom_top",
+ "textures": {
+  "top": "kiyamet:block/vehicle_workshop_top",
+  "bottom": "kiyamet:block/vehicle_workshop_side",
+  "side": "kiyamet:block/vehicle_workshop_side"
+ }
+}

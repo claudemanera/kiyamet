@@ -1,0 +1,9 @@
+{
+ "type": "minecraft:crafting_transmute",
+ "category": "equipment",
+ "input": "kiyamet:canvas_satchel",
+ "material": "minecraft:leather",
+ "result": {
+  "id": "kiyamet:scout_pack"
+ }
+}

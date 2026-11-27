@@ -1,0 +1,9 @@
+{
+ "type": "minecraft:crafting_transmute",
+ "category": "equipment",
+ "input": "kiyamet:hiker_pack",
+ "material": "minecraft:gold_ingot",
+ "result": {
+  "id": "kiyamet:survivor_pack"
+ }
+}

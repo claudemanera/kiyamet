@@ -1,0 +1,10 @@
+{
+ "type": "minecraft:smelting",
+ "category": "food",
+ "ingredient": "kiyamet:moose_meat",
+ "result": {
+  "id": "kiyamet:cooked_moose_meat"
+ },
+ "experience": 0.35,
+ "cookingtime": 200
+}

@@ -1,0 +1,149 @@
+{
+ "parent": "minecraft:block/block",
+ "textures": {
+  "side": "kiyamet:block/creation_table_side",
+  "stone": "kiyamet:block/wisdom_stone",
+  "top": "kiyamet:block/creation_table_top",
+  "light": "kiyamet:block/wisdom_light",
+  "particle": "kiyamet:block/wisdom_stone"
+ },
+ "elements": [
+  {
+   "from": [
+    1,
+    0,
+    1
+   ],
+   "to": [
+    15,
+    4,
+    15
+   ],
+   "faces": {
+    "north": {
+     "texture": "#stone"
+    },
+    "south": {
+     "texture": "#stone"
+    },
+    "east": {
+     "texture": "#stone"
+    },
+    "west": {
+     "texture": "#stone"
+    },
+    "up": {
+     "texture": "#stone"
+    },
+    "down": {
+     "texture": "#stone"
+    }
+   }
+  },
+  {
+   "from": [
+    3,
+    4,
+    3
+   ],
+   "to": [
+    13,
+    8,
+    13
+   ],
+   "faces": {
+    "north": {
+     "texture": "#side"
+    },
+    "south": {
+     "texture": "#side"
+    },
+    "east": {
+     "texture": "#side"
+    },
+    "west": {
+     "texture": "#side"
+    },
+    "up": {
+     "texture": "#stone"
+    },
+    "down": {
+     "texture": "#stone"
+    }
+   }
+  },
+  {
+   "from": [
+    5,
+    8,
+    5
+   ],
+   "to": [
+    11,
+    10,
+    11
+   ],
+   "faces": {
+    "north": {
+     "texture": "#stone"
+    },
+    "south": {
+     "texture": "#stone"
+    },
+    "east": {
+     "texture": "#stone"
+    },
+    "west": {
+     "texture": "#stone"
+    },
+    "up": {
+     "texture": "#top"
+    },
+    "down": {
+     "texture": "#stone"
+    }
+   }
+  },
+  {
+   "from": [
+    6.5,
+    11,
+    6.5
+   ],
+   "to": [
+    9.5,
+    15.5,
+    9.5
+   ],
+   "rotation": {
+    "angle": 45,
+    "axis": "y",
+    "origin": [
+     8,
+     13,
+     8
+    ]
+   },
+   "faces": {
+    "north": {
+     "texture": "#light"
+    },
+    "south": {
+     "texture": "#light"
+    },
+    "east": {
+     "texture": "#light"
+    },
+    "west": {
+     "texture": "#light"
+    },
+    "up": {
+     "texture": "#light"
+    },
+    "down": {
+     "texture": "#light"
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,331 @@
+[
+ {
+  "meal": "vegetable_stew",
+  "count": 1,
+  "ingredients": [
+   "minecraft:bowl",
+   "minecraft:potato",
+   "minecraft:carrot",
+   "kiyamet:onion",
+   "kiyamet:cabbage",
+   "kiyamet:tomato"
+  ]
+ },
+ {
+  "meal": "tomato_soup",
+  "count": 1,
+  "ingredients": [
+   "minecraft:bowl",
+   "kiyamet:tomato",
+   "kiyamet:tomato",
+   "kiyamet:tomato",
+   "kiyamet:onion"
+  ]
+ },
+ {
+  "meal": "stuffed_peppers",
+  "count": 2,
+  "ingredients": [
+   "kiyamet:bell_pepper",
+   "kiyamet:bell_pepper",
+   "minecraft:cooked_beef",
+   "kiyamet:onion",
+   "kiyamet:tomato"
+  ]
+ },
+ {
+  "meal": "ratatouille",
+  "count": 1,
+  "ingredients": [
+   "minecraft:bowl",
+   "kiyamet:eggplant",
+   "kiyamet:tomato",
+   "kiyamet:cucumber",
+   "kiyamet:bell_pepper",
+   "kiyamet:onion"
+  ]
+ },
+ {
+  "meal": "cabbage_rolls",
+  "count": 2,
+  "ingredients": [
+   "kiyamet:cabbage",
+   "minecraft:cooked_porkchop",
+   "kiyamet:onion",
+   "kiyamet:tomato"
+  ]
+ },
+ {
+  "meal": "cornbread",
+  "count": 2,
+  "ingredients": [
+   "kiyamet:corn",
+   "kiyamet:corn",
+   "kiyamet:corn",
+   "minecraft:wheat",
+   "minecraft:wheat",
+   "minecraft:egg"
+  ]
+ },
+ {
+  "meal": "fruit_salad",
+  "count": 1,
+  "ingredients": [
+   "minecraft:bowl",
+   "kiyamet:orange",
+   "kiyamet:peach",
+   "kiyamet:strawberry",
+   "kiyamet:strawberry",
+   "minecraft:apple"
+  ]
+ },
+ {
+  "meal": "peach_pie",
+  "count": 1,
+  "ingredients": [
+   "kiyamet:peach",
+   "kiyamet:peach",
+   "kiyamet:peach",
+   "minecraft:wheat",
+   "minecraft:sugar",
+   "minecraft:egg"
+  ]
+ },
+ {
+  "meal": "strawberry_jam",
+  "count": 2,
+  "ingredients": [
+   "minecraft:glass_bottle",
+   "kiyamet:strawberry",
+   "kiyamet:strawberry",
+   "kiyamet:strawberry",
+   "kiyamet:strawberry",
+   "minecraft:sugar"
+  ]
+ },
+ {
+  "meal": "survivor_ration",
+  "count": 2,
+  "ingredients": [
+   "minecraft:cooked_beef",
+   "kiyamet:cornbread",
+   "minecraft:dried_kelp",
+   "minecraft:dried_kelp",
+   "minecraft:paper",
+   "kiyamet:strawberry_jam"
+  ]
+ },
+ {
+  "meal": "hunters_breakfast",
+  "count": 1,
+  "ingredients": [
+   "minecraft:cooked_porkchop",
+   "minecraft:egg",
+   "minecraft:bread",
+   "minecraft:baked_potato"
+  ]
+ },
+ {
+  "meal": "fish_and_chips",
+  "count": 1,
+  "ingredients": [
+   "minecraft:cooked_cod",
+   "minecraft:baked_potato",
+   "minecraft:baked_potato",
+   "minecraft:paper"
+  ]
+ },
+ {
+  "meal": "mushroom_risotto",
+  "count": 1,
+  "ingredients": [
+   "minecraft:bowl",
+   "minecraft:brown_mushroom",
+   "minecraft:red_mushroom",
+   "minecraft:wheat",
+   "minecraft:wheat",
+   "minecraft:cooked_chicken"
+  ]
+ },
+ {
+  "meal": "honey_glazed_ham",
+  "count": 1,
+  "ingredients": [
+   "minecraft:cooked_porkchop",
+   "minecraft:cooked_porkchop",
+   "minecraft:honey_bottle",
+   "minecraft:carrot"
+  ]
+ },
+ {
+  "meal": "berry_pancakes",
+  "count": 2,
+  "ingredients": [
+   "minecraft:wheat",
+   "minecraft:wheat",
+   "minecraft:egg",
+   "minecraft:milk_bucket",
+   "minecraft:sweet_berries",
+   "minecraft:sugar"
+  ]
+ },
+ {
+  "meal": "fish_sandwich",
+  "count": 1,
+  "ingredients": [
+   "minecraft:bread",
+   "minecraft:cooked_cod",
+   "kiyamet:cabbage",
+   "kiyamet:tomato"
+  ]
+ },
+ {
+  "meal": "chicken_soup",
+  "count": 1,
+  "ingredients": [
+   "minecraft:bowl",
+   "minecraft:cooked_chicken",
+   "minecraft:carrot",
+   "kiyamet:onion",
+   "minecraft:potato"
+  ]
+ },
+ {
+  "meal": "burger",
+  "count": 1,
+  "ingredients": [
+   "minecraft:bread",
+   "minecraft:cooked_beef",
+   "kiyamet:tomato",
+   "kiyamet:cabbage",
+   "kiyamet:onion"
+  ]
+ },
+ {
+  "meal": "cabbage_salad",
+  "count": 1,
+  "ingredients": [
+   "minecraft:bowl",
+   "kiyamet:cabbage",
+   "kiyamet:tomato",
+   "kiyamet:cucumber",
+   "kiyamet:onion"
+  ]
+ },
+ {
+  "meal": "omelette",
+  "count": 1,
+  "ingredients": [
+   "minecraft:egg",
+   "minecraft:egg",
+   "kiyamet:onion",
+   "kiyamet:bell_pepper",
+   "kiyamet:tomato"
+  ]
+ },
+ {
+  "meal": "venison_stew",
+  "count": 1,
+  "ingredients": [
+   "minecraft:bowl",
+   "kiyamet:venison",
+   "minecraft:potato",
+   "minecraft:carrot",
+   "kiyamet:onion"
+  ]
+ },
+ {
+  "meal": "bear_steak",
+  "count": 1,
+  "ingredients": [
+   "kiyamet:cooked_bear_meat",
+   "minecraft:baked_potato",
+   "minecraft:baked_potato",
+   "kiyamet:onion"
+  ]
+ },
+ {
+  "meal": "boar_sausages",
+  "count": 2,
+  "ingredients": [
+   "kiyamet:boar_meat",
+   "kiyamet:boar_meat",
+   "kiyamet:onion",
+   "kiyamet:bell_pepper"
+  ]
+ },
+ {
+  "meal": "moose_roast",
+  "count": 2,
+  "ingredients": [
+   "kiyamet:moose_meat",
+   "minecraft:carrot",
+   "minecraft:potato",
+   "kiyamet:onion",
+   "kiyamet:tomato"
+  ]
+ },
+ {
+  "meal": "meat_skewers",
+  "count": 2,
+  "ingredients": [
+   "kiyamet:big_cat_meat",
+   "kiyamet:bell_pepper",
+   "kiyamet:onion",
+   "minecraft:stick",
+   "minecraft:stick"
+  ]
+ },
+ {
+  "meal": "croc_wrap",
+  "count": 1,
+  "ingredients": [
+   "kiyamet:cooked_croc_meat",
+   "minecraft:bread",
+   "kiyamet:tomato",
+   "kiyamet:cabbage"
+  ]
+ },
+ {
+  "meal": "hunters_pie",
+  "count": 2,
+  "ingredients": [
+   "kiyamet:venison",
+   "minecraft:wheat",
+   "minecraft:wheat",
+   "minecraft:egg",
+   "minecraft:brown_mushroom"
+  ]
+ },
+ {
+  "meal": "bear_chili",
+  "count": 1,
+  "ingredients": [
+   "minecraft:bowl",
+   "kiyamet:bear_meat",
+   "kiyamet:tomato",
+   "kiyamet:bell_pepper",
+   "kiyamet:onion"
+  ]
+ },
+ {
+  "meal": "jerky",
+  "count": 3,
+  "ingredients": [
+   "kiyamet:venison",
+   "kiyamet:moose_meat",
+   "kiyamet:boar_meat"
+  ]
+ },
+ {
+  "meal": "meatballs",
+  "count": 1,
+  "ingredients": [
+   "minecraft:bowl",
+   "kiyamet:boar_meat",
+   "minecraft:bread",
+   "minecraft:egg",
+   "kiyamet:tomato"
+  ]
+ }
+]

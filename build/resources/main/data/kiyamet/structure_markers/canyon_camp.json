@@ -1,0 +1,68 @@
+{
+  "markers": [
+    {
+      "pos": [
+        8,
+        24,
+        4
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        39,
+        24,
+        4
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        5,
+        24,
+        25
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        38,
+        24,
+        8
+      ],
+      "type": "survivor"
+    },
+    {
+      "pos": [
+        18,
+        1,
+        10
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        26,
+        1,
+        20
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        22,
+        1,
+        4
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        17,
+        1,
+        27
+      ],
+      "type": "loot"
+    }
+  ]
+}

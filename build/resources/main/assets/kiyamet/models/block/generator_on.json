@@ -1,0 +1,1 @@
+{"parent": "minecraft:block/cube_bottom_top", "textures": {"top": "kiyamet:block/generator_top", "bottom": "kiyamet:block/steel_block", "side": "kiyamet:block/generator_side_on"}}

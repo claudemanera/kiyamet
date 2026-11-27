@@ -1,0 +1,14 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "equipment",
+ "ingredients": [
+  "minecraft:redstone",
+  "minecraft:glowstone_dust",
+  "minecraft:copper_ingot",
+  "minecraft:gold_ingot"
+ ],
+ "result": {
+  "id": "kiyamet:plasma_cell",
+  "count": 10
+ }
+}

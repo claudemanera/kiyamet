@@ -1,0 +1,17 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "equipment",
+ "pattern": [
+  "IC",
+  "II",
+  "II"
+ ],
+ "key": {
+  "I": "minecraft:iron_ingot",
+  "C": "minecraft:copper_ingot"
+ },
+ "result": {
+  "id": "kiyamet:magazine_large",
+  "count": 1
+ }
+}

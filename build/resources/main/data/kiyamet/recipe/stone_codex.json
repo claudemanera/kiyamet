@@ -1,0 +1,33 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  "kiyamet:stone_codex_page_1",
+  "kiyamet:stone_codex_page_2",
+  "kiyamet:stone_codex_page_3",
+  "kiyamet:stone_codex_page_4",
+  "kiyamet:stone_codex_page_5",
+  "kiyamet:stone_codex_page_6"
+ ],
+ "result": {
+  "id": "minecraft:written_book",
+  "count": 1,
+  "components": {
+   "minecraft:written_book_content": {
+    "title": "Stone Codex",
+    "author": "Helix Institute",
+    "resolved": true,
+    "pages": [
+     "STONE CODEX\n\nCollected notes of the Helix Institute on the ten Power Stones.\n\nSocket stones into the Stone Gauntlet. Slots open at Total Power 200 / 1000 / 3000 / 6000 / 10000.",
+     "FIRE STONE\nPassive: immune to fire and lava.\nActive: ring of flames around you.\nFound: Volcano Station, Lava Forge (Lava Golem).\n\nFROST STONE\nPassive: hits slow enemies.\nActive: frost burst freezes the area.\nFound: Cryo Vault, Frozen Ship, Frost Giant.",
+     "STORM STONE\nPassive: +8% speed.\nActive: calls lightning on the target.\nFound: Weather Station (Storm Lord), Core Chamber.\n\nNATURE STONE\nPassive: slow health regeneration.\nActive: vine trap holds zombies.\nFound: Swamp Hut, Jungle Ruins, Hive Nest.",
+     "BLOOD STONE\nPassive: hits steal health.\nActive: blood storm, area damage.\nFound: Patient Zero (Outbreak Lab), Quarantine City.\n\nSHADOW STONE\nPassive: at night zombies notice you late.\nActive: short invisibility.\nFound: Shadow Ruins (Shadow Stalker).",
+     "SOUL STONE\nPassive: keep your inventory on death.\nActive: summons spirit soldiers.\nFound: Ancient Underground City (Forgotten King).\n\nTIME STONE\nPassive: cooldowns -10%.\nActive: slows time for 5 s.\nFound: Lost Library (Time Keeper), Crystal Cavern.",
+     "VOID STONE\nPassive: longer teleport range.\nActive: mini black hole.\nFound: Core Chamber (Core Warden).\n\nEARTH STONE\nPassive: no knockback.\nActive: ground quake.\nFound: Crystal Cavern, Buried Pyramid.\n\nCOMBOS\nFire+Storm: plasma blast\nFrost+Void: absolute zero\nBlood+Shadow: vampire\nTime+Soul: rebirth\nNature+Earth: forest fortress"
+    ]
+   },
+   "minecraft:rarity": "epic",
+   "minecraft:enchantment_glint_override": true
+  }
+ }
+}

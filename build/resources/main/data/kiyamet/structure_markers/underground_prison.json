@@ -1,0 +1,172 @@
+{
+  "markers": [
+    {
+      "pos": [
+        6,
+        2,
+        7
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        14,
+        2,
+        30
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        22,
+        2,
+        30
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        38,
+        2,
+        30
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        42,
+        2,
+        30
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        6,
+        8,
+        7
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        18,
+        8,
+        7
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        22,
+        8,
+        7
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        26,
+        8,
+        30
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        30,
+        8,
+        7
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        30,
+        8,
+        30
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        34,
+        8,
+        7
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        19,
+        2,
+        22
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        28,
+        2,
+        22
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        39,
+        8,
+        21
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        9,
+        2,
+        19
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        39,
+        2,
+        19
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        12,
+        2,
+        18
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        32,
+        2,
+        20
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        20,
+        8,
+        19
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        30,
+        8,
+        18
+      ],
+      "type": "zombie"
+    }
+  ]
+}

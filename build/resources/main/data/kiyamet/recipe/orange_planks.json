@@ -1,0 +1,11 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "building",
+ "ingredients": [
+  "kiyamet:orange_log"
+ ],
+ "result": {
+  "id": "minecraft:oak_planks",
+  "count": 4
+ }
+}

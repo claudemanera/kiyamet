@@ -1,0 +1,14 @@
+{
+ "structures": [
+  {
+   "structure": "kiyamet:city_industrial",
+   "weight": 1
+  }
+ ],
+ "placement": {
+  "type": "minecraft:random_spread",
+  "spacing": 250,
+  "separation": 100,
+  "salt": 66012
+ }
+}

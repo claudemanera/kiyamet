@@ -1,0 +1,9 @@
+{
+ "type": "minecraft:crafting_transmute",
+ "category": "equipment",
+ "input": "kiyamet:ranger_pack",
+ "material": "kiyamet:medkit",
+ "result": {
+  "id": "kiyamet:medic_pack"
+ }
+}

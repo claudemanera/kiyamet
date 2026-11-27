@@ -1,0 +1,13 @@
+{
+ "replace": false,
+ "values": [
+  "kiyamet:tomato_crop",
+  "kiyamet:corn_crop",
+  "kiyamet:cucumber_crop",
+  "kiyamet:eggplant_crop",
+  "kiyamet:bell_pepper_crop",
+  "kiyamet:onion_crop",
+  "kiyamet:cabbage_crop",
+  "kiyamet:strawberry_crop"
+ ]
+}

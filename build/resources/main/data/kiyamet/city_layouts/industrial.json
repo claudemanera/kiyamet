@@ -1,0 +1,1275 @@
+{
+ "size": [
+  208,
+  70,
+  208
+ ],
+ "tiles": [
+  {
+   "template": "kiyamet:cities/industrial/t_0_0",
+   "offset": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_0_1",
+   "offset": [
+    0,
+    0,
+    64
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_0_2",
+   "offset": [
+    0,
+    0,
+    128
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_0_3",
+   "offset": [
+    0,
+    0,
+    192
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_1_0",
+   "offset": [
+    64,
+    0,
+    0
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_1_1",
+   "offset": [
+    64,
+    0,
+    64
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_1_2",
+   "offset": [
+    64,
+    0,
+    128
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_1_3",
+   "offset": [
+    64,
+    0,
+    192
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_2_0",
+   "offset": [
+    128,
+    0,
+    0
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_2_1",
+   "offset": [
+    128,
+    0,
+    64
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_2_2",
+   "offset": [
+    128,
+    0,
+    128
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_2_3",
+   "offset": [
+    128,
+    0,
+    192
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_3_0",
+   "offset": [
+    192,
+    0,
+    0
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_3_1",
+   "offset": [
+    192,
+    0,
+    64
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_3_2",
+   "offset": [
+    192,
+    0,
+    128
+   ]
+  },
+  {
+   "template": "kiyamet:cities/industrial/t_3_3",
+   "offset": [
+    192,
+    0,
+    192
+   ]
+  }
+ ],
+ "markers": [
+  {
+   "pos": [
+    132,
+    2,
+    43
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    132,
+    2,
+    57
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    132,
+    2,
+    55
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    132,
+    2,
+    91
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    138,
+    2,
+    43
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    144,
+    2,
+    30
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    144,
+    2,
+    54
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    144,
+    2,
+    78
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    150,
+    2,
+    78
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    150,
+    2,
+    76
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    156,
+    2,
+    48
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    156,
+    2,
+    60
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    174,
+    2,
+    61
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    186,
+    2,
+    74
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    186,
+    2,
+    88
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    192,
+    2,
+    54
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    142,
+    1,
+    8
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    153,
+    1,
+    163
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    156,
+    1,
+    163
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    188,
+    1,
+    163
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    191,
+    1,
+    163
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    170,
+    1,
+    160
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    46,
+    1,
+    175
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    76,
+    1,
+    171
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    58,
+    1,
+    160
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    83,
+    1,
+    161
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    60,
+    1,
+    172
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    60,
+    1,
+    166
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    64,
+    1,
+    167
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    65,
+    1,
+    169
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    83,
+    1,
+    156
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    49,
+    1,
+    175
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    40,
+    1,
+    38
+   ],
+   "type": "boss"
+  },
+  {
+   "pos": [
+    62,
+    1,
+    48
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    22,
+    11,
+    15
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    64,
+    1,
+    16
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    60,
+    1,
+    46
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    34,
+    1,
+    49
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    35,
+    1,
+    27
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    41,
+    1,
+    36
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    18,
+    1,
+    24
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    49
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    62,
+    1,
+    27
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    50,
+    1,
+    47
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    47,
+    1,
+    16
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    18,
+    1,
+    28
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    110,
+    1,
+    18
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    80,
+    1,
+    42
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    83,
+    1,
+    19
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    108,
+    1,
+    43
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    91,
+    1,
+    18
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    109,
+    1,
+    22
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    110,
+    1,
+    42
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    9,
+    1,
+    67
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    16,
+    1,
+    74
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    10,
+    1,
+    79
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    67
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    38,
+    1,
+    74
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    29,
+    1,
+    79
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    54,
+    1,
+    67
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    66,
+    1,
+    74
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    55,
+    1,
+    79
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    83,
+    1,
+    67
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    91,
+    1,
+    74
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    84,
+    1,
+    79
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    103,
+    1,
+    77
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    110,
+    1,
+    88
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    104,
+    1,
+    98
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    9,
+    1,
+    87
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    19,
+    1,
+    96
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    10,
+    1,
+    103
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    34,
+    1,
+    87
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    42,
+    1,
+    96
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    35,
+    1,
+    103
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    55,
+    1,
+    87
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    66,
+    1,
+    96
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    56,
+    1,
+    103
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    82,
+    1,
+    87
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    89,
+    1,
+    96
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    83,
+    1,
+    103
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    13,
+    1,
+    130
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    25,
+    1,
+    130
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    13,
+    1,
+    142
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    22,
+    1,
+    144
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    26,
+    1,
+    166
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    10,
+    1,
+    180
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    22,
+    1,
+    180
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    21,
+    1,
+    192
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    107,
+    1,
+    130
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    107,
+    1,
+    142
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    107,
+    1,
+    154
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    105,
+    1,
+    166
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    103,
+    1,
+    168
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    106,
+    1,
+    178
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    104,
+    1,
+    180
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    103,
+    1,
+    192
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    113,
+    1,
+    198
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    63,
+    1,
+    192
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    61,
+    1,
+    194
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    73,
+    1,
+    194
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    88,
+    1,
+    192
+   ],
+   "type": "loot"
+  },
+  {
+   "pos": [
+    86,
+    1,
+    194
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    15,
+    1,
+    84
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    175,
+    1,
+    142
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    55,
+    1,
+    11
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    60,
+    1,
+    33
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    3,
+    1,
+    131
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    192,
+    1,
+    45
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    18,
+    1,
+    41
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    135,
+    1,
+    55
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    117,
+    1,
+    50
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    108,
+    1,
+    70
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    23,
+    1,
+    132
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    98,
+    1,
+    100
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    34,
+    1,
+    1
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    153,
+    1,
+    25
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    98,
+    1,
+    167
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    99,
+    1,
+    68
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    11,
+    1,
+    8
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    78,
+    1,
+    172
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    173,
+    1,
+    77
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    60,
+    1,
+    183
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    168,
+    1,
+    21
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    154,
+    1,
+    40
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    59,
+    1,
+    162
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    124,
+    1,
+    52
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    163,
+    1,
+    176
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    8,
+    1,
+    123
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    65,
+    1,
+    65
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    161,
+    1,
+    117
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    22,
+    1,
+    33
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    32,
+    1,
+    105
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    35,
+    1,
+    203
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    134,
+    1,
+    154
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    73,
+    1,
+    27
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    100,
+    1,
+    51
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    90,
+    1,
+    146
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    77,
+    1,
+    190
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    192,
+    1,
+    48
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    122,
+    1,
+    21
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    144,
+    1,
+    141
+   ],
+   "type": "zombie"
+  },
+  {
+   "pos": [
+    134,
+    1,
+    122
+   ],
+   "type": "zombie"
+  }
+ ]
+}

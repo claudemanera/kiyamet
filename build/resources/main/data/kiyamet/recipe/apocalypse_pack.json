@@ -1,0 +1,9 @@
+{
+ "type": "minecraft:crafting_transmute",
+ "category": "equipment",
+ "input": "kiyamet:expedition_pack",
+ "material": "minecraft:netherite_ingot",
+ "result": {
+  "id": "kiyamet:apocalypse_pack"
+ }
+}

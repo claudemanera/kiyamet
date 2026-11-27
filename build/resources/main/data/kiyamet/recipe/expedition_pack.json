@@ -1,0 +1,9 @@
+{
+ "type": "minecraft:crafting_transmute",
+ "category": "equipment",
+ "input": "kiyamet:military_rucksack",
+ "material": "kiyamet:energy_core",
+ "result": {
+  "id": "kiyamet:expedition_pack"
+ }
+}

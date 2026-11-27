@@ -1,0 +1,84 @@
+{
+  "markers": [
+    {
+      "pos": [
+        34,
+        2,
+        11
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        8,
+        2,
+        36
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        27,
+        2,
+        14
+      ],
+      "type": "human:leader"
+    },
+    {
+      "pos": [
+        10,
+        6,
+        34
+      ],
+      "type": "human:trader"
+    },
+    {
+      "pos": [
+        26,
+        1,
+        37
+      ],
+      "type": "human:member"
+    },
+    {
+      "pos": [
+        38,
+        1,
+        37
+      ],
+      "type": "human:member"
+    },
+    {
+      "pos": [
+        30,
+        2,
+        45
+      ],
+      "type": "human:member"
+    },
+    {
+      "pos": [
+        3,
+        9,
+        3
+      ],
+      "type": "human:guard"
+    },
+    {
+      "pos": [
+        51,
+        9,
+        51
+      ],
+      "type": "human:guard"
+    },
+    {
+      "pos": [
+        27,
+        1,
+        52
+      ],
+      "type": "human:guard"
+    }
+  ]
+}

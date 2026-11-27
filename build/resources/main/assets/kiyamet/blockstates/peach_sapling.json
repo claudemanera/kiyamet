@@ -1,0 +1,10 @@
+{
+ "variants": {
+  "stage=0": {
+   "model": "kiyamet:block/peach_sapling"
+  },
+  "stage=1": {
+   "model": "kiyamet:block/peach_sapling"
+  }
+ }
+}

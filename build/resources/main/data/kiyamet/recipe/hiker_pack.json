@@ -1,0 +1,9 @@
+{
+ "type": "minecraft:crafting_transmute",
+ "category": "equipment",
+ "input": "kiyamet:scout_pack",
+ "material": "minecraft:iron_ingot",
+ "result": {
+  "id": "kiyamet:hiker_pack"
+ }
+}

@@ -1,0 +1,124 @@
+{
+  "markers": [
+    {
+      "pos": [
+        16,
+        2,
+        19
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        47,
+        7,
+        25
+      ],
+      "type": "loot"
+    },
+    {
+      "pos": [
+        31,
+        2,
+        22
+      ],
+      "type": "human:leader"
+    },
+    {
+      "pos": [
+        22,
+        2,
+        40
+      ],
+      "type": "human:member"
+    },
+    {
+      "pos": [
+        26,
+        2,
+        50
+      ],
+      "type": "human:member"
+    },
+    {
+      "pos": [
+        44,
+        2,
+        42
+      ],
+      "type": "human:member"
+    },
+    {
+      "pos": [
+        40,
+        1,
+        52
+      ],
+      "type": "human:trader"
+    },
+    {
+      "pos": [
+        4,
+        11,
+        4
+      ],
+      "type": "human:guard"
+    },
+    {
+      "pos": [
+        57,
+        11,
+        57
+      ],
+      "type": "human:guard"
+    },
+    {
+      "pos": [
+        31,
+        1,
+        57
+      ],
+      "type": "human:guard"
+    },
+    {
+      "pos": [
+        33,
+        1,
+        36
+      ],
+      "type": "human:guard"
+    },
+    {
+      "pos": [
+        20,
+        7,
+        22
+      ],
+      "type": "human:member"
+    },
+    {
+      "pos": [
+        40,
+        7,
+        22
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        44,
+        7,
+        18
+      ],
+      "type": "zombie"
+    },
+    {
+      "pos": [
+        24,
+        7,
+        28
+      ],
+      "type": "zombie"
+    }
+  ]
+}

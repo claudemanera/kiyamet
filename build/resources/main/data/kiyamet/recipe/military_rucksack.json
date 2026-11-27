@@ -1,0 +1,9 @@
+{
+ "type": "minecraft:crafting_transmute",
+ "category": "equipment",
+ "input": "kiyamet:tactical_pack",
+ "material": "minecraft:diamond",
+ "result": {
+  "id": "kiyamet:military_rucksack"
+ }
+}

@@ -1,0 +1,6 @@
+{
+ "parent": "minecraft:item/generated",
+ "textures": {
+  "layer0": "kiyamet:item/community_member_spawn_egg"
+ }
+}

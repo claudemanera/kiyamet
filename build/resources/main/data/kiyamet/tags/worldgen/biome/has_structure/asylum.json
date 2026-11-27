@@ -1,0 +1,12 @@
+{
+  "values": [
+    "minecraft:forest",
+    "minecraft:dark_forest",
+    "minecraft:taiga",
+    "minecraft:swamp",
+    {
+      "id": "#c:is_forest",
+      "required": false
+    }
+  ]
+}

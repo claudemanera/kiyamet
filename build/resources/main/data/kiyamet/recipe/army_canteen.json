@@ -1,0 +1,18 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "misc",
+ "pattern": [
+  "SCS",
+  "I I",
+  "III"
+ ],
+ "key": {
+  "S": "minecraft:string",
+  "C": "minecraft:copper_ingot",
+  "I": "minecraft:iron_ingot"
+ },
+ "result": {
+  "id": "kiyamet:army_canteen",
+  "count": 1
+ }
+}

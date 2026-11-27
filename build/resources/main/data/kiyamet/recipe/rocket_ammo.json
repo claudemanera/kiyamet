@@ -1,0 +1,13 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "equipment",
+ "ingredients": [
+  "minecraft:tnt",
+  "minecraft:iron_ingot",
+  "minecraft:gunpowder"
+ ],
+ "result": {
+  "id": "kiyamet:rocket_ammo",
+  "count": 3
+ }
+}

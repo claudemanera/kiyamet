@@ -1,0 +1,17 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "equipment",
+ "pattern": [
+  " I ",
+  "IBI",
+  " I "
+ ],
+ "key": {
+  "I": "minecraft:iron_block",
+  "B": "kiyamet:magazine_large"
+ },
+ "result": {
+  "id": "kiyamet:magazine_drum",
+  "count": 1
+ }
+}

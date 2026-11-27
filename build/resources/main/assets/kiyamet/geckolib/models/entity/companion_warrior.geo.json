@@ -1,0 +1,227 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.kiyamet.companion_warrior",
+    "texture_width": 128,
+    "texture_height": 64
+   },
+   "bones": [
+    {
+     "name": "leg_r",
+     "pivot": [
+      -2.0,
+      12.0,
+      0.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -4,
+        0,
+        -2
+       ],
+       "size": [
+        4,
+        12,
+        4
+       ],
+       "uv": [
+        0,
+        16
+       ]
+      }
+     ]
+    },
+    {
+     "name": "leg_l",
+     "pivot": [
+      2.0,
+      12.0,
+      0.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        0,
+        0,
+        -2
+       ],
+       "size": [
+        4,
+        12,
+        4
+       ],
+       "uv": [
+        16,
+        48
+       ]
+      }
+     ]
+    },
+    {
+     "name": "body",
+     "pivot": [
+      0.0,
+      12.0,
+      0.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -4.0,
+        12,
+        -2.0
+       ],
+       "size": [
+        8.0,
+        12,
+        4.0
+       ],
+       "uv": [
+        16,
+        16
+       ]
+      }
+     ]
+    },
+    {
+     "name": "head",
+     "parent": "body",
+     "pivot": [
+      0.0,
+      24.0,
+      0.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -4,
+        24,
+        -4
+       ],
+       "size": [
+        8,
+        8,
+        8
+       ],
+       "uv": [
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "name": "arm_r",
+     "parent": "body",
+     "pivot": [
+      -6.0,
+      22.0,
+      0.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8.0,
+        12,
+        -2
+       ],
+       "size": [
+        4.0,
+        12,
+        4
+       ],
+       "uv": [
+        40,
+        16
+       ]
+      }
+     ]
+    },
+    {
+     "name": "arm_l",
+     "parent": "body",
+     "pivot": [
+      6.0,
+      22.0,
+      0.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        4.0,
+        12,
+        -2
+       ],
+       "size": [
+        4.0,
+        12,
+        4
+       ],
+       "uv": [
+        32,
+        48
+       ]
+      }
+     ]
+    },
+    {
+     "name": "bat",
+     "parent": "arm_r",
+     "pivot": [
+      -6.0,
+      22.0,
+      0.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -7,
+        0,
+        -1
+       ],
+       "size": [
+        2,
+        12,
+        2
+       ],
+       "uv": [
+        64,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "name": "pad",
+     "parent": "arm_l",
+     "pivot": [
+      6.0,
+      22.0,
+      0.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        4,
+        22,
+        -2.5
+       ],
+       "size": [
+        5,
+        2,
+        5.0
+       ],
+       "uv": [
+        72,
+        0
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

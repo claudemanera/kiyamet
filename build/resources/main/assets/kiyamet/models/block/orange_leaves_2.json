@@ -1,0 +1,6 @@
+{
+ "parent": "minecraft:block/leaves",
+ "textures": {
+  "all": "kiyamet:block/orange_leaves_2"
+ }
+}

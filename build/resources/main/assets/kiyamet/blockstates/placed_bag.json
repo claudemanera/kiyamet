@@ -1,0 +1,964 @@
+{
+ "multipart": [
+  {
+   "when": {
+    "lower": "1",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag1_lower",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "upper": "1",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag1_upper",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "lower": "1",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag1_lower",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "upper": "1",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag1_upper",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "lower": "1",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag1_lower",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "upper": "1",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag1_upper",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "lower": "1",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag1_lower",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "upper": "1",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag1_upper",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "lower": "2",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag2_lower",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "upper": "2",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag2_upper",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "lower": "2",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag2_lower",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "upper": "2",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag2_upper",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "lower": "2",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag2_lower",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "upper": "2",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag2_upper",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "lower": "2",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag2_lower",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "upper": "2",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag2_upper",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "lower": "3",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag3_lower",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "upper": "3",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag3_upper",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "lower": "3",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag3_lower",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "upper": "3",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag3_upper",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "lower": "3",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag3_lower",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "upper": "3",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag3_upper",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "lower": "3",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag3_lower",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "upper": "3",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag3_upper",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "lower": "4",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag4_lower",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "upper": "4",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag4_upper",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "lower": "4",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag4_lower",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "upper": "4",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag4_upper",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "lower": "4",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag4_lower",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "upper": "4",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag4_upper",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "lower": "4",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag4_lower",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "upper": "4",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag4_upper",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "lower": "5",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag5_lower",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "upper": "5",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag5_upper",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "lower": "5",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag5_lower",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "upper": "5",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag5_upper",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "lower": "5",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag5_lower",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "upper": "5",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag5_upper",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "lower": "5",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag5_lower",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "upper": "5",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag5_upper",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "lower": "6",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag6_lower",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "upper": "6",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag6_upper",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "lower": "6",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag6_lower",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "upper": "6",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag6_upper",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "lower": "6",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag6_lower",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "upper": "6",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag6_upper",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "lower": "6",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag6_lower",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "upper": "6",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag6_upper",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "lower": "7",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag7_lower",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "upper": "7",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag7_upper",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "lower": "7",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag7_lower",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "upper": "7",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag7_upper",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "lower": "7",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag7_lower",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "upper": "7",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag7_upper",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "lower": "7",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag7_lower",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "upper": "7",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag7_upper",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "lower": "8",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag8_lower",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "upper": "8",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag8_upper",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "lower": "8",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag8_lower",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "upper": "8",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag8_upper",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "lower": "8",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag8_lower",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "upper": "8",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag8_upper",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "lower": "8",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag8_lower",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "upper": "8",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag8_upper",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "lower": "9",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag9_lower",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "upper": "9",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag9_upper",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "lower": "9",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag9_lower",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "upper": "9",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag9_upper",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "lower": "9",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag9_lower",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "upper": "9",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag9_upper",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "lower": "9",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag9_lower",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "upper": "9",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag9_upper",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "lower": "10",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag10_lower",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "upper": "10",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag10_upper",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "lower": "10",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag10_lower",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "upper": "10",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag10_upper",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "lower": "10",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag10_lower",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "upper": "10",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag10_upper",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "lower": "10",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag10_lower",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "upper": "10",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag10_upper",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "lower": "11",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag11_lower",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "upper": "11",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag11_upper",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "lower": "11",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag11_lower",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "upper": "11",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag11_upper",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "lower": "11",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag11_lower",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "upper": "11",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag11_upper",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "lower": "11",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag11_lower",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "upper": "11",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag11_upper",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "lower": "12",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag12_lower",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "upper": "12",
+    "facing": "north"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag12_upper",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "lower": "12",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag12_lower",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "upper": "12",
+    "facing": "east"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag12_upper",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "lower": "12",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag12_lower",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "upper": "12",
+    "facing": "south"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag12_upper",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "lower": "12",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag12_lower",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "upper": "12",
+    "facing": "west"
+   },
+   "apply": {
+    "model": "kiyamet:block/bag12_upper",
+    "y": 270
+   }
+  }
+ ]
+}

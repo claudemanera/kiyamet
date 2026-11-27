@@ -1,0 +1,11 @@
+{
+  "values": [
+    "minecraft:badlands",
+    "minecraft:windswept_savanna",
+    "minecraft:stony_peaks",
+    {
+      "id": "#c:is_mountain",
+      "required": false
+    }
+  ]
+}

@@ -77,8 +77,8 @@ jobs:
           tag_name: build-${{ github.run_number }}
           name: Kiyamet build ${{ github.run_number }}
           make_latest: true
-          files: build/libs/kiyamet-*[0-9].jar
+          files: build/libs/the-walking-dead-*[0-9].jar
       - uses: actions/upload-artifact@v4
         with:
           name: kiyamet-jar
-          path: build/libs/kiyamet-*[0-9].jar
+          path: build/libs/the-walking-dead-*[0-9].jar

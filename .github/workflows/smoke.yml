@@ -37,7 +37,7 @@ jobs:
           FAPI=$(grep fabric_api_version ../gradle.properties | cut -d= -f2)
           curl -sL -o mods/fabric-api.jar "https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/$FAPI/fabric-api-$FAPI.jar"
           cp "$(find ~/.gradle/caches -name 'geckolib-fabric-1.21.11-*.jar' | grep -v sources | head -1)" mods/
-          cp ../build/libs/kiyamet-*[0-9].jar mods/
+          cp ../build/libs/the-walking-dead-*[0-9].jar mods/
           ls -la mods
           echo "eula=true" > eula.txt
           printf "online-mode=false\nlevel-seed=12345\nview-distance=6\nsimulation-distance=6\nspawn-protection=0\nsync-chunk-writes=false\nmax-tick-time=-1\n" > server.properties

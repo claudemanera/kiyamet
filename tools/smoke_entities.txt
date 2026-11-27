@@ -47,3 +47,6 @@ mission_board lion tiger brown_bear ice_bear crocodile wild_boar deer moose zomb
  earth_guardian
  water_sage
  thunder_lord
+ zombie_enderman
+ void_tyrant
+ star_warden

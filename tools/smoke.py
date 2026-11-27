@@ -135,6 +135,23 @@ if p:
     cmd(p, 'execute positioned 210 100 210 run twd buildtemple flame', 8)
     cmd(p, 'execute if entity @e[type=kiyamet:flame_lord] run say TEMPLE_LORD_OK', 1)
     cmd(p, 'execute if entity @e[type=kiyamet:flame_guardian] run say TEMPLE_GUARDS_OK', 1)
+    # 2.2: creation items, the new stones, the zombie enderman, the five End bosses, the five End structures and the Temple of Wisdom
+    for a in ('creation_axe', 'creation_rod', 'creation_core', 'star_stone', 'dragon_stone', 'creation_altar', 'wisdom_stone'):
+        cmd(p, 'summon item 3 101 -3 {Item:{id:"kiyamet:%s",count:1}}' % a, 0.2)
+    cmd(p, 'setblock 5 101 5 kiyamet:creation_table', 0.3)
+    cmd(p, 'setblock 7 101 5 kiyamet:creation_altar', 0.3)
+    cmd(p, 'summon kiyamet:zombie_enderman 6 101 8', 0.4)
+    for i, bs in enumerate(('void_tyrant', 'sky_herald', 'dead_captain', 'hive_matriarch', 'star_warden')):
+        cmd(p, 'summon kiyamet:%s %d 101 12' % (bs, -8 + 4 * i), 0.4)
+    for i, st in enumerate(('void_citadel', 'sky_spire', 'fallen_skyship', 'ender_hive', 'starfall_observatory')):
+        x = -700 + 350 * i
+        cmd(p, 'forceload add %d -460 %d -340' % (x - 60, x + 60), 4)
+        cmd(p, 'execute positioned %d 120 -400 run twd endbuild %s' % (x, st), 10)
+    cmd(p, 'forceload add -40 360 40 520', 4)
+    cmd(p, 'execute positioned 0 140 400 run twd buildwisdom', 10)
+    for bs in ('void_tyrant', 'sky_herald', 'dead_captain', 'hive_matriarch', 'star_warden'):
+        cmd(p, 'execute if entity @e[type=kiyamet:%s,x=-900,y=0,z=-600,dx=2000,dy=400,dz=400] run say END_%s_OK' % (bs, bs.upper()), 1)
+    cmd(p, 'execute if block 0 141 400 kiyamet:creation_table run say WISDOM_TABLE_OK', 1)
     # 1.6 more: auto turret, thrown bombs, cars, eggs, cash
     cmd(p, 'summon kiyamet:auto_turret 2 101 -4', 0.5)
     cmd(p, 'summon kiyamet:thrown_bomb 2 104 -2 {Item:{id:"kiyamet:frag_grenade",count:1}}', 0.5)
